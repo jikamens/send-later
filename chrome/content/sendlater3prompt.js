@@ -1,18 +1,18 @@
-var sl8tr_prefservice = Components.classes["@mozilla.org/preferences-service;1"].
+var sendlater3_prefservice = Components.classes["@mozilla.org/preferences-service;1"].
                 getService(Components.interfaces.nsIPrefBranch);
 
 
 
-var shortcut1value = sl8tr_prefservice.getIntPref("extensions.sl8tr.quickoptions.1.value");
-var shortcut2value = sl8tr_prefservice.getIntPref("extensions.sl8tr.quickoptions.2.value");
-var shortcut3value = sl8tr_prefservice.getIntPref("extensions.sl8tr.quickoptions.3.value");
+var shortcut1value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.1.value");
+var shortcut2value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.2.value");
+var shortcut3value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.3.value");
 
-var shortcut1label = sl8tr_prefservice.getComplexValue("extensions.sl8tr.quickoptions.1.label",
+var shortcut1label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.1.label",
 														Components.interfaces.nsISupportsString).data;
-var shortcut2label = sl8tr_prefservice.getComplexValue("extensions.sl8tr.quickoptions.2.label",	
+var shortcut2label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.2.label",	
 														Components.interfaces.nsISupportsString).data;
 
-var shortcut3label = sl8tr_prefservice.getComplexValue("extensions.sl8tr.quickoptions.3.label",
+var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.3.label",
 														Components.interfaces.nsISupportsString).data;
 			
 
@@ -81,7 +81,7 @@ function populateMonths()
 {
   var selectedyear =  document.getElementById("yearvalue").value;
   var today = new Date();
-  var strbundle = document.getElementById("sl8trpromptstrings");
+  var strbundle = document.getElementById("sendlater3promptstrings");
   var monthStr = [ strbundle.getString("January") ,strbundle.getString("February"),strbundle.getString("March"),strbundle.getString("April"),strbundle.getString("May"),strbundle.getString("June"),
 					strbundle.getString("July"),strbundle.getString("August"),strbundle.getString("September"),strbundle.getString("October"),strbundle.getString("November"),strbundle.getString("December") ];
   var container = document.getElementById("months");
@@ -154,7 +154,7 @@ sendat.setDate(parseInt(selecteddate));
 sendat.setHours(parseInt(selectedhour));
 sendat.setMinutes(parseInt(selectedmin));
 
-	var strbundle = document.getElementById("sl8trpromptstrings");
+	var strbundle = document.getElementById("sendlater3promptstrings");
     document.getElementById("summary").value = strbundle.getString("willsendat") + " " + sendat.toLocaleString();
     
 

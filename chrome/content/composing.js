@@ -1,7 +1,7 @@
 var composelogMngr = null;
 var composelogger = null;
 
-function CSL8TRdump(msg)
+function CSENDLATER3dump(msg)
 {
   if (composelogger)
   {
@@ -17,7 +17,7 @@ function CinitDebug()
 	{
 	composelogMngr = Components.classes["@mozmonkey.com/debuglogger/manager;1"]
 		.getService(Components.interfaces.nsIDebugLoggerManager);
-		composelogger = composelogMngr.registerLogger("Compose.SL8TR@UnsignedByte.com");
+		composelogger = composelogMngr.registerLogger("Compose.SENDLATER3@UnsignedByte.com");
 	}
 	catch (e)
 	{
@@ -32,7 +32,7 @@ CinitDebug();
 
 var msgWindow = Components.classes["@mozilla.org/messenger/msgwindow;1"].createInstance();
 msgWindow = msgWindow.QueryInterface(Components.interfaces.nsIMsgWindow);
-var sl8trComposePrefs        = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+var sendlater3ComposePrefs        = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 
 
 
@@ -41,7 +41,7 @@ var prevXSendLater = false;
 function CheckForXSendLater()
 {
 
- CSL8TRdump("CheckforXSendLater")
+ CSENDLATER3dump("CheckforXSendLater")
  if (gMsgCompose != null)
   {
     var msgCompFields = gMsgCompose.compFields;
@@ -49,7 +49,7 @@ function CheckForXSendLater()
     {
 		if (gMsgCompose.originalMsgURI!="")
 		{
-			CSL8TRdump("Checking " + gMsgCompose.originalMsgURI);
+			CSENDLATER3dump("Checking " + gMsgCompose.originalMsgURI);
 				var messageURI = gMsgCompose.originalMsgURI;
 						var accountManager = Components.classes["@mozilla.org/messenger/account-manager;1"].getService(Components.interfaces.nsIMsgAccountManager);
 						var messenger = Components.classes["@mozilla.org/messenger;1"].getService(Components.interfaces.nsIMessenger);
@@ -88,7 +88,7 @@ function CheckForXSendLater()
 							   }
 							}
 						}
-					CSL8TRdump("HeaderReady = " + headerready + " , SendLaterPresent = " + xsendlaterpresent);
+					CSENDLATER3dump("HeaderReady = " + headerready + " , SendLaterPresent = " + xsendlaterpresent);
 						var gotcha;
 						if (xsendlaterpresent)
 							gotcha =content.match(/\r\nX-Send-Later-At:.*/).toString();
@@ -97,7 +97,7 @@ function CheckForXSendLater()
 						if (gotcha)
 						{
 							prevXSendLater = new Date (gotcha.substr(18));
-							CSL8TRdump("PrevXSendLater = " + prevXSendLater);
+							CSENDLATER3dump("PrevXSendLater = " + prevXSendLater);
 						} 
 		}
 			
@@ -182,7 +182,7 @@ function MyGenericSendMessage( msgType , sendat)
       {
       
         //Do we need to check the spelling?
-        if (sl8trComposePrefs.getBoolPref("mail.SpellCheckBeforeSend"))
+        if (sendlater3ComposePrefs.getBoolPref("mail.SpellCheckBeforeSend"))
         {
           // We disable spellcheck for the following -subject line, attachment pane, identity and addressing widget
           // therefore we need to explicitly focus on the mail body when we have to do a spellcheck.
@@ -233,7 +233,7 @@ function MyGenericSendMessage( msgType , sendat)
         if (servertype != "nntp" && msgCompFields.newsgroups != "")
         {
           // default to ask user if the pref is not set
-          var dontAskAgain = sl8trComposePrefs.getBoolPref("mail.compose.dontWarnMail2Newsgroup");
+          var dontAskAgain = sendlater3ComposePrefs.getBoolPref("mail.compose.dontWarnMail2Newsgroup");
 
           if (!dontAskAgain)
           {
@@ -249,7 +249,7 @@ function MyGenericSendMessage( msgType , sendat)
               return;
 
             if (checkbox.value)
-              sl8trComposePrefs.setBoolPref(kDontAskAgainPref, true);
+              sendlater3ComposePrefs.setBoolPref(kDontAskAgainPref, true);
           }
 
           // remove newsgroups to prevent news_p to be set
@@ -416,7 +416,7 @@ function CancelSendLater()
 
 function CheckSendAt()
 {
-window.openDialog("chrome://sl8tr/content/sl8trprompt.xul", "Send at ?", "modal,chrome,centerscreen", 
+window.openDialog("chrome://sendlater3/content/sendlater3prompt.xul", "Send at ?", "modal,chrome,centerscreen", 
                   {finishCallback: SendAtTime, continueCallback : ContinueSendLater, cancelCallback: CancelSendLater,previouslyTimed : prevXSendLater });
 }
 
@@ -424,9 +424,9 @@ window.openDialog("chrome://sl8tr/content/sl8trprompt.xul", "Send at ?", "modal,
 
 var mysleventListener = { handleEvent : function(event) { 
 			CheckForXSendLater(); 
-			if (SL8TR_TOOLBAR_SetOnLoad)
+			if (SENDLATER3_TOOLBAR_SetOnLoad)
 			{
-				SL8TR_TOOLBAR_SetOnLoad();
+				SENDLATER3_TOOLBAR_SetOnLoad();
 			}
 		} 
 }

@@ -1,6 +1,6 @@
-content	sl8tr	chrome/content/
-locale	sl8tr	en-US	chrome/locale/en-US/
-overlay	chrome://messenger/content/messenger.xul	chrome://sl8tr/content/backgrounding.xul
-overlay	chrome://messenger/content/messenger.xul	chrome://sl8tr/content/headerView.xul
-overlay chrome://messenger/content/messengercompose/messengercompose.xul chrome://sl8tr/content/composing.xul
-overlay chrome://messenger/content/messengercompose/messengercompose.xul chrome://sl8tr/content/composeToolbar.xul
+content	sendlater3	chrome/content/
+locale	sendlater3	en-US	chrome/locale/en-US/
+overlay	chrome://messenger/content/messenger.xul	chrome://sendlater3/content/backgrounding.xul
+overlay	chrome://messenger/content/messenger.xul	chrome://sendlater3/content/headerView.xul
+overlay chrome://messenger/content/messengercompose/messengercompose.xul chrome://sendlater3/content/composing.xul
+overlay chrome://messenger/content/messengercompose/messengercompose.xul chrome://sendlater3/content/composeToolbar.xul

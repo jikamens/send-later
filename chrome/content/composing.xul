@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<overlay id="sl8tr-composing-overlay"
+<overlay id="sendlater3-composing-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="composing.js"/>
 

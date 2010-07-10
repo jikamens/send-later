@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
-<!DOCTYPE window SYSTEM "chrome://sl8tr/locale/sl8trprompt.dtd">
+<!DOCTYPE window SYSTEM "chrome://sendlater3/locale/sendlater3prompt.dtd">
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
         title="&sendlater.prompt.title.label;" onload="SetOnLoad();">
 <stringbundleset id="strbundles">
-	<stringbundle id="sl8trpromptstrings" src="chrome://sl8tr/locale/sl8trprompt.properties"/>
+	<stringbundle id="sendlater3promptstrings" src="chrome://sendlater3/locale/sendlater3prompt.properties"/>
 </stringbundleset>
-<script src="chrome://sl8tr/content/sl8trprompt.js"/>
+<script src="chrome://sendlater3/content/sendlater3prompt.js"/>
 <keyset>
 <key id="quickbutton1-key" modifiers="alt" key="1"/>
 <key id="quickbutton2-key" modifiers="alt" key="2"/>
@@ -18,8 +18,8 @@
 	<hbox>
 		<hbox  align="center"  >
 		<separator flex="1" width="8" />			
-		<hbox id="sl8trtoolbartimeicon" width="24" >
-			<image  src="chrome://sl8tr/content/timeIcon.png" />
+		<hbox id="sendlater3toolbartimeicon" width="24" >
+			<image  src="chrome://sendlater3/content/timeIcon.png" />
 			<separator flex="1" />
 		</hbox>
 		<menulist label="HH" id="hourvalue" style="margin: 0px;" >
@@ -32,8 +32,8 @@
 			</menupopup>
 		</menulist>
 			<separator flex="1" width="4" />
-		<hbox id="sl8trtoolbarcalicon" width="28" >
-			<image src="chrome://sl8tr/content/calIcon.png"  />
+		<hbox id="sendlater3toolbarcalicon" width="28" >
+			<image src="chrome://sendlater3/content/calIcon.png"  />
 			<separator flex="1" />
 		</hbox>
 		<menulist label="Years" id="yearvalue"  style="margin: 0px;">

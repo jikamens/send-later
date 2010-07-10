@@ -1,21 +1,21 @@
-var sl8tr_prefservice = Components.classes["@mozilla.org/preferences-service;1"].
+var sendlater3_prefservice = Components.classes["@mozilla.org/preferences-service;1"].
                 getService(Components.interfaces.nsIPrefBranch);
 
 
-var showquickbutton1 = sl8tr_prefservice.getBoolPref("extensions.sl8tr.quickoptions.1.showintoolbar");
-var showquickbutton2 = sl8tr_prefservice.getBoolPref("extensions.sl8tr.quickoptions.2.showintoolbar");
-var showquickbutton3 = sl8tr_prefservice.getBoolPref("extensions.sl8tr.quickoptions.3.showintoolbar");
+var showquickbutton1 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.1.showintoolbar");
+var showquickbutton2 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.2.showintoolbar");
+var showquickbutton3 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.3.showintoolbar");
 
-var shortcut1value = sl8tr_prefservice.getIntPref("extensions.sl8tr.quickoptions.1.value");
-var shortcut2value = sl8tr_prefservice.getIntPref("extensions.sl8tr.quickoptions.2.value");
-var shortcut3value = sl8tr_prefservice.getIntPref("extensions.sl8tr.quickoptions.3.value");
+var shortcut1value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.1.value");
+var shortcut2value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.2.value");
+var shortcut3value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.3.value");
 
-var shortcut1label = sl8tr_prefservice.getComplexValue("extensions.sl8tr.quickoptions.1.label",
+var shortcut1label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.1.label",
 														Components.interfaces.nsISupportsString).data;
-var shortcut2label = sl8tr_prefservice.getComplexValue("extensions.sl8tr.quickoptions.2.label",	
+var shortcut2label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.2.label",	
 														Components.interfaces.nsISupportsString).data;
 
-var shortcut3label = sl8tr_prefservice.getComplexValue("extensions.sl8tr.quickoptions.3.label",
+var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.3.label",
 														Components.interfaces.nsISupportsString).data;
 
 function DZFormat(val)
@@ -83,7 +83,7 @@ function populateMonths()
 {
   var selectedyear =  document.getElementById("yearvalue").value;
   var today = new Date();
-  var strbundle = document.getElementById("sl8trpromptstrings");
+  var strbundle = document.getElementById("sendlater3promptstrings");
   var monthStr = [ strbundle.getString("January") ,strbundle.getString("February"),strbundle.getString("March"),strbundle.getString("April"),strbundle.getString("May"),strbundle.getString("June"),
 					strbundle.getString("July"),strbundle.getString("August"),strbundle.getString("September"),strbundle.getString("October"),strbundle.getString("November"),strbundle.getString("December") ];
   var container = document.getElementById("months");
@@ -169,9 +169,9 @@ SendAtTime(sendat);
 }
 
 
-function SL8TR_TOOLBAR_SetOnLoad()
+function SENDLATER3_TOOLBAR_SetOnLoad()
 {
-	if (document.getElementById('sl8tr_toolbar'))
+	if (document.getElementById('sendlater3_toolbar'))
 	{
 	
 		document.getElementById("yearvalue").removeEventListener("ValueChange", populateMonths, false);
@@ -188,16 +188,16 @@ function SL8TR_TOOLBAR_SetOnLoad()
 		var hhmm = new Date();
 		document.getElementById("hourvalue").value = hhmm.getHours();
 		document.getElementById("minvalue").value = hhmm.getMinutes();
-		switch (document.getElementById("sl8tr_toolbar").parentNode.getAttribute("mode"))
+		switch (document.getElementById("sendlater3_toolbar").parentNode.getAttribute("mode"))
 		{
 		  case "full":
 		  case "icons":
-			document.getElementById("sl8trtoolbartimeicon").hidden = false;
-			document.getElementById("sl8trtoolbarcalicon").hidden = false;
+			document.getElementById("sendlater3toolbartimeicon").hidden = false;
+			document.getElementById("sendlater3toolbarcalicon").hidden = false;
 			break;
 		  default:
-			document.getElementById("sl8trtoolbartimeicon").hidden = true;
-			document.getElementById("sl8trtoolbarcalicon").hidden = true;
+			document.getElementById("sendlater3toolbartimeicon").hidden = true;
+			document.getElementById("sendlater3toolbarcalicon").hidden = true;
 			break;
 		}
 
@@ -240,7 +240,7 @@ else
 	
 		if (prevXSendLater)
 		{
-			CSL8TRdump("PrevXSendlater is Set to " + prevXSendLater);
+			CSENDLATER3dump("PrevXSendlater is Set to " + prevXSendLater);
 		   document.getElementById("yearvalue").value = prevXSendLater.getFullYear();
 		   document.getElementById("monthvalue").value = prevXSendLater.getMonth();
 		   document.getElementById("dayvalue").value = prevXSendLater.getDate();
@@ -249,22 +249,22 @@ else
 		 }
 		 else
 		 {
-			CSL8TRdump("No previous time");
+			CSENDLATER3dump("No previous time");
 		}
 
 	}
 }
 
 var originalCustomizeDone;
-function sl8tr_CustomizeDone()
+function sendlater3_CustomizeDone()
 {
 	originalCustomizeDone();
-	SL8TR_TOOLBAR_SetOnLoad();
+	SENDLATER3_TOOLBAR_SetOnLoad();
 }
 function captureonLoad()
 {
 		originalCustomizeDone = document.getElementById("compose-toolbox").customizeDone;
-		document.getElementById("compose-toolbox").customizeDone = sl8tr_CustomizeDone;
+		document.getElementById("compose-toolbox").customizeDone = sendlater3_CustomizeDone;
 }
 
 window.addEventListener("load",captureonLoad,false);

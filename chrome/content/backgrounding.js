@@ -3,22 +3,22 @@ var keepChecking;
 Components.utils.import("resource:///modules/gloda/log4moz.js");
 
 var checkTimeout;
-var sl8tr_displayprogressbar;
+var sendlater3_displayprogressbar;
 
-var sl8tr_prefservice = Components.classes["@mozilla.org/preferences-service;1"].
+var sendlater3_prefservice = Components.classes["@mozilla.org/preferences-service;1"].
                 getService(Components.interfaces.nsIPrefBranch);
 
 
 //mailnews.customDBHeaders 
-var installedCustomHeaders = sl8tr_prefservice.getCharPref('mailnews.customDBHeaders');
+var installedCustomHeaders = sendlater3_prefservice.getCharPref('mailnews.customDBHeaders');
 if (installedCustomHeaders.indexOf("x-send-later-at")<0)
 {
   dump("Installing Custom Header\n");
-  sl8tr_prefservice.setCharPref('mailnews.customDBHeaders',installedCustomHeaders + " x-send-later-at");
+  sendlater3_prefservice.setCharPref('mailnews.customDBHeaders',installedCustomHeaders + " x-send-later-at");
 }
 
-checkTimeout = sl8tr_prefservice.getIntPref("extensions.sl8tr.checktimepref");
-sl8tr_displayprogressbar = sl8tr_prefservice.getBoolPref("extensions.sl8tr.showprogress");
+checkTimeout = sendlater3_prefservice.getIntPref("extensions.sendlater3.checktimepref");
+sendlater3_displayprogressbar = sendlater3_prefservice.getBoolPref("extensions.sendlater3.showprogress");
 
 if (checkTimeout < 5000) checkTimeout = 60000;
 
@@ -30,12 +30,12 @@ var DisplayMessages = new Array();
 
 var logger = null;
 
-function SL8TRdump(msg)
+function SENDLATER3dump(msg)
 {
   logger.info(msg);
 }
 
-function SL8TRdebug(msg)
+function SENDLATER3debug(msg)
 {
   logger.debug(msg);
 }
@@ -43,7 +43,7 @@ function SL8TRdebug(msg)
 function initDebug()
 {
 
-	logger = Log4Moz.getConfiguredLogger("extensions.sl8tr",
+	logger = Log4Moz.getConfiguredLogger("extensions.sendlater3",
 					     Log4Moz.Level.Debug,
 					     Log4Moz.Level.Info,
 					     Log4Moz.Level.Debug);
@@ -154,14 +154,14 @@ var copyServiceListener =  { sfileNP: null,
 
 function SwitchToStatus()
 {
-	SL8TRdebug("STATUS MESSAGE - " + MessagesPending);
+	SENDLATER3debug("STATUS MESSAGE - " + MessagesPending);
     document.getElementById("sendlater_deck").selectedIndex = 1;
-     var strbundle = document.getElementById("sl8trbackgroundstrings");
+     var strbundle = document.getElementById("sendlater3backgroundstrings");
 
    if (MessagesPending > 0) 
-	{StatusReportMsg("SL8TR [" +strbundle.getString("PendingMessage") + " " + MessagesPending + "]");}
+	{StatusReportMsg("SENDLATER3 [" +strbundle.getString("PendingMessage") + " " + MessagesPending + "]");}
    else
-	{StatusReportMsg("SL8TR ["+ strbundle.getString("IdleMessage") +"]");}
+	{StatusReportMsg("SENDLATER3 ["+ strbundle.getString("IdleMessage") +"]");}
    
 }
 
@@ -182,7 +182,7 @@ function CheckThisURI(messageURI)
 	clearTimeout(animTimeout);
 	animTimeout = setTimeout("SwitchToStatus()",3000);
 
-	SL8TRdebug("Checking message : " + messageURI + "\n");
+	SENDLATER3debug("Checking message : " + messageURI + "\n");
 	
 	ScriptInputStream .init(consumer);
 	MsgService .streamMessage(messageURI, MsgStream, msgWindow, null, false,null);
@@ -197,14 +197,14 @@ function CheckThisURI(messageURI)
 		{
 		   if (content.match(/\r\n\r\n/) || content.match(/\n\n/))
 		   {
-		   	 SL8TRdebug("header is now ready");
+		   	 SENDLATER3debug("header is now ready");
 			   headerready = true;
 		      if (content.match(/^X-Send-Later-At:.*$/m)) xsendlaterpresent = true;
 		   }
 		}
 	}
 	
-	SL8TRdebug("HeaderReady = " + headerready + " , SendLaterPresent = " + xsendlaterpresent);
+	SENDLATER3debug("HeaderReady = " + headerready + " , SendLaterPresent = " + xsendlaterpresent);
 	var gotcha;
 	if (xsendlaterpresent)
 	gotcha =content.match(/^X-Send-Later-At:.*$/m).toString();
@@ -212,7 +212,7 @@ function CheckThisURI(messageURI)
 	gotcha = false;
 	if (gotcha)
 	{
-		SL8TRdump ("Found Pending Message.");
+		SENDLATER3dump ("Found Pending Message.");
 		var sendattime = new Date (gotcha.substr(16));
 		var now = new Date();
 		if (now > sendattime)
@@ -249,7 +249,7 @@ function CheckThisURI(messageURI)
 			var sfile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
 			sfile.initWithPath(tempDir.path);
 			sfile.appendRelativePath("tempMsg" + messageHDR.messageId + ".eml");
-			SL8TRdump("Saving message to " + sfile.path);
+			SENDLATER3dump("Saving message to " + sfile.path);
 			if (sfile.exists()) sfile.remove(true);
 			sfile.create(sfile.NORMAL_FILE_TYPE, 0600);
 			var stream = Components.classes['@mozilla.org/network/file-output-stream;1'].createInstance(Components.interfaces.nsIFileOutputStream);
@@ -264,14 +264,14 @@ function CheckThisURI(messageURI)
 			dellist.appendElement(messageHDR, false);
 			messageHDR.folder.deleteMessages(dellist,msgWindow,true,false,null,false);
 			msgSendLater.sendUnsentMessages(null);
-			SL8TRdump ("Sending Message.");
+			SENDLATER3dump ("Sending Message.");
 			clearTimeout(animTimeout);
 			animTimeout = setTimeout("SwitchToStatus()",3000);
 		}
 		else
 		{
 			MessagesPending++;
-			SL8TRdump(MessagesPending + " messages still pending");
+			SENDLATER3dump(MessagesPending + " messages still pending");
 		}
 	}
 }                            
@@ -286,19 +286,19 @@ var folderLoadListener =
             if (folder)
             {
              folder.endFolderLoading();
-				SL8TRdebug("FOLDER LOADED - " + folder.URI);
+				SENDLATER3debug("FOLDER LOADED - " + folder.URI);
                 if (folderstocheck.indexOf(folder.URI)>=0)
                 {
                     clearTimeout(animTimeout);
                    	animTimeout = setTimeout("SwitchToStatus()",3000);
 
-                    SL8TRdump("FOLDER MONITORED - " + folder.URI + "\n");
+                    SENDLATER3dump("FOLDER MONITORED - " + folder.URI + "\n");
                     //folderstocheck.splice(folderstocheck.indexOf(folder.URI),1);
                     var thisfolder = folder.QueryInterface(Components.interfaces.nsIMsgFolder);
                     var messageenumerator = thisfolder.messages;
                     if ( messageenumerator )
                     {
-                        SL8TRdump ("Got Enumerator\n");
+                        SENDLATER3dump ("Got Enumerator\n");
                         while ( messageenumerator.hasMoreElements() )
                         {
                             var messageDBHDR = messageenumerator.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
@@ -308,7 +308,7 @@ var folderLoadListener =
                     }
 		    else
 		    {
-		      SL8TRdump("No Enumerator\n");
+		      SENDLATER3dump("No Enumerator\n");
 		    }
                 }
             }
@@ -322,14 +322,14 @@ function CheckForSendLater ()
 {
 
 	MessagesPending = 0;
-	SL8TRdebug("One cycle of checking");
+	SENDLATER3debug("One cycle of checking");
 	
 		var accountManager = Components.classes["@mozilla.org/messenger/account-manager;1"].getService(Components.interfaces.nsIMsgAccountManager);
 	var fdrlocal = accountManager.localFoldersServer.rootFolder;
 	
 	folderstocheck = new Array();
 	folderstocheck.push(fdrlocal.findSubFolder("Drafts").URI);
-	SL8TRdump("SCHEDULE - " + fdrlocal.findSubFolder("Drafts").URI);
+	SENDLATER3dump("SCHEDULE - " + fdrlocal.findSubFolder("Drafts").URI);
 	fdrlocal.findSubFolder("Drafts").endFolderLoading();
 	fdrlocal.findSubFolder("Drafts").startFolderLoading();
 	fdrlocal.findSubFolder("Drafts").updateFolder(msgWindow);
@@ -338,21 +338,21 @@ function CheckForSendLater ()
 	var allaccounts = accountManager.accounts;
 
 	var acindex;
-	SL8TRdebug("Progress Animation SET");
-	if (sl8tr_displayprogressbar)
+	SENDLATER3debug("Progress Animation SET");
+	if (sendlater3_displayprogressbar)
 		document.getElementById("sendlater_deck").selectedIndex = 0;
 	
 	for (acindex = 0;acindex < allaccounts.Count();acindex++)
 	{
 		clearTimeout(animTimeout);
 		animTimeout = setTimeout("SwitchToStatus()",5000);
-		SL8TRdebug("Progress Animation RESET");
+		SENDLATER3debug("Progress Animation RESET");
 		var thisaccount = allaccounts.GetElementAt(acindex);
 		if (thisaccount)
 		{
 			thisaccount = thisaccount.QueryInterface(Components.interfaces.nsIMsgAccount);
 		
-			SL8TRdebug(thisaccount.incomingServer.type + " - Identities [" + thisaccount.identities.Count() + "]");
+			SENDLATER3debug(thisaccount.incomingServer.type + " - Identities [" + thisaccount.identities.Count() + "]");
 			switch (thisaccount.incomingServer.type) 
 			{
 				   case "pop3":
@@ -365,20 +365,20 @@ function CheckForSendLater ()
 									if (folderstocheck.indexOf(thisfolder.URI)<0)
 									{
 										folderstocheck.push (thisfolder.URI);
-										SL8TRdump("SCHEDULE - " + thisfolder.URI );
+										SENDLATER3dump("SCHEDULE - " + thisfolder.URI );
 										thisfolder.endFolderLoading();
 										thisfolder.startFolderLoading();
 										thisfolder.updateFolder(msgWindow);
 									}
 									else
 									{
-									   SL8TRdebug("Already scheduled - " + thisfolder.URI);
+									   SENDLATER3debug("Already scheduled - " + thisfolder.URI);
 									}
 								}
 							}
 							break;
 					default:
-							SL8TRdebug("Skipping this server type - " + thisaccount);
+							SENDLATER3debug("Skipping this server type - " + thisaccount);
 							break;
 
 				
@@ -389,7 +389,7 @@ function CheckForSendLater ()
 }
 function startMonitor()
 {
-SL8TRdebug("Starting monitor [for every " + checkTimeout + "ms]");
+SENDLATER3debug("Starting monitor [for every " + checkTimeout + "ms]");
 var mailSession = Components.classes["@mozilla.org/messenger/services/session;1"].getService(Components.interfaces.nsIMsgMailSession);
 mailSession.AddFolderListener(folderLoadListener,Components.interfaces.nsIFolderListener.event);
 keepChecking = setTimeout("CheckForSendLater();",2000);//checkTimeout+Math.ceil(Math.random()*3000)-1500);

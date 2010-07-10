@@ -1,5 +1,5 @@
 
-var sl8trcolumnHandler = {
+var sendlater3columnHandler = {
    getCellText: function(row, col) {
     var key = gDBView.getKeyAt(row);
     var hdr = gDBView.db.GetMsgHdrForKey(key);
@@ -60,13 +60,13 @@ function IsThisDraft(msgFolder)
 
 }
 
-function addSL8TRColumnHandler() {
+function addSENDLATER3ColumnHandler() {
 	
 
    
   if ( IsThisDraft(gDBView.viewFolder) )
   {	
-		if (sl8tr_prefservice.getBoolPref("extensions.sl8tr.showcolumn"))
+		if (sendlater3_prefservice.getBoolPref("extensions.sendlater3.showcolumn"))
 			{
 				document.getElementById("colXSendLaterAt").hidden = false;
 			}
@@ -74,7 +74,7 @@ function addSL8TRColumnHandler() {
 			{
 				document.getElementById("colXSendLaterAt").hidden = true;
 			}
-    gDBView.addColumnHandler("colXSendLaterAt",sl8trcolumnHandler);
+    gDBView.addColumnHandler("colXSendLaterAt",sendlater3columnHandler);
 	
   }
   else
@@ -90,12 +90,12 @@ function addSL8TRColumnHandler() {
 
 
 
-var sl8tr_HeaderDisplay = 
+var sendlater3_HeaderDisplay = 
 {
 dispHeader: function ()
 {
 
-	if (sl8tr_prefservice.getBoolPref("extensions.sl8tr.showheader"))
+	if (sendlater3_prefservice.getBoolPref("extensions.sendlater3.showheader"))
 	{	
 		if (IsThisDraft(gDBView.viewFolder))
 		{	
@@ -135,15 +135,15 @@ noop: function() { }
 
 }
 
-function sl8tr_HeaderView_SetupListener()
+function sendlater3_HeaderView_SetupListener()
 {
 
 		var listener = {};
-		listener.onStartHeaders	= sl8tr_HeaderDisplay.noop;
-		listener.onEndHeaders	= sl8tr_HeaderDisplay.dispHeader;
+		listener.onStartHeaders	= sendlater3_HeaderDisplay.noop;
+		listener.onEndHeaders	= sendlater3_HeaderDisplay.dispHeader;
 		gMessageListeners.push(listener);
-		window.document.getElementById('folderTree').addEventListener("select",addSL8TRColumnHandler,false);
+		window.document.getElementById('folderTree').addEventListener("select",addSENDLATER3ColumnHandler,false);
 
 }
 
-window.addEventListener("load",sl8tr_HeaderView_SetupListener,false);
+window.addEventListener("load",sendlater3_HeaderView_SetupListener,false);
