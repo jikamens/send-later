@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://sl8tr/locale/prefwindow.dtd">
+<prefwindow id="sl8trPreferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&prefwindow.title;">
+  <prefpane id="pane1" label="&pane1.title;">
+    <preferences>
+      <preference id="checktimepref" name="extensions.sl8tr.checktimepref" type="int"/>
+      <preference id="sl8tr_quickoption_label1" name="extensions.sl8tr.quickoptions.1.label" type="unichar"/>
+      <preference id="sl8tr_quickoption_label2" name="extensions.sl8tr.quickoptions.2.label" type="unichar"/>
+      <preference id="sl8tr_quickoption_label3" name="extensions.sl8tr.quickoptions.3.label" type="unichar"/>
+      <preference id="sl8tr_quickoption_value1" name="extensions.sl8tr.quickoptions.1.value" type="int"/>
+      <preference id="sl8tr_quickoption_value2" name="extensions.sl8tr.quickoptions.2.value" type="int"/>
+      <preference id="sl8tr_quickoption_value3" name="extensions.sl8tr.quickoptions.3.value" type="int"/>
+      <preference id="sl8tr_quickoption_showtb1" name="extensions.sl8tr.quickoptions.1.showintoolbar" type="bool"/>
+      <preference id="sl8tr_quickoption_showtb2" name="extensions.sl8tr.quickoptions.2.showintoolbar" type="bool"/>
+      <preference id="sl8tr_quickoption_showtb3" name="extensions.sl8tr.quickoptions.3.showintoolbar" type="bool"/>
+      <preference id="sl8tr_showheader" name="extensions.sl8tr.showheader" type="bool"/>
+      <preference id="sl8tr_showcolumn" name="extensions.sl8tr.showcolumn" type="bool"/>
+	  <preference id="sl8tr_showprogress" name="extensions.sl8tr.showprogress" type="bool"/>
+
+
+    </preferences>
+	<tabbox>
+	<tabs>
+	<tab label="&general.caption;"/>
+	<tab label="&quickoption1.caption;"/>
+	<tab label="&quickoption2.caption;"/>
+	<tab label="&quickoption3.caption;"/>
+	</tabs>
+	<tabpanels>
+	<tabpanel>
+	<vbox>
+    <hbox align="center" >
+        <label align="bottom" accesskey="&checktimepref.accesskey;" control="textintpref">&checktimepref.label;</label><textbox id="textintpref" preference="checktimepref"/><label >&checktimepref2.label;</label>
+    </hbox>
+	<separator label="-"/>
+	<hbox align="center" >
+		<checkbox id="showcolumnpref" preference="sl8tr_showcolumn" label="&showsendlatercolumn.caption;" />
+	</hbox>
+	<hbox align="center" >
+		<checkbox id="showheaderpref" preference="sl8tr_showheader" label="&showsendlaterheader.caption;" />
+	</hbox>
+	<hbox align="center" >
+		<checkbox id="showprogresspref" preference="sl8tr_showprogress" label="&showsendlaterprogress.caption;" />
+	</hbox>
+	</vbox>
+	</tabpanel>
+	<tabpanel>
+	<vbox>
+	<hbox align="center">
+    	<label align="bottom" control="quickoption_label1">&quickoptionname.label;</label><textbox id="quickoption_label1" preference="sl8tr_quickoption_label1"/>
+        <label align="bottom" control="quickoption_value1">&quickoptionvalue.label;</label><textbox id="quickoption_value1" preference="sl8tr_quickoption_value1"/>
+	</hbox>
+	<separator label="-"/>
+    <hbox align="center" >
+		<checkbox id="quickbutton_tb1" preference="sl8tr_quickoption_showtb1" label="&showtoolbarbutton.caption;" />
+	</hbox>
+	</vbox>
+	</tabpanel>
+	<tabpanel>
+	<vbox>
+	<hbox align="center">
+    	<label align="bottom" control="quickoption_label2">&quickoptionname.label;</label><textbox id="quickoption_label2" preference="sl8tr_quickoption_label2"/>
+        <label align="bottom" control="quickoption_value2">&quickoptionvalue.label;</label><textbox id="quickoption_value2" preference="sl8tr_quickoption_value2"/>
+	</hbox>
+	<separator label="-"/>
+    <hbox align="center" >
+		<checkbox id="quickbutton_tb2" preference="sl8tr_quickoption_showtb2" label="&showtoolbarbutton.caption;" />
+	</hbox>
+	</vbox>
+    </tabpanel>
+	<tabpanel>
+	<vbox>
+	<hbox align="center">
+    	<label align="bottom" control="quickoption_label3">&quickoptionname.label;</label><textbox id="quickoption_label3" preference="sl8tr_quickoption_label3"/>
+        <label align="bottom" control="quickoption_value3">&quickoptionvalue.label;</label><textbox id="quickoption_value3" preference="sl8tr_quickoption_value3"/>
+	</hbox>
+	<separator label="-"/>
+    <hbox align="center" >
+		<checkbox id="quickbutton_tb3" preference="sl8tr_quickoption_showtb3" label="&showtoolbarbutton.caption;" />
+	</hbox>
+	</vbox>
+
+    </tabpanel>
+	</tabpanels>
+	</tabbox>
+  </prefpane>
+</prefwindow>

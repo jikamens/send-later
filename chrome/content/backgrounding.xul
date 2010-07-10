@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<overlay id="sl8tr-backgrounding-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="backgrounding.js"/>
+  <statusbar id="status-bar"> 
+<stringbundleset id="strbundles">
+	<stringbundle id="sl8trbackgroundstrings" src="chrome://sl8tr/locale/background.properties"/>
+</stringbundleset>
+    <deck selectedIndex="1" id="sendlater_deck" insertafter="statusTextBox" insertbefore="unreadMessageCount" style="width:120px" >
+    <progressmeter id="sendlater_anim" mode="undetermined" />
+    <label id="sendlater_status" value="Send Later 1.2.0.0" style="width:100%;text-align:center;margin:4px" />
+    </deck>
+  </statusbar>
+  
+</overlay>

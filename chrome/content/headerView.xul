@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE window SYSTEM "chrome://sl8tr/locale/headerView.dtd">
+
+<overlay id="sl8tr-header-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<tree id="threadTree">
+  <treecols id="threadCols">
+    <splitter class="tree-splitter" />
+    <treecol id="colXSendLaterAt" persist="ordinal width"
+              currentView="unthreaded" flex="1"
+              label="&sl8trheader.label;" />
+  </treecols>
+</tree>
+
+  <vbox id="expandedHeaders">		
+    <mail-headerfield id="expandedx-send-later-atBox" label="&sl8trheader.label;:" >
+	</mail-headerfield>
+  </vbox>
+
+  <script type="text/javascript" src="chrome://messenger/content/dateFormat.js" />
+  <script type="text/javascript" src="chrome://sl8tr/content/headerView.js" />
+</overlay>

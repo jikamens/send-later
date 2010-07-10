@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<overlay id="sl8tr-composing-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="composing.js"/>
+
+  <commandset id="composeCommands">
+  <command id="cmd_sendLater" oncommand="CheckSendAt();"/>
+  </commandset>
+  <keyset id="tasksKeys">
+  <key oncommand="CheckSendAt()" id="key_sendLater"
+     keycode="VK_RETURN" observes="cmd_sendLater" modifiers="accel, shift"/>
+  </keyset>
+  
+</overlay>
