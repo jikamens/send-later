@@ -54,7 +54,6 @@ function CheckForXSendLater()
 						var accountManager = Components.classes["@mozilla.org/messenger/account-manager;1"].getService(Components.interfaces.nsIMsgAccountManager);
 						var messenger = Components.classes["@mozilla.org/messenger;1"].getService(Components.interfaces.nsIMessenger);
 						var fdrlocal = accountManager.localFoldersServer.rootFolder;
-						var fdrunsent = fdrlocal.FindSubFolder("Unsent%20Messages");
 						var content = "";
 						var MsgService = messenger.messageServiceFromURI(messageURI);
 						var messageHDR = messenger.msgHdrFromURI(messageURI);

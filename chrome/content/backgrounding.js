@@ -1,5 +1,7 @@
 var keepChecking;
 
+Components.utils.import("resource:///modules/gloda/log4moz.js");
+
 var checkTimeout;
 var sl8tr_displayprogressbar;
 
@@ -26,39 +28,25 @@ msgWindow = msgWindow.QueryInterface(Components.interfaces.nsIMsgWindow);
 
 var DisplayMessages = new Array();
 
-var logMngr = null;
 var logger = null;
 
 function SL8TRdump(msg)
 {
-  if (logger)
-  {
-     logger.log(3,msg);
-  }
+  logger.info(msg);
 }
 
 function SL8TRdebug(msg)
 {
-  if (logger)
-  {
-     logger.log(5,msg);
-  }
+  logger.debug(msg);
 }
 
 function initDebug()
 {
 
-	try 
-	{
-	logMngr = Components.classes["@mozmonkey.com/debuglogger/manager;1"]
-		.getService(Components.interfaces.nsIDebugLoggerManager);
-		logger = logMngr.registerLogger("SL8TR@UnsignedByte.com");
-	}
-	catch (e)
-	{
-	  logger = null;
-	}		
-
+	logger = Log4Moz.getConfiguredLogger("extensions.sl8tr",
+					     Log4Moz.Level.Debug,
+					     Log4Moz.Level.Info,
+					     Log4Moz.Level.Debug);
 }
 
 initDebug();
@@ -180,8 +168,9 @@ function SwitchToStatus()
 function CheckThisURI(messageURI)
 {
 
-	var fdrlocal = accountManager.localFoldersServer.rootFolder;
-	var fdrunsent = fdrlocal.FindSubFolder("Unsent%20Messages");
+	var msgSendLater = Components.classes["@mozilla.org/messengercompose/sendlater;1"]
+                             .getService(Components.interfaces.nsIMsgSendLater);
+	var fdrunsent = msgSendLater.getUnsentMessagesFolder(null);
 	var content = "";
 	var MsgService = messenger.messageServiceFromURI(messageURI);
 	var messageHDR = messenger.msgHdrFromURI(messageURI);
@@ -196,13 +185,7 @@ function CheckThisURI(messageURI)
 	SL8TRdebug("Checking message : " + messageURI + "\n");
 	
 	ScriptInputStream .init(consumer);
-	try
-	{
-		MsgService .streamMessage(messageURI, MsgStream, msgWindow, null, false,null);
-	}
-	catch (ex)
-	{
-	}
+	MsgService .streamMessage(messageURI, MsgStream, msgWindow, null, false,null);
 //	ScriptInputStream .available();
 	var headerready=false;
 	var xsendlaterpresent=false;
@@ -234,30 +217,53 @@ function CheckThisURI(messageURI)
 		var now = new Date();
 		if (now > sendattime)
 		{
-			content = content.replace(/^Date:.*$/m,"Date: "+ FormatDateTime(new Date(),true)+"");
-			content = content.replace(/(\n|\r|\r\n)^X-Send-Later-At:.*$/m,"");
+			content = content.replace(/^Date:.*(\r?\n)$/m,"Date: "+ FormatDateTime(new Date(),true)+"$1");
+			content = content.replace(/\nX-Send-Later-At:.*\r?\n/,"\n");
+
+			// There is a bug in Thunderbird (3.1, at least) where
+			// when a message is being sent from the user's Outbox
+			// and then a copy is being uploaded into an IMAP
+			// server's Sent Items folder, Thunderbird doesn't
+			// convert bare \n to \r\n before trying to upload the
+			// message copy.  This is a violation of the IMAP spec,
+			// and some IMAP servers, e.g., Cyrus IMAPd, reject the
+			// message because of the bare newlines.  So we have to
+			// make sure that the message has only \r\n line
+			// terminators in it before we put it into the Outbox.
+			// It might *already* have \r\n line terminators in it,
+			// so first we replace \r\n with \n, and then we
+			// replace \n with \r\n.  The reason why we prepend a
+			// "From - <date>" line to the message before doing
+			// this is because if we don't, then CopyFileMessage
+			// will prepend a couple of useless X-Mozilla-* headers
+			// to the top of the message, and the headers it adds
+			// will end with bare \n's on them, so we're back to
+			// the original problem.
+			content = "From - " + Date().toString() + "\r\n"
+				+ content;
+			content = content.replace(/\r\n/g,"\n").
+				replace(/\n/g,"\r\n");
+
 			var dirService = Components.classes["@mozilla.org/file/directory_service;1"].getService(Components.interfaces.nsIProperties);
 			var tempDir = dirService.get("TmpD", Components.interfaces.nsIFile);
-			var tempFileNativePath = tempDir.path + "\\" + "tempMsg" + messageHDR.messageId + ".eml";
 			var sfile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-			sfile.initWithPath(tempFileNativePath);
+			sfile.initWithPath(tempDir.path);
+			sfile.appendRelativePath("tempMsg" + messageHDR.messageId + ".eml");
+			SL8TRdump("Saving message to " + sfile.path);
 			if (sfile.exists()) sfile.remove(true);
 			sfile.create(sfile.NORMAL_FILE_TYPE, 0600);
 			var stream = Components.classes['@mozilla.org/network/file-output-stream;1'].createInstance(Components.interfaces.nsIFileOutputStream);
 			stream.init(sfile, 2, 0x200, false); // open as "write only"
 			stream.write(content, content.length);
 			stream.close();
-			var fileSpc = Components.classes["@mozilla.org/filespec;1"].createInstance();
-			fileSpc = fileSpc.QueryInterface( Components.interfaces.nsIFileSpec);
-			fileSpc.nativePath = tempFileNativePath;
 			var copyService = Components.classes["@mozilla.org/messenger/messagecopyservice;1"].createInstance();
 			copyService = copyService.QueryInterface( Components.interfaces.nsIMsgCopyService);
-			copyService.CopyFileMessage(fileSpc, fdrunsent, null, false, 0, copyServiceListener,msgWindow);
+			copyService.CopyFileMessage(sfile, fdrunsent, null, false, 0, "", copyServiceListener,msgWindow);
 			if (sfile.exists()) sfile.remove(true);
-			var dellist = Components.classes["@mozilla.org/supports-array;1"].createInstance(Components.interfaces.nsISupportsArray);
-			dellist.AppendElement(messageHDR);
+			var dellist = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
+			dellist.appendElement(messageHDR, false);
 			messageHDR.folder.deleteMessages(dellist,msgWindow,true,false,null,false);
-			messenger.sendUnsentMessages(null,msgWindow);
+			msgSendLater.sendUnsentMessages(null);
 			SL8TRdump ("Sending Message.");
 			clearTimeout(animTimeout);
 			animTimeout = setTimeout("SwitchToStatus()",3000);
@@ -289,18 +295,10 @@ var folderLoadListener =
                     SL8TRdump("FOLDER MONITORED - " + folder.URI + "\n");
                     //folderstocheck.splice(folderstocheck.indexOf(folder.URI),1);
                     var thisfolder = folder.QueryInterface(Components.interfaces.nsIMsgFolder);
-                    var messageenumerator=null;
-                    try
-                    {
-                        messageenumerator = thisfolder.getMessages(msgWindow);
-                    }
-                    catch (e)
-                    {
-                        //SL8TRdump("\nEXCEPTION:" + thisfolder.URI + "\n"); SL8TRdump(e);
-                    }
+                    var messageenumerator = thisfolder.messages;
                     if ( messageenumerator )
                     {
-                        //        SL8TRdump ("Got Enumerator\n");
+                        SL8TRdump ("Got Enumerator\n");
                         while ( messageenumerator.hasMoreElements() )
                         {
                             var messageDBHDR = messageenumerator.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
@@ -308,6 +306,10 @@ var folderLoadListener =
                             setTimeout("CheckThisURI('" + messageURI + "');",100);
                         }
                     }
+		    else
+		    {
+		      SL8TRdump("No Enumerator\n");
+		    }
                 }
             }
 		} 
@@ -326,11 +328,11 @@ function CheckForSendLater ()
 	var fdrlocal = accountManager.localFoldersServer.rootFolder;
 	
 	folderstocheck = new Array();
-	folderstocheck.push(fdrlocal.FindSubFolder("Drafts").URI);
-	SL8TRdump("SCHEDULE - " + fdrlocal.FindSubFolder("Drafts").URI);
-	fdrlocal.FindSubFolder("Drafts").endFolderLoading();
-	fdrlocal.FindSubFolder("Drafts").startFolderLoading();
-	fdrlocal.FindSubFolder("Drafts").updateFolder(msgWindow);
+	folderstocheck.push(fdrlocal.findSubFolder("Drafts").URI);
+	SL8TRdump("SCHEDULE - " + fdrlocal.findSubFolder("Drafts").URI);
+	fdrlocal.findSubFolder("Drafts").endFolderLoading();
+	fdrlocal.findSubFolder("Drafts").startFolderLoading();
+	fdrlocal.findSubFolder("Drafts").updateFolder(msgWindow);
 	
 	
 	var allaccounts = accountManager.accounts;

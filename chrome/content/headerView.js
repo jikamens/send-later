@@ -44,7 +44,7 @@ function IsThisDraft(msgFolder)
 	var thisisdraft = false;
 	
 	var fdrlocal = accountManager.localFoldersServer.rootFolder;
-	if (fdrlocal.FindSubFolder("Drafts").URI==msgFolder.URI) thisisdraft = true;
+	if (fdrlocal.findSubFolder("Drafts").URI==msgFolder.URI) thisisdraft = true;
 	
 
 	var identities = accountManager.GetIdentitiesForServer(msgFolder.server);

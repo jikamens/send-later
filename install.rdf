@@ -4,17 +4,18 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>sl8tr@unsignedbyte.com</em:id>
     <em:name>Send Later</em:name>
-    <em:version>1.2.0.0</em:version>
+    <em:version>3.1</em:version>
     <em:creator>Karthik S</em:creator>
-    <em:description>True 'Send Later' functionality to schedule the time for sending an email</em:description>
+    <em:developer>Jonathan Kamens</em:developer>
+    <em:description>True 'Send Later' functionality to schedule the time for sending an email.  Originally written by Karthik S; port to Thunderbird 3.1+ created and maintained by Jonathan Kamens.</em:description>
     <em:homepageURL>http://www.unsignedbyte.com/sl8tr.html</em:homepageURL>
     <em:optionsURL>chrome://sl8tr/content/options.xul</em:optionsURL>
     <em:iconURL>chrome://sl8tr/content/sl8tricon.png</em:iconURL>
 	<em:targetApplication>
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id> <!-- thunderbird -->
-        <em:minVersion>1.5</em:minVersion>
-        <em:maxVersion>2.0.0.*</em:maxVersion>
+        <em:minVersion>3.1</em:minVersion>
+        <em:maxVersion>3.1.*</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>

@@ -13,3 +13,6 @@ pref("extensions.sl8tr.showprogress",true);
 pref("extensions.sl8tr.quickoptions.1.showintoolbar",false);
 pref("extensions.sl8tr.quickoptions.2.showintoolbar",false);
 pref("extensions.sl8tr.quickoptions.3.showintoolbar",false);
+// "Info" for terse logging, "Debug" for verbose logging
+pref("extensions.sl8tr.logging.console","Fatal");
+pref("extensions.sl8tr.logging.dump","Fatal");
