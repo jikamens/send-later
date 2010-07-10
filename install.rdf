@@ -3,7 +3,7 @@
  xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>sendlater3@kamens.us</em:id>
-    <em:name>Send Later</em:name>
+    <em:name>Send Later 3</em:name>
     <em:version>3.1</em:version>
     <em:creator>Karthik S</em:creator>
     <em:developer>Jonathan Kamens</em:developer>
