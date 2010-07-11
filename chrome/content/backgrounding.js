@@ -256,6 +256,17 @@ function CheckThisURI(messageURI)
 			stream.init(sfile, 2, 0x200, false); // open as "write only"
 			stream.write(content, content.length);
 			stream.close();
+			// If we try (Thunderbird 3.1 on Windows) to use the
+			// same sfile object created and written to above in
+			// CopyFileMessage, it fails and copies nothing but a
+			// blank line into the unsent messages folder. Perhaps
+			// the file object doesn't like being used for both
+			// write and read or something.  In any case, just
+			// recreating the file object is an acceptable
+			// workaround.
+			sfile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+			sfile.initWithPath(tempDir.path);
+			sfile.appendRelativePath("tempMsg" + messageHDR.messageId + ".eml");
 			var copyService = Components.classes["@mozilla.org/messenger/messagecopyservice;1"].createInstance();
 			copyService = copyService.QueryInterface( Components.interfaces.nsIMsgCopyService);
 			copyService.CopyFileMessage(sfile, fdrunsent, null, false, 0, "", copyServiceListener,msgWindow);
@@ -332,9 +343,19 @@ function CheckForSendLater ()
 	SENDLATER3dump("SCHEDULE - " + fdrlocal.findSubFolder("Drafts").URI);
 	fdrlocal.findSubFolder("Drafts").endFolderLoading();
 	fdrlocal.findSubFolder("Drafts").startFolderLoading();
-	fdrlocal.findSubFolder("Drafts").updateFolder(msgWindow);
-	
-	
+	try {
+	    // Documentation for nsiMsgFolder says, "Note: Even if the
+	    // folder doesn't currently exist, a nsIMsgFolder may be
+	    // returned." When that happens, the following line
+	    // generates an error. I can't find any way to check
+	    // whether the folder currently exists before calling
+	    // this, so I'm just discarding the error.
+	    fdrlocal.findSubFolder("Drafts").updateFolder(msgWindow);
+	}
+	catch (e) {
+	    SENDLATER3debug("updateFolder on local Drafts folder failed");
+	}
+
 	var allaccounts = accountManager.accounts;
 
 	var acindex;
