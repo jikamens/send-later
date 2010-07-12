@@ -217,8 +217,22 @@ function CheckThisURI(messageURI)
 		var now = new Date();
 		if (now > sendattime)
 		{
-			content = content.replace(/^Date:.*(\r?\n)$/m,"Date: "+ FormatDateTime(new Date(),true)+"$1");
+			// Simplify search & replace in header by putting a
+			// blank line at the beginning of the message, so that
+			// we can match header lines starting with \n, i.e., we
+			// can assume that there's always a newline immediately
+			// before any header line. This prevents false
+			// negatives when the header line we're looking for
+			// happens to be the first header line in the
+			// message. We'll remove the extra newline when we're
+			// done mucking with the headers.
+			content = "\n" + content;
+
+			content = content.replace(/(\nDate:).*(\r?\n)/,"$1 "+FormatDateTime(new Date(),true)+"$2");
 			content = content.replace(/\nX-Send-Later-At:.*\r?\n/,"\n");
+
+			// Remove extra newline -- see comment above.
+			content = content.slice(1);
 
 			// There is a bug in Thunderbird (3.1, at least) where
 			// when a message is being sent from the user's Outbox
