@@ -253,8 +253,10 @@ function CheckThisURI(messageURI)
 			// to the top of the message, and the headers it adds
 			// will end with bare \n's on them, so we're back to
 			// the original problem.
-			content = "From - " + Date().toString() + "\r\n"
-				+ content;
+			if (content.slice(0,5) != "From ") {
+			    content = "From - " + Date().toString() + "\r\n"
+				    + content;
+			}
 			content = content.replace(/\r\n/g,"\n").
 				replace(/\n/g,"\r\n");
 
