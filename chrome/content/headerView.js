@@ -38,6 +38,9 @@ var sendlater3columnHandler = {
 
 function IsThisDraft(msgFolder)
 {
+	if (msgFolder == null) {
+	    return false;
+	}
 
 	var accountManager = Components.classes["@mozilla.org/messenger/account-manager;1"].getService(Components.interfaces.nsIMsgAccountManager);
 	

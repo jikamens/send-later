@@ -1,29 +1,21 @@
+Components.utils.import("resource:///modules/gloda/log4moz.js");
+
 var composelogMngr = null;
 var composelogger = null;
+var sComposeMsgsBundle = document.getElementById("bundle_composeMsgs");
 
 function CSENDLATER3dump(msg)
 {
-  if (composelogger)
-  {
-     composelogger.log(3,msg);
-  }
+  composelogger.info(msg);
 }
 
 
 function CinitDebug()
 {
-
-	try 
-	{
-	composelogMngr = Components.classes["@mozmonkey.com/debuglogger/manager;1"]
-		.getService(Components.interfaces.nsIDebugLoggerManager);
-		composelogger = composelogMngr.registerLogger("Compose.SENDLATER3@UnsignedByte.com");
-	}
-	catch (e)
-	{
-	  composelogger = null;
-	}		
-
+	composelogger = Log4Moz.getConfiguredLogger("extensions.sendlater3",
+					     Log4Moz.Level.Debug,
+					     Log4Moz.Level.Info,
+					     Log4Moz.Level.Debug);
 }
 
 CinitDebug();
@@ -156,33 +148,43 @@ var sMonths= ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov",
 return s;
 }
 
-function MyGenericSendMessage( msgType , sendat)
+// Copied from mail/components/compose/content/MsgComposeCommands.js
+// in Thunderbird 3.1 source. Unfortunately, I can't find a better way
+// than this to interpose Send Later into the message send flow.
+function Sendlater3GenericSendMessage( msgType, sendat )
 {
-//  dump("GenericSendMessage from XUL\n");
-
-//  dump("Identity = " + getCurrentIdentity() + "\n");
-
   if (gMsgCompose != null)
   {
     var msgCompFields = gMsgCompose.compFields;
     if (msgCompFields)
     {
-    
       Recipients2CompFields(msgCompFields);
-      
+
+      // BEGIN SENDLATER3 ADDED
       var head = "X-Send-Later-At: " + FormatDateTime(sendat,true) + "\r\n";
       msgCompFields.otherRandomHeaders += head;
-      
-   			
+      // END SENDLATER3 ADDED
+
       var subject = GetMsgSubjectElement().value;
       msgCompFields.subject = subject;
       Attachments2CompFields(msgCompFields);
 
-      if (msgType == nsIMsgCompDeliverMode.Now || msgType == nsIMsgCompDeliverMode.Later || msgType == nsIMsgCompDeliverMode.SaveAsDraft)
+      if (msgType == nsIMsgCompDeliverMode.Now ||
+          msgType == nsIMsgCompDeliverMode.Later ||
+          msgType == nsIMsgCompDeliverMode.Background
+	  // BEGIN SENDLATER3 ADDED
+	  // Note that when this function is called, msgType will
+	  // always be SaveAsDraft, but I'm just adding this condition
+	  // here rather than getting rid of the conditional to keep
+	  // the number of changes to the copied code as small as
+	  // possible, to make it easier to merge new versions of that
+	  // code in later.
+	  || msgType == nsIMsgCompDeliverMode.SaveAsDraft
+	  // END SENDLATER3 ADDED
+	  )
       {
-      
         //Do we need to check the spelling?
-        if (sendlater3ComposePrefs.getBoolPref("mail.SpellCheckBeforeSend"))
+        if (getPref("mail.SpellCheckBeforeSend"))
         {
           // We disable spellcheck for the following -subject line, attachment pane, identity and addressing widget
           // therefore we need to explicitly focus on the mail body when we have to do a spellcheck.
@@ -197,27 +199,55 @@ function MyGenericSendMessage( msgType , sendat)
             return;
         }
 
-        // Check if we have a subject, else ask user for confirmation
+        // Strip trailing spaces and long consecutive WSP sequences from the
+        // subject line to prevent getting only WSP chars on a folded line.
+        var fixedSubject = subject.replace(/\s{74,}/g, "    ")
+                                  .replace(/\s*$/, "");
+        if (fixedSubject != subject)
+        {
+          subject = fixedSubject;
+          msgCompFields.subject = fixedSubject;
+          GetMsgSubjectElement().value = fixedSubject;
+        }
+
+        // Remind the person if there isn't a subject
         if (subject == "")
         {
-          if (gPromptService)
+          var bundle = document.getElementById("bundle_composeMsgs");
+          if (gPromptService.confirmEx(
+                window,
+                bundle.getString("subjectEmptyTitle"),
+                bundle.getString("subjectEmptyMessage"),
+                (gPromptService.BUTTON_TITLE_IS_STRING * gPromptService.BUTTON_POS_0) +
+                (gPromptService.BUTTON_TITLE_IS_STRING * gPromptService.BUTTON_POS_1),
+                bundle.getString("sendWithEmptySubjectButton"),
+                bundle.getString("cancelSendingButton"),
+                null, null, {value:0}) == 1)
           {
-            var result = {value:sComposeMsgsBundle.getString("defaultSubject")};
-            if (gPromptService.prompt(
-                    window,
-                    sComposeMsgsBundle.getString("sendMsgTitle"),
-                    sComposeMsgsBundle.getString("subjectDlogMessage"),
-                    result,
-                    null,
-                    {value:0}))
-            {
-              msgCompFields.subject = result.value;
-              var subjectInputElem = GetMsgSubjectElement();
-              subjectInputElem.value = result.value;
-            }
-            else
-              return;
+            GetMsgSubjectElement().focus();
+            return;
           }
+        }
+
+        // Alert the user if
+        //  - the button to remind about attachments was clicked, or
+        //  - the aggressive pref is set and the notification was not dismissed
+        // and the message (still) contains attachment keywords.
+        if ((gRemindLater || (getPref("mail.compose.attachment_reminder_aggressive") &&
+             document.getElementById("attachmentNotificationBox").currentNotification)) &&
+            ShouldShowAttachmentNotification(false)) {
+          var bundle = document.getElementById("bundle_composeMsgs");
+          var flags = gPromptService.BUTTON_POS_0 * gPromptService.BUTTON_TITLE_IS_STRING +
+                      gPromptService.BUTTON_POS_1 * gPromptService.BUTTON_TITLE_IS_STRING;
+          var hadForgotten = gPromptService.confirmEx(window,
+                               bundle.getString("attachmentReminderTitle"),
+                               bundle.getString("attachmentReminderMsg"),
+                               flags,
+                               bundle.getString("attachmentReminderFalseAlarm"),
+                               bundle.getString("attachmentReminderYesIForgot"),
+                               null, null, {value:0});
+          if (hadForgotten)
+            return;
         }
 
         // check if the user tries to send a message to a newsgroup through a mail account
@@ -232,24 +262,30 @@ function MyGenericSendMessage( msgType , sendat)
 
         if (servertype != "nntp" && msgCompFields.newsgroups != "")
         {
+	  // SENDLATER3 CHANGED: "let" -> "var"
+          var kDontAskAgainPref = "mail.compose.dontWarnMail2Newsgroup";
           // default to ask user if the pref is not set
-          var dontAskAgain = sendlater3ComposePrefs.getBoolPref("mail.compose.dontWarnMail2Newsgroup");
-
+          var dontAskAgain = getPref(kDontAskAgainPref);
           if (!dontAskAgain)
           {
             var checkbox = {value:false};
+            var bundle = document.getElementById("bundle_composeMsgs");
             var okToProceed = gPromptService.confirmCheck(
                                   window,
-                                  sComposeMsgsBundle.getString("sendMsgTitle"),
-                                  sComposeMsgsBundle.getString("recipientDlogMessage"),
-                                  sComposeMsgsBundle.getString("CheckMsg"),
+                                  bundle.getString("noNewsgroupSupportTitle"),
+                                  bundle.getString("recipientDlogMessage"),
+                                  bundle.getString("CheckMsg"),
                                   checkbox);
 
             if (!okToProceed)
               return;
 
-            if (checkbox.value)
-              sendlater3ComposePrefs.setBoolPref(kDontAskAgainPref, true);
+            if (checkbox.value) {
+              var branch = Components.classes["@mozilla.org/preferences-service;1"]
+                                     .getService(Components.interfaces.nsIPrefBranch);
+
+              branch.setBoolPref(kDontAskAgainPref, true);
+            }
           }
 
           // remove newsgroups to prevent news_p to be set
@@ -282,7 +318,7 @@ function MyGenericSendMessage( msgType , sendat)
         }
 
         // we will remember the users "send format" decision
-        // in the address collector code (see nsAbAddressCollecter::CollectAddress())
+        // in the address collector code (see nsAbAddressCollector::CollectAddress())
         // by using msgCompFields.forcePlainText and msgCompFields.useMultipartAlternative
         // to determine the nsIAbPreferMailFormat (unknown, plaintext, or html)
         // if the user sends both, we remember html.
@@ -308,40 +344,34 @@ function MyGenericSendMessage( msgType , sendat)
       var observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
       observerService.notifyObservers(window, "mail:composeOnSend", null);
 
+      var originalCharset = gMsgCompose.compFields.characterSet;
       // Check if the headers of composing mail can be converted to a mail charset.
-      if (msgType == nsIMsgCompDeliverMode.Now || 
+      if (msgType == nsIMsgCompDeliverMode.Now ||
         msgType == nsIMsgCompDeliverMode.Later ||
-        msgType == nsIMsgCompDeliverMode.Save || 
-        msgType == nsIMsgCompDeliverMode.SaveAsDraft || 
-        msgType == nsIMsgCompDeliverMode.AutoSaveAsDraft || 
-        msgType == nsIMsgCompDeliverMode.SaveAsTemplate) 
+        msgType == nsIMsgCompDeliverMode.Background ||
+        msgType == nsIMsgCompDeliverMode.Save ||
+        msgType == nsIMsgCompDeliverMode.SaveAsDraft ||
+        msgType == nsIMsgCompDeliverMode.AutoSaveAsDraft ||
+        msgType == nsIMsgCompDeliverMode.SaveAsTemplate)
       {
         var fallbackCharset = new Object;
-        if (gPromptService && 
-            !gMsgCompose.checkCharsetConversion(getCurrentIdentity(), fallbackCharset)) 
+        // Check encoding, switch to UTF-8 if the default encoding doesn't fit
+        // and disable_fallback_to_utf8 isn't set for this encoding.
+        if (!gMsgCompose.checkCharsetConversion(getCurrentIdentity(), fallbackCharset))
         {
-          var dlgTitle = sComposeMsgsBundle.getString("initErrorDlogTitle");
-          var dlgText = sComposeMsgsBundle.getString("12553");  // NS_ERROR_MSG_MULTILINGUAL_SEND
-          var result3 = gPromptService.confirmEx(window, dlgTitle, dlgText,
-              (gPromptService.BUTTON_TITLE_IS_STRING * gPromptService.BUTTON_POS_0) +
-              (gPromptService.BUTTON_TITLE_CANCEL * gPromptService.BUTTON_POS_1) +
-              (gPromptService.BUTTON_TITLE_IS_STRING * gPromptService.BUTTON_POS_2),
-              sComposeMsgsBundle.getString('sendInUTF8'), 
-              null,
-              sComposeMsgsBundle.getString('sendAnyway'), null, {value:0}); 
-          switch(result3)
+          var disableFallback = false;
+          try
           {
-            case 0: 
-              fallbackCharset.value = "UTF-8";
-              break;
-            case 1:  // cancel
-              return;
-            case 2:  // send anyway
-              msgCompFields.needToCheckCharset = false;
-              break;
+            disableFallback = getPref("mailnews.disable_fallback_to_utf8." + originalCharset);
           }
+          catch (e) {}
+          if (disableFallback)
+            msgCompFields.needToCheckCharset = false;
+          else
+            fallbackCharset.value = "UTF-8";
         }
-        if (fallbackCharset && 
+
+        if (fallbackCharset &&
             fallbackCharset.value && fallbackCharset.value != "")
           gMsgCompose.SetDocumentCharset(fallbackCharset.value);
       }
@@ -349,9 +379,14 @@ function MyGenericSendMessage( msgType , sendat)
 
         // just before we try to send the message, fire off the compose-send-message event for listeners
         // such as smime so they can do any pre-security work such as fetching certificates before sending
-        var event = document.createEvent('Events');
+        var event = document.createEvent('UIEvents');
         event.initEvent('compose-send-message', false, true);
-        document.getElementById("msgcomposeWindow").dispatchEvent(event);
+        var msgcomposeWindow = document.getElementById("msgcomposeWindow");
+        msgcomposeWindow.setAttribute("msgtype", msgType);
+        msgcomposeWindow.dispatchEvent(event);
+        if (event.getPreventDefault())
+          throw Components.results.NS_ERROR_ABORT;
+
         gAutoSaving = (msgType == nsIMsgCompDeliverMode.AutoSaveAsDraft);
         // disable the ui if we're not auto-saving
         if (!gAutoSaving)
@@ -363,7 +398,7 @@ function MyGenericSendMessage( msgType , sendat)
         // if we're auto saving, mark the body as not changed here, and not
         // when the save is done, because the user might change it between now
         // and when the save is done.
-        else 
+        else
           SetContentAndBodyAsUnmodified();
 
         var progress = Components.classes["@mozilla.org/messenger/progress;1"].createInstance(Components.interfaces.nsIMsgProgress);
@@ -372,10 +407,9 @@ function MyGenericSendMessage( msgType , sendat)
           progress.registerListener(progressListener);
           gSendOrSaveOperationInProgress = true;
         }
-        //msgWindow.domWindow = window;
-        //msgWindow.rootDocShell.allowAuth = true; Dont know why ?
-		
-		gMsgCompose.SendMsg(msgType, getCurrentIdentity(), currentAccountKey, msgWindow, progress);
+        msgWindow.domWindow = window;
+        msgWindow.rootDocShell.allowAuth = true;
+        gMsgCompose.SendMsg(msgType, getCurrentIdentity(), currentAccountKey, msgWindow, progress);
       }
       catch (ex) {
         dump("failed to SendMsg: " + ex + "\n");
@@ -383,6 +417,8 @@ function MyGenericSendMessage( msgType , sendat)
         enableEditableFields();
         updateComposeItems();
       }
+      if (gMsgCompose && originalCharset != gMsgCompose.compFields.characterSet)
+        SetDocumentCharacterSet(gMsgCompose.compFields.characterSet);
     }
   }
   else
@@ -399,7 +435,7 @@ function ReallySendAt(sendatstring)
 var sendat = new Date(sendatstring);
 
 gCloseWindowAfterSave = true;
-MyGenericSendMessage(nsIMsgCompDeliverMode.SaveAsDraft,sendat);
+Sendlater3GenericSendMessage(nsIMsgCompDeliverMode.SaveAsDraft,sendat);
 defaultSaveOperation = "draft";
 
 }
