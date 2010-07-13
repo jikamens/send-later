@@ -288,8 +288,13 @@ function CheckThisURI(messageURI)
 			var dellist = Components.classes["@mozilla.org/array;1"].createInstance(Components.interfaces.nsIMutableArray);
 			dellist.appendElement(messageHDR, false);
 			messageHDR.folder.deleteMessages(dellist,msgWindow,true,false,null,false);
-			msgSendLater.sendUnsentMessages(null);
-			SENDLATER3dump ("Sending Message.");
+			if (sendlater3_prefservice.getBoolPref("extensions.sendlater3.sendunsentmessages")) {
+			    msgSendLater.sendUnsentMessages(null);
+			    SENDLATER3dump ("Sending Message.");
+			}
+			else {
+			    SENDLATER3dump("Message deposited in Outbox.");
+			}
 			clearTimeout(animTimeout);
 			animTimeout = setTimeout("SwitchToStatus()",3000);
 		}

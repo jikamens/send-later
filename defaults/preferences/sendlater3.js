@@ -16,3 +16,4 @@ pref("extensions.sendlater3.quickoptions.3.showintoolbar",false);
 // "Info" for terse logging, "Debug" for verbose logging
 pref("extensions.sendlater3.logging.console","Fatal");
 pref("extensions.sendlater3.logging.dump","Fatal");
+pref("extensions.sendlater3.sendunsentmessages",true);
