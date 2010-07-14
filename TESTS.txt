@@ -8,8 +8,9 @@ Send later with Ctrl-Shift-Enter.
 Send later with File > Send Later.
 Popup: Change hour - summary updates
 Popup: Change minute - summary updates
+Popup: Change year - months and summary change.
 Popup: Change month - summary and days change.
-Popup: Set month to Feb and change year - summary and days change.
+Popup: February days are correct leap year vs. not
 Popup: Change day - summary changes
 Popup: Send at specified time
 Popup: Send in 15 minutes
@@ -20,8 +21,10 @@ Popup: Cancel
 Popup: Empty subject prompt send anyway works
 Popup: Empty subject cancel works
 Add toolbar works and dropdowns are populated
+Toolbar: Initial values populated with current date & time
+Toolbar: Change year - months change
 Toolbar: Change month - days change
-Toolbar: Set month to Feb and change year - days change
+Toolbar: February days are correct leap year vs. not
 Toolbar: Send at specified time
 Toolbar: Send in 15 minutes
 toolbar: Send in 30 minutes

@@ -70,7 +70,7 @@ function addSENDLATER3ColumnHandler() {
    
   if ( IsThisDraft(gDBView.viewFolder) )
   {	
-		if (sendlater3_prefservice.getBoolPref("extensions.sendlater3.showcolumn"))
+		if (Sendlater3Util.PrefService.getBoolPref("extensions.sendlater3.showcolumn"))
 			{
 				document.getElementById("colXSendLaterAt").hidden = false;
 			}
@@ -98,9 +98,11 @@ var sendlater3_HeaderDisplay =
 {
 dispHeader: function ()
 {
-
-	if (sendlater3_prefservice.getBoolPref("extensions.sendlater3.showheader"))
+	Sendlater3Util.debug("headerView.js: entering dispHeader");
+	var hidden = true;
+	if (Sendlater3Util.PrefService.getBoolPref("extensions.sendlater3.showheader"))
 	{	
+		Sendlater3Util.debug("headerView.js: dispHeader: showheader is true");
 		if (IsThisDraft(gDBView.viewFolder))
 		{	
 			var msghdr = gDBView.hdrForFirstSelectedMessage;
@@ -109,31 +111,31 @@ dispHeader: function ()
 				if (msghdr.getStringProperty("x-send-later-at")!="")
 				{
 					var xsendlater = new Date(msghdr.getStringProperty("x-send-later-at"));
-					
 					document.getElementById("expandedx-send-later-atBox").headerValue = xsendlater.toLocaleString();
-					document.getElementById("expandedx-send-later-atBox").hidden = false;
+					hidden = false;
+					Sendlater3Util.debug("headerView.js: dispHeader: showing header");
 				}	
 				else
 				{
-					document.getElementById("expandedx-send-later-atBox").headerValue = "Not scheduled";
-					document.getElementById("expandedx-send-later-atBox").hidden = true;
+					Sendlater3Util.debug("headerView.js: dispHeader: hiding header (empty)");
 				}
 		
 			}
 			else
 			{
-				document.getElementById("expandedx-send-later-atBox").hidden = true;
+				Sendlater3Util.debug("headerView.js: dispHeader: hiding header (null msghdr)");
 			}
 		}
 		else
 		{
-			document.getElementById("expandedx-send-later-atBox").hidden = true;
+			Sendlater3Util.debug("headerView.js: dispHeader: hiding header (not draft)");
 		}
 	}
 	else
 	{
-		document.getElementById("expandedx-send-later-atBox").hidden = true;
+		Sendlater3Util.debug("headerView.js: dispHeader: showheader is false");
 	}
+	document.getElementById("expandedx-send-later-atRow").hidden = hidden;
 },
 noop: function() { }
 

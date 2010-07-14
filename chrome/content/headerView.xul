@@ -4,19 +4,23 @@
 <overlay id="sendlater3-header-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-<tree id="threadTree">
-  <treecols id="threadCols">
-    <splitter class="tree-splitter" />
-    <treecol id="colXSendLaterAt" persist="ordinal width"
-              currentView="unthreaded" flex="1"
-              label="&sendlater3header.label;" />
-  </treecols>
-</tree>
+  <tree id="threadTree">
+    <treecols id="threadCols">
+      <splitter class="tree-splitter" />
+      <treecol id="colXSendLaterAt" persist="ordinal width"
+		currentView="unthreaded" flex="1"
+		label="&sendlater3header.label;" />
+    </treecols>
+  </tree>
 
-  <vbox id="expandedHeaders">		
-    <mail-headerfield id="expandedx-send-later-atBox" label="&sendlater3header.label;:" >
-	</mail-headerfield>
-  </vbox>
+  <rows id="expandedHeader2Rows">
+    <row id="expandedx-send-later-atRow">
+      <label id="expandedx-send-later-atLabel" class="headerName"
+	     value="x-send-later-at"
+	     control="expandedx-send-later-atBox"/>
+      <mail-headerfield id="expandedx-send-later-atBox"/>
+    </row>
+  </rows>
 
   <script src="util.js"/>
   <script type="text/javascript" src="chrome://messenger/content/dateFormat.js" />

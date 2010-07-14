@@ -1,29 +1,9 @@
 var Sendlater3Composing = {
     main: function() {
 
-Components.utils.import("resource:///modules/gloda/log4moz.js");
-
 var composelogMngr = null;
 var composelogger = null;
 var sComposeMsgsBundle = document.getElementById("bundle_composeMsgs");
-
-function CSENDLATER3dump(msg)
-{
-  composelogger.info(msg);
-}
-
-
-function CinitDebug()
-{
-	composelogger = Log4Moz.getConfiguredLogger("extensions.sendlater3",
-					     Log4Moz.Level.Debug,
-					     Log4Moz.Level.Info,
-					     Log4Moz.Level.Debug);
-}
-
-CinitDebug();
-
-
 
 var msgWindow = Components.classes["@mozilla.org/messenger/msgwindow;1"].createInstance();
 msgWindow = msgWindow.QueryInterface(Components.interfaces.nsIMsgWindow);
@@ -34,7 +14,7 @@ var sendlater3ComposePrefs        = Components.classes["@mozilla.org/preferences
 function CheckForXSendLater()
 {
 
- CSENDLATER3dump("CheckforXSendLater")
+ Sendlater3Util.dump("CheckforXSendLater")
  if (gMsgCompose != null)
   {
     var msgCompFields = gMsgCompose.compFields;
@@ -42,7 +22,7 @@ function CheckForXSendLater()
     {
 		if (gMsgCompose.originalMsgURI!="")
 		{
-			CSENDLATER3dump("Checking " + gMsgCompose.originalMsgURI);
+			Sendlater3Util.dump("Checking " + gMsgCompose.originalMsgURI);
 				var messageURI = gMsgCompose.originalMsgURI;
 						var accountManager = Components.classes["@mozilla.org/messenger/account-manager;1"].getService(Components.interfaces.nsIMsgAccountManager);
 						var messenger = Components.classes["@mozilla.org/messenger;1"].getService(Components.interfaces.nsIMessenger);
@@ -81,7 +61,7 @@ function CheckForXSendLater()
 							   }
 							}
 						}
-					CSENDLATER3dump("HeaderReady = " + headerready + " , SendLaterPresent = " + xsendlaterpresent);
+					Sendlater3Util.dump("HeaderReady = " + headerready + " , SendLaterPresent = " + xsendlaterpresent);
 						var gotcha;
 						if (xsendlaterpresent)
 							gotcha =content.match(/\r\nX-Send-Later-At:.*/).toString();
@@ -90,7 +70,7 @@ function CheckForXSendLater()
 						if (gotcha)
 						{
 							Sendlater3Composing.prevXSendLater = new Date (gotcha.substr(18));
-							CSENDLATER3dump("PrevXSendLater = " + Sendlater3Composing.prevXSendLater);
+							Sendlater3Util.dump("PrevXSendLater = " + Sendlater3Composing.prevXSendLater);
 						} 
 		}
 			
@@ -98,56 +78,6 @@ function CheckForXSendLater()
   }
  
 }                            
-
-function FormatDateTime(thisdate,includeTZ)
-{
-var s="";
-var sDaysOfWeek = [ "Sun","Mon","Tue","Wed","Thu","Fri","Sat" ];
-var sMonths= ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-	var offset = thisdate.getTimezoneOffset();
-	s += sDaysOfWeek[thisdate.getDay()];
-	s += ", ";
-	s += thisdate.getDate();
-	s += " ";
-	s += sMonths[thisdate.getMonth()];
-	s += " ";
-	s+=( thisdate.getFullYear());
-	s += " ";
-	var val = thisdate.getHours();
-	if (val < 10)
-		s += "0";
-	s += val;
-	s += ":";
-	val = thisdate.getMinutes();
-	if (val < 10)
-		s += "0";
-	s+= val;
-	s += ":";
-	val = thisdate.getSeconds();
-	if (val < 10)
-		s += "0";
-	s+=val;
-	if (includeTZ) {
-		s += " ";
-		if (offset < 0) {
-			offset *= -1;
-			s += "+";
-		}
-		else
-			s += "-";
-		
-		val = Math.floor (offset / 60);
-		if (val < 10)
-			s += "0";
-		s+=val;
-		val = Math.floor (offset % 60);
-		if (val < 10)
-			s += "0";
-		s+=val;
-	}
-return s;
-}
 
 var mysleventListener = { handleEvent : function(event) { 
 			CheckForXSendLater(); 
@@ -233,7 +163,7 @@ document.getElementById("msgcomposeWindow").addEventListener("compose-window-ini
 	  Recipients2CompFields(msgCompFields);
 
 	  // BEGIN SENDLATER3 ADDED
-	  var head = "X-Send-Later-At: " + FormatDateTime(sendat,true) + "\r\n";
+	  var head = "X-Send-Later-At: " + Sendlater3Util.FormatDateTime(sendat,true) + "\r\n";
 	  msgCompFields.otherRandomHeaders += head;
 	  // END SENDLATER3 ADDED
 

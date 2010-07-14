@@ -1,248 +1,280 @@
 var Sendlater3ComposeToolbar = {
     main: function() {
+    	Sendlater3Util.debug("composeToolbar.js: entering main");
 
-var showquickbutton1 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.1.showintoolbar");
-var showquickbutton2 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.2.showintoolbar");
-var showquickbutton3 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.3.showintoolbar");
+	var showquickbutton1 = Sendlater3Util.PrefService
+	    .getBoolPref("extensions.sendlater3.quickoptions.1.showintoolbar");
+	var showquickbutton2 = Sendlater3Util.PrefService
+	    .getBoolPref("extensions.sendlater3.quickoptions.2.showintoolbar");
+	var showquickbutton3 = Sendlater3Util.PrefService
+	    .getBoolPref("extensions.sendlater3.quickoptions.3.showintoolbar");
 
-var shortcut1value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.1.value");
-var shortcut2value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.2.value");
-var shortcut3value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.3.value");
+	var shortcut1value = Sendlater3Util.PrefService
+	    .getIntPref("extensions.sendlater3.quickoptions.1.value");
+	var shortcut2value = Sendlater3Util.PrefService
+	    .getIntPref("extensions.sendlater3.quickoptions.2.value");
+	var shortcut3value = Sendlater3Util.PrefService
+	    .getIntPref("extensions.sendlater3.quickoptions.3.value");
 
-var shortcut1label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.1.label",
-														Components.interfaces.nsISupportsString).data;
-var shortcut2label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.2.label",	
-														Components.interfaces.nsISupportsString).data;
-
-var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.3.label",
-														Components.interfaces.nsISupportsString).data;
-
-function DZFormat(val)
-{
-   if (val < 10) return "0" + val; else return val;
-}
-
-function populateHours()
-{
-
-  var container = document.getElementById("hours");
-  var i;
-  for (i=0;i<24;i++)
-  {
-	var newitem = document.createElement("menuitem");
-	newitem.setAttribute("label",DZFormat(i));
-	newitem.setAttribute("value",i.toString());
-	container.appendChild(newitem);
-  }
-   
-
-}
-function populateMins()
-{
-
-  var container = document.getElementById("mins");
-  var i;
-  for (i=0;i<60;i++)
-  {
-	var newitem = document.createElement("menuitem");
-	newitem.setAttribute("label",DZFormat(i));
-	newitem.setAttribute("value",i.toString());
-	container.appendChild(newitem);
-  }
-   
-
-}
+	var shortcut1label = Sendlater3Util.PrefService
+	    .getComplexValue("extensions.sendlater3.quickoptions.1.label",
+			     Components.interfaces.nsISupportsString).data;
+	var shortcut2label = Sendlater3Util.PrefService
+	    .getComplexValue("extensions.sendlater3.quickoptions.2.label",	
+			     Components.interfaces.nsISupportsString).data;
+	var shortcut3label = Sendlater3Util.PrefService
+	    .getComplexValue("extensions.sendlater3.quickoptions.3.label",
+			     Components.interfaces.nsISupportsString).data;
 
 
-function populateYears()
-{
-  var today = new Date();
-  var container = document.getElementById("years");
-  var i;
-  for (i=0;i<5;i++)
-  {
-	var newitem = document.createElement("menuitem");
-	newitem.setAttribute("label",(today.getFullYear()+i).toString());
-	newitem.setAttribute("value",(today.getFullYear()+i).toString());
-	container.appendChild(newitem);
-  }
-   
-   document.getElementById("yearvalue").selectedIndex = 0;
-}
-function clearChildren(element)
-{
-while (element.childNodes.length>0)
-{
-   element.removeChild(element.childNodes[0]);
-}
+	function populateHours() {
+	    Sendlater3Util.debug("composeToolbar.js: entering populateHours");
+	    var container = document.getElementById("hours");
+	    var i;
+	    for (i=0;i<24;i++) {
+		var newitem = document.createElement("menuitem");
+		newitem.setAttribute("label",Sendlater3Util.DZFormat(i));
+		newitem.setAttribute("value",i.toString());
+		container.appendChild(newitem);
+	    }
+	}
 
-}
+	function populateMins() {
+	    Sendlater3Util.debug("composeToolbar.js: entering populateMins");
+	    var container = document.getElementById("mins");
+	    var i;
+	    for (i=0;i<60;i++) {
+		var newitem = document.createElement("menuitem");
+		newitem.setAttribute("label",Sendlater3Util.DZFormat(i));
+		newitem.setAttribute("value",i.toString());
+		container.appendChild(newitem);
+	    }
+	}
 
-function populateMonths()
-{
-  var selectedyear =  document.getElementById("yearvalue").value;
-  var today = new Date();
-  var strbundle = document.getElementById("sendlater3promptstrings");
-  var monthStr = [ strbundle.getString("January") ,strbundle.getString("February"),strbundle.getString("March"),strbundle.getString("April"),strbundle.getString("May"),strbundle.getString("June"),
-					strbundle.getString("July"),strbundle.getString("August"),strbundle.getString("September"),strbundle.getString("October"),strbundle.getString("November"),strbundle.getString("December") ];
-  var container = document.getElementById("months");
-  clearChildren(container);
-  var i = 0;
-if (selectedyear == today.getFullYear())
-{  
-   i = today.getMonth();
-}
-  for (;i<12;i++)
-  {
-	var newitem = document.createElement("menuitem");
-	newitem.setAttribute("label",monthStr[i]);
-	newitem.setAttribute("value",i);
-	container.appendChild(newitem);
-  }
-   document.getElementById("monthvalue").selectedIndex = 0;
+	function populateYears() {
+	    Sendlater3Util.debug("composeToolbar.js: entering populateYears");
+	    var today = new Date();
+	    var container = document.getElementById("years");
+	    var i;
+	    for (i=0;i<5;i++) {
+		var newitem = document.createElement("menuitem");
+		newitem.setAttribute("label",
+				     (today.getFullYear()+i).toString());
+		newitem.setAttribute("value",
+				     (today.getFullYear()+i).toString());
+		container.appendChild(newitem);
+	    }
 
-}
+	    document.getElementById("yearvalue").selectedIndex = 0;
+	}
 
-function getMaxDays(year,month)
-{
- var oneDay = (1000 * 60 * 60 * 24);
-  var today = new Date();
-today.setFullYear(parseInt(year));
-today.setDate(1);
-month++;
-today.setMonth(month);
-var bt = today.toString();
-today.setTime(today.valueOf() - oneDay);
-return today.getDate();
+	function clearChildren(element) {
+	    while (element.childNodes.length>0) {
+	        element.removeChild(element.childNodes[0]);
+	    }
+	}
 
-}
-function populateDays()
-{
-var today = new Date();
+	function populateMonths() {
+	    Sendlater3Util.debug("composeToolbar.js: entering populateMonths");
+	    var selectedyear =  document.getElementById("yearvalue").value;
+	    var today = new Date();
+	    var strbundle = document.getElementById("sendlater3promptstrings");
+	    var monthStr = [ strbundle.getString("January"),
+	    		     strbundle.getString("February"),
+			     strbundle.getString("March"),
+			     strbundle.getString("April"),
+			     strbundle.getString("May"),
+			     strbundle.getString("June"),
+			     strbundle.getString("July"),
+			     strbundle.getString("August"),
+			     strbundle.getString("September"),
+			     strbundle.getString("October"),
+			     strbundle.getString("November"),
+			     strbundle.getString("December") ];
+	    var container = document.getElementById("months");
+	    clearChildren(container);
+	    var i = 0;
+	    if (selectedyear == today.getFullYear()) {
+		i = today.getMonth();
+	    }
+	    for (;i<12;i++) {
+		var newitem = document.createElement("menuitem");
+		newitem.setAttribute("label",monthStr[i]);
+		newitem.setAttribute("value",i);
+		container.appendChild(newitem);
+	    }
+	    document.getElementById("monthvalue").selectedIndex = 0;
+	}
 
-  var selectedyear =  document.getElementById("yearvalue").value;
-  var selectedmonth =  document.getElementById("monthvalue").value;
+	function getMaxDays(year,month) {
+	    var oneDay = (1000 * 60 * 60 * 24);
+	    var today = new Date();
+	    today.setFullYear(parseInt(year));
+	    today.setDate(1);
+	    month++;
+	    today.setMonth(month);
+	    var bt = today.toString();
+	    today.setTime(today.valueOf() - oneDay);
+	    return today.getDate();
+	}
 
-  var container = document.getElementById("days");
-  clearChildren(container);
-  var i=0;
-if ( (selectedyear == today.getFullYear()) && (selectedmonth == today.getMonth()) )
-{  
-   i = today.getDate() - 1;
-}
-  for (;i<getMaxDays(selectedyear,selectedmonth);i++)
-  {
-	var newitem = document.createElement("menuitem");
-	newitem.setAttribute("label",(i+1).toString());
-	newitem.setAttribute("value",(i+1).toString());
-	container.appendChild(newitem);
-  }
-   document.getElementById("dayvalue").selectedIndex = 0;
-}
+	function populateDays() {
+	    Sendlater3Util.debug("composeToolbar.js: entering populateDays");
+	    var today = new Date();
 
-function SENDLATER3_TOOLBAR_SetOnLoad()
-{
-	if (document.getElementById('sendlater3_toolbar'))
-	{
-	
-		document.getElementById("yearvalue").removeEventListener("ValueChange", populateMonths, false);
-		document.getElementById("monthvalue").removeEventListener("ValueChange", populateDays, false);
-		document.getElementById("yearvalue").addEventListener("ValueChange", populateMonths, false);
-		document.getElementById("monthvalue").addEventListener("ValueChange", populateDays, false);
-		
-		//document.getElementById("dayvalue").addEventListener("ValueChange", updateSummary , false);
-		//document.getElementById("hourvalue").addEventListener("ValueChange", updateSummary , false);
-		//document.getElementById("minvalue").addEventListener("ValueChange", updateSummary , false);
+	    var selectedyear =  document.getElementById("yearvalue").value;
+	    var selectedmonth =  document.getElementById("monthvalue").value;
+
+	    var container = document.getElementById("days");
+	    clearChildren(container);
+	    var i=0;
+	    if ((selectedyear == today.getFullYear()) &&
+	        (selectedmonth == today.getMonth())) {
+		i = today.getDate() - 1;
+	    }
+	    for (;i<getMaxDays(selectedyear,selectedmonth);i++) {
+		var newitem = document.createElement("menuitem");
+		newitem.setAttribute("label",(i+1).toString());
+		newitem.setAttribute("value",(i+1).toString());
+		container.appendChild(newitem);
+	    }
+	    document.getElementById("dayvalue").selectedIndex = 0;
+	}
+
+	function SENDLATER3_TOOLBAR_SetOnLoad() {
+	    Sendlater3Util.debug("composeToolbar.js: entering SENDLATER3_TOOLBAR_SetOnLoad");
+	    if (document.getElementById('sendlater3_toolbar')) {
+		document.getElementById("yearvalue")
+		    .removeEventListener("ValueChange", populateMonths, false);
+		document.getElementById("monthvalue")
+		    .removeEventListener("ValueChange", populateDays, false);
+		document.getElementById("yearvalue")
+		    .addEventListener("ValueChange", populateMonths, false);
+		document.getElementById("monthvalue")
+		    .addEventListener("ValueChange", populateDays, false);
+
+		//document.getElementById("dayvalue")
+		//    .addEventListener("ValueChange", updateSummary , false);
+		//document.getElementById("hourvalue")
+		//    .addEventListener("ValueChange", updateSummary , false);
+		//document.getElementById("minvalue")
+		//    .addEventListener("ValueChange", updateSummary , false);
 		populateYears();
 		populateHours();
 		populateMins();
 		var hhmm = new Date();
 		document.getElementById("hourvalue").value = hhmm.getHours();
 		document.getElementById("minvalue").value = hhmm.getMinutes();
-		switch (document.getElementById("sendlater3_toolbar").parentNode.getAttribute("mode"))
-		{
-		  case "full":
-		  case "icons":
-			document.getElementById("sendlater3toolbartimeicon").hidden = false;
-			document.getElementById("sendlater3toolbarcalicon").hidden = false;
+		switch (document.getElementById("sendlater3_toolbar")
+		        .parentNode.getAttribute("mode")) {
+		    case "full":
+		    case "icons":
+			document.getElementById("sendlater3toolbartimeicon")
+			    .hidden = false;
+			document.getElementById("sendlater3toolbarcalicon")
+			    .hidden = false;
 			break;
-		  default:
-			document.getElementById("sendlater3toolbartimeicon").hidden = true;
-			document.getElementById("sendlater3toolbarcalicon").hidden = true;
+		    default:
+			document.getElementById("sendlater3toolbartimeicon")
+			    .hidden = true;
+			document.getElementById("sendlater3toolbarcalicon")
+			    .hidden = true;
 			break;
 		}
 
-
-if (showquickbutton1)
-{
-	document.getElementById("shortcutbtn_1").label = shortcut1label;
-	document.getElementById("shortcutbtn_1").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut1value + ");");
-	document.getElementById("quickbutton1-key").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut1value + ");");
-    document.getElementById("shortcutbtn_1").hidden = false;
-}
-else
-{
-    document.getElementById("shortcutbtn_1").hidden = true;
-}
-
-if (showquickbutton2)
-{
-	document.getElementById("shortcutbtn_2").label = shortcut2label;
-	document.getElementById("shortcutbtn_2").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut2value + ");");
-	document.getElementById("quickbutton2-key").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut2value + ");");
-    document.getElementById("shortcutbtn_2").hidden = false;
-}
-else
-{
-    document.getElementById("shortcutbtn_2").hidden = true;
-}
-
-if (showquickbutton3)
-{
-	document.getElementById("shortcutbtn_3").label = shortcut3label;
-	document.getElementById("shortcutbtn_3").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut3value + ");");
-	document.getElementById("quickbutton3-key").setAttribute("oncommand","alert('je');Sendlater3ComposeToolbar.CallSendAfter(" + shortcut3value + ");");
-    document.getElementById("shortcutbtn_3").hidden = false;
-}
-else
-{
-    document.getElementById("shortcutbtn_3").hidden = true;
-}
-	
-		if (prevXSendLater)
-		{
-			CSENDLATER3dump("PrevXSendlater is Set to " + prevXSendLater);
-		   document.getElementById("yearvalue").value = prevXSendLater.getFullYear();
-		   document.getElementById("monthvalue").value = prevXSendLater.getMonth();
-		   document.getElementById("dayvalue").value = prevXSendLater.getDate();
-		   document.getElementById("hourvalue").value = prevXSendLater.getHours();
-		   document.getElementById("minvalue").value = prevXSendLater.getMinutes();
-		 }
-		 else
-		 {
-			CSENDLATER3dump("No previous time");
+		if (showquickbutton1) {
+		    document.getElementById("shortcutbtn_1").label =
+		        shortcut1label;
+		    document.getElementById("shortcutbtn_1")
+		        .setAttribute("oncommand",
+				      "Sendlater3ComposeToolbar.CallSendAfter("
+				      + shortcut1value + ");");
+		    document.getElementById("quickbutton1-key")
+		        .setAttribute("oncommand",
+				      "Sendlater3ComposeToolbar.CallSendAfter("
+				      + shortcut1value + ");");
+		    document.getElementById("shortcutbtn_1").hidden = false;
+		}
+		else {
+		    document.getElementById("shortcutbtn_1").hidden = true;
 		}
 
+		if (showquickbutton2) {
+		    document.getElementById("shortcutbtn_2").label =
+		        shortcut2label;
+		    document.getElementById("shortcutbtn_2")
+		        .setAttribute("oncommand",
+			              "Sendlater3ComposeToolbar.CallSendAfter("
+				      + shortcut2value + ");");
+		    document.getElementById("quickbutton2-key")
+		        .setAttribute("oncommand",
+				      "Sendlater3ComposeToolbar.CallSendAfter("
+				      + shortcut2value + ");");
+		    document.getElementById("shortcutbtn_2").hidden = false;
+		}
+		else {
+		    document.getElementById("shortcutbtn_2").hidden = true;
+		}
+
+		if (showquickbutton3) {
+		    document.getElementById("shortcutbtn_3").label =
+		        shortcut3label;
+		    document.getElementById("shortcutbtn_3")
+		        .setAttribute("oncommand",
+				      "Sendlater3ComposeToolbar.CallSendAfter("
+				      + shortcut3value + ");");
+		    document.getElementById("quickbutton3-key")
+		        .setAttribute("oncommand",
+				      "Sendlater3ComposeToolbar.CallSendAfter("
+				      + shortcut3value + ");");
+		    document.getElementById("shortcutbtn_3").hidden = false;
+		}
+		else {
+		    document.getElementById("shortcutbtn_3").hidden = true;
+		}
+
+		if (Sendlater3Composing.prevXSendLater) {
+		    Sendlater3Util.dump("PrevXSendlater is Set to " +
+		    			Sendlater3Composing.prevXSendLater);
+		    document.getElementById("yearvalue").value =
+		        Sendlater3Composing.prevXSendLater.getFullYear();
+		    document.getElementById("monthvalue").value =
+		        Sendlater3Composing.prevXSendLater.getMonth();
+		    document.getElementById("dayvalue").value =
+		        Sendlater3Composing.prevXSendLater.getDate();
+		    document.getElementById("hourvalue").value =
+		        Sendlater3Composing.prevXSendLater.getHours();
+		    document.getElementById("minvalue").value =
+		        Sendlater3Composing.prevXSendLater.getMinutes();
+		}
+		else {
+		    Sendlater3Util.dump("No previous time");
+		}
+	    }
 	}
-}
 
-var originalCustomizeDone;
-function sendlater3_CustomizeDone()
-{
-	originalCustomizeDone();
-	SENDLATER3_TOOLBAR_SetOnLoad();
-}
-function captureonLoad()
-{
-		originalCustomizeDone = document.getElementById("compose-toolbox").customizeDone;
-		document.getElementById("compose-toolbox").customizeDone = sendlater3_CustomizeDone;
-}
+	function captureonLoad() {
+	    Sendlater3Util.debug("sendlater3_toolbar_initialized: " +
+	        window.sendlater3_toolbar_initialized);
+	    if (! window.sendlater3_toolbar_initialized) {
+		SENDLATER3_TOOLBAR_SetOnLoad();
+	        window.sendlater3_toolbar_initialized = true;
+	    }
+	}
 
-window.addEventListener("load",captureonLoad,false);
-
+	// The toolbar is only loaded the first time a message
+	// composition window is created, but we want the time in our
+	// toolbar to be set to the current time every time a new
+	// message is composed. We accomplish that by detecting both
+	// load and focus events and checking in the event listener
+	// whether the values have already been set (using a custom
+	// attribute on the window) before setting them.
+	window.addEventListener("load",captureonLoad,false);
+	window.addEventListener("focus",captureonLoad,false);
     },
 
     CallSendAt: function() {
+	Sendlater3Util.debug("composeToolbar.js: entering CallSendAt");
 	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
@@ -260,6 +292,7 @@ window.addEventListener("load",captureonLoad,false);
     },
 
     CallSendAfter: function(mins) {
+	Sendlater3Util.debug("composeToolbar.js: entering CallSendAfter");
 	var sendat = new Date();
 	sendat.setTime(sendat.getTime()+mins*60*1000);
 	Sendlater3Composing.SendAtTime(sendat);

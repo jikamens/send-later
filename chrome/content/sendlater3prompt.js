@@ -1,19 +1,4 @@
 var Sendlater3Sendlater3Prompt = {
-    main: function() {
-
-var shortcut1value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.1.value");
-var shortcut2value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.2.value");
-var shortcut3value = sendlater3_prefservice.getIntPref("extensions.sendlater3.quickoptions.3.value");
-
-var shortcut1label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.1.label",
-														Components.interfaces.nsISupportsString).data;
-var shortcut2label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.2.label",	
-														Components.interfaces.nsISupportsString).data;
-
-var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlater3.quickoptions.3.label",
-														Components.interfaces.nsISupportsString).data;
-    },
-
     SetOnLoad: function() {
 	document.getElementById("yearvalue")
 	    .addEventListener("ValueChange",
@@ -36,9 +21,18 @@ var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlate
 	var hhmm = new Date();
 	document.getElementById("hourvalue").value = hhmm.getHours();
 	document.getElementById("minvalue").value = hhmm.getMinutes();
-	document.getElementById("shortcutbtn_1").label = shortcut1label;
-	document.getElementById("shortcutbtn_2").label = shortcut2label;
-	document.getElementById("shortcutbtn_3").label = shortcut3label;
+	document.getElementById("shortcutbtn_1").label =
+	    Sendlater3Util.PrefService.getComplexValue("extensions.sendlater3.quickoptions.1.label",
+						   Components.interfaces.nsISupportsString).data;
+	document.getElementById("shortcutbtn_2").label =
+	    Sendlater3Util.PrefService.getComplexValue("extensions.sendlater3.quickoptions.2.label",
+						   Components.interfaces.nsISupportsString).data;
+	document.getElementById("shortcutbtn_3").label =
+	    Sendlater3Util.PrefService.getComplexValue("extensions.sendlater3.quickoptions.3.label",
+						   Components.interfaces.nsISupportsString).data;
+	var shortcut1value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.1.value");
+	var shortcut2value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.2.value");
+	var shortcut3value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.3.value");
 	document.getElementById("shortcutbtn_1")
 	    .setAttribute("oncommand",
 			  "Sendlater3Sendlater3Prompt.CallSendAfter(" +
@@ -154,7 +148,7 @@ var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlate
 	var i;
 	for (i=0;i<24;i++) {
 	    var newitem = document.createElement("menuitem");
-	    newitem.setAttribute("label",Sendlater3Sendlater3Prompt.DZFormat(i));
+	    newitem.setAttribute("label",Sendlater3Util.DZFormat(i));
 	    newitem.setAttribute("value",i.toString());
 	    container.appendChild(newitem);
 	}
@@ -165,7 +159,7 @@ var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlate
 	var i;
 	for (i=0;i<60;i++) {
 	    var newitem = document.createElement("menuitem");
-	    newitem.setAttribute("label",Sendlater3Sendlater3Prompt.DZFormat(i));
+	    newitem.setAttribute("label",Sendlater3Util.DZFormat(i));
 	    newitem.setAttribute("value",i.toString());
 	    container.appendChild(newitem);
 	}
@@ -213,10 +207,6 @@ var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlate
 	return today.getDate();
     },
 
-    DZFormat: function(val) {
-        if (val < 10) return "0" + val; else return val;
-    },
-
     CallSendAt: function() {
 	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
@@ -234,5 +224,3 @@ var shortcut3label = sendlater3_prefservice.getComplexValue("extensions.sendlate
 	window.arguments[0].finishCallback(sendat);
     }
 }
-
-Sendlater3Sendlater3Prompt.main();
