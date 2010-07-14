@@ -3,3 +3,4 @@ Unify logging in utils file.
 Improve toolbar behavior.
 Internationalize if necessary.
 Make preference changes take effect immediately.
+Reformat / reindent all JS code for readability.
