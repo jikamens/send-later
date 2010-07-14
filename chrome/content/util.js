@@ -4,6 +4,26 @@ var Sendlater3Util = {
     PrefService: Components.classes["@mozilla.org/preferences-service;1"]
         .getService(Components.interfaces.nsIPrefBranch),
 
+    _PromptBundle: null,
+
+    PromptBundleGet: function(name) {
+	if (Sendlater3Util._PromptBundle == null) {
+	   Sendlater3Util._PromptBundle =
+	       document.getElementById("sendlater3promptstrings");
+	}
+	return Sendlater3Util._PromptBundle.getString(name);
+    },
+
+    ButtonLabel: function(num) {
+    	var label = Sendlater3Util.PrefService.
+	    getComplexValue("extensions.sendlater3.quickoptions." + num + ".label",
+			    Components.interfaces.nsISupportsString).data;
+	if (label == "<from locale>") {
+	    label = Sendlater3Util.PromptBundleGet("Button" + num + "Label");
+	}
+	return label;
+    },
+
     FormatDateTime: function(thisdate,includeTZ) {
 	var s="";
 	var sDaysOfWeek = [ "Sun","Mon","Tue","Wed","Thu","Fri","Sat" ];

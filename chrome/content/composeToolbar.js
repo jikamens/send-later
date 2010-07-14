@@ -16,17 +16,6 @@ var Sendlater3ComposeToolbar = {
 	var shortcut3value = Sendlater3Util.PrefService
 	    .getIntPref("extensions.sendlater3.quickoptions.3.value");
 
-	var shortcut1label = Sendlater3Util.PrefService
-	    .getComplexValue("extensions.sendlater3.quickoptions.1.label",
-			     Components.interfaces.nsISupportsString).data;
-	var shortcut2label = Sendlater3Util.PrefService
-	    .getComplexValue("extensions.sendlater3.quickoptions.2.label",	
-			     Components.interfaces.nsISupportsString).data;
-	var shortcut3label = Sendlater3Util.PrefService
-	    .getComplexValue("extensions.sendlater3.quickoptions.3.label",
-			     Components.interfaces.nsISupportsString).data;
-
-
 	function populateHours() {
 	    Sendlater3Util.debug("composeToolbar.js: entering populateHours");
 	    var container = document.getElementById("hours");
@@ -78,19 +67,18 @@ var Sendlater3ComposeToolbar = {
 	    Sendlater3Util.debug("composeToolbar.js: entering populateMonths");
 	    var selectedyear =  document.getElementById("yearvalue").value;
 	    var today = new Date();
-	    var strbundle = document.getElementById("sendlater3promptstrings");
-	    var monthStr = [ strbundle.getString("January"),
-	    		     strbundle.getString("February"),
-			     strbundle.getString("March"),
-			     strbundle.getString("April"),
-			     strbundle.getString("May"),
-			     strbundle.getString("June"),
-			     strbundle.getString("July"),
-			     strbundle.getString("August"),
-			     strbundle.getString("September"),
-			     strbundle.getString("October"),
-			     strbundle.getString("November"),
-			     strbundle.getString("December") ];
+	    var monthStr = [ Sendlater3Util.PromptBundleGet("January"),
+	    		     Sendlater3Util.PromptBundleGet("February"),
+			     Sendlater3Util.PromptBundleGet("March"),
+			     Sendlater3Util.PromptBundleGet("April"),
+			     Sendlater3Util.PromptBundleGet("May"),
+			     Sendlater3Util.PromptBundleGet("June"),
+			     Sendlater3Util.PromptBundleGet("July"),
+			     Sendlater3Util.PromptBundleGet("August"),
+			     Sendlater3Util.PromptBundleGet("September"),
+			     Sendlater3Util.PromptBundleGet("October"),
+			     Sendlater3Util.PromptBundleGet("November"),
+			     Sendlater3Util.PromptBundleGet("December") ];
 	    var container = document.getElementById("months");
 	    clearChildren(container);
 	    var i = 0;
@@ -184,7 +172,7 @@ var Sendlater3ComposeToolbar = {
 
 		if (showquickbutton1) {
 		    document.getElementById("shortcutbtn_1").label =
-		        shortcut1label;
+		        Sendlater3Util.ButtonLabel(1);
 		    document.getElementById("shortcutbtn_1")
 		        .setAttribute("oncommand",
 				      "Sendlater3ComposeToolbar.CallSendAfter("
@@ -201,7 +189,7 @@ var Sendlater3ComposeToolbar = {
 
 		if (showquickbutton2) {
 		    document.getElementById("shortcutbtn_2").label =
-		        shortcut2label;
+		        Sendlater3Util.ButtonLabel(2);
 		    document.getElementById("shortcutbtn_2")
 		        .setAttribute("oncommand",
 			              "Sendlater3ComposeToolbar.CallSendAfter("
@@ -218,7 +206,7 @@ var Sendlater3ComposeToolbar = {
 
 		if (showquickbutton3) {
 		    document.getElementById("shortcutbtn_3").label =
-		        shortcut3label;
+		        Sendlater3Util.ButtonLabel(3);
 		    document.getElementById("shortcutbtn_3")
 		        .setAttribute("oncommand",
 				      "Sendlater3ComposeToolbar.CallSendAfter("

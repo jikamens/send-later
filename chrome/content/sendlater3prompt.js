@@ -22,14 +22,11 @@ var Sendlater3Sendlater3Prompt = {
 	document.getElementById("hourvalue").value = hhmm.getHours();
 	document.getElementById("minvalue").value = hhmm.getMinutes();
 	document.getElementById("shortcutbtn_1").label =
-	    Sendlater3Util.PrefService.getComplexValue("extensions.sendlater3.quickoptions.1.label",
-						   Components.interfaces.nsISupportsString).data;
+	    Sendlater3Util.ButtonLabel(1);
 	document.getElementById("shortcutbtn_2").label =
-	    Sendlater3Util.PrefService.getComplexValue("extensions.sendlater3.quickoptions.2.label",
-						   Components.interfaces.nsISupportsString).data;
+	    Sendlater3Util.ButtonLabel(2);
 	document.getElementById("shortcutbtn_3").label =
-	    Sendlater3Util.PrefService.getComplexValue("extensions.sendlater3.quickoptions.3.label",
-						   Components.interfaces.nsISupportsString).data;
+	    Sendlater3Util.ButtonLabel(3);
 	var shortcut1value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.1.value");
 	var shortcut2value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.2.value");
 	var shortcut3value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.3.value");
@@ -93,19 +90,18 @@ var Sendlater3Sendlater3Prompt = {
     populateMonths: function() {
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var today = new Date();
-	var strbundle = document.getElementById("sendlater3promptstrings");
-	var monthStr = [ strbundle.getString("January"),
-	    	         strbundle.getString("February"),
-			 strbundle.getString("March"),
-			 strbundle.getString("April"),
-			 strbundle.getString("May"),
-			 strbundle.getString("June"),
-			 strbundle.getString("July"),
-			 strbundle.getString("August"),
-			 strbundle.getString("September"),
-			 strbundle.getString("October"),
-			 strbundle.getString("November"),
-			 strbundle.getString("December") ];
+	var monthStr = [ Sendlater3Util.PromptBundleGet("January"),
+	    	         Sendlater3Util.PromptBundleGet("February"),
+			 Sendlater3Util.PromptBundleGet("March"),
+			 Sendlater3Util.PromptBundleGet("April"),
+			 Sendlater3Util.PromptBundleGet("May"),
+			 Sendlater3Util.PromptBundleGet("June"),
+			 Sendlater3Util.PromptBundleGet("July"),
+			 Sendlater3Util.PromptBundleGet("August"),
+			 Sendlater3Util.PromptBundleGet("September"),
+			 Sendlater3Util.PromptBundleGet("October"),
+			 Sendlater3Util.PromptBundleGet("November"),
+			 Sendlater3Util.PromptBundleGet("December") ];
 	var container = document.getElementById("months");
 	Sendlater3Sendlater3Prompt.clearChildren(container);
 	var i = 0;
@@ -178,9 +174,8 @@ var Sendlater3Sendlater3Prompt = {
 	sendat.setHours(parseInt(selectedhour));
 	sendat.setMinutes(parseInt(selectedmin));
 
-	var strbundle = document.getElementById("sendlater3promptstrings");
 	document.getElementById("summary").value =
-	    strbundle.getString("willsendat") + " " + sendat.toLocaleString();
+	    Sendlater3Util.PromptBundleGet("willsendat") + " " + sendat.toLocaleString();
     },
 
     CallSendAfter: function(mins) {

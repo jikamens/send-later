@@ -365,8 +365,9 @@ var CheckForSendLaterCallback = {
 	folderstocheck.push(fdrlocal.findSubFolder("Drafts").URI);
 	Sendlater3Util.dump("SCHEDULE - " + folderstocheck[0]);
 	// Local Drafts folder might have different name, e.g., in other locales
-	var local_draft_pref = Sendlater3Util.
-	    PrefService.getCharPref('mail.identity.default.draft_folder');
+	var local_draft_pref = Sendlater3Util.PrefService
+	    .getComplexValue('mail.identity.default.draft_folder',
+			     Components.interfaces.nsISupportsString).data;
 	Sendlater3Util.debug("mail.identity.default.draft_folder=" +
 	                     local_draft_pref);
 	if (local_draft_pref != null && local_draft_pref != folderstocheck[0]) {
