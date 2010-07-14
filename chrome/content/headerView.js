@@ -1,3 +1,4 @@
+var Sendlater3HeaderView = function() {
 
 var sendlater3columnHandler = {
    getCellText: function(row, col) {
@@ -150,3 +151,7 @@ function sendlater3_HeaderView_SetupListener()
 }
 
 window.addEventListener("load",sendlater3_HeaderView_SetupListener,false);
+
+}
+
+Sendlater3HeaderView.apply();

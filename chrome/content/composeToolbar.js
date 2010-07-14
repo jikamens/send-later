@@ -1,6 +1,5 @@
-var sendlater3_prefservice = Components.classes["@mozilla.org/preferences-service;1"].
-                getService(Components.interfaces.nsIPrefBranch);
-
+var Sendlater3ComposeToolbar = {
+    main: function() {
 
 var showquickbutton1 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.1.showintoolbar");
 var showquickbutton2 = sendlater3_prefservice.getBoolPref("extensions.sendlater3.quickoptions.2.showintoolbar");
@@ -141,34 +140,6 @@ if ( (selectedyear == today.getFullYear()) && (selectedmonth == today.getMonth()
    document.getElementById("dayvalue").selectedIndex = 0;
 }
 
-
-function CallSendAt()
-{
-var sendat = new Date();
-  var selectedyear =  document.getElementById("yearvalue").value;
-  var selectedmonth =  document.getElementById("monthvalue").value;
-  var selecteddate =  document.getElementById("dayvalue").value;
-  var selectedhour =  document.getElementById("hourvalue").value;
-  var selectedmin =  document.getElementById("minvalue").value;
- 
-sendat.setFullYear(parseInt(selectedyear));
-sendat.setMonth(parseInt(selectedmonth));
-sendat.setDate(parseInt(selecteddate));
-sendat.setHours(parseInt(selectedhour));
-sendat.setMinutes(parseInt(selectedmin));
-
-SendAtTime(sendat);
-
-}
-
-function CallSendAfter(mins)
-{
-var sendat = new Date();
-sendat.setTime(sendat.getTime()+mins*60*1000);
-SendAtTime(sendat);
-}
-
-
 function SENDLATER3_TOOLBAR_SetOnLoad()
 {
 	if (document.getElementById('sendlater3_toolbar'))
@@ -205,8 +176,8 @@ function SENDLATER3_TOOLBAR_SetOnLoad()
 if (showquickbutton1)
 {
 	document.getElementById("shortcutbtn_1").label = shortcut1label;
-	document.getElementById("shortcutbtn_1").setAttribute("oncommand","CallSendAfter(" + shortcut1value + ");");
-	document.getElementById("quickbutton1-key").setAttribute("oncommand","CallSendAfter(" + shortcut1value + ");");
+	document.getElementById("shortcutbtn_1").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut1value + ");");
+	document.getElementById("quickbutton1-key").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut1value + ");");
     document.getElementById("shortcutbtn_1").hidden = false;
 }
 else
@@ -217,8 +188,8 @@ else
 if (showquickbutton2)
 {
 	document.getElementById("shortcutbtn_2").label = shortcut2label;
-	document.getElementById("shortcutbtn_2").setAttribute("oncommand","CallSendAfter(" + shortcut2value + ");");
-	document.getElementById("quickbutton2-key").setAttribute("oncommand","CallSendAfter(" + shortcut2value + ");");
+	document.getElementById("shortcutbtn_2").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut2value + ");");
+	document.getElementById("quickbutton2-key").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut2value + ");");
     document.getElementById("shortcutbtn_2").hidden = false;
 }
 else
@@ -229,8 +200,8 @@ else
 if (showquickbutton3)
 {
 	document.getElementById("shortcutbtn_3").label = shortcut3label;
-	document.getElementById("shortcutbtn_3").setAttribute("oncommand","CallSendAfter(" + shortcut3value + ");");
-	document.getElementById("quickbutton3-key").setAttribute("oncommand","alert('je');CallSendAfter(" + shortcut3value + ");");
+	document.getElementById("shortcutbtn_3").setAttribute("oncommand","Sendlater3ComposeToolbar.CallSendAfter(" + shortcut3value + ");");
+	document.getElementById("quickbutton3-key").setAttribute("oncommand","alert('je');Sendlater3ComposeToolbar.CallSendAfter(" + shortcut3value + ");");
     document.getElementById("shortcutbtn_3").hidden = false;
 }
 else
@@ -268,3 +239,31 @@ function captureonLoad()
 }
 
 window.addEventListener("load",captureonLoad,false);
+
+    },
+
+    CallSendAt: function() {
+	var sendat = new Date();
+	var selectedyear =  document.getElementById("yearvalue").value;
+	var selectedmonth =  document.getElementById("monthvalue").value;
+	var selecteddate =  document.getElementById("dayvalue").value;
+	var selectedhour =  document.getElementById("hourvalue").value;
+	var selectedmin =  document.getElementById("minvalue").value;
+
+	sendat.setFullYear(parseInt(selectedyear));
+	sendat.setMonth(parseInt(selectedmonth));
+	sendat.setDate(parseInt(selecteddate));
+	sendat.setHours(parseInt(selectedhour));
+	sendat.setMinutes(parseInt(selectedmin));
+
+	Sendlater3Composing.SendAtTime(sendat);
+    },
+
+    CallSendAfter: function(mins) {
+	var sendat = new Date();
+	sendat.setTime(sendat.getTime()+mins*60*1000);
+	Sendlater3Composing.SendAtTime(sendat);
+    }
+}
+
+Sendlater3ComposeToolbar.main();

@@ -4,10 +4,10 @@
   <script src="composing.js"/>
 
   <commandset id="composeCommands">
-  <command id="cmd_sendLater" oncommand="CheckSendAt();"/>
+  <command id="cmd_sendLater" oncommand="Sendlater3Composing.CheckSendAt();"/>
   </commandset>
   <keyset id="tasksKeys">
-  <key oncommand="CheckSendAt()" id="key_sendLater"
+  <key oncommand="Sendlater3Composing.CheckSendAt()" id="key_sendLater"
      keycode="VK_RETURN" observes="cmd_sendLater" modifiers="accel, shift"/>
   </keyset>
   
