@@ -425,25 +425,46 @@ function Sendlater3GenericSendMessage( msgType, sendat )
     dump("###SendMessage Error: composeAppCore is null!\n");
 }
 
-function ContinueSendLater()
-{
-	setTimeout("goDoCommand('cmd_sendLater')",500);
+var Sendlater3ContinueSendLaterTimer;
+var Sendlater3ContinueSendLaterCallback = {
+    notify: function (timer) {
+	goDoCommand('cmd_sendLater');
+    }
+}
+function Sendlater3ContinueSendLater() {
+    Sendlater3ContinueSendLaterTimer = Components
+	.classes["@mozilla.org/timer;1"]
+	.createInstance(Components.interfaces.nsITimer);
+    Sendlater3ContinueSendLaterTimer.initWithCallback(
+	Sendlater3ContinueSendLaterCallback,
+	500,
+	Components.interfaces.nsITimer.TYPE_ONE_SHOT
+	);
 }
 
-function ReallySendAt(sendatstring)
-{
-var sendat = new Date(sendatstring);
+var Sendlater3ReallySendAtTimer;
+var Sendlater3ReallySendAtClosure;
+var Sendlater3ReallySendAtCallback = {
+    notify: function (timer) {
+	var sendat = Sendlater3ReallySendAtClosure;
 
-gCloseWindowAfterSave = true;
-Sendlater3GenericSendMessage(nsIMsgCompDeliverMode.SaveAsDraft,sendat);
-defaultSaveOperation = "draft";
-
+	gCloseWindowAfterSave = true;
+	Sendlater3GenericSendMessage(nsIMsgCompDeliverMode.SaveAsDraft,sendat);
+	defaultSaveOperation = "draft";
+    }
 }
 
 function SendAtTime(sendat)
 {
-
-   setTimeout("ReallySendAt('"+sendat.toString()+"')",500);
+    Sendlater3ReallySendAtClosure = sendat;
+    Sendlater3ReallySendAtTimer = Components
+	.classes["@mozilla.org/timer;1"]
+	.createInstance(Components.interfaces.nsITimer);
+    Sendlater3ReallySendAtTimer.initWithCallback(
+	Sendlater3ReallySendAtCallback,
+	500,
+	Components.interfaces.nsITimer.TYPE_ONE_SHOT
+	);
 }
 
 function CancelSendLater()
@@ -453,7 +474,7 @@ function CancelSendLater()
 function CheckSendAt()
 {
 window.openDialog("chrome://sendlater3/content/sendlater3prompt.xul", "Send at ?", "modal,chrome,centerscreen", 
-                  {finishCallback: SendAtTime, continueCallback : ContinueSendLater, cancelCallback: CancelSendLater,previouslyTimed : prevXSendLater });
+                  {finishCallback: SendAtTime, continueCallback : Sendlater3ContinueSendLater, cancelCallback: CancelSendLater,previouslyTimed : prevXSendLater });
 }
 
 

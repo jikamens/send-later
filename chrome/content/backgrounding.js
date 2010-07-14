@@ -1,5 +1,3 @@
-var keepChecking;
-
 Components.utils.import("resource:///modules/gloda/log4moz.js");
 
 var checkTimeout;
@@ -50,24 +48,32 @@ function initDebug()
 }
 
 initDebug();
-function DisplayReport()
-{
-  if (DisplayMessages.length>0)
-  {
-     var msg = DisplayMessages.shift();
-     document.getElementById("sendlater_status").value = msg;
-     setTimeout("DisplayReport()",300);
-  }
-}
 
+var Sendlater3DisplayReportTimer;
+var Sendlater3DisplayReportCallback = {
+    notify: function(timer) {
+	if (DisplayMessages.length>0) {
+	    var msg = DisplayMessages.shift();
+	    document.getElementById("sendlater_status").value = msg;
+	}
+	else {
+	    timer.cancel();
+	}
+    }
+}
      
-function StatusReportMsg(msg)
-{
-   if (!DisplayMessages.length)
-   {
-      setTimeout("DisplayReport()",300);
-   }
-   DisplayMessages.push(msg);   
+function StatusReportMsg(msg) {
+    if (!DisplayMessages.length) {
+        Sendlater3DisplayReportTimer = Components
+	    .classes["@mozilla.org/timer;1"]
+	    .createInstance(Components.interfaces.nsITimer);
+	Sendlater3DisplayReportTimer.initWithCallback(
+	    Sendlater3DisplayReportCallback,
+	    300,
+	    Components.interfaces.nsITimer.TYPE_REPEATING_SLACK
+	    );
+    }
+    DisplayMessages.push(msg);   
 }
 
 function FormatDateTime(thisdate,includeTZ)
@@ -121,7 +127,6 @@ function FormatDateTime(thisdate,includeTZ)
 	}
 	return s;
 }
-var animTimeout;
 
 const FOLDER_IS_IDLE = 0;
 const FOLDER_IS_LOADING = 1;
@@ -152,21 +157,48 @@ var copyServiceListener =  { sfileNP: null,
 										};
 								
 
-function SwitchToStatus()
-{
+var Sendlater3AnimTimer = null;
+var Sendlater3AnimCallback = {
+    notify: function(timer) {
 	SENDLATER3debug("STATUS MESSAGE - " + MessagesPending);
-    document.getElementById("sendlater_deck").selectedIndex = 1;
-     var strbundle = document.getElementById("sendlater3backgroundstrings");
+	document.getElementById("sendlater_deck").selectedIndex = 1;
+	var strbundle = document.getElementById("sendlater3backgroundstrings");
+	var status;
 
-   if (MessagesPending > 0) 
-	{StatusReportMsg("SENDLATER3 [" +strbundle.getString("PendingMessage") + " " + MessagesPending + "]");}
-   else
-	{StatusReportMsg("SENDLATER3 ["+ strbundle.getString("IdleMessage") +"]");}
-   
+	if (MessagesPending > 0) {
+	    status = strbundle.getString("PendingMessage") + " " +
+	    	     MessagesPending;
+	}
+	else {
+	    status = strbundle.getString("IdleMessage");
+	}
+	StatusReportMsg("SENDLATER3 [" + status + "]");
+    }
+}
+function Sendlater3SetAnimTimer(timeout) {
+    if (Sendlater3AnimTimer != null) {
+        Sendlater3AnimTimer.cancel();
+    }
+    Sendlater3AnimTimer = Components
+	.classes["@mozilla.org/timer;1"]
+	.createInstance(Components.interfaces.nsITimer);
+    Sendlater3AnimTimer.initWithCallback(
+	Sendlater3AnimCallback,
+	timeout,
+	Components.interfaces.nsITimer.TYPE_ONE_SHOT
+	);
 }
 
-function CheckThisURI(messageURI)
-{
+var Sendlater3CheckThisURIQueue = new Array();
+var Sendlater3CheckThisURITimer;
+
+var Sendlater3CheckThisURICallback = {
+    notify: function (timer) {
+	if (Sendlater3CheckThisURIQueue.length == 0) {
+	    timer.cancel();
+	    return;
+	}
+	messageURI = Sendlater3CheckThisURIQueue.shift();
 
 	var msgSendLater = Components.classes["@mozilla.org/messengercompose/sendlater;1"]
                              .getService(Components.interfaces.nsIMsgSendLater);
@@ -179,8 +211,7 @@ function CheckThisURI(messageURI)
 	var ScriptInput = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance();
 	var ScriptInputStream = ScriptInput .QueryInterface(Components.interfaces.nsIScriptableInputStream);
 
-	clearTimeout(animTimeout);
-	animTimeout = setTimeout("SwitchToStatus()",3000);
+	Sendlater3SetAnimTimer(3000);
 
 	SENDLATER3debug("Checking message : " + messageURI + "\n");
 	
@@ -297,8 +328,7 @@ function CheckThisURI(messageURI)
 			else {
 			    SENDLATER3dump("Message deposited in Outbox.");
 			}
-			clearTimeout(animTimeout);
-			animTimeout = setTimeout("SwitchToStatus()",3000);
+			Sendlater3SetAnimTimer(3000);
 		}
 		else
 		{
@@ -306,7 +336,27 @@ function CheckThisURI(messageURI)
 			SENDLATER3dump(MessagesPending + " messages still pending");
 		}
 	}
-}                            
+    }
+}
+
+// We use a queue of URIs to be checked, and only allow one URI to be
+// checked each time the timer fires, so that we don't block for a
+// long time checking drafts and cause the UI to hang or respond
+// sluggishly.
+function Sendlater3CheckThisURIQueueAdd(messageURI) {
+    if (Sendlater3CheckThisURIQueue.length == 0) {
+        Sendlater3CheckThisURITimer = Components
+	    .classes["@mozilla.org/timer;1"]
+	    .createInstance(Components.interfaces.nsITimer);
+	Sendlater3CheckThisURITimer.initWithCallback(
+	    Sendlater3CheckThisURICallback,
+	    100,
+	    Components.interfaces.nsITimer.TYPE_REPEATING_SLACK
+	    );
+    }
+    Sendlater3CheckThisURIQueue.push(messageURI);
+}
+
 var folderLoadListener =
 {
     OnItemEvent: function(folder, event)
@@ -321,8 +371,7 @@ var folderLoadListener =
 				SENDLATER3debug("FOLDER LOADED - " + folder.URI);
                 if (folderstocheck.indexOf(folder.URI)>=0)
                 {
-                    clearTimeout(animTimeout);
-                   	animTimeout = setTimeout("SwitchToStatus()",3000);
+		    Sendlater3SetAnimTimer(3000);
 
                     SENDLATER3dump("FOLDER MONITORED - " + folder.URI + "\n");
                     //folderstocheck.splice(folderstocheck.indexOf(folder.URI),1);
@@ -335,7 +384,7 @@ var folderLoadListener =
                         {
                             var messageDBHDR = messageenumerator.getNext().QueryInterface(Components.interfaces.nsIMsgDBHdr);
                             var messageURI = thisfolder.getUriForMsg(messageDBHDR);
-                            setTimeout("CheckThisURI('" + messageURI + "');",100);
+			    Sendlater3CheckThisURIQueueAdd(messageURI);
                         }
                     }
 		    else
@@ -349,10 +398,10 @@ var folderLoadListener =
 };
 	
 	 
+var Sendlater3BackgroundTimer;
 
-function CheckForSendLater ()
-{
-
+var Sendlater3CheckForSendLaterCallback = {
+    notify: function (timer) {
 	MessagesPending = 0;
 	SENDLATER3debug("One cycle of checking");
 	
@@ -386,8 +435,7 @@ function CheckForSendLater ()
 	
 	for (acindex = 0;acindex < allaccounts.Count();acindex++)
 	{
-		clearTimeout(animTimeout);
-		animTimeout = setTimeout("SwitchToStatus()",5000);
+		Sendlater3SetAnimTimer(5000);
 		SENDLATER3debug("Progress Animation RESET");
 		var thisaccount = allaccounts.GetElementAt(acindex);
 		if (thisaccount)
@@ -427,14 +475,38 @@ function CheckForSendLater ()
 			}
 		}
 	}
-	keepChecking = setTimeout("CheckForSendLater();",checkTimeout+Math.ceil(Math.random()*3000)-1500);
-}
-function startMonitor()
-{
-SENDLATER3debug("Starting monitor [for every " + checkTimeout + "ms]");
-var mailSession = Components.classes["@mozilla.org/messenger/services/session;1"].getService(Components.interfaces.nsIMsgMailSession);
-mailSession.AddFolderListener(folderLoadListener,Components.interfaces.nsIFolderListener.event);
-keepChecking = setTimeout("CheckForSendLater();",2000);//checkTimeout+Math.ceil(Math.random()*3000)-1500);
+    }
 }
 
-setTimeout("startMonitor();",5000);
+var Sendlater3FirstBackgroundCallback = {
+    notify: function (timer) {
+	Sendlater3CheckForSendLaterCallback.notify(null);
+	Sendlater3BackgroundTimer.initWithCallback(
+	    Sendlater3CheckForSendLaterCallback,
+	    checkTimeout+Math.ceil(Math.random()*3000)-1500,
+	    Components.interfaces.nsITimer.TYPE_REPEATING_SLACK
+	    );
+    }
+}
+
+var Sendlater3StartMonitorCallback = {
+    notify: function (timer) {
+	SENDLATER3debug("Starting monitor [for every " + checkTimeout + "ms]");
+	var mailSession = Components.classes["@mozilla.org/messenger/services/session;1"].getService(Components.interfaces.nsIMsgMailSession);
+	mailSession.AddFolderListener(folderLoadListener,Components.interfaces.nsIFolderListener.event);
+	Sendlater3BackgroundTimer.initWithCallback(
+	    Sendlater3FirstBackgroundCallback,
+	    2000,
+	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
+	    );
+    }
+}
+
+Sendlater3BackgroundTimer = Components
+    .classes["@mozilla.org/timer;1"]
+    .createInstance(Components.interfaces.nsITimer);
+Sendlater3BackgroundTimer.initWithCallback(
+    Sendlater3StartMonitorCallback,
+    5000,
+    Components.interfaces.nsITimer.TYPE_ONE_SHOT
+    );
