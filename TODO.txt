@@ -1,0 +1,5 @@
+Fix global namespace pollution.
+Unify logging in utils file.
+Improve toolbar behavior.
+Internationalize if necessary.
+Make preference changes take effect immediately.
