@@ -45,22 +45,20 @@ function IsThisDraft(msgFolder)
 
 	var accountManager = Components.classes["@mozilla.org/messenger/account-manager;1"].getService(Components.interfaces.nsIMsgAccountManager);
 	
-	var thisisdraft = false;
-	
 	var fdrlocal = accountManager.localFoldersServer.rootFolder;
-	if (fdrlocal.findSubFolder("Drafts").URI==msgFolder.URI) thisisdraft = true;
-	
+	if (fdrlocal.findSubFolder("Drafts").URI==msgFolder.URI) return true;
+	if (Sendlater3Util.PrefService.getCharPref('mail.identity.default.draft_folder')==msgFolder.URI) return true;	
 
 	var identities = accountManager.GetIdentitiesForServer(msgFolder.server);
 	
 	for (idindex = 0;idindex < identities.Count(); idindex++)
 	{  
 		if (identities.GetElementAt(idindex).QueryInterface(Components.interfaces.nsIMsgIdentity).draftFolder==msgFolder.URI)
-			thisisdraft = true;
+			return true;
 	}
 	
 
-    return(thisisdraft);
+    return false;
 
 }
 
