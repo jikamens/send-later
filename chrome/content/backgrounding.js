@@ -369,12 +369,13 @@ var folderLoadListener =
             {
              folder.endFolderLoading();
 				SENDLATER3debug("FOLDER LOADED - " + folder.URI);
-                if (folderstocheck.indexOf(folder.URI)>=0)
+		var where = folderstocheck.indexOf(folder.URI);
+                if (where >= 0)
                 {
 		    Sendlater3SetAnimTimer(3000);
 
                     SENDLATER3dump("FOLDER MONITORED - " + folder.URI + "\n");
-                    //folderstocheck.splice(folderstocheck.indexOf(folder.URI),1);
+                    folderstocheck.splice(where, 1);
                     var thisfolder = folder.QueryInterface(Components.interfaces.nsIMsgFolder);
                     var messageenumerator = thisfolder.messages;
                     if ( messageenumerator )
