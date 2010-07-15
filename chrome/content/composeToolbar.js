@@ -165,19 +165,19 @@ var Sendlater3ComposeToolbar = {
 		document.getElementById("minvalue").value = hhmm.getMinutes();
 		switch (document.getElementById("sendlater3_toolbar")
 		        .parentNode.getAttribute("mode")) {
-		    case "full":
-		    case "icons":
-			document.getElementById("sendlater3toolbartimeicon")
-			    .hidden = false;
-			document.getElementById("sendlater3toolbarcalicon")
-			    .hidden = false;
-			break;
-		    default:
-			document.getElementById("sendlater3toolbartimeicon")
-			    .hidden = true;
-			document.getElementById("sendlater3toolbarcalicon")
-			    .hidden = true;
-			break;
+		case "full":
+		case "icons":
+		    document.getElementById("sendlater3toolbartimeicon")
+			.hidden = false;
+		    document.getElementById("sendlater3toolbarcalicon")
+			.hidden = false;
+		    break;
+		default:
+		    document.getElementById("sendlater3toolbartimeicon")
+			.hidden = true;
+		    document.getElementById("sendlater3toolbarcalicon")
+			.hidden = true;
+		    break;
 		}
 
 		if (showquickbutton1) {
@@ -255,7 +255,7 @@ var Sendlater3ComposeToolbar = {
 	function captureonLoad() {
 	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.captureonLoad");
 	    Sendlater3Util.debug("sendlater3_toolbar_initialized: " +
-	        window.sendlater3_toolbar_initialized);
+				 window.sendlater3_toolbar_initialized);
 	    if (! window.sendlater3_toolbar_initialized) {
 		SENDLATER3_TOOLBAR_SetOnLoad();
 	        window.sendlater3_toolbar_initialized = true;

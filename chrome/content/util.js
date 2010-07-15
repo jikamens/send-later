@@ -9,8 +9,8 @@ var Sendlater3Util = {
     PromptBundleGet: function(name) {
 	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGet", name);
 	if (Sendlater3Util._PromptBundle == null) {
-	   Sendlater3Util._PromptBundle =
-	       document.getElementById("promptstrings");
+	    Sendlater3Util._PromptBundle =
+		document.getElementById("promptstrings");
 	}
 	Sendlater3Util.Returning("Sendlater3Util.PromptBundleGet",
 				 Sendlater3Util._PromptBundle.getString(name));
@@ -30,7 +30,8 @@ var Sendlater3Util = {
     },
 
     FormatDateTime: function(thisdate,includeTZ) {
-	Sendlater3Util.Entering("Sendlater3Util.FormatDateTime", thisdate, includeTZ);
+	Sendlater3Util.Entering("Sendlater3Util.FormatDateTime", thisdate,
+				includeTZ);
 	var s="";
 	var sDaysOfWeek = [ "Sun","Mon","Tue","Wed","Thu","Fri","Sat" ];
 	var sMonths= ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep",
@@ -47,35 +48,35 @@ var Sendlater3Util = {
 	s += " ";
 	var val = thisdate.getHours();
 	if (val < 10)
-	s += "0";
+	    s += "0";
 	s += val;
 	s += ":";
 	val = thisdate.getMinutes();
 	if (val < 10)
-	s += "0";
+	    s += "0";
 	s+= val;
 	s += ":";
 	val = thisdate.getSeconds();
 	if (val < 10)
-	s += "0";
+	    s += "0";
 	s+=val;
 	if (includeTZ) {
 	    s += " ";
 	    if (offset < 0) 
-		    {
-		    offset *= -1;
-		    s += "+";
-		    }
+	    {
+		offset *= -1;
+		s += "+";
+	    }
 	    else
-		    s += "-";
+		s += "-";
 
 	    val = Math.floor (offset / 60);
 	    if (val < 10)
-		    s += "0";
+		s += "0";
 	    s+=val;
 	    val = Math.floor (offset % 60);
 	    if (val < 10)
-		    s += "0";
+		s += "0";
 	    s+=val;
 	}
 	Sendlater3Util.Returning("Sendlater3Util.FormatDateTime", s);

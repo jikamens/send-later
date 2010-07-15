@@ -28,9 +28,12 @@ var Sendlater3Prompt = {
 	    Sendlater3Util.ButtonLabel(2);
 	document.getElementById("shortcutbtn_3").label =
 	    Sendlater3Util.ButtonLabel(3);
-	var shortcut1value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.1.value");
-	var shortcut2value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.2.value");
-	var shortcut3value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.3.value");
+	var shortcut1value = Sendlater3Util.PrefService
+	    .getIntPref("extensions.sendlater3.quickoptions.1.value");
+	var shortcut2value = Sendlater3Util.PrefService
+	    .getIntPref("extensions.sendlater3.quickoptions.2.value");
+	var shortcut3value = Sendlater3Util.PrefService
+	    .getIntPref("extensions.sendlater3.quickoptions.3.value");
 	document.getElementById("shortcutbtn_1")
 	    .setAttribute("oncommand",
 			  "Sendlater3Prompt.CallSendAfter(" +
@@ -57,8 +60,7 @@ var Sendlater3Prompt = {
 			  shortcut3value + ");close();");
 
 	var prevXSendLater = window.arguments[0].previouslyTimed;
-	if (prevXSendLater)
-	{
+	if (prevXSendLater) {
 	   document.getElementById("yearvalue").value =
 	       prevXSendLater.getFullYear();
 	   document.getElementById("monthvalue").value =
@@ -188,7 +190,8 @@ var Sendlater3Prompt = {
 	sendat.setMinutes(parseInt(selectedmin));
 
 	document.getElementById("summary").value =
-	    Sendlater3Util.PromptBundleGet("willsendat") + " " + sendat.toLocaleString();
+	    Sendlater3Util.PromptBundleGet("willsendat") + " " +
+	    sendat.toLocaleString();
         Sendlater3Util.Leaving("Sendlater3Prompt.updateSummary");
     },
 

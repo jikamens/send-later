@@ -1,4 +1,3 @@
 Make preference changes take effect immediately.
-Reformat / reindent all JS code for readability.
 Share common code between toolbar and popup.
 Stupid interval should be in seconds, not milliseconds.
