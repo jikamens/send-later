@@ -1,3 +1,2 @@
-Make preference changes take effect immediately.
 Share common code between toolbar and popup.
 Stupid interval should be in seconds, not milliseconds.

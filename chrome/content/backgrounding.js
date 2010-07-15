@@ -1,8 +1,6 @@
 var Sendlater3Backgrounding = function() {
     Sendlater3Util.Entering("Sendlater3Backgrounding");
 
-    var displayprogressbar;
-
     //mailnews.customDBHeaders 
     var installedCustomHeaders = Sendlater3Util.PrefService
         .getCharPref('mailnews.customDBHeaders');
@@ -20,8 +18,10 @@ var Sendlater3Backgrounding = function() {
 	return timeout;
     }
 
-    displayprogressbar = Sendlater3Util.PrefService
-	.getBoolPref("extensions.sendlater3.showprogress");
+    function displayprogressbar() {
+	return Sendlater3Util.PrefService
+	    .getBoolPref("extensions.sendlater3.showprogress");
+    }
 
     var msgWindow = Components.classes["@mozilla.org/messenger/msgwindow;1"]
 	.createInstance();
@@ -426,7 +426,7 @@ var Sendlater3Backgrounding = function() {
 
 	    var acindex;
 	    Sendlater3Util.debug("Progress Animation SET");
-	    if (displayprogressbar)
+	    if (displayprogressbar())
 		document.getElementById("sendlater_deck").selectedIndex = 0;
 
 	    for (acindex = 0;acindex < allaccounts.Count();acindex++) {

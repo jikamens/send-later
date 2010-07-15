@@ -6,7 +6,7 @@ var Sendlater3Composing = {
 	var sComposeMsgsBundle = document.getElementById("bundle_composeMsgs");
 
 	var msgWindow = Components
-	    .classes["@mozilla.org/messenger/msgwindow;1"].createInstance();
+	    .classes["@mozilla.org/messenger/msgwindow;1"].createInstance()
 	    .QueryInterface(Components.interfaces.nsIMsgWindow);
 	var sendlater3ComposePrefs = Components
 	    .classes["@mozilla.org/preferences-service;1"]
@@ -61,7 +61,7 @@ var Sendlater3Composing = {
 			   ( (!headerready) || 
 			     (headerready && xsendlaterpresent) )) {
 			content = content + ScriptInputStream .read(512);
-			if (!headerready and content.match(/\r\n\r\n/)) {
+			if (!headerready && content.match(/\r\n\r\n/)) {
 			    headerready = true;
 			    if (content.match(/\r\nX-Send-Later-At:.*/))
 				xsendlaterpresent = true;

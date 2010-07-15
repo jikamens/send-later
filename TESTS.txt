@@ -29,19 +29,19 @@ Toolbar: Send at specified time
 Toolbar: Send in 15 minutes
 toolbar: Send in 30 minutes
 Toolbar: Send in 2 hours
-Show Send Later column enabled works (after restart)
-Show Send Later column disabled works (after restart)
-Show Send Later Header enabled works (after restart)
-Show Send Later Header disabled works (after restart)
-Show Background Progress in Statusbar enabled works (after restart)
-Show Background Progress in Statusbar disabled works (after restart)
-Changing "Check every" works (after restart)
-Shortcut 1 label change works (after restart)
-Shortcut 1 minutes change works (after restart)
-Shortcut 1 show in toolbar works (after restart)
-Shortcut 2 label change works (after restart)
-Shortcut 2 minutes change works (after restart)
-Shortcut 2 show in toolbar works (after restart)
-Shortcut 3 label change works (after restart)
-Shortcut 3 minutes change works (after restart)
-Shortcut 3 show in toolbar works (after restart)
+Show Send Later column enabled works
+Show Send Later column disabled works
+Show Send Later Header enabled works
+Show Send Later Header disabled works
+Show Background Progress in Statusbar enabled works
+Show Background Progress in Statusbar disabled works
+Changing "Check every" works
+Shortcut 1 label change works
+Shortcut 1 minutes change works
+Shortcut 1 show in toolbar works
+Shortcut 2 label change works
+Shortcut 2 minutes change works
+Shortcut 2 show in toolbar works
+Shortcut 3 label change works
+Shortcut 3 minutes change works
+Shortcut 3 show in toolbar works

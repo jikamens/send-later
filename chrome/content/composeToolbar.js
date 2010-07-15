@@ -2,19 +2,17 @@ var Sendlater3ComposeToolbar = {
     main: function() {
     	Sendlater3Util.Entering("Sendlater3ComposeToolbar.main");
 
-	var showquickbutton1 = Sendlater3Util.PrefService
-	    .getBoolPref("extensions.sendlater3.quickoptions.1.showintoolbar");
-	var showquickbutton2 = Sendlater3Util.PrefService
-	    .getBoolPref("extensions.sendlater3.quickoptions.2.showintoolbar");
-	var showquickbutton3 = Sendlater3Util.PrefService
-	    .getBoolPref("extensions.sendlater3.quickoptions.3.showintoolbar");
+	function showquickbutton(num) {
+	    return Sendlater3Util.PrefService
+		.getBoolPref("extensions.sendlater3.quickoptions." + num +
+			     ".showintoolbar");
+	}
 
-	var shortcut1value = Sendlater3Util.PrefService
-	    .getIntPref("extensions.sendlater3.quickoptions.1.value");
-	var shortcut2value = Sendlater3Util.PrefService
-	    .getIntPref("extensions.sendlater3.quickoptions.2.value");
-	var shortcut3value = Sendlater3Util.PrefService
-	    .getIntPref("extensions.sendlater3.quickoptions.3.value");
+	function shortcutvalue(num) {
+	    return Sendlater3Util.PrefService
+		.getIntPref("extensions.sendlater3.quickoptions." + num +
+			    ".value");
+	}
 
 	function populateHours() {
 	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.populateHours");
@@ -180,55 +178,23 @@ var Sendlater3ComposeToolbar = {
 		    break;
 		}
 
-		if (showquickbutton1) {
-		    document.getElementById("shortcutbtn_1").label =
-		        Sendlater3Util.ButtonLabel(1);
-		    document.getElementById("shortcutbtn_1")
-		        .setAttribute("oncommand",
-				      "Sendlater3ComposeToolbar.CallSendAfter("
-				      + shortcut1value + ");");
-		    document.getElementById("quickbutton1-key")
-		        .setAttribute("oncommand",
-				      "Sendlater3ComposeToolbar.CallSendAfter("
-				      + shortcut1value + ");");
-		    document.getElementById("shortcutbtn_1").hidden = false;
-		}
-		else {
-		    document.getElementById("shortcutbtn_1").hidden = true;
-		}
-
-		if (showquickbutton2) {
-		    document.getElementById("shortcutbtn_2").label =
-		        Sendlater3Util.ButtonLabel(2);
-		    document.getElementById("shortcutbtn_2")
-		        .setAttribute("oncommand",
-			              "Sendlater3ComposeToolbar.CallSendAfter("
-				      + shortcut2value + ");");
-		    document.getElementById("quickbutton2-key")
-		        .setAttribute("oncommand",
-				      "Sendlater3ComposeToolbar.CallSendAfter("
-				      + shortcut2value + ");");
-		    document.getElementById("shortcutbtn_2").hidden = false;
-		}
-		else {
-		    document.getElementById("shortcutbtn_2").hidden = true;
-		}
-
-		if (showquickbutton3) {
-		    document.getElementById("shortcutbtn_3").label =
-		        Sendlater3Util.ButtonLabel(3);
-		    document.getElementById("shortcutbtn_3")
-		        .setAttribute("oncommand",
-				      "Sendlater3ComposeToolbar.CallSendAfter("
-				      + shortcut3value + ");");
-		    document.getElementById("quickbutton3-key")
-		        .setAttribute("oncommand",
-				      "Sendlater3ComposeToolbar.CallSendAfter("
-				      + shortcut3value + ");");
-		    document.getElementById("shortcutbtn_3").hidden = false;
-		}
-		else {
-		    document.getElementById("shortcutbtn_3").hidden = true;
+		var i;
+		for (i = 1; i <= 3; i++) {
+		    var btn = "shortcutbtn_" + i;
+		    if (showquickbutton(1)) {
+			var cmd = "Sendlater3ComposeToolbar.CallSendAfter(" +
+			    shortcutvalue(i) + ");"
+			document.getElementById(btn).label =
+			    Sendlater3Util.ButtonLabel(i);
+			document.getElementById(btn)
+			    .setAttribute("oncommand", cmd);
+			document.getElementById("quickbutton" + i + "-key")
+			    .setAttribute("oncommand", cmd);
+			document.getElementById(btn).hidden = false;
+		    }
+		    else {
+			document.getElementById(btn).hidden = true;
+		    }
 		}
 
 		if (Sendlater3Composing.prevXSendLater) {
