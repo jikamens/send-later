@@ -214,17 +214,45 @@ var Sendlater3ComposeToolbar = {
 		else {
 		    Sendlater3Util.dump("No previous time");
 		}
+		SEndlater3Util.Returning("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad", true);
+		return true;
 	    }
-	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad");
+	    Sendlater3Util.Returning("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad", false);
+	    return false;
+	}
+
+	var originalCustomizeDone;
+
+	function CustomizeDone(aToolboxChanged) {
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.CustomizeDone", aToolboxChanged);
+	    originalCustomizeDone(aToolboxChanged);
+	    if (aToolboxChanged) {
+		Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.CustomizeDone");
+		captureonLoad();
+		Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.CustomizeDone");
+	    }
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.CustomizeDone");
 	}
 
 	function captureonLoad() {
 	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.captureonLoad");
+	    // We need to detect when the toolbar is first added to
+	    // the message window, so we can populate it at that
+	    // point.
+	    if (! originalCustomizeDone) {
+		originalCustomizeDone = document
+		    .getElementById("compose-toolbox").customizeDone;
+		Sendlater3Util.debug("originalCustomizeDone=" + 
+				     originalCustomizeDone);
+		document.getElementById("compose-toolbox").customizeDone =
+		    CustomizeDone;
+	    }
+
 	    Sendlater3Util.debug("sendlater3_toolbar_initialized: " +
 				 window.sendlater3_toolbar_initialized);
 	    if (! window.sendlater3_toolbar_initialized) {
-		SENDLATER3_TOOLBAR_SetOnLoad();
-	        window.sendlater3_toolbar_initialized = true;
+	        window.sendlater3_toolbar_initialized = 
+		    SENDLATER3_TOOLBAR_SetOnLoad();
 	    }
 	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.captureonLoad");
 	}
@@ -238,6 +266,7 @@ var Sendlater3ComposeToolbar = {
 	// attribute on the window) before setting them.
 	window.addEventListener("load",captureonLoad,false);
 	window.addEventListener("focus",captureonLoad,false);
+
     	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main");
     },
 

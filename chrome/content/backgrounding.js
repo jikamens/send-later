@@ -188,7 +188,7 @@ var Sendlater3Backgrounding = function() {
 		    (content.match(/\r\n\r\n/) || content.match(/\n\n/))) {
 		    Sendlater3Util.debug("header is now ready");
 		    headerready = true;
-		    if (content.match(/^X-Send-Later-At:.*$/m)) {
+		    if (content.match(/^X-Send-Later-At:.*$/mi)) {
 			xsendlaterpresent = true;
 		    }
 		}
@@ -198,7 +198,7 @@ var Sendlater3Backgrounding = function() {
 				 " , SendLaterPresent = " + xsendlaterpresent);
 	    var gotcha;
 	    if (xsendlaterpresent)
-		gotcha =content.match(/^X-Send-Later-At:.*$/m).toString();
+		gotcha =content.match(/^X-Send-Later-At:.*$/mi).toString();
 	    else
 		gotcha = false;
 	    if (gotcha) {
@@ -218,10 +218,10 @@ var Sendlater3Backgrounding = function() {
 		    content = "\n" + content;
 
 		    content = content
-			.replace(/(\nDate:).*(\r?\n)/,"$1 " +
+			.replace(/(\nDate:).*(\r?\n)/i,"$1 " +
 				 Sendlater3Util.FormatDateTime(new Date(),
 							       true)+"$2");
-		    content = content.replace(/\nX-Send-Later-At:.*\r?\n/,
+		    content = content.replace(/\nX-Send-Later-At:.*\r?\n/i,
 					      "\n");
 
 		    // Remove extra newline -- see comment above.
@@ -485,7 +485,7 @@ var Sendlater3Backgrounding = function() {
 
     function StartMonitorCallback() {
 	Sendlater3Util.Entering("Sendlater3Backgrounding.StartMonitorCallback");
-	Sendlater3Util.debug("Starting monitor [for every " + checkTimeout +
+	Sendlater3Util.debug("Starting monitor [for every " + checkTimeout() +
 			     "ms]");
 	var mailSession = Components
 	    .classes["@mozilla.org/messenger/services/session;1"]
