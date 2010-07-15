@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
-<!DOCTYPE window SYSTEM "chrome://sendlater3/locale/sendlater3prompt.dtd">
+<!DOCTYPE window SYSTEM "chrome://sendlater3/locale/prompt.dtd">
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
-        title="&sendlater.prompt.title.label;" onload="Sendlater3Sendlater3Prompt.SetOnLoad();">
+        title="&sendlater.prompt.title.label;" onload="Sendlater3Prompt.SetOnLoad();">
 <stringbundleset id="strbundles">
-	<stringbundle id="sendlater3promptstrings" src="chrome://sendlater3/locale/sendlater3prompt.properties"/>
+	<stringbundle id="promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
 </stringbundleset>
 <script src="util.js"/>
-<script src="chrome://sendlater3/content/sendlater3prompt.js"/>
+<script src="chrome://sendlater3/content/prompt.js"/>
 <keyset>
 <key id="quickbutton1-key" modifiers="alt" key="1"/>
 <key id="quickbutton2-key" modifiers="alt" key="2"/>
@@ -58,11 +58,11 @@
 	</hbox>
 	
 	<vbox style="border:solid #00C000 3px" >
-				<button width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Sendlater3Prompt.CallSendAt();close();"/>
+				<button width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 				<hbox>
-					<button key="quickbutton1-key" id="shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Sendlater3Prompt.CallSendAfter(15);close();"/>
-					<button key="quickbutton2-key" id="shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3Sendlater3Prompt.CallSendAfter(30);close();"/>
-					<button key="quickbutton3-key" id="shortcutbtn_3" flex="1" label="2 hours" oncommand="Sendlater3Sendlater3Prompt.CallSendAfter(120);close();"/>
+					<button key="quickbutton1-key" id="shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Prompt.CallSendAfter(15);close();"/>
+					<button key="quickbutton2-key" id="shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3Prompt.CallSendAfter(30);close();"/>
+					<button key="quickbutton3-key" id="shortcutbtn_3" flex="1" label="2 hours" oncommand="Sendlater3Prompt.CallSendAfter(120);close();"/>
 				</hbox>
 
 	</vbox>

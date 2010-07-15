@@ -1,6 +1,3 @@
-Rename sendlater3prompt.js to prompt.js?
-Improve toolbar behavior.
-Internationalize if necessary.
 Make preference changes take effect immediately.
 Reformat / reindent all JS code for readability.
 Share common code between toolbar and popup.

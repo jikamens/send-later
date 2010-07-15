@@ -93,7 +93,7 @@ document.getElementById("msgcomposeWindow").addEventListener("compose-window-ini
     },
 
     CheckSendAt: function() {
-	window.openDialog("chrome://sendlater3/content/sendlater3prompt.xul",
+	window.openDialog("chrome://sendlater3/content/prompt.xul",
 			  "SendAtWindow", "modal,chrome,centerscreen", 
 			  { finishCallback: Sendlater3Composing.SendAtTime,
 			    continueCallback: Sendlater3Composing.ContinueSendLater,

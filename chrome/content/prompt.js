@@ -1,24 +1,24 @@
-var Sendlater3Sendlater3Prompt = {
+var Sendlater3Prompt = {
     SetOnLoad: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.SetOnLoad");
+        Sendlater3Util.Entering("Sendlater3Prompt.SetOnLoad");
 	document.getElementById("yearvalue")
 	    .addEventListener("ValueChange",
-			      Sendlater3Sendlater3Prompt.populateMonths, false);
+			      Sendlater3Prompt.populateMonths, false);
 	document.getElementById("monthvalue")
 	    .addEventListener("ValueChange",
-			      Sendlater3Sendlater3Prompt.populateDays, false);
+			      Sendlater3Prompt.populateDays, false);
 	document.getElementById("dayvalue")
 	    .addEventListener("ValueChange",
-			      Sendlater3Sendlater3Prompt.updateSummary, false);
+			      Sendlater3Prompt.updateSummary, false);
 	document.getElementById("hourvalue").
 	    addEventListener("ValueChange",
-			     Sendlater3Sendlater3Prompt.updateSummary, false);
+			     Sendlater3Prompt.updateSummary, false);
 	document.getElementById("minvalue").
 	    addEventListener("ValueChange",
-			     Sendlater3Sendlater3Prompt.updateSummary, false);
-	Sendlater3Sendlater3Prompt.populateYears();
-	Sendlater3Sendlater3Prompt.populateHours();
-	Sendlater3Sendlater3Prompt.populateMins();
+			     Sendlater3Prompt.updateSummary, false);
+	Sendlater3Prompt.populateYears();
+	Sendlater3Prompt.populateHours();
+	Sendlater3Prompt.populateMins();
 	var hhmm = new Date();
 	document.getElementById("hourvalue").value = hhmm.getHours();
 	document.getElementById("minvalue").value = hhmm.getMinutes();
@@ -33,27 +33,27 @@ var Sendlater3Sendlater3Prompt = {
 	var shortcut3value = Sendlater3Util.PrefService.getIntPref("extensions.sendlater3.quickoptions.3.value");
 	document.getElementById("shortcutbtn_1")
 	    .setAttribute("oncommand",
-			  "Sendlater3Sendlater3Prompt.CallSendAfter(" +
+			  "Sendlater3Prompt.CallSendAfter(" +
 			  shortcut1value + ");close();");
 	document.getElementById("shortcutbtn_2")
 	    .setAttribute("oncommand",
-	                  "Sendlater3Sendlater3Prompt.CallSendAfter(" +
+	                  "Sendlater3Prompt.CallSendAfter(" +
 			  shortcut2value + ");close();");
 	document.getElementById("shortcutbtn_3")
 	    .setAttribute("oncommand",
-			  "Sendlater3Sendlater3Prompt.CallSendAfter(" +
+			  "Sendlater3Prompt.CallSendAfter(" +
 			  shortcut3value + ");close();");
 	document.getElementById("quickbutton1-key")
 	    .setAttribute("oncommand",
-			  "Sendlater3Sendlater3Prompt.CallSendAfter(" +
+			  "Sendlater3Prompt.CallSendAfter(" +
 			  shortcut1value + ");close();");
 	document.getElementById("quickbutton2-key")
 	    .setAttribute("oncommand",
-			  "Sendlater3Sendlater3Prompt.CallSendAfter(" +
+			  "Sendlater3Prompt.CallSendAfter(" +
 			  shortcut2value + ");close();");
 	document.getElementById("quickbutton3-key")
 	    .setAttribute("oncommand",
-			  "Sendlater3Sendlater3Prompt.CallSendAfter(" +
+			  "Sendlater3Prompt.CallSendAfter(" +
 			  shortcut3value + ");close();");
 
 	var prevXSendLater = window.arguments[0].previouslyTimed;
@@ -71,11 +71,11 @@ var Sendlater3Sendlater3Prompt = {
 	       prevXSendLater.getMinutes();
 	}
 	document.getElementById("cancelButton").focus();
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.SetOnLoad");
+        Sendlater3Util.Leaving("Sendlater3Prompt.SetOnLoad");
     },
 
     populateYears: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateYears");
+        Sendlater3Util.Entering("Sendlater3Prompt.populateYears");
 	var today = new Date();
 	var container = document.getElementById("years");
 	var i;
@@ -88,11 +88,11 @@ var Sendlater3Sendlater3Prompt = {
 	}
 
 	document.getElementById("yearvalue").selectedIndex = 0;
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateYears");
+        Sendlater3Util.Leaving("Sendlater3Prompt.populateYears");
     },
 
     populateMonths: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateMonths");
+        Sendlater3Util.Entering("Sendlater3Prompt.populateMonths");
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var today = new Date();
 	var monthStr = [ Sendlater3Util.PromptBundleGet("January"),
@@ -108,7 +108,7 @@ var Sendlater3Sendlater3Prompt = {
 			 Sendlater3Util.PromptBundleGet("November"),
 			 Sendlater3Util.PromptBundleGet("December") ];
 	var container = document.getElementById("months");
-	Sendlater3Sendlater3Prompt.clearChildren(container);
+	Sendlater3Prompt.clearChildren(container);
 	var i = 0;
 	if (selectedyear == today.getFullYear()) {  
 	    i = today.getMonth();
@@ -120,35 +120,35 @@ var Sendlater3Sendlater3Prompt = {
 	    container.appendChild(newitem);
 	}
 	document.getElementById("monthvalue").selectedIndex = 0;
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateMonths");
+        Sendlater3Util.Leaving("Sendlater3Prompt.populateMonths");
     },
 
     populateDays: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateDays");
+        Sendlater3Util.Entering("Sendlater3Prompt.populateDays");
 	var today = new Date();
 
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
 
 	var container = document.getElementById("days");
-	Sendlater3Sendlater3Prompt.clearChildren(container);
+	Sendlater3Prompt.clearChildren(container);
 	var i=0;
         if ((selectedyear == today.getFullYear()) &&
             (selectedmonth == today.getMonth())) {
 	    i = today.getDate() - 1;
 	}
-	for (;i<Sendlater3Sendlater3Prompt.getMaxDays(selectedyear,selectedmonth);i++) {
+	for (;i<Sendlater3Prompt.getMaxDays(selectedyear,selectedmonth);i++) {
 	    var newitem = document.createElement("menuitem");
 	    newitem.setAttribute("label",(i+1).toString());
 	    newitem.setAttribute("value",(i+1).toString());
 	    container.appendChild(newitem);
 	}
 	document.getElementById("dayvalue").selectedIndex = 0;
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateDays");
+        Sendlater3Util.Leaving("Sendlater3Prompt.populateDays");
     },
 
     populateHours: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateHours");
+        Sendlater3Util.Entering("Sendlater3Prompt.populateHours");
 	var container = document.getElementById("hours");
 	var i;
 	for (i=0;i<24;i++) {
@@ -157,11 +157,11 @@ var Sendlater3Sendlater3Prompt = {
 	    newitem.setAttribute("value",i.toString());
 	    container.appendChild(newitem);
 	}
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateHours");
+        Sendlater3Util.Leaving("Sendlater3Prompt.populateHours");
     },
 
     populateMins: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateMins");
+        Sendlater3Util.Entering("Sendlater3Prompt.populateMins");
 	var container = document.getElementById("mins");
 	var i;
 	for (i=0;i<60;i++) {
@@ -170,11 +170,11 @@ var Sendlater3Sendlater3Prompt = {
 	    newitem.setAttribute("value",i.toString());
 	    container.appendChild(newitem);
 	}
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateMins");
+        Sendlater3Util.Leaving("Sendlater3Prompt.populateMins");
     },
 
     updateSummary: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.updateSummary");
+        Sendlater3Util.Entering("Sendlater3Prompt.updateSummary");
 	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
@@ -189,27 +189,27 @@ var Sendlater3Sendlater3Prompt = {
 
 	document.getElementById("summary").value =
 	    Sendlater3Util.PromptBundleGet("willsendat") + " " + sendat.toLocaleString();
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.updateSummary");
+        Sendlater3Util.Leaving("Sendlater3Prompt.updateSummary");
     },
 
     CallSendAfter: function(mins) {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.CallSendAfter");
+        Sendlater3Util.Entering("Sendlater3Prompt.CallSendAfter");
 	var sendat = new Date();
 	sendat.setTime(sendat.getTime()+mins*60*1000);
 	window.arguments[0].finishCallback(sendat);
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.CallSendAfter");
+        Sendlater3Util.Leaving("Sendlater3Prompt.CallSendAfter");
     },
 
     clearChildren: function(element) {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.clearChildren");
+        Sendlater3Util.Entering("Sendlater3Prompt.clearChildren");
 	while (element.childNodes.length>0) {
 	    element.removeChild(element.childNodes[0]);
 	}
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.clearChildren");
+        Sendlater3Util.Leaving("Sendlater3Prompt.clearChildren");
     },
 
     getMaxDays: function(year,month) {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.getMaxDays");
+        Sendlater3Util.Entering("Sendlater3Prompt.getMaxDays");
 	var oneDay = (1000 * 60 * 60 * 24);
 	var today = new Date();
 	today.setFullYear(parseInt(year));
@@ -218,13 +218,13 @@ var Sendlater3Sendlater3Prompt = {
 	today.setMonth(month);
 	var bt = today.toString();
 	today.setTime(today.valueOf() - oneDay);
-        Sendlater3Util.Returning("Sendlater3Sendlater3Prompt.getMaxDays",
+        Sendlater3Util.Returning("Sendlater3Prompt.getMaxDays",
 				 today.getDate());
 	return today.getDate();
     },
 
     CallSendAt: function() {
-        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.CallSendAt");
+        Sendlater3Util.Entering("Sendlater3Prompt.CallSendAt");
 	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
@@ -239,6 +239,6 @@ var Sendlater3Sendlater3Prompt = {
 	sendat.setMinutes(parseInt(selectedmin));
 
 	window.arguments[0].finishCallback(sendat);
-        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.CallSendAt");
+        Sendlater3Util.Leaving("Sendlater3Prompt.CallSendAt");
     }
 }

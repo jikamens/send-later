@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
-<!DOCTYPE window SYSTEM "chrome://sendlater3/locale/sendlater3prompt.dtd">
+<!DOCTYPE window SYSTEM "chrome://sendlater3/locale/prompt.dtd">
 <overlay id="sendlater3-toolbar-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 <keyset>
@@ -13,7 +13,7 @@
 <toolbaritem id="sendlater3_toolbar" class="chromeclass-toolbar" context="toolbar-context-menu" 
        hidden="false"  >
 <stringbundleset id="strbundles">
-	<stringbundle id="sendlater3promptstrings" src="chrome://sendlater3/locale/sendlater3prompt.properties"/>
+	<stringbundle id="promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
 </stringbundleset>
 <script src="util.js"/>
 <script src="chrome://sendlater3/content/composeToolbar.js"/>

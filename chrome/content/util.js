@@ -10,7 +10,7 @@ var Sendlater3Util = {
 	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGet", name);
 	if (Sendlater3Util._PromptBundle == null) {
 	   Sendlater3Util._PromptBundle =
-	       document.getElementById("sendlater3promptstrings");
+	       document.getElementById("promptstrings");
 	}
 	Sendlater3Util.Returning("Sendlater3Util.PromptBundleGet",
 				 Sendlater3Util._PromptBundle.getString(name));
