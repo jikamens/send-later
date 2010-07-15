@@ -1,6 +1,6 @@
 var Sendlater3ComposeToolbar = {
     main: function() {
-    	Sendlater3Util.debug("composeToolbar.js: entering main");
+    	Sendlater3Util.Entering("Sendlater3ComposeToolbar.main");
 
 	var showquickbutton1 = Sendlater3Util.PrefService
 	    .getBoolPref("extensions.sendlater3.quickoptions.1.showintoolbar");
@@ -17,7 +17,7 @@ var Sendlater3ComposeToolbar = {
 	    .getIntPref("extensions.sendlater3.quickoptions.3.value");
 
 	function populateHours() {
-	    Sendlater3Util.debug("composeToolbar.js: entering populateHours");
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.populateHours");
 	    var container = document.getElementById("hours");
 	    var i;
 	    for (i=0;i<24;i++) {
@@ -26,10 +26,11 @@ var Sendlater3ComposeToolbar = {
 		newitem.setAttribute("value",i.toString());
 		container.appendChild(newitem);
 	    }
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.populateHours");
 	}
 
 	function populateMins() {
-	    Sendlater3Util.debug("composeToolbar.js: entering populateMins");
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.populateMins");
 	    var container = document.getElementById("mins");
 	    var i;
 	    for (i=0;i<60;i++) {
@@ -38,10 +39,11 @@ var Sendlater3ComposeToolbar = {
 		newitem.setAttribute("value",i.toString());
 		container.appendChild(newitem);
 	    }
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.populateMins");
 	}
 
 	function populateYears() {
-	    Sendlater3Util.debug("composeToolbar.js: entering populateYears");
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.populateYears");
 	    var today = new Date();
 	    var container = document.getElementById("years");
 	    var i;
@@ -55,16 +57,19 @@ var Sendlater3ComposeToolbar = {
 	    }
 
 	    document.getElementById("yearvalue").selectedIndex = 0;
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.populateYears");
 	}
 
 	function clearChildren(element) {
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.clearChildren");
 	    while (element.childNodes.length>0) {
 	        element.removeChild(element.childNodes[0]);
 	    }
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.clearChildren");
 	}
 
 	function populateMonths() {
-	    Sendlater3Util.debug("composeToolbar.js: entering populateMonths");
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.populateMonths");
 	    var selectedyear =  document.getElementById("yearvalue").value;
 	    var today = new Date();
 	    var monthStr = [ Sendlater3Util.PromptBundleGet("January"),
@@ -92,9 +97,11 @@ var Sendlater3ComposeToolbar = {
 		container.appendChild(newitem);
 	    }
 	    document.getElementById("monthvalue").selectedIndex = 0;
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.populateMonths");
 	}
 
 	function getMaxDays(year,month) {
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.getMaxDays");
 	    var oneDay = (1000 * 60 * 60 * 24);
 	    var today = new Date();
 	    today.setFullYear(parseInt(year));
@@ -103,11 +110,13 @@ var Sendlater3ComposeToolbar = {
 	    today.setMonth(month);
 	    var bt = today.toString();
 	    today.setTime(today.valueOf() - oneDay);
+	    Sendlater3Util.Returning("Sendlater3ComposeToolbar.main.getMaxDays",
+				     today.getDate());
 	    return today.getDate();
 	}
 
 	function populateDays() {
-	    Sendlater3Util.debug("composeToolbar.js: entering populateDays");
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.populateDays");
 	    var today = new Date();
 
 	    var selectedyear =  document.getElementById("yearvalue").value;
@@ -127,10 +136,11 @@ var Sendlater3ComposeToolbar = {
 		container.appendChild(newitem);
 	    }
 	    document.getElementById("dayvalue").selectedIndex = 0;
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.populateDays");
 	}
 
 	function SENDLATER3_TOOLBAR_SetOnLoad() {
-	    Sendlater3Util.debug("composeToolbar.js: entering SENDLATER3_TOOLBAR_SetOnLoad");
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad");
 	    if (document.getElementById('sendlater3_toolbar')) {
 		document.getElementById("yearvalue")
 		    .removeEventListener("ValueChange", populateMonths, false);
@@ -239,15 +249,18 @@ var Sendlater3ComposeToolbar = {
 		    Sendlater3Util.dump("No previous time");
 		}
 	    }
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad");
 	}
 
 	function captureonLoad() {
+	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.captureonLoad");
 	    Sendlater3Util.debug("sendlater3_toolbar_initialized: " +
 	        window.sendlater3_toolbar_initialized);
 	    if (! window.sendlater3_toolbar_initialized) {
 		SENDLATER3_TOOLBAR_SetOnLoad();
 	        window.sendlater3_toolbar_initialized = true;
 	    }
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.captureonLoad");
 	}
 
 	// The toolbar is only loaded the first time a message
@@ -259,10 +272,11 @@ var Sendlater3ComposeToolbar = {
 	// attribute on the window) before setting them.
 	window.addEventListener("load",captureonLoad,false);
 	window.addEventListener("focus",captureonLoad,false);
+    	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main");
     },
 
     CallSendAt: function() {
-	Sendlater3Util.debug("composeToolbar.js: entering CallSendAt");
+	Sendlater3Util.Entering("Sendlater3ComposeToolbar.CallSendAt");
 	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
@@ -277,13 +291,15 @@ var Sendlater3ComposeToolbar = {
 	sendat.setMinutes(parseInt(selectedmin));
 
 	Sendlater3Composing.SendAtTime(sendat);
+	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.CallSendAt");
     },
 
     CallSendAfter: function(mins) {
-	Sendlater3Util.debug("composeToolbar.js: entering CallSendAfter");
+	Sendlater3Util.Entering("Sendlater3ComposeToolbar.CallSendAfter");
 	var sendat = new Date();
 	sendat.setTime(sendat.getTime()+mins*60*1000);
 	Sendlater3Composing.SendAtTime(sendat);
+	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.CallSendAfter");
     }
 }
 

@@ -7,24 +7,30 @@ var Sendlater3Util = {
     _PromptBundle: null,
 
     PromptBundleGet: function(name) {
+	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGet", name);
 	if (Sendlater3Util._PromptBundle == null) {
 	   Sendlater3Util._PromptBundle =
 	       document.getElementById("sendlater3promptstrings");
 	}
+	Sendlater3Util.Returning("Sendlater3Util.PromptBundleGet",
+				 Sendlater3Util._PromptBundle.getString(name));
 	return Sendlater3Util._PromptBundle.getString(name);
     },
 
     ButtonLabel: function(num) {
+	Sendlater3Util.Entering("Sendlater3Util.ButtonLabel", num);
     	var label = Sendlater3Util.PrefService.
 	    getComplexValue("extensions.sendlater3.quickoptions." + num + ".label",
 			    Components.interfaces.nsISupportsString).data;
 	if (label == "<from locale>") {
 	    label = Sendlater3Util.PromptBundleGet("Button" + num + "Label");
 	}
+	Sendlater3Util.Returning("Sendlater3Util.ButtonLabel", label);
 	return label;
     },
 
     FormatDateTime: function(thisdate,includeTZ) {
+	Sendlater3Util.Entering("Sendlater3Util.FormatDateTime", thisdate, includeTZ);
 	var s="";
 	var sDaysOfWeek = [ "Sun","Mon","Tue","Wed","Thu","Fri","Sat" ];
 	var sMonths= ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep",
@@ -72,6 +78,7 @@ var Sendlater3Util = {
 		    s += "0";
 	    s+=val;
 	}
+	Sendlater3Util.Returning("Sendlater3Util.FormatDateTime", s);
 	return s;
     },
 
@@ -87,17 +94,52 @@ var Sendlater3Util = {
     	Sendlater3Util.logger.debug(msg);
     },
 
+    trace: function(msg) {
+        Sendlater3Util.initLogging();
+    	Sendlater3Util.logger.trace(msg);
+    },
+
     initLogging: function() {
         if (Sendlater3Util.logger == null) {
 	    Sendlater3Util.logger =
 	        Log4Moz.getConfiguredLogger("extensions.sendlater3",
-					    Log4Moz.Level.Debug,
+					    Log4Moz.Level.Trace,
 					    Log4Moz.Level.Info,
 					    Log4Moz.Level.Debug);
 	}
     },
 
     DZFormat: function(val) {
-	if (val < 10) return "0" + val; else return val;
+    	Sendlater3Util.Entering("Sendlater3Util.DZFormat", val);
+	var ret;
+	if (val < 10) ret = "0" + val; else ret = val;
+	Sendlater3Util.Returning("Sendlater3Util.DZFormat", ret);
+	return ret;
+    },
+
+    Entering: function() {
+    	var func = arguments[0];
+	var msg = "Entering " + func;
+	var a = new Array();
+	var i;
+	for (i = 1; i < arguments.length; i++) {
+	    a.push(arguments[i]);
+	}
+	if (a.length > 0) {
+	    msg = msg + "(" + a.join(", ") + ")";
+	}
+        Sendlater3Util.trace(msg);
+    },
+
+    Leaving: function(func) {
+        Sendlater3Util.trace("Leaving " + func);
+    },
+
+    Returning: function(func, value) {
+        Sendlater3Util.trace("Returning \"" + value + "\" from " + func);
+    },
+
+    Throwing: function(func, error) {
+        Sendlater3Util.trace("Throwing \"" + error + "\" from " + func);
     }
 }

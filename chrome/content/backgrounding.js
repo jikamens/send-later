@@ -1,6 +1,6 @@
 var Sendlater3Backgrounding = function() {
 
-Sendlater3Util.debug("Entering Sendlater3Backgrounding");
+Sendlater3Util.Entering("Sendlater3Backgrounding");
 
 var checkTimeout;
 var displayprogressbar;
@@ -27,7 +27,7 @@ var DisplayMessages = new Array();
 var DisplayReportTimer;
 var DisplayReportCallback = {
     notify: function(timer) {
-    	Sendlater3Util.debug("Entering Sendlater3Backgrounding.DisplayReportCallback.notify");
+    	Sendlater3Util.Entering("Sendlater3Backgrounding.DisplayReportCallback.notify");
 	if (DisplayMessages.length>0) {
 	    var msg = DisplayMessages.shift();
 	    document.getElementById("sendlater_status").value = msg;
@@ -35,12 +35,12 @@ var DisplayReportCallback = {
 	else {
 	    timer.cancel();
 	}
-    	Sendlater3Util.debug("Leaving Sendlater3Backgrounding.DisplayReportCallback.notify");
+    	Sendlater3Util.Leaving("Sendlater3Backgrounding.DisplayReportCallback.notify");
     }
 }
      
 function StatusReportMsg(msg) {
-    Sendlater3Util.debug("Entering Sendlater3Backgrounding.StatusReportMsg");
+    Sendlater3Util.Entering("Sendlater3Backgrounding.StatusReportMsg");
     if (!DisplayMessages.length) {
         DisplayReportTimer = Components.classes["@mozilla.org/timer;1"]
 	    .createInstance(Components.interfaces.nsITimer);
@@ -51,7 +51,7 @@ function StatusReportMsg(msg) {
 	    );
     }
     DisplayMessages.push(msg);   
-    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.StatusReportMsg");
+    Sendlater3Util.Leaving("Sendlater3Backgrounding.StatusReportMsg");
 }
 
 const FOLDER_IS_IDLE = 0;
@@ -61,33 +61,35 @@ var MessagesPending=0;
 var copyServiceListener =  { sfileNP: null,
 															QueryInterface : function(iid) 
 															{
-															    Sendlater3Util.debug("Entering Sendlater3Backgrounding.copyServiceListener.QueryInterface");
+															    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.QueryInterface");
 																	if (iid.equals(Components.interfaces.nsIMsgCopyServiceListener) ||
 																									iid.equals(Components.interfaces.nsISupports))
+																		Sendlater3Util.Returning("Sendlater3Backgrounding.copyServiceListener.QueryInterface",
+																		                         this);
 																		return this;
+																	Sendlater3Util.Throwing("Sendlater3Backgrounding.copyServiceListener.QueryInterface",
+																	                        Components.results.NS_NOINTERFACE);
 																	throw Components.results.NS_NOINTERFACE;
-																	return 0;
-															    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.copyServiceListener.QueryInterface");
 															 },
 
 															OnProgress: function (progress, progressMax) {
-															    Sendlater3Util.debug("Entering Sendlater3Backgrounding.copyServiceListener.OnProgress");
-															    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.copyServiceListener.OnProgress");
+															    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.OnProgress");
+															    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.OnProgress");
 															},
 
 															OnStartCopy: function () {
-															    Sendlater3Util.debug("Entering Sendlater3Backgrounding.copyServiceListener.OnStartCopy");
-															    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.copyServiceListener.OnStartCopy");
+															    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.OnStartCopy");
+															    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.OnStartCopy");
 															},
 
 															OnStopCopy: function ( status ) {
-															    Sendlater3Util.debug("Entering Sendlater3Backgrounding.copyServiceListener.OnStopCopy");
-															    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.copyServiceListener.OnStopCopy");
+															    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.OnStopCopy");
+															    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.OnStopCopy");
 															},
 
 															SetMessageKey: function (key ) {
-															    Sendlater3Util.debug("Entering Sendlater3Backgrounding.copyServiceListener.SetMessageKey");
-															    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.copyServiceListener.SetMessageKey");
+															    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.SetMessageKey");
+															    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.SetMessageKey");
 															}
 															
 										};
@@ -96,7 +98,7 @@ var copyServiceListener =  { sfileNP: null,
 var AnimTimer = null;
 var AnimCallback = {
     notify: function(timer) {
-        Sendlater3Util.debug("Entering Sendlater3Backgrounding.AnimCallback.notify");
+        Sendlater3Util.Entering("Sendlater3Backgrounding.AnimCallback.notify");
 	Sendlater3Util.debug("STATUS MESSAGE - " + MessagesPending);
 	if (document != null) {
 	    document.getElementById("sendlater_deck").selectedIndex = 1;
@@ -113,11 +115,11 @@ var AnimCallback = {
 	    }
 	    StatusReportMsg("SENDLATER3 [" + status + "]");
 	}
-        Sendlater3Util.debug("Leaving Sendlater3Backgrounding.AnimCallback.notify");
+        Sendlater3Util.Leaving("Sendlater3Backgrounding.AnimCallback.notify");
     }
 }
 function SetAnimTimer(timeout) {
-    Sendlater3Util.debug("Entering Sendlater3Backgrounding.SetAnimTimer");
+    Sendlater3Util.Entering("Sendlater3Backgrounding.SetAnimTimer");
     if (AnimTimer != null) {
         AnimTimer.cancel();
     }
@@ -128,7 +130,7 @@ function SetAnimTimer(timeout) {
 	timeout,
 	Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
-    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.SetAnimTimer");
+    Sendlater3Util.Leaving("Sendlater3Backgrounding.SetAnimTimer");
 }
 
 var CheckThisURIQueue = new Array();
@@ -136,9 +138,10 @@ var CheckThisURITimer;
 
 var CheckThisURICallback = {
     notify: function (timer) {
-	Sendlater3Util.debug("Entering Sendlater3Backgrounding.CheckThisUriCallback.notify");
+	Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisUriCallback.notify");
 	if (CheckThisURIQueue.length == 0) {
 	    timer.cancel();
+	    Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
 	    return;
 	}
 	messageURI = CheckThisURIQueue.shift();
@@ -279,7 +282,7 @@ var CheckThisURICallback = {
 			Sendlater3Util.dump(MessagesPending + " messages still pending");
 		}
 	}
-	Sendlater3Util.debug("Leaving Sendlater3Backgrounding.CheckThisUriCallback.notify");
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisUriCallback.notify");
     }
 }
 
@@ -288,7 +291,7 @@ var CheckThisURICallback = {
 // long time checking drafts and cause the UI to hang or respond
 // sluggishly.
 function CheckThisURIQueueAdd(messageURI) {
-    Sendlater3Util.debug("Entering Sendlater3Backgrounding.CheckThisURIQueueAdd");
+    Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisURIQueueAdd");
     if (CheckThisURIQueue.length == 0) {
         CheckThisURITimer = Components.classes["@mozilla.org/timer;1"]
 	    .createInstance(Components.interfaces.nsITimer);
@@ -299,14 +302,14 @@ function CheckThisURIQueueAdd(messageURI) {
 	    );
     }
     CheckThisURIQueue.push(messageURI);
-    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.CheckThisURIQueueAdd");
+    Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisURIQueueAdd");
 }
 
 var folderLoadListener =
 {
     OnItemEvent: function(folder, event)
     {
-	Sendlater3Util.debug("Entering Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
+	Sendlater3Util.Entering("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
         var eventType = event.toString();
         
         if (eventType == "FolderLoaded")
@@ -345,7 +348,7 @@ var folderLoadListener =
                 }
             }
 		} 
-	Sendlater3Util.debug("Leaving Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
     }
 };
 	
@@ -354,7 +357,7 @@ var BackgroundTimer;
 
 var CheckForSendLaterCallback = {
     notify: function (timer) {
-	Sendlater3Util.debug("Entering Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
+	Sendlater3Util.Entering("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
 	MessagesPending = 0;
 	Sendlater3Util.debug("One cycle of checking");
 	
@@ -438,25 +441,25 @@ var CheckForSendLaterCallback = {
 			}
 		}
 	}
-	Sendlater3Util.debug("Leaving Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
     }
 }
 
 var FirstBackgroundCallback = {
     notify: function (timer) {
-	Sendlater3Util.debug("Entering Sendlater3Backgrounding.FirstBackgroundCallback.notify");
+	Sendlater3Util.Entering("Sendlater3Backgrounding.FirstBackgroundCallback.notify");
 	CheckForSendLaterCallback.notify(null);
 	BackgroundTimer.initWithCallback(
 	    CheckForSendLaterCallback,
 	    checkTimeout+Math.ceil(Math.random()*3000)-1500,
 	    Components.interfaces.nsITimer.TYPE_REPEATING_SLACK
 	    );
-	Sendlater3Util.debug("Leaving Sendlater3Backgrounding.FirstBackgroundCallback.notify");
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.FirstBackgroundCallback.notify");
     }
 }
 
 function StartMonitorCallback() {
-    Sendlater3Util.debug("Entering Sendlater3Backgrounding.StartMonitorCallback");
+    Sendlater3Util.Entering("Sendlater3Backgrounding.StartMonitorCallback");
     Sendlater3Util.debug("Starting monitor [for every " + checkTimeout + "ms]");
     var mailSession = Components.classes["@mozilla.org/messenger/services/session;1"].getService(Components.interfaces.nsIMsgMailSession);
     mailSession.AddFolderListener(folderLoadListener,Components.interfaces.nsIFolderListener.event);
@@ -468,7 +471,7 @@ function StartMonitorCallback() {
 	2000,
 	Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
-    Sendlater3Util.debug("Leaving Sendlater3Backgrounding.StartMonitorCallback");
+    Sendlater3Util.Leaving("Sendlater3Backgrounding.StartMonitorCallback");
 }
 
 // BackgroundTimer = Components
@@ -481,7 +484,7 @@ function StartMonitorCallback() {
 //     );
 
     window.addEventListener("load", StartMonitorCallback,false);
-    Sendlater3Util.debug("Leaving Sendlater3Backgrounding");
+    Sendlater3Util.Leaving("Sendlater3Backgrounding");
 }
 
 Sendlater3Backgrounding.apply();

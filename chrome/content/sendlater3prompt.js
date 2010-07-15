@@ -1,5 +1,6 @@
 var Sendlater3Sendlater3Prompt = {
     SetOnLoad: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.SetOnLoad");
 	document.getElementById("yearvalue")
 	    .addEventListener("ValueChange",
 			      Sendlater3Sendlater3Prompt.populateMonths, false);
@@ -70,9 +71,11 @@ var Sendlater3Sendlater3Prompt = {
 	       prevXSendLater.getMinutes();
 	}
 	document.getElementById("cancelButton").focus();
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.SetOnLoad");
     },
 
     populateYears: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateYears");
 	var today = new Date();
 	var container = document.getElementById("years");
 	var i;
@@ -84,10 +87,12 @@ var Sendlater3Sendlater3Prompt = {
 	      container.appendChild(newitem);
 	}
 
-	 document.getElementById("yearvalue").selectedIndex = 0;
+	document.getElementById("yearvalue").selectedIndex = 0;
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateYears");
     },
 
     populateMonths: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateMonths");
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var today = new Date();
 	var monthStr = [ Sendlater3Util.PromptBundleGet("January"),
@@ -115,9 +120,11 @@ var Sendlater3Sendlater3Prompt = {
 	    container.appendChild(newitem);
 	}
 	document.getElementById("monthvalue").selectedIndex = 0;
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateMonths");
     },
 
     populateDays: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateDays");
 	var today = new Date();
 
 	var selectedyear =  document.getElementById("yearvalue").value;
@@ -136,10 +143,12 @@ var Sendlater3Sendlater3Prompt = {
 	    newitem.setAttribute("value",(i+1).toString());
 	    container.appendChild(newitem);
 	}
-	 document.getElementById("dayvalue").selectedIndex = 0;
+	document.getElementById("dayvalue").selectedIndex = 0;
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateDays");
     },
 
     populateHours: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateHours");
 	var container = document.getElementById("hours");
 	var i;
 	for (i=0;i<24;i++) {
@@ -148,9 +157,11 @@ var Sendlater3Sendlater3Prompt = {
 	    newitem.setAttribute("value",i.toString());
 	    container.appendChild(newitem);
 	}
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateHours");
     },
 
     populateMins: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.populateMins");
 	var container = document.getElementById("mins");
 	var i;
 	for (i=0;i<60;i++) {
@@ -159,9 +170,11 @@ var Sendlater3Sendlater3Prompt = {
 	    newitem.setAttribute("value",i.toString());
 	    container.appendChild(newitem);
 	}
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.populateMins");
     },
 
     updateSummary: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.updateSummary");
 	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
@@ -176,21 +189,27 @@ var Sendlater3Sendlater3Prompt = {
 
 	document.getElementById("summary").value =
 	    Sendlater3Util.PromptBundleGet("willsendat") + " " + sendat.toLocaleString();
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.updateSummary");
     },
 
     CallSendAfter: function(mins) {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.CallSendAfter");
 	var sendat = new Date();
 	sendat.setTime(sendat.getTime()+mins*60*1000);
 	window.arguments[0].finishCallback(sendat);
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.CallSendAfter");
     },
 
     clearChildren: function(element) {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.clearChildren");
 	while (element.childNodes.length>0) {
 	    element.removeChild(element.childNodes[0]);
 	}
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.clearChildren");
     },
 
     getMaxDays: function(year,month) {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.getMaxDays");
 	var oneDay = (1000 * 60 * 60 * 24);
 	var today = new Date();
 	today.setFullYear(parseInt(year));
@@ -199,10 +218,13 @@ var Sendlater3Sendlater3Prompt = {
 	today.setMonth(month);
 	var bt = today.toString();
 	today.setTime(today.valueOf() - oneDay);
+        Sendlater3Util.Returning("Sendlater3Sendlater3Prompt.getMaxDays",
+				 today.getDate());
 	return today.getDate();
     },
 
     CallSendAt: function() {
+        Sendlater3Util.Entering("Sendlater3Sendlater3Prompt.CallSendAt");
 	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
@@ -217,5 +239,6 @@ var Sendlater3Sendlater3Prompt = {
 	sendat.setMinutes(parseInt(selectedmin));
 
 	window.arguments[0].finishCallback(sendat);
+        Sendlater3Util.Leaving("Sendlater3Sendlater3Prompt.CallSendAt");
     }
 }

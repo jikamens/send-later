@@ -58,7 +58,7 @@
 	</hbox>
 	
 	<vbox style="border:solid #00C000 3px" >
-				<button width="100%" flex="1" label="&sendlater.prompt.sendat.label;" oncommand="Sendlater3Sendlater3Prompt.CallSendAt();close();"/>
+				<button width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Sendlater3Prompt.CallSendAt();close();"/>
 				<hbox>
 					<button key="quickbutton1-key" id="shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Sendlater3Prompt.CallSendAfter(15);close();"/>
 					<button key="quickbutton2-key" id="shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3Sendlater3Prompt.CallSendAfter(30);close();"/>
@@ -74,9 +74,9 @@
 		<description flex="1">&separate.label;</description>
 	</hbox>
 	<hbox align="center" style="border:solid red 2px">
-		<button label="&sendlater.prompt.sendlater.label;" oncommand="window.arguments[0].continueCallback();close();"/>
+		<button label="&sendlater.prompt.sendlater.label;" tooltiptext="&sendlater.prompt.sendlater.tooltip;" oncommand="window.arguments[0].continueCallback();close();"/>
 		<description flex="1">&separate.label;</description>
-		<button id="cancelButton" key="cancel-esc" label="&sendlater.prompt.close.label;" oncommand="window.arguments[0].cancelCallback();close();"/>
+		<button id="cancelButton" key="cancel-esc" label="&sendlater.prompt.close.label;" tooltiptext="&sendlater.prompt.close.tooltip;" oncommand="window.arguments[0].cancelCallback();close();"/>
 	</hbox>
 </vbox>
 </window>
