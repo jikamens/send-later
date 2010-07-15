@@ -1,7 +1,6 @@
 var Sendlater3Backgrounding = function() {
     Sendlater3Util.Entering("Sendlater3Backgrounding");
 
-    var checkTimeout;
     var displayprogressbar;
 
     //mailnews.customDBHeaders 
@@ -14,13 +13,15 @@ var Sendlater3Backgrounding = function() {
 					       " x-send-later-at");
     }
 
-    checkTimeout = Sendlater3Util.PrefService
-	.getIntPref("extensions.sendlater3.checktimepref");
+    function checkTimeout() {
+	var timeout = Sendlater3Util.PrefService
+	    .getIntPref("extensions.sendlater3.checktimepref");
+	if (timeout < 5000) timeout = 60000;
+	return timeout;
+    }
+
     displayprogressbar = Sendlater3Util.PrefService
 	.getBoolPref("extensions.sendlater3.showprogress");
-
-    if (checkTimeout < 5000) checkTimeout = 60000;
-
 
     var msgWindow = Components.classes["@mozilla.org/messenger/msgwindow;1"]
 	.createInstance();
@@ -467,59 +468,53 @@ var Sendlater3Backgrounding = function() {
 			}
 			break;
 		    default:
-			sendlater3util.debug("skipping this server type - " +
+			Sendlater3Util.debug("skipping this server type - " +
 					     thisaccount);
 			break;
 		    }
 		}
 	    }
-	    sendlater3util.leaving("sendlater3backgrounding.checkforsendlatercallback.notify");
-	}
-    }
-
-    var firstbackgroundcallback = {
-	notify: function (timer) {
-	    sendlater3util.entering("sendlater3backgrounding.firstbackgroundcallback.notify");
-	    checkforsendlatercallback.notify(null);
-	    backgroundtimer.initwithcallback(
-		checkforsendlatercallback,
-		checktimeout+math.ceil(math.random()*3000)-1500,
-		components.interfaces.nsitimer.type_repeating_slack
+	    BackgroundTimer.initWithCallback(
+		CheckForSendLaterCallback,
+		checkTimeout() + Math.ceil(Math.random()*3000)-1500,
+		Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	    );
-	    sendlater3util.leaving("sendlater3backgrounding.firstbackgroundcallback.notify");
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
 	}
     }
 
-    function startmonitorcallback() {
-	sendlater3util.entering("sendlater3backgrounding.startmonitorcallback");
-	sendlater3util.debug("starting monitor [for every " +
-			     checktimeout + "ms]");
-	var mailsession = components
+    function StartMonitorCallback() {
+	Sendlater3Util.Entering("Sendlater3Backgrounding.StartMonitorCallback");
+	Sendlater3Util.debug("Starting monitor [for every " + checkTimeout +
+			     "ms]");
+	var mailSession = Components
 	    .classes["@mozilla.org/messenger/services/session;1"]
-	    .getservice(components.interfaces.nsimsgmailsession);
-	mailsession.addfolderlistener(folderloadlistener,
-				      components.interfaces.nsifolderlistener
-				      .event);
-	backgroundtimer = components.classes["@mozilla.org/timer;1"]
-	    .createinstance(components.interfaces.nsitimer);
-	backgroundtimer.initwithcallback(
-	    firstbackgroundcallback, 2000,
-	    components.interfaces.nsitimer.type_one_shot
+	    .getService(Components.interfaces.nsIMsgMailSession);
+	mailSession
+	    .AddFolderListener(folderLoadListener,
+			       Components.interfaces.nsIFolderListener.event);
+	BackgroundTimer = Components
+	    .classes["@mozilla.org/timer;1"]
+	    .createInstance(Components.interfaces.nsITimer);
+	BackgroundTimer.initWithCallback(
+	    CheckForSendLaterCallback,
+	    2000,
+	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
-	sendlater3util.leaving("sendlater3backgrounding.startmonitorcallback");
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.StartMonitorCallback");
     }
 
-    // backgroundtimer = components
+    // BackgroundTimer = Components
     //     .classes["@mozilla.org/timer;1"]
-    //     .createinstance(components.interfaces.nsitimer);
-    // backgroundtimer.initwithcallback(
-    //     startmonitorcallback,
+    //     .createInstance(Components.interfaces.nsITimer);
+    // BackgroundTimer.initWithCallback(
+    //     StartMonitorCallback,
     //     5000,
-    //     components.interfaces.nsitimer.type_one_shot
+    //     Components.interfaces.nsITimer.TYPE_ONE_SHOT
     //     );
 
-    window.addeventlistener("load", startmonitorcallback,false);
-    sendlater3util.leaving("sendlater3backgrounding");
+    window.addEventListener("load", StartMonitorCallback,false);
+    Sendlater3Util.Leaving("Sendlater3Backgrounding");
 }
 
-sendlater3backgrounding.apply();
+Sendlater3Backgrounding.apply();
