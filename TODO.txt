@@ -1,2 +1,10 @@
 Share common code between toolbar and popup.
+
 Stupid interval should be in seconds, not milliseconds.
+
+If you use Thunderbird from multiple PCs with different identities (or
+identities configured in a different order), and a draft is saved to
+be sent later from one PC and then sent later from another one, then
+the identity used to send the draft might end up being incorrect. Need
+to find a way to store the identity in a way that is portable between
+different Thunderbird configurations.
