@@ -1,6 +1,80 @@
 var Sendlater3Backgrounding = function() {
     Sendlater3Util.Entering("Sendlater3Backgrounding");
 
+    // If there are multiple open Thunderbird windows, then each of them is
+    // going to load this overlay, which will wreak havoc when multiple windows
+    // try to run our background proceses at the same time. To avoid this
+    // problem, we assign each instance of this overlay a unique ID, and we
+    // store the ID of the currently active instance in the user's preferences,
+    // along with the time when the active instance last started a background
+    // pass. Every entry point function (e.g., event handlers, etc.)  checks to
+    // see if its unique ID is the one in the preferences. If so, then it
+    // processed as normal -- it has the conch. Otherwise, if it's the main
+    // callback function (CheckForSendLaterCallback) AND the last active
+    // timestamp is >2x the current check interval, then it resets the active
+    // instance to its own UUID and proceeds, thus taking over for the other
+    // instance that has apparently given up the ghost.
+    var uuid;
+    var pref_prefix = "extensions.sendlater3.activescanner.";
+    function checkUuid(capturable) {
+	if (! uuid) {
+	    var uuidGenerator = 
+		Components.classes["@mozilla.org/uuid-generator;1"]
+		.getService(Components.interfaces.nsIUUIDGenerator);
+	    uuid = uuidGenerator.generateUUID().toString();
+	}
+	var current_time = Math.round((new Date()).getTime() / 1000);
+	var active_uuid = Sendlater3Util.PrefService
+	    .getCharPref(pref_prefix + "uuid");
+	var active_time = Sendlater3Util.PrefService
+	    .getIntPref(pref_prefix + "time");
+	var timeout = Math.round(checkTimeout() / 1000);
+	var func = "Sendlater3Backgrounding.checkUuid: ";
+	var dbgMsg =
+	    "uuid="         + uuid         + ", " +
+	    "current_time=" + current_time + ", " +
+	    "active_uuid="  + active_uuid  + ", " +
+	    "active_time="  + active_time  + ", " +
+	    "timeout="      + timeout;
+	if (active_uuid && active_uuid != "" && active_uuid != uuid) {
+	    if (current_time - active_time > 2 * timeout) {
+		if (capturable) {
+		    Sendlater3Util.debug(func + "capturing: " + dbgMsg);
+		    Sendlater3Util.PrefService.setCharPref(pref_prefix + "uuid",
+							   uuid);
+		}
+		else {
+		    Sendlater3Util.debug(func + "can't capture: " + dbgMsg);
+		    return false;
+		}
+	    }
+	    else {
+		Sendlater3Util.debug(func + "non-active window: " + dbgMsg);
+		return false;
+	    }
+	}
+	else if (active_uuid && active_uuid != "") {
+	    Sendlater3Util.debug(func + "active window: " + dbgMsg);
+	}
+	else {
+	    Sendlater3Util.debug(func + "first window: " + dbgMsg);
+	    Sendlater3Util.PrefService.setCharPref(pref_prefix + "uuid", uuid);
+	}
+	Sendlater3Util.PrefService.setIntPref(pref_prefix + "time",
+					      current_time);
+	return true;
+    }
+
+    function clearActiveUuidCallback() {
+	if (! uuid) return;
+	var active_uuid = Sendlater3Util.PrefService
+	    .getCharPref(pref_prefix + "uuid");
+	if (active_uuid != uuid) return;
+	var func = "Sendlater3Backgrounding.clearActiveUuidCallback: ";
+	Sendlater3Util.debug(func + "clearing: uuid=" + uuid);
+	Sendlater3Util.PrefService.setCharPref(pref_prefix + "uuid", "");
+    }
+
     //mailnews.customDBHeaders 
     var installedCustomHeaders = Sendlater3Util.PrefService
         .getCharPref('mailnews.customDBHeaders');
@@ -149,6 +223,13 @@ var Sendlater3Backgrounding = function() {
 		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
 		return;
 	    }
+
+	    if (! checkUuid(false)) {
+		CheckThisURIQueue = new Array();
+		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
+		return;
+	    }
+		
 	    messageURI = CheckThisURIQueue.shift();
 
 	    var msgSendLater = Components
@@ -338,6 +419,12 @@ var Sendlater3Backgrounding = function() {
     var folderLoadListener = {
 	OnItemEvent: function(folder, event) {
 	    Sendlater3Util.Entering("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
+
+	    if (! checkUuid(false)) {
+		Sendlater3Util.Returning("Sendlater3Backgrounding.folderLoadListener.OnItemEvent", "");
+		return;
+	    }
+
 	    var eventType = event.toString();
 
 	    if (eventType == "FolderLoaded" && folder) {
@@ -384,6 +471,18 @@ var Sendlater3Backgrounding = function() {
     var CheckForSendLaterCallback = {
 	notify: function (timer) {
 	    Sendlater3Util.Entering("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
+
+	    BackgroundTimer.initWithCallback(
+		CheckForSendLaterCallback,
+		checkTimeout() + Math.ceil(Math.random()*3000)-1500,
+		Components.interfaces.nsITimer.TYPE_ONE_SHOT
+	    );
+
+	    if (! checkUuid(true)) {
+		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckForSendLaterCallback.notify", "");
+		return;
+	    }
+
 	    MessagesPending = 0;
 	    Sendlater3Util.debug("One cycle of checking");
 
@@ -474,11 +573,6 @@ var Sendlater3Backgrounding = function() {
 		    }
 		}
 	    }
-	    BackgroundTimer.initWithCallback(
-		CheckForSendLaterCallback,
-		checkTimeout() + Math.ceil(Math.random()*3000)-1500,
-		Components.interfaces.nsITimer.TYPE_ONE_SHOT
-	    );
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
 	}
     }
@@ -514,6 +608,7 @@ var Sendlater3Backgrounding = function() {
     //     );
 
     window.addEventListener("load", StartMonitorCallback,false);
+    window.addEventListener("unload", clearActiveUuidCallback, false);
     Sendlater3Util.Leaving("Sendlater3Backgrounding");
 }
 
