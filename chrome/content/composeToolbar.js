@@ -214,7 +214,7 @@ var Sendlater3ComposeToolbar = {
 		else {
 		    Sendlater3Util.dump("No previous time");
 		}
-		SEndlater3Util.Returning("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad", true);
+		Sendlater3Util.Returning("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad", true);
 		return true;
 	    }
 	    Sendlater3Util.Returning("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad", false);

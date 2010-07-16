@@ -212,84 +212,64 @@ var Sendlater3Backgrounding = function() {
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.SetAnimTimer");
     }
 
-    var CheckThisURIQueue = new Array();
-    var CheckThisURITimer;
+    // Can we assume that a read from a hung server will eventually time out
+    // and cause onStopRequest to be called with an error status code, or are
+    // we introducing a memory leak here by creating asynchronous listeners
+    // that are going to hang around forever? That is, do we have to explicitly
+    // set up timeouts to destroy the listeners that take too long to read? I'm
+    // going to assume for now that we don't have to do that.
 
-    var CheckThisURICallback = {
-	notify: function (timer) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisUriCallback.notify");
-	    if (CheckThisURIQueue.length == 0) {
-		timer.cancel();
-		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
+    var cycle = 0;
+
+    function UriStreamListener(messageHDR) {
+	Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener",
+			       messageHDR);
+    	this._content = "";
+	this._cycle = cycle;
+	this._messageHDR = messageHDR;
+	this._header = null;
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener");
+    }
+
+    UriStreamListener.prototype = {
+	QueryInterface: function(iid) {
+	    // Sort of cheating, but we know this is going to be used safely.
+	    if (iid.equals(Components.interfaces.nsIStreamListener) ||
+		iid.equals(Components.interfaces.nsISupports)) {
+		return this;
+	    }
+	    return null;
+	},
+	onStartRequest: function(aReq, aContext) {
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener.onStartRequest");
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener.onStartRequest");
+	},
+	onStopRequest: function(aReq, aContext, aStatusCode) {
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
+	    if (! checkUuid(false) || cycle != this._cycle || 
+		this._content == "") {
 		return;
 	    }
+	    var content = this._content;
+	    var messageHDR = this._messageHDR;
+	    this._messageHDR = null;
+	    this._content = null;
 
-	    if (! checkUuid(false)) {
-		CheckThisURIQueue = new Array();
-		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
-		return;
-	    }
-		
-	    messageURI = CheckThisURIQueue.shift();
-
-	    var msgSendLater = Components
-		.classes["@mozilla.org/messengercompose/sendlater;1"]
-		.getService(Components.interfaces.nsIMsgSendLater);
-	    var fdrunsent = msgSendLater.getUnsentMessagesFolder(null);
-	    var content = "";
-	    var MsgService = messenger.messageServiceFromURI(messageURI);
-	    var messageHDR = messenger.msgHdrFromURI(messageURI);
-	    var MsgStream = Components
-		.classes["@mozilla.org/network/sync-stream-listener;1"]
-		.createInstance();
-	    var consumer = MsgStream.QueryInterface(Components.interfaces
-						    .nsIInputStream);
-	    var ScriptInput = Components
-		.classes["@mozilla.org/scriptableinputstream;1"]
-		.createInstance();
-	    var ScriptInputStream = ScriptInput
-		.QueryInterface(Components.interfaces
-				.nsIScriptableInputStream);
-
-	    SetAnimTimer(3000);
-
-	    Sendlater3Util.debug("Checking message : " + messageURI + "\n");
-
-	    ScriptInputStream .init(consumer);
-	    MsgService .streamMessage(messageURI, MsgStream, msgWindow, null,
-				      false,null);
-	    //	ScriptInputStream .available();
-	    var xsendlaterpresent=false;
-	    var header = "";
-
-	    while (ScriptInputStream.available()) {
-		var block = ScriptInputStream.read(512);
-		content = content + block;
-		content = content.replace(/\r\n/g, "\n");
-		var eoh = content.search(/\n\n/);
-		if (eoh > -1) {
-		    header = content.slice(0, eoh);
-		    break;
-		}
+	    // We check if we've reached the end of the header below, in
+	    // onDataAvailable, as each block of data is read. Therefore, if we
+	    // get to this point, it's because we never hit the end of the
+	    // header, which means that the message consists only of a header.
+	    if (this._header == null) {
+		this._header = header.match(/^X-Send-Later-At:.*$/mi);
 	    }
 
-	    if (header == "") {
-		header = content;
-	    }
-
-	    xsendlaterpresent = header.match(/^X-Send-Later-At:.*$/mi);
-
-	    Sendlater3Util.debug("SendLaterPresent = " + xsendlaterpresent);
-	    if (xsendlaterpresent != null) {
-		xsendlaterpresent = xsendlaterpresent.toString();
+	    Sendlater3Util.debug("SendLaterPresent = " + this._header);
+	    if (this._header != null) {
+		this._header = this._header.toString();
 		Sendlater3Util.dump ("Found Pending Message.");
-		var sendattime = new Date (xsendlaterpresent.substr(16));
+		var sendattime = new Date (this._header.substr(16));
 		var now = new Date();
 		if (now > sendattime) {
-		    while (ScriptInputStream.available()) {
-			var block = ScriptInputStream.read(512);
-			content = content + block;
-		    }
 		    // Simplify search & replace in header by putting a
 		    // blank line at the beginning of the message, so that
 		    // we can match header lines starting with \n, i.e., we
@@ -302,10 +282,10 @@ var Sendlater3Backgrounding = function() {
 		    content = "\n" + content;
 
 		    content = content
-			.replace(/(\nDate:).*(\r?\n)/i,"$1 " +
+			.replace(/(\nDate:).*\n/i,"$1 " +
 				 Sendlater3Util.FormatDateTime(new Date(),
-							       true)+"$2");
-		    content = content.replace(/\nX-Send-Later-At:.*\r?\n/i,
+							       true)+"\n");
+		    content = content.replace(/\nX-Send-Later-At:.*\n/i,
 					      "\n");
 
 		    // Remove extra newline -- see comment above.
@@ -330,11 +310,15 @@ var Sendlater3Backgrounding = function() {
 		    // with bare \n's on them, so we're back to the original
 		    // problem.
 		    if (content.slice(0,5) != "From ") {
-			content = "From - " + Date().toString() + "\r\n"
+			content = "From - " + Date().toString() + "\n"
 			    + content;
 		    }
-		    content = content.replace(/\r\n/g,"\n").
-			replace(/\n/g,"\r\n");
+		    content = content.replace(/\n/g,"\r\n");
+
+		    var msgSendLater = Components
+			.classes["@mozilla.org/messengercompose/sendlater;1"]
+			.getService(Components.interfaces.nsIMsgSendLater);
+		    var fdrunsent = msgSendLater.getUnsentMessagesFolder(null);
 
 		    var dirService = Components
 			.classes["@mozilla.org/file/directory_service;1"]
@@ -396,6 +380,79 @@ var Sendlater3Backgrounding = function() {
 					" messages still pending");
 		}
 	    }
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
+	},
+	onDataAvailable: function(aReq, aContext, aInputStream, aOffset,
+				  aCount) {
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener.onDataAvailable");
+	    var uuidOk = checkUuid(false);
+	    var cycleOk = cycle == this._cycle;
+	    if (! (uuidOk && cycleOk)) {
+		this._content = "";
+		aInputStream.close();
+		Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable",
+					 uuidOk ? "obsolete cycle" : "inactive window");
+		return;
+	    }
+	    var stream = Components
+		.classes["@mozilla.org/scriptableinputstream;1"]
+		.createInstance()
+		.QueryInterface(Components.interfaces
+				.nsIScriptableInputStream);
+	    stream.init(aInputStream);
+	    var data = stream.read(aCount);
+	    data = data.replace(/\r\n/g, "\n");
+	    if (this._content.length && this._content.slice(-1) == "\r"
+		&& data.slice(0, 1) == "\n") {
+		this._content = this._content.slice(0, this.content.length -1);
+	    }
+	    this._content += data;
+
+	    var eoh = this._content.search(/\n\n/);
+	    if (eoh > -1) {
+		var header = this._content.slice(0, eoh);
+
+		this._header = header.match(/^X-Send-Later-At:.*$/mi);
+		if (this._header == null) {
+		    Sendlater3Util.debug("SendLaterPresent = null");
+		    this._content = "";
+		    aInputStream.close();
+		    Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "no header");
+		    return;
+		}
+	    }
+
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener.onDataAvailable");
+	}
+    };
+
+    var CheckThisURIQueue = new Array();
+    var CheckThisURITimer;
+
+    var CheckThisURICallback = {
+	notify: function (timer) {
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisUriCallback.notify");
+	    if (CheckThisURIQueue.length == 0) {
+		timer.cancel();
+		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
+		return;
+	    }
+
+	    if (! checkUuid(false)) {
+		CheckThisURIQueue = new Array();
+		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
+		return;
+	    }
+		
+	    messageURI = CheckThisURIQueue.shift();
+	    Sendlater3Util.debug("Checking message : " + messageURI + "\n");
+
+	    var MsgService = messenger.messageServiceFromURI(messageURI);
+	    var messageHDR = messenger.msgHdrFromURI(messageURI);
+	    var listener = new UriStreamListener(messageHDR);
+	    MsgService.streamMessage(messageURI, listener,
+				     msgWindow, null, false, null);
+	    SetAnimTimer(3000);
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisUriCallback.notify");
 	}
     }
@@ -488,6 +545,8 @@ var Sendlater3Backgrounding = function() {
 
 	    MessagesPending = 0;
 	    Sendlater3Util.debug("One cycle of checking");
+
+	    cycle++;
 
 	    var accountManager = Components
 		.classes["@mozilla.org/messenger/account-manager;1"]
