@@ -31,7 +31,7 @@
 	<tabpanels>
 	<tabpanel>
 	<vbox>
-    <hbox align="center" >
+    <hbox align="center" tooltiptext="&checktimepref.tooltip;">
         <label align="bottom" accesskey="&checktimepref.accesskey;" control="textintpref">&checktimepref.label;</label><textbox id="textintpref" preference="checktimepref"/><label >&checktimepref2.label;</label>
     </hbox>
 	<separator label="-"/>

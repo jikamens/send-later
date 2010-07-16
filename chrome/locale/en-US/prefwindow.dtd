@@ -2,6 +2,7 @@
 <!ENTITY pane1.title "Send Later preferences">
 <!ENTITY checktimepref.label "Check every :">
 <!ENTITY checktimepref2.label "milliseconds">
+<!ENTITY checktimepref.tooltip "Interval, in milliseconds, between checks for drafts whose delivery time has arrived. Increase this value if your drafts sometimes aren't sent on time or the pending message count in your status bar sometimes doesn't reflect all scheduled drafts.">
 <!ENTITY checktimepref.accesskey "C">
 <!ENTITY general.caption "General">
 <!ENTITY quickoption1.caption "Shortcut 1">
