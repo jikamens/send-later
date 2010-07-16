@@ -259,34 +259,37 @@ var Sendlater3Backgrounding = function() {
 	    MsgService .streamMessage(messageURI, MsgStream, msgWindow, null,
 				      false,null);
 	    //	ScriptInputStream .available();
-	    var headerready=false;
 	    var xsendlaterpresent=false;
+	    var header = "";
 
-	    while ((ScriptInputStream .available()) &&
-		   ((!headerready) || (headerready && xsendlaterpresent) )) {
-		content = content + ScriptInputStream .read(512);
-		if (!headerready &&
-		    (content.match(/\r\n\r\n/) || content.match(/\n\n/))) {
-		    Sendlater3Util.debug("header is now ready");
-		    headerready = true;
-		    if (content.match(/^X-Send-Later-At:.*$/mi)) {
-			xsendlaterpresent = true;
-		    }
+	    while (ScriptInputStream.available()) {
+		var block = ScriptInputStream.read(512);
+		content = content + block;
+		content = content.replace(/\r\n/g, "\n");
+		var eoh = content.search(/\n\n/);
+		if (eoh > -1) {
+		    header = content.slice(0, eoh);
+		    break;
 		}
 	    }
 
-	    Sendlater3Util.debug("HeaderReady = " + headerready +
-				 " , SendLaterPresent = " + xsendlaterpresent);
-	    var gotcha;
-	    if (xsendlaterpresent)
-		gotcha =content.match(/^X-Send-Later-At:.*$/mi).toString();
-	    else
-		gotcha = false;
-	    if (gotcha) {
+	    if (header == "") {
+		header = content;
+	    }
+
+	    xsendlaterpresent = header.match(/^X-Send-Later-At:.*$/mi);
+
+	    Sendlater3Util.debug("SendLaterPresent = " + xsendlaterpresent);
+	    if (xsendlaterpresent != null) {
+		xsendlaterpresent = xsendlaterpresent.toString();
 		Sendlater3Util.dump ("Found Pending Message.");
-		var sendattime = new Date (gotcha.substr(16));
+		var sendattime = new Date (xsendlaterpresent.substr(16));
 		var now = new Date();
 		if (now > sendattime) {
+		    while (ScriptInputStream.available()) {
+			var block = ScriptInputStream.read(512);
+			content = content + block;
+		    }
 		    // Simplify search & replace in header by putting a
 		    // blank line at the beginning of the message, so that
 		    // we can match header lines starting with \n, i.e., we

@@ -1,6 +1,2 @@
 Share common code between toolbar and popup.
 Stupid interval should be in seconds, not milliseconds.
-When checking pending messages, shouldn't read entire message into
-memory until we've confirmed that it is time to send it.
-Bug: backgrounding.js code could match X-Send-Later-At near beginning
-of message body.
