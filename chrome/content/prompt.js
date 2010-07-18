@@ -22,42 +22,20 @@ var Sendlater3Prompt = {
 	var hhmm = new Date();
 	document.getElementById("hourvalue").value = hhmm.getHours();
 	document.getElementById("minvalue").value = hhmm.getMinutes();
-	document.getElementById("shortcutbtn_1").label =
-	    Sendlater3Util.ButtonLabel(1);
-	document.getElementById("shortcutbtn_2").label =
-	    Sendlater3Util.ButtonLabel(2);
-	document.getElementById("shortcutbtn_3").label =
-	    Sendlater3Util.ButtonLabel(3);
-	var shortcut1value = Sendlater3Util.PrefService
-	    .getIntPref("extensions.sendlater3.quickoptions.1.value");
-	var shortcut2value = Sendlater3Util.PrefService
-	    .getIntPref("extensions.sendlater3.quickoptions.2.value");
-	var shortcut3value = Sendlater3Util.PrefService
-	    .getIntPref("extensions.sendlater3.quickoptions.3.value");
-	document.getElementById("shortcutbtn_1")
-	    .setAttribute("oncommand",
-			  "Sendlater3Prompt.CallSendAfter(" +
-			  shortcut1value + ");close();");
-	document.getElementById("shortcutbtn_2")
-	    .setAttribute("oncommand",
-	                  "Sendlater3Prompt.CallSendAfter(" +
-			  shortcut2value + ");close();");
-	document.getElementById("shortcutbtn_3")
-	    .setAttribute("oncommand",
-			  "Sendlater3Prompt.CallSendAfter(" +
-			  shortcut3value + ");close();");
-	document.getElementById("quickbutton1-key")
-	    .setAttribute("oncommand",
-			  "Sendlater3Prompt.CallSendAfter(" +
-			  shortcut1value + ");close();");
-	document.getElementById("quickbutton2-key")
-	    .setAttribute("oncommand",
-			  "Sendlater3Prompt.CallSendAfter(" +
-			  shortcut2value + ");close();");
-	document.getElementById("quickbutton3-key")
-	    .setAttribute("oncommand",
-			  "Sendlater3Prompt.CallSendAfter(" +
-			  shortcut3value + ");close();");
+	var i;
+	for (i = 1; i <= 3; i++) {
+	    document.getElementById("shortcutbtn_" + i).label =
+		Sendlater3Util.ButtonLabel(i);
+	    var value = Sendlater3Util.ShortcutValue(i);
+	    document.getElementById("shortcutbtn_" + i)
+		.setAttribute("oncommand",
+			      "Sendlater3Prompt.CallSendAfter(" + value +
+			      ");close();");
+	    document.getElementById("quickbutton" + i + "-key")
+		.setAttribute("oncommand",
+			      "Sendlater3Prompt.CallSendAfter(" + value +
+			      ");close();");
+	}
 
 	var prevXSendLater = window.arguments[0].previouslyTimed;
 	if (prevXSendLater) {

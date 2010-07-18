@@ -8,9 +8,9 @@
       <preference id="sendlater3_quickoption_label1" name="extensions.sendlater3.quickoptions.1.label" type="unichar"/>
       <preference id="sendlater3_quickoption_label2" name="extensions.sendlater3.quickoptions.2.label" type="unichar"/>
       <preference id="sendlater3_quickoption_label3" name="extensions.sendlater3.quickoptions.3.label" type="unichar"/>
-      <preference id="sendlater3_quickoption_value1" name="extensions.sendlater3.quickoptions.1.value" type="int"/>
-      <preference id="sendlater3_quickoption_value2" name="extensions.sendlater3.quickoptions.2.value" type="int"/>
-      <preference id="sendlater3_quickoption_value3" name="extensions.sendlater3.quickoptions.3.value" type="int"/>
+      <preference id="sendlater3_quickoption_value1" name="extensions.sendlater3.quickoptions.1.valuestring" type="string"/>
+      <preference id="sendlater3_quickoption_value2" name="extensions.sendlater3.quickoptions.2.valuestring" type="string"/>
+      <preference id="sendlater3_quickoption_value3" name="extensions.sendlater3.quickoptions.3.valuestring" type="string"/>
       <preference id="sendlater3_quickoption_showtb1" name="extensions.sendlater3.quickoptions.1.showintoolbar" type="bool"/>
       <preference id="sendlater3_quickoption_showtb2" name="extensions.sendlater3.quickoptions.2.showintoolbar" type="bool"/>
       <preference id="sendlater3_quickoption_showtb3" name="extensions.sendlater3.quickoptions.3.showintoolbar" type="bool"/>

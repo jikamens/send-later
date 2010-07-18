@@ -29,6 +29,30 @@ var Sendlater3Util = {
 	return label;
     },
 
+    ShortcutValue: function(num) {
+	Sendlater3Util.Entering("Sendlater3Util.ShortcutValue", num);
+	var raw = Sendlater3Util.PrefService.
+	    getCharPref("extensions.sendlater3.quickoptions." + num +
+			".valuestring");
+	if (raw.match(/^[0-9]+$/)) {
+	    Sendlater3Util.Returning("Sendlater3Util.ShortcutValue", raw);
+	    return raw;
+	}
+	else if (raw.match(/^[A-Za-z_$][A-Za-z0-9_$]*$/)) {
+	    // If the user specifies an invalid function name, then this will
+	    // throw an error, which will show up in the error console, which
+	    // is what we want.
+	    var v;
+	    eval("v = " + raw + "();");
+	    if (typeof(v) == "number") {
+		v = raw + "()";
+		Sendlater3Util.Returning("Sendlater3Util.ShortcutValue", v);
+		return v;
+	    }
+	}
+	throw("Invalid setting for quick option " + num + ": \"" + raw + "\"");
+    },
+
     FormatDateTime: function(thisdate,includeTZ) {
 	Sendlater3Util.Entering("Sendlater3Util.FormatDateTime", thisdate,
 				includeTZ);

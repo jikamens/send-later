@@ -4,9 +4,9 @@ pref("extensions.sendlater3@unsignedbyte.com.description", "chrome://sendlater3/
 pref("extensions.sendlater3.quickoptions.1.label","<from locale>");
 pref("extensions.sendlater3.quickoptions.2.label","<from locale>");
 pref("extensions.sendlater3.quickoptions.3.label","<from locale>");
-pref("extensions.sendlater3.quickoptions.1.value",15);
-pref("extensions.sendlater3.quickoptions.2.value",30);
-pref("extensions.sendlater3.quickoptions.3.value",120);
+pref("extensions.sendlater3.quickoptions.1.valuestring","15");
+pref("extensions.sendlater3.quickoptions.2.valuestring","30");
+pref("extensions.sendlater3.quickoptions.3.valuestring","120");
 pref("extensions.sendlater3.showheader",true);
 pref("extensions.sendlater3.showcolumn",true);
 pref("extensions.sendlater3.showprogress",true);

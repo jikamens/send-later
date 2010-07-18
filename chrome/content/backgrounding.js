@@ -1,6 +1,36 @@
 var Sendlater3Backgrounding = function() {
     Sendlater3Util.Entering("Sendlater3Backgrounding");
 
+    // I had to change the type of one of my preferences from int to char to be
+    // able to add some new functionality. I couldn't find a way to change the
+    // type of a preference for people who had the old version of the add-on
+    // with the old preference installed. When I just changed its type from int
+    // to string in the <preference ...> element in my XUL file and in my
+    // references to it in my code, that didn't work -- I got errors trying to
+    // use the preference. So the best idea I could come up with for solving
+    // this problem is to replace the preference with a new one, migrate over
+    // any old values, and delete the old one. I don't know if there's a better
+    // way to do this.
+    function MigrateQuickOptionValue(num) {
+	var oldp = "extensions.sendlater3.quickoptions." + num + ".value";
+	var newp = oldp + "string";
+	
+	var v;
+	try {
+	    v = Sendlater3Util.PrefService.getIntPref(oldp);
+	}
+	catch (e) {}
+
+	if (v != null) {
+	    Sendlater3Util.PrefService.setCharPref(newp, v);
+	    Sendlater3Util.PrefService.deleteBranch(oldp);
+	}
+    }
+    var i;
+    for (i = 1; i <= 3; i++) {
+	MigrateQuickOptionValue(i);
+    }
+
     // If there are multiple open Thunderbird windows, then each of them is
     // going to load this overlay, which will wreak havoc when multiple windows
     // try to run our background proceses at the same time. To avoid this

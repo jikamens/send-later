@@ -8,12 +8,6 @@ var Sendlater3ComposeToolbar = {
 			     ".showintoolbar");
 	}
 
-	function shortcutvalue(num) {
-	    return Sendlater3Util.PrefService
-		.getIntPref("extensions.sendlater3.quickoptions." + num +
-			    ".value");
-	}
-
 	function populateHours() {
 	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.populateHours");
 	    var container = document.getElementById("hours");
@@ -183,7 +177,7 @@ var Sendlater3ComposeToolbar = {
 		    var btn = "shortcutbtn_" + i;
 		    if (showquickbutton(1)) {
 			var cmd = "Sendlater3ComposeToolbar.CallSendAfter(" +
-			    shortcutvalue(i) + ");"
+			    Sendlater3Util.ShortcutValue(i) + ");"
 			document.getElementById(btn).label =
 			    Sendlater3Util.ButtonLabel(i);
 			document.getElementById(btn)
