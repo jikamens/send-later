@@ -8,3 +8,8 @@ be sent later from one PC and then sent later from another one, then
 the identity used to send the draft might end up being incorrect. Need
 to find a way to store the identity in a way that is portable between
 different Thunderbird configurations.
+
+If Send Later is installed on Thunderbird running on two different
+machines talking to the same mail server at the same time, they could
+both try to send scheduled drafts, thus causing errors and/or
+duplicate email messages.
