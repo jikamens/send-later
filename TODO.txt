@@ -13,3 +13,9 @@ If Send Later is installed on Thunderbird running on two different
 machines talking to the same mail server at the same time, they could
 both try to send scheduled drafts, thus causing errors and/or
 duplicate email messages.
+
+Should Send Later mark a message "replied" when sending a delayed
+reply?
+
+Should the drop-downs in the compose pane toolbar update automatically
+to the current time while the user is writing?
