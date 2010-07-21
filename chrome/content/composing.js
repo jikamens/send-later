@@ -89,9 +89,6 @@ var Sendlater3Composing = {
 	var mysleventListener = {
 	    handleEvent : function(event) { 
 		CheckForXSendLater(); 
-		if (SENDLATER3_TOOLBAR_SetOnLoad) {
-		    SENDLATER3_TOOLBAR_SetOnLoad();
-		}
 	    } 
 	}
 

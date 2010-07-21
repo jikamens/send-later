@@ -16,6 +16,3 @@ duplicate email messages.
 
 Should Send Later mark a message "replied" when sending a delayed
 reply?
-
-Should the drop-downs in the compose pane toolbar update automatically
-to the current time while the user is writing?
