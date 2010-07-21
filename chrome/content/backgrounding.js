@@ -1,7 +1,61 @@
 var Sendlater3Backgrounding = function() {
     Sendlater3Util.Entering("Sendlater3Backgrounding");
 
-    // I had to change the type of one of my preferences from int to char to be
+    // If you add a message to the Outbox and call nsIMsgSendLater when it's
+    // already in the middle of sending unsent messages, then it's possible
+    // that the message you just added won't get sent. Therefore, when we add a
+    // new message to the Outbox, we need to be aware of whether we're already
+    // in the middle of sending unsent messages, and if so, then trigger
+    // another send after it's finished.
+    var sendingUnsentMessages = false;
+    var needToSendUnsentMessages = false;
+    var sendUnsentMessagesListener = {
+	onStartSending: function(aTotalMessageCount) {
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStartSending");
+	    sendingUnsentMessages = true;
+	    needToSendUnsentMessages = false;
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStartSending");
+	},
+	onMessageStartSending: function(aCurrentMessage, aTotalMessageCount,
+					aMessageHeader, aIdentity) {},
+	onProgress: function(aCurrentMessage, aTotalMessage) {},
+	onMessageSendProgress: function(aCurrentMessage, aTotalMessageCount,
+					aMessageSendPercent,
+					aMessageCopyPercent) {},
+	onStatus: function(aMsg) {},
+	onStopSending: function(aStatus, aMsg, aTotalTried, aSuccessful) {
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStopSending");
+	    sendingUnsentMessages = false;
+	    if (needToSendUnsentMessages) {
+		var msgSendLater = Components
+		    .classes["@mozilla.org/messengercompose/sendlater;1"]
+		    .getService(Components.interfaces.nsIMsgSendLater);
+		msgSendLater.sendUnsentMessages(null);
+	    }
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStopSending");
+	}
+    }
+    function queueSendUnsentMessages(msgSendLater) {
+	Sendlater3Util.Entering("Sendlater3Backgrounding.queueSendUnsentMessages");
+	if (sendingUnsentMessages) {
+	    Sendlater3Util.debug("Deferring sendUnsentMessages");
+	    needToSendUnsentMessages = true;
+	}
+	else {
+	    msgSendLater.sendUnsentMessages(null);
+	}
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.queueSendUnsentMessages");
+    }
+    function addMsgSendLaterListener() {
+	Sendlater3Util.Entering("Sendlater3Backgrounding.addMsgSendLaterListener");
+	var msgSendLater = Components
+	    .classes["@mozilla.org/messengercompose/sendlater;1"]
+	    .getService(Components.interfaces.nsIMsgSendLater);
+	msgSendLater.addListener(sendUnsentMessagesListener);
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.addMsgSendLaterListener");
+    }
+
+    // i had to change the type of one of my preferences from int to char to be
     // able to add some new functionality. I couldn't find a way to change the
     // type of a preference for people who had the old version of the add-on
     // with the old preference installed. When I just changed its type from int
@@ -396,7 +450,7 @@ var Sendlater3Backgrounding = function() {
 		    messageHDR.folder.deleteMessages(dellist, msgWindow, true,
 						     false, null, false);
 		    if (Sendlater3Util.PrefService.getBoolPref("extensions.sendlater3.sendunsentmessages")) {
-			msgSendLater.sendUnsentMessages(null);
+			queueSendUnsentMessages(msgSendLater);
 			Sendlater3Util.dump ("Sending Message.");
 		    }
 		    else {
@@ -702,6 +756,7 @@ var Sendlater3Backgrounding = function() {
     window.addEventListener("load", StartMonitorCallback,false);
     window.addEventListener("unload", clearActiveUuidCallback, false);
     Sendlater3Util.Leaving("Sendlater3Backgrounding");
+    addMsgSendLaterListener();
 }
 
 Sendlater3Backgrounding.apply();
