@@ -11,10 +11,10 @@ var Sendlater3Backgrounding = function() {
     var needToSendUnsentMessages = false;
     var sendUnsentMessagesListener = {
 	onStartSending: function(aTotalMessageCount) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStartSending");
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStartSending");
 	    sendingUnsentMessages = true;
 	    needToSendUnsentMessages = false;
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStartSending");
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStartSending");
 	},
 	onMessageStartSending: function(aCurrentMessage, aTotalMessageCount,
 					aMessageHeader, aIdentity) {},
@@ -24,7 +24,7 @@ var Sendlater3Backgrounding = function() {
 					aMessageCopyPercent) {},
 	onStatus: function(aMsg) {},
 	onStopSending: function(aStatus, aMsg, aTotalTried, aSuccessful) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStopSending");
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	    sendingUnsentMessages = false;
 	    if (needToSendUnsentMessages) {
 		var msgSendLater = Components
@@ -32,7 +32,7 @@ var Sendlater3Backgrounding = function() {
 		    .getService(Components.interfaces.nsIMsgSendLater);
 		msgSendLater.sendUnsentMessages(null);
 	    }
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.OnStopSending");
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	}
     }
     function queueSendUnsentMessages(msgSendLater) {
@@ -55,7 +55,7 @@ var Sendlater3Backgrounding = function() {
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.addMsgSendLaterListener");
     }
 
-    // i had to change the type of one of my preferences from int to char to be
+    // I had to change the type of one of my preferences from int to char to be
     // able to add some new functionality. I couldn't find a way to change the
     // type of a preference for people who had the old version of the add-on
     // with the old preference installed. When I just changed its type from int
@@ -236,25 +236,13 @@ var Sendlater3Backgrounding = function() {
 	    throw Components.results.NS_NOINTERFACE;
 	},
 
-	OnProgress: function (progress, progressMax) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.OnProgress");
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.OnProgress");
-	},
+	OnProgress: function (progress, progressMax) {},
 
-	OnStartCopy: function () {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.OnStartCopy");
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.OnStartCopy");
-	},
+	OnStartCopy: function () {},
 
-	OnStopCopy: function ( status ) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.OnStopCopy");
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.OnStopCopy");
-	},
+	OnStopCopy: function ( status ) {},
 
-	SetMessageKey: function (key ) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.SetMessageKey");
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.copyServiceListener.SetMessageKey");
-	}
+	SetMessageKey: function (key ) {}
 
     };
 
