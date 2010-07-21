@@ -3,12 +3,6 @@ var Sendlater3ComposeToolbar = {
     originalCustomizeDone: null,
 
     updateModified: function() {
-	// I cannot for the life of me figure out when "this" is set as I
-	// expect. In particular, sometimes when functions are called as event
-	// listeners, it appears that "this" is set to the window from which
-	// they were called, not the object containing the functions. So
-	// sometimes we reference the object explicitly to make sure the right
-	// thing happens. I wish I understood this better.
 	var t = Sendlater3ComposeToolbar;
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.updateModified");
 	if (t.timer != null) {
