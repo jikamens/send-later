@@ -131,8 +131,23 @@ var Sendlater3ComposeToolbar = {
 	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.populateDays");
 	}
 
+	var originalCustomizeDone;
+
 	function SENDLATER3_TOOLBAR_SetOnLoad() {
 	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad");
+
+	    // We need to detect when the toolbar is first added to
+	    // the message window, so we can populate it at that
+	    // point.
+	    if (! originalCustomizeDone) {
+		originalCustomizeDone = document
+		    .getElementById("compose-toolbox").customizeDone;
+		Sendlater3Util.debug("originalCustomizeDone=" + 
+				     originalCustomizeDone);
+		document.getElementById("compose-toolbox").customizeDone =
+		    CustomizeDone;
+	    }
+
 	    if (document.getElementById('sendlater3_toolbar')) {
 		document.getElementById("yearvalue")
 		    .removeEventListener("ValueChange", populateMonths, false);
@@ -208,47 +223,17 @@ var Sendlater3ComposeToolbar = {
 		else {
 		    Sendlater3Util.dump("No previous time");
 		}
-		Sendlater3Util.Returning("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad", true);
-		return true;
 	    }
-	    Sendlater3Util.Returning("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad", false);
-	    return false;
+	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.SENDLATER3_TOOLBAR_SetOnLoad");
 	}
-
-	var originalCustomizeDone;
 
 	function CustomizeDone(aToolboxChanged) {
 	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.CustomizeDone", aToolboxChanged);
 	    originalCustomizeDone(aToolboxChanged);
 	    if (aToolboxChanged) {
-		Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.CustomizeDone");
-		captureonLoad();
-		Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.CustomizeDone");
+		SENDLATER3_TOOLBAR_SetOnLoad();
 	    }
 	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.CustomizeDone");
-	}
-
-	function captureonLoad() {
-	    Sendlater3Util.Entering("Sendlater3ComposeToolbar.main.captureonLoad");
-	    // We need to detect when the toolbar is first added to
-	    // the message window, so we can populate it at that
-	    // point.
-	    if (! originalCustomizeDone) {
-		originalCustomizeDone = document
-		    .getElementById("compose-toolbox").customizeDone;
-		Sendlater3Util.debug("originalCustomizeDone=" + 
-				     originalCustomizeDone);
-		document.getElementById("compose-toolbox").customizeDone =
-		    CustomizeDone;
-	    }
-
-	    Sendlater3Util.debug("sendlater3_toolbar_initialized: " +
-				 window.sendlater3_toolbar_initialized);
-	    if (! window.sendlater3_toolbar_initialized) {
-	        window.sendlater3_toolbar_initialized = 
-		    SENDLATER3_TOOLBAR_SetOnLoad();
-	    }
-	    Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main.captureonLoad");
 	}
 
 	// The toolbar is only loaded the first time a message
@@ -258,8 +243,8 @@ var Sendlater3ComposeToolbar = {
 	// load and focus events and checking in the event listener
 	// whether the values have already been set (using a custom
 	// attribute on the window) before setting them.
-	window.addEventListener("load",captureonLoad,false);
-	window.addEventListener("focus",captureonLoad,false);
+	window.addEventListener("load", SENDLATER3_TOOLBAR_SetOnLoad, false);
+	document.getElementById("msgcomposeWindow").addEventListener("compose-window-reopen", SENDLATER3_TOOLBAR_SetOnLoad, false);
 
     	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main");
     },
