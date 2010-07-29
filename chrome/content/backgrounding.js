@@ -516,7 +516,7 @@ var Sendlater3Backgrounding = function() {
 		return;
 	    }
 		
-	    messageURI = CheckThisURIQueue.shift();
+	    var messageURI = CheckThisURIQueue.shift();
 	    Sendlater3Util.debug("Checking message : " + messageURI + "\n");
 
 	    var MsgService = messenger.messageServiceFromURI(messageURI);
