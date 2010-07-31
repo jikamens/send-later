@@ -332,7 +332,7 @@ var Sendlater3Backgrounding = function() {
 	    // get to this point, it's because we never hit the end of the
 	    // header, which means that the message consists only of a header.
 	    if (this._header == null) {
-		this._header = header.match(/^X-Send-Later-At:.*$/mi);
+		this._header = content.match(/^X-Send-Later-At:.*$/mi);
 	    }
 
 	    Sendlater3Util.debug("SendLaterPresent = " + this._header);
