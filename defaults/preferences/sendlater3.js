@@ -14,7 +14,7 @@ pref("extensions.sendlater3.quickoptions.1.showintoolbar",false);
 pref("extensions.sendlater3.quickoptions.2.showintoolbar",false);
 pref("extensions.sendlater3.quickoptions.3.showintoolbar",false);
 // "Info" for terse logging, "Debug" for verbose logging, "Trace" for everything
-pref("extensions.sendlater3.logging.console","Fatal");
+pref("extensions.sendlater3.logging.console","Warn");
 pref("extensions.sendlater3.logging.dump","Fatal");
 pref("extensions.sendlater3.sendunsentmessages",true);
 // Internal settings not to be messed with

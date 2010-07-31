@@ -17,6 +17,20 @@ var Sendlater3Util = {
 	return Sendlater3Util._PromptBundle.getString(name);
     },
 
+    PromptBundleGetFormatted: function(name, params) {
+	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGetFormatted", name,
+				params, length);
+	if (Sendlater3Util._PromptBundle == null) {
+	    Sendlater3Util._PromptBundle =
+		document.getElementById("promptstrings");
+	}
+	var formatted = Sendlater3Util._PromptBundle
+	    .getFormattedString(name, params)
+	Sendlater3Util.Returning("Sendlater3Util.PromptBundleGetFormatted",
+				 formatted);
+	return formatted;
+    },
+
     ButtonLabel: function(num) {
 	Sendlater3Util.Entering("Sendlater3Util.ButtonLabel", num);
     	var label = Sendlater3Util.PrefService.
@@ -39,18 +53,33 @@ var Sendlater3Util = {
 	    return raw;
 	}
 	else if (raw.match(/^[A-Za-z_$][A-Za-z0-9_$]*$/)) {
-	    // If the user specifies an invalid function name, then this will
-	    // throw an error, which will show up in the error console, which
-	    // is what we want.
-	    var v;
-	    eval("v = " + raw + "();");
-	    if (typeof(v) == "number") {
-		v = raw + "()";
-		Sendlater3Util.Returning("Sendlater3Util.ShortcutValue", v);
-		return v;
+	    var func = window[raw];
+	    if (typeof(func) == "undefined") {
+		Sendlater3Util.warn("Invalid setting for quick option " + num + 
+				    ": function \"" + raw + 
+				    "\" is not defined");
+		return; // undefined
 	    }
+	    else if (typeof(func) != "function") {
+		Sendlater3Util.warn("Invalid setting for quick option " + num + 
+				    ": \"" + raw + "\" is not a function");
+		return; // undefined
+	    }
+	    var v = func();
+	    if (typeof(v) != "number") {
+		Sendlater3Util.warn("Invalid setting for quick option " + num + 
+				    ": \"" + raw + 
+				    "()\" does not return a number");
+		return; // undefined
+	    }
+	    v = raw + "()";
+	    Sendlater3Util.Returning("Sendlater3Util.ShortcutValue", v);
+	    return v;
 	}
-	throw("Invalid setting for quick option " + num + ": \"" + raw + "\"");
+	Sendlater3Util.warn("Invalid setting for quick option " + num + ": \"" +
+			    raw + "\" is neither a number nor a function " +
+			    "that returns a number");
+	return; // undefined
     },
 
     FormatDateTime: function(thisdate,includeTZ) {
@@ -108,6 +137,11 @@ var Sendlater3Util = {
     },
 
     logger: null,
+
+    warn: function(msg) {
+        Sendlater3Util.initLogging();
+        Sendlater3Util.logger.warn(msg);
+    },
 
     dump: function(msg) {
         Sendlater3Util.initLogging();

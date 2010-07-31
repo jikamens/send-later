@@ -27,14 +27,37 @@ var Sendlater3Prompt = {
 	    document.getElementById("shortcutbtn_" + i).label =
 		Sendlater3Util.ButtonLabel(i);
 	    var value = Sendlater3Util.ShortcutValue(i);
-	    document.getElementById("shortcutbtn_" + i)
-		.setAttribute("oncommand",
-			      "Sendlater3Prompt.CallSendAfter(" + value +
-			      ");close();");
-	    document.getElementById("quickbutton" + i + "-key")
-		.setAttribute("oncommand",
-			      "Sendlater3Prompt.CallSendAfter(" + value +
-			      ");close();");
+	    if (value == undefined) {
+		document.getElementById("shortcutbtn_" + i).hidden = true;
+	    }
+	    else {
+		var cmd = "Sendlater3Prompt.CallSendAfter(" + value +
+		    ");close();";
+		// For the life of me, I can't figure out why I have to remove
+		// these attributes before setting them, but if I don't, then
+		// sometimes when the user changes one of the button values in
+		// the middle of a session, the new value doesn't take effect
+		// immediately. I found a Web page claiming that setAttribute
+		// is unreliable because it sets the "default value" for the
+		// attribute rather than the actual value, and that therefore
+		// attributes should be set as properties (as shown for setting
+		// the "hidden" attribute just below), but I tried using
+		// ".oncommand = ..." instead of ".setAttribute("oncommand",
+		// ...)" and it did not solve the problem. Only removing and
+		// recreating the attribute seems to solve the problem. I
+		// suppose now that I've got it working, it'll do, but I sure
+		// wish I understood what's going on here inside the JavaScript
+		// interpreter.
+		document.getElementById("shortcutbtn_" + i)
+		    .removeAttribute("oncommand");
+		document.getElementById("quickbutton" + i + "-key")
+		    .removeAttribute("oncommand");
+		document.getElementById("shortcutbtn_" + i)
+		    .setAttribute("oncommand", cmd);
+		document.getElementById("quickbutton" + i + "-key")
+		    .setAttribute("oncommand", cmd);
+		document.getElementById("shortcutbtn_" + i).hidden = false;
+	    }
 	}
 
 	var prevXSendLater = window.arguments[0].previouslyTimed;
@@ -174,7 +197,7 @@ var Sendlater3Prompt = {
     },
 
     CallSendAfter: function(mins) {
-        Sendlater3Util.Entering("Sendlater3Prompt.CallSendAfter");
+        Sendlater3Util.Entering("Sendlater3Prompt.CallSendAfter", mins);
 	var sendat = new Date();
 	sendat.setTime(sendat.getTime()+mins*60*1000);
 	window.arguments[0].finishCallback(sendat);

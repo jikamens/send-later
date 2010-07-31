@@ -90,13 +90,18 @@ var Sendlater3ComposeToolbar = {
 	    var i;
 	    for (i = 1; i <= 3; i++) {
 		var btn = "shortcutbtn_" + i;
-		if (t.showquickbutton(1)) {
+		var minutes = Sendlater3Util.ShortcutValue(i);
+		if (t.showquickbutton(1) && minutes != undefined) {
 		    var cmd = "Sendlater3ComposeToolbar.CallSendAfter(" +
-			Sendlater3Util.ShortcutValue(i) + ");"
+			minutes + ");"
 		    document.getElementById(btn).label =
 			Sendlater3Util.ButtonLabel(i);
-		    document.getElementById(btn)
-			.setAttribute("oncommand", cmd);
+		    // See comment about removeAttribute above similar code
+		    // in prompt.js.
+		    document.getElementById(btn).removeAttribute("oncommand");
+		    document.getElementById("quickbutton" + i + "-key")
+			.removeAttribute("oncommand");
+		    document.getElementById(btn).setAttribute("oncommand", cmd);
 		    document.getElementById("quickbutton" + i + "-key")
 			.setAttribute("oncommand", cmd);
 		    document.getElementById(btn).hidden = false;
