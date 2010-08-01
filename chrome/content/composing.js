@@ -61,9 +61,9 @@ var Sendlater3Composing = {
 			   ( (!headerready) || 
 			     (headerready && xsendlaterpresent) )) {
 			content = content + ScriptInputStream .read(512);
-			if (!headerready && content.match(/\r\n\r\n/)) {
+			if (!headerready && content.match(/\n\r?\n/)) {
 			    headerready = true;
-			    if (content.match(/\r\nX-Send-Later-At:.*/))
+			    if (content.match(/\nX-Send-Later-At:.*/))
 				xsendlaterpresent = true;
 			}
 		    }
@@ -71,14 +71,14 @@ var Sendlater3Composing = {
 					" , SendLaterPresent = " + 
 					xsendlaterpresent);
 		    var gotcha;
-		    if (xsendlaterpresent)
-			gotcha = content
-			.match(/\r\nX-Send-Later-At:.*/).toString();
+		    if (xsendlaterpresent) {
+			gotcha = content.match(/\nX-Send-Later-At:\s*(.*)/);
+			gotcha = gotcha[1];
+		    }
 		    else
 			gotcha = false;
 		    if (gotcha) {
-			Sendlater3Composing.prevXSendLater = 
-			    new Date (gotcha.substr(18));
+			Sendlater3Composing.prevXSendLater = new Date(gotcha);
 			Sendlater3Util.dump("PrevXSendLater = " +
 					    Sendlater3Composing.prevXSendLater);
 		    } 
