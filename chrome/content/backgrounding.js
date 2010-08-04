@@ -732,6 +732,19 @@ var Sendlater3Backgrounding = function() {
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.StartMonitorCallback");
     }
 
+    function StopMonitorCallback() {
+	Sendlater3Util.Entering("Sendlater3Backgrounding.StopMonitorCallback");
+	var mailSession = Components
+	    .classes["@mozilla.org/messenger/services/session;1"]
+	    .getService(Components.interfaces.nsIMsgMailSession);
+	mailSession.RemoveFolderListener(folderLoadListener);
+	if (BackgroundTimer) {
+	    BackgroundTimer.cancel();
+	}
+	clearActiveUuidCallback();
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.StopMonitorCallback");
+    }
+
     // BackgroundTimer = Components
     //     .classes["@mozilla.org/timer;1"]
     //     .createInstance(Components.interfaces.nsITimer);
@@ -742,7 +755,7 @@ var Sendlater3Backgrounding = function() {
     //     );
 
     window.addEventListener("load", StartMonitorCallback,false);
-    window.addEventListener("unload", clearActiveUuidCallback, false);
+    window.addEventListener("unload", StopMonitorCallback, false);
     Sendlater3Util.Leaving("Sendlater3Backgrounding");
     addMsgSendLaterListener();
 }
