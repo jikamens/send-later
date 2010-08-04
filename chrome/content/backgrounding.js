@@ -521,8 +521,8 @@ var Sendlater3Backgrounding = function() {
 
 	    var MsgService = messenger.messageServiceFromURI(messageURI);
 	    var messageHDR = messenger.msgHdrFromURI(messageURI);
-	    var listener = new UriStreamListener(messageHDR);
-	    MsgService.streamMessage(messageURI, listener,
+	    MsgService.streamMessage(messageURI,
+				     new UriStreamListener(messageHDR),
 				     msgWindow, null, false, null);
 	    SetAnimTimer(3000);
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisUriCallback.notify");
