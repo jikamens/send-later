@@ -18,3 +18,6 @@
 <!ENTITY showsendlaterprogress.caption "Toon de voortgang in de statusbalk">
 <!ENTITY showsendlaterunsentmessages.caption "Verstuur niet-verzonden berichten die in Postvak UIT staan">
 <!ENTITY showsendlaterunsentmessages.tooltip "Als je deze optie ontvinkt, zal Send Later de berichten niet versturen, maar ze op het moment van versturen in je Postvak UIT plaatsen. Ontvink deze optie, bijvoorbeeld, als je een andere extensie gebruikt, zoals bijvoorbeeld BlunderDelay, die periodiek berichten in je Postvak UIT verstuurt. Merk op dat als deze optie aangevinkt is, Send Later samen met het geplande bericht ALLE berichten in je Postvak UIT verstuurt.">
+<!ENTITY advanced.caption "Advanced">
+<!ENTITY dumplevel.caption "Dump log level:">
+<!ENTITY consolelevel.caption "Console log level:">
