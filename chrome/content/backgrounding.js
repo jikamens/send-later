@@ -542,7 +542,7 @@ var Sendlater3Backgrounding = function() {
     // long time checking drafts and cause the UI to hang or respond
     // sluggishly.
     function CheckThisURIQueueAdd(messageURI) {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisURIQueueAdd");
+	Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisURIQueueAdd", messageURI);
 	if (CheckThisURIQueue.length == 0) {
 	    CheckThisURITimer = Components.classes["@mozilla.org/timer;1"]
 		.createInstance(Components.interfaces.nsITimer);
