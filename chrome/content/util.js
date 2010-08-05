@@ -165,7 +165,47 @@ var Sendlater3Util = {
 					    Log4Moz.Level.Trace,
 					    Log4Moz.Level.Info,
 					    Log4Moz.Level.Debug);
+	    Sendlater3Util.logger.debug("Initialized logging");
 	}
+    },
+
+    reinitLogging: {
+	observe: function() {
+	    Sendlater3Util.Entering("Sendlater3Util.reinitLogging.observe");
+	    // This is really disgusting.
+	    delete Log4Moz.repository._loggers["extensions.sendlater3"];
+	    Sendlater3Util.logger = null;
+	    Sendlater3Util.initLogging();
+	    Sendlater3Util.Leaving("Sendlater3Util.reinitLogging.observe");
+	},
+    },
+    
+    initUtil: function() {
+	Sendlater3Util.Entering("Sendlater3Util.initUtil");
+	Sendlater3Util.PrefService
+	    .QueryInterface(Components.interfaces.nsIPrefBranch2);
+	Sendlater3Util.consoleObserver =
+	    Sendlater3Util.PrefService.addObserver(
+		"extensions.sendlater3.logging.console",
+		Sendlater3Util.reinitLogging, false);
+	Sendlater3Util.dumpObserver =
+	    Sendlater3Util.PrefService.addObserver(
+		"extensions.sendlater3.logging.dump",
+		Sendlater3Util.reinitLogging, false);
+	Sendlater3Util.Leaving("Sendlater3Util.initUtil");
+    },
+
+    uninitUtil: function() {
+	Sendlater3Util.Entering("Sendlater3Util.uninitUtil");
+	Sendlater3Util.PrefService
+	    .QueryInterface(Components.interfaces.nsIPrefBranch2);
+	Sendlater3Util.PrefService.removeObserver(
+	    "extensions.sendlater3.logging.console",
+	    Sendlater3Util.reinitLogging);
+	Sendlater3Util.PrefService.removeObserver(
+	    "extensions.sendlater3.logging.dump",
+	    Sendlater3Util.reinitLogging);
+	Sendlater3Util.Leaving("Sendlater3Util.uninitUtil");
     },
 
     DZFormat: function(val) {

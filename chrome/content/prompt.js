@@ -246,3 +246,6 @@ var Sendlater3Prompt = {
         Sendlater3Util.Leaving("Sendlater3Prompt.CallSendAt");
     }
 }
+
+Sendlater3Util.initUtil();
+window.addEventListener("unload", Sendlater3Util.uninitUtil, false);

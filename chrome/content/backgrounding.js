@@ -752,6 +752,7 @@ var Sendlater3Backgrounding = function() {
 	clearActiveUuidCallback();
 	removeMsgSendLaterListener();
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.StopMonitorCallback");
+	Sendlater3Util.uninitUtil();
     }
 
     // BackgroundTimer = Components
@@ -769,4 +770,5 @@ var Sendlater3Backgrounding = function() {
     addMsgSendLaterListener();
 }
 
+Sendlater3Util.initUtil();
 Sendlater3Backgrounding.apply();

@@ -141,7 +141,9 @@ var Sendlater3HeaderView = function() {
     }
 
     window.addEventListener("load",sendlater3_HeaderView_SetupListener,false);
+    window.addEventListener("unload", Sendlater3Util.uninitUtil, false);
 
 }
 
+Sendlater3Util.initUtil();
 Sendlater3HeaderView.apply();

@@ -22,3 +22,6 @@ var Sendlater3Options = {
 	return true;
     }
 };
+
+Sendlater3Util.initUtil();
+window.addEventListener("unload", Sendlater3Util.uninitUtil, false);

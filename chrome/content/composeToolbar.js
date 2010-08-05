@@ -306,10 +306,12 @@ var Sendlater3ComposeToolbar = {
     	Sendlater3Util.Entering("Sendlater3ComposeToolbar.main");
 
 	window.addEventListener("load", this.SetOnLoad, false);
+	window.addEventListener("unload", Sendlater3Util.uninitUtil, false);
 	document.getElementById("msgcomposeWindow").addEventListener("compose-window-reopen", this.SetOnLoad, false);
 
     	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.main");
     }
 }
 
+Sendlater3Util.initUtil();
 Sendlater3ComposeToolbar.main();
