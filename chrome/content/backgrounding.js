@@ -54,6 +54,14 @@ var Sendlater3Backgrounding = function() {
 	msgSendLater.addListener(sendUnsentMessagesListener);
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.addMsgSendLaterListener");
     }
+    function removeMsgSendLaterListener() {
+	Sendlater3Util.Entering("Sendlater3Backgrounding.removeMsgSendLaterListener");
+	var msgSendLater = Components
+	    .classes["@mozilla.org/messengercompose/sendlater;1"]
+	    .getService(Components.interfaces.nsIMsgSendLater);
+	msgSendLater.removeListener(sendUnsentMessagesListener);
+	Sendlater3Util.Leaving("Sendlater3Backgrounding.removeMsgSendLaterListener");
+    }
 
     // I had to change the type of one of my preferences from int to char to be
     // able to add some new functionality. I couldn't find a way to change the
@@ -742,6 +750,7 @@ var Sendlater3Backgrounding = function() {
 	    BackgroundTimer.cancel();
 	}
 	clearActiveUuidCallback();
+	removeMsgSendLaterListener();
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.StopMonitorCallback");
     }
 
