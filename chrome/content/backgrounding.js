@@ -225,9 +225,6 @@ var Sendlater3Backgrounding = function() {
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.StatusReportMsg");
     }
 
-    const FOLDER_IS_IDLE = 0;
-    const FOLDER_IS_LOADING = 1;
-    var folderstocheck = new Array();
     var MessagesPending=0;
     var copyServiceListener =  {
 	sfileNP: null,
@@ -556,6 +553,21 @@ var Sendlater3Backgrounding = function() {
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisURIQueueAdd");
     }
 
+    // folderstocheck is a list of folders waiting to be checked in this
+    // cycle. foldersdone is a list of folders we've already checked in this
+    // cycle. folderstocheck grows when we scan all the draft folders in
+    // CheckForSendLaterCallback. folderstocheck shrinks and foldersdone grows
+    // when we process a folder in the folderLoadListener. We need to keep
+    // track of both folderstocheck and folderstodone because we call
+    // updateFolder in CheckForSendLaterCallback as we add folders to
+    // folderstocheck, and updateFolder sometimes calls the folderLoadListener
+    // synchronously, so if we just kept track of folderstocheck and multiple
+    // accounts were pointing at the same Drafts folder, then we could end up
+    // processing that Drafts folder multiple times and miscounting pending
+    // messages.
+    var folderstocheck = new Array();
+    var foldersdone = new Array();
+
     var folderLoadListener = {
 	OnItemEvent: function(folder, event) {
 	    Sendlater3Util.Entering("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
@@ -582,6 +594,7 @@ var Sendlater3Backgrounding = function() {
 
 		    Sendlater3Util.dump("FOLDER MONITORED - "+folder.URI+"\n");
 		    folderstocheck.splice(where, 1);
+		    foldersdone.push(folder.URI);
 		    var thisfolder = folder
 			.QueryInterface(Components.interfaces.nsIMsgFolder);
 		    var messageenumerator = thisfolder.messages;
@@ -634,6 +647,7 @@ var Sendlater3Backgrounding = function() {
 	    var fdrlocal = accountManager.localFoldersServer.rootFolder;
 
 	    folderstocheck = new Array();
+	    foldersdone = new Array();
 	    folderstocheck.push(fdrlocal.findSubFolder("Drafts").URI);
 	    Sendlater3Util.dump("SCHEDULE - " + folderstocheck[0]);
 	    // Local Drafts folder might have different name, e.g., in other
@@ -694,7 +708,8 @@ var Sendlater3Backgrounding = function() {
 						.nsIMsgIdentity);
 			    var thisfolder =
 				GetMsgFolderFromUri(identity.draftFolder);
-			    if (folderstocheck.indexOf(thisfolder.URI)<0) {
+			    if (folderstocheck.indexOf(thisfolder.URI)<0 &&
+				foldersdone.indexOf(thisfolder.URI)<0) {
 				folderstocheck.push (thisfolder.URI);
 				Sendlater3Util.dump("SCHEDULE - " +
 						    thisfolder.URI );
