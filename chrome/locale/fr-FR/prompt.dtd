@@ -1,0 +1,9 @@
+<!ENTITY separate.label "">
+<!ENTITY sendlater.prompt.sendlater.label "Contourner Send Later">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Fonctionnalit&eacute; de Thunderbird: d&eacute;place le message vers la boite d&#x27;envoi pour exp&eacute;dition d&egrave;s qu&#x27;un message est envoy&eacute;.">
+<!ENTITY sendlater.prompt.close.label "Annuler">
+<!ENTITY sendlater.prompt.close.tooltip "Reprendre la r&eacute;daction du message.">
+<!ENTITY sendlater.prompt.title.label "Envoyer ce courriel plus tard">
+<!ENTITY sendlater.prompt.sendat.label "Envoyer &agrave; une heure donn&eacute;e">
+<!ENTITY sendlater.prompt.sendat.tooltip "Enregistrer le message pour envoi automatique &agrave; l&#x27;heure pr&eacute;cis&eacute;e ci-dessus.">
+<!ENTITY sendlater.toolbar.sendlater.button.label "Send Later">

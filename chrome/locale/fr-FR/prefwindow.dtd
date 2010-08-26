@@ -1,0 +1,23 @@
+<!ENTITY prefwindow.title "Pr&eacute;f&eacute;rences &quot;Send Later&quot;">
+<!ENTITY pane1.title "Pr&eacute;f&eacute;rences &quot;Send Later&quot;">
+<!ENTITY checktimepref.label "V&eacute;rifie toutes les :">
+<!ENTITY checktimepref2.label "millisecondes">
+<!ENTITY checktimepref.tooltip "Intervalle en millisecondes entre les recherches de messages &agrave; exp&eacute;dier. Augmenter cette valeur si il arrive que vos messages ne soient pas envoy&eacute;s &agrave; l&#x27;heure pr&eacute;vue ou si le nombre de message en attente est erron&eacute;.">
+<!ENTITY checktimepref.accesskey "C">
+<!ENTITY general.caption "G&eacute;neral">
+<!ENTITY quickoption1.caption "Raccourci 1">
+<!ENTITY quickoption2.caption "Raccourci 2">
+<!ENTITY quickoption3.caption "Raccourci 3">
+<!ENTITY quickoptionname.label "Nom du bouton : ">
+<!ENTITY quickoptionvalue.label "Minutes :">
+<!ENTITY showtoolbarbutton.caption "Afficher dans la barre d&#x27;outils">
+<!ENTITY showsendlatercolumn.caption "Afficher la colonne &quot;Send Later&quot;">
+<!ENTITY showsendlatercolumn.tooltip "D&eacute;termine l&#x27;affichage de la colonne &quot;Send Later&quot; en mode visualisation des messages en attente">
+<!ENTITY showsendlaterheader.caption "Afficher les ent&ecirc;tes de &quot;Send Later&quot;">
+<!ENTITY showsendlaterheader.tooltip "D&eacute;termine l&#x27;affichage de l&#x27;ent&ecirc;te "X-Send-Later-At", i.e., l&#x27;heure pr&eacute;vue d&#x27;envoi d&#x27;un message.">
+<!ENTITY showsendlaterprogress.caption "Affichage dans la barre d&#x27;&eacute;tat de l&#x27;avancement des envois en t&acirc;che de fond.">
+<!ENTITY showsendlaterunsentmessages.caption "D&eacute;clenche l&#x27;exp&eacute;dition des messages en attente dans la boite d&#x27;exp&eacute;dition.">
+<!ENTITY showsendlaterunsentmessages.tooltip "En d&eacute;sactivant cette option Send Later ne d&eacute;livrera pas les messages programm&eacute;s pour &ecirc;tre exp&eacute;di&eacute;s mais les placera en boite d&#x27;exp&eacute;dition. D&eacute;sactivez, par exemple cette option si vous utilisez une autre extension (comme BlunderDelay) pour p&eacute;riodiquement relever les messages de la boite d&#x27;exp&eacute;dition. Notez bien que lorsque cette option est activ&eacute;e quand Send Later exp&eacute;die un message TOUS les messages de la boite d&#x27;exp&eacute;dition seront envoy&eacute;s en m&ecirc;me temps.">
+<!ENTITY advanced.caption "Avanc&eacute;">
+<!ENTITY dumplevel.caption "Niveau de journalisation :">
+<!ENTITY consolelevel.caption "Console de journalisation :">
