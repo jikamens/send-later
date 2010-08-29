@@ -141,7 +141,9 @@ var Sendlater3ComposeToolbar = {
 
     populateHours: function() {
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.populateHours");
+	var t = Sendlater3ComposeToolbar;
 	var container = document.getElementById("hours");
+	t.clearChildren(container);
 	var i;
 	for (i=0;i<24;i++) {
 	    var newitem = document.createElement("menuitem");
@@ -154,7 +156,9 @@ var Sendlater3ComposeToolbar = {
 
     populateMins: function() {
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.populateMins");
+	var t = Sendlater3ComposeToolbar;
 	var container = document.getElementById("mins");
+	t.clearChildren(container);
 	var i;
 	for (i=0;i<60;i++) {
 	    var newitem = document.createElement("menuitem");
@@ -168,7 +172,9 @@ var Sendlater3ComposeToolbar = {
     populateYears: function() {
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.populateYears");
 	var today = new Date();
+	var t = Sendlater3ComposeToolbar;
 	var container = document.getElementById("years");
+	t.clearChildren(container);
 	var i;
 	for (i=0;i<5;i++) {
 	    var newitem = document.createElement("menuitem");
