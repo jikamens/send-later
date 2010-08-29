@@ -18,3 +18,6 @@
 <!ENTITY showsendlaterprogress.caption "Zeige Hintergrund-Fortschritt in der Symbolleiste">
 <!ENTITY showsendlaterunsentmessages.caption "Auslösen des Versands der pendenten Nachrichten aus dem Postausgangsordner">
 <!ENTITY showsendlaterunsentmessages.tooltip "Wird diese Option zurückgesetzt, dann wird SendeSpäter die Nachrichten nicht in vollem Umfang ausliefern, stattdessen werden sie für die geplante Lieferung direkt in den Postausgang gesteckt. Setze diese Option zurück, wenn eine andere Erweiterung, wie z.B. BlunderDelay, verwendet wird, um periodisch Nachrichten aus dem Postausgang zu versenden. Beachte: ist diese Option gesetzt, wird SendeSpäter, wann immer es Nachrichten ausliefert, melden: ALLE Nachrichten im Postausgang wurden ausgeliefert.">
+<!ENTITY advanced.caption "Advanced">
+<!ENTITY dumplevel.caption "Dump log level:">
+<!ENTITY consolelevel.caption "Console log level:">
