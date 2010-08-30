@@ -5,11 +5,11 @@
     <em:id>sendlater3@kamens.us</em:id>
     <em:name>Send Later 3</em:name>
     <em:version>3.1.1.5</em:version>
-    <em:creator>Karthik S</em:creator>
+    <em:creator>Karthik Sivaram</em:creator>
     <em:developer>Jonathan Kamens</em:developer>
     <em:translator>Didier Journois</em:translator><!-- French -->
     <em:translator>Daniel S.</em:translator><!-- Part of German -->
-    <em:description>True 'Send Later' functionality to schedule the time for sending an email. Originally written by Karthik S; port to Thunderbird 3+ created and maintained by Jonathan Kamens.</em:description>
+    <em:description>True 'Send Later' functionality to schedule the time for sending an email. Originally written by Karthik Sivaram; port to Thunderbird 3+ created and maintained by Jonathan Kamens.</em:description>
     <em:homepageURL>http://blog.kamens.us/send-later-3</em:homepageURL>
     <em:optionsURL>chrome://sendlater3/content/options.xul</em:optionsURL>
     <em:iconURL>chrome://sendlater3/content/sendlater3icon.png</em:iconURL>
