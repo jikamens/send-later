@@ -9,7 +9,7 @@
     <em:developer>Jonathan Kamens</em:developer>
     <em:translator>Didier Journois</em:translator><!-- French -->
     <em:translator>Daniel S.</em:translator><!-- Part of German -->
-    <em:description>True 'Send Later' functionality to schedule the time for sending an email.</em:description>
+    <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
     <em:homepageURL>http://blog.kamens.us/send-later-3</em:homepageURL>
     <em:optionsURL>chrome://sendlater3/content/options.xul</em:optionsURL>
     <em:iconURL>chrome://sendlater3/content/sendlater3icon.png</em:iconURL>
