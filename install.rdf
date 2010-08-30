@@ -10,6 +10,12 @@
     <em:translator>Didier Journois</em:translator><!-- French -->
     <em:translator>Daniel S.</em:translator><!-- Part of German -->
     <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
+    <em:localized>
+      <Description>
+	<em:locale>fr-FR</em:locale>
+	<em:description>Fonction d'envoi de courrier différé permettant de programmer l'heure d'envoi d'un courriel.</em:description>
+      </Description>
+    </em:localized>
     <em:homepageURL>http://blog.kamens.us/send-later-3</em:homepageURL>
     <em:optionsURL>chrome://sendlater3/content/options.xul</em:optionsURL>
     <em:iconURL>chrome://sendlater3/content/sendlater3icon.png</em:iconURL>
