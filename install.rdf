@@ -16,6 +16,18 @@
 	<em:description>Fonction d'envoi de courrier différé permettant de programmer l'heure d'envoi d'un courriel.</em:description>
       </Description>
     </em:localized>
+    <em:localized>
+      <Description>
+	<em:locale>nl-NL</em:locale>
+	<em:description>"Send Later"-functie om het tijdstip van verzending van een email in te stellen.</em:description>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
+	<em:locale>de-DE</em:locale>
+	<em:description>Eine echte "SendeSpäter" Funktionalität zur Planung der Sendezeit von Emails.</em:description>
+      </Description>
+    </em:localized>
     <em:homepageURL>http://blog.kamens.us/send-later-3</em:homepageURL>
     <em:optionsURL>chrome://sendlater3/content/options.xul</em:optionsURL>
     <em:iconURL>chrome://sendlater3/content/sendlater3icon.png</em:iconURL>
