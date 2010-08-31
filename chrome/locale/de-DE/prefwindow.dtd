@@ -1,8 +1,8 @@
-<!ENTITY prefwindow.title "SendeSpäter Präferenzen">
-<!ENTITY pane1.title "SendeSpäter Präferenzen">
-<!ENTITY checktimepref.label "Überprüfe alle :">
+<!ENTITY prefwindow.title "SendeSpÃ¤ter PrÃ¤ferenzen">
+<!ENTITY pane1.title "SendeSpÃ¤ter PrÃ¤ferenzen">
+<!ENTITY checktimepref.label "ÃœberprÃ¼fe alle :">
 <!ENTITY checktimepref2.label "Millisekunden">
-<!ENTITY checktimepref.tooltip "Intervall, in Millisekunden, zwischen dem Überprüfen der Entwürfe, ob deren Lieferzeit erreicht ist. Erhöhe diesen Wert, wenn die Entwürfe manchmal nicht rechtzeitig gesendet werden oder der Mitteilungszähler in der Statuszeile nicht alle zeitlich geplanten Entwürfe wiedergibt.">
+<!ENTITY checktimepref.tooltip "Intervall, in Millisekunden, zwischen dem ÃœberprÃ¼fen der EntwÃ¼rfe, ob deren Lieferzeit erreicht ist. ErhÃ¶he diesen Wert, wenn die EntwÃ¼rfe manchmal nicht rechtzeitig gesendet werden oder der MitteilungszÃ¤hler in der Statuszeile nicht alle zeitlich geplanten EntwÃ¼rfe wiedergibt.">
 <!ENTITY checktimepref.accesskey "C">
 <!ENTITY general.caption "Allgemein">
 <!ENTITY quickoption1.caption "Schnelltaste 1">
@@ -11,13 +11,13 @@
 <!ENTITY quickoptionname.label "Knopf Beschriftung :">
 <!ENTITY quickoptionvalue.label "Minuten :">
 <!ENTITY showtoolbarbutton.caption "Zeige in der Werkzeugleiste">
-<!ENTITY showsendlatercolumn.caption "Zeige SendeSpäter Spalte">
-<!ENTITY showsendlatercolumn.tooltip "Zeigen, die &quot;SendeSpäter&quot; Spalte beim Ansehen des Ordners Entwürfe">
-<!ENTITY showsendlaterheader.caption "Zeige SendeSpäter Kopfzeile">
-<!ENTITY showsendlaterheader.tooltip "Zeigen, die &quot;X-SendeSpäter:&quot; Kopfzeile, z.B. die Zeit, wann ein Entwurf zum Senden geplant ist, in der Kopfzeile beim Ansehen einer Nachricht.">
+<!ENTITY showsendlatercolumn.caption "Zeige SendeSpÃ¤ter Spalte">
+<!ENTITY showsendlatercolumn.tooltip "Zeigen, die &quot;SendeSpÃ¤ter&quot; Spalte beim Ansehen des Ordners EntwÃ¼rfe">
+<!ENTITY showsendlaterheader.caption "Zeige SendeSpÃ¤ter Kopfzeile">
+<!ENTITY showsendlaterheader.tooltip "Zeigen, die &quot;X-SendeSpÃ¤ter:&quot; Kopfzeile, z.B. die Zeit, wann ein Entwurf zum Senden geplant ist, in der Kopfzeile beim Ansehen einer Nachricht.">
 <!ENTITY showsendlaterprogress.caption "Zeige Hintergrund-Fortschritt in der Symbolleiste">
-<!ENTITY showsendlaterunsentmessages.caption "Auslösen des Versands der pendenten Nachrichten aus dem Postausgangsordner">
-<!ENTITY showsendlaterunsentmessages.tooltip "Wird diese Option zurückgesetzt, dann wird SendeSpäter die Nachrichten nicht in vollem Umfang ausliefern, stattdessen werden sie für die geplante Lieferung direkt in den Postausgang gesteckt. Setze diese Option zurück, wenn eine andere Erweiterung, wie z.B. BlunderDelay, verwendet wird, um periodisch Nachrichten aus dem Postausgang zu versenden. Beachte: ist diese Option gesetzt, wird SendeSpäter, wann immer es Nachrichten ausliefert, melden: ALLE Nachrichten im Postausgang wurden ausgeliefert.">
+<!ENTITY showsendlaterunsentmessages.caption "AuslÃ¶sen des Versands der pendenten Nachrichten aus dem Postausgangsordner">
+<!ENTITY showsendlaterunsentmessages.tooltip "Wird diese Option zurÃ¼ckgesetzt, dann wird SendeSpÃ¤ter die Nachrichten nicht in vollem Umfang ausliefern, stattdessen werden sie fÃ¼r die geplante Lieferung direkt in den Postausgang gesteckt. Setze diese Option zurÃ¼ck, wenn eine andere Erweiterung, wie z.B. BlunderDelay, verwendet wird, um periodisch Nachrichten aus dem Postausgang zu versenden. Beachte: ist diese Option gesetzt, wird SendeSpÃ¤ter, wann immer es Nachrichten ausliefert, melden: ALLE Nachrichten im Postausgang wurden ausgeliefert.">
 <!ENTITY advanced.caption "Erweiterte">
 <!ENTITY dumplevel.caption "Dump log Level:">
 <!ENTITY consolelevel.caption "Konsolen log Level:">

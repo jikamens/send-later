@@ -1,9 +1,9 @@
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Durchgang zu SendeSpäter">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Eingebaute Thunderbird-Funktionalität: verschiebt eine Nachricht in den Postausgangs-Ordner für die nächste Auslieferung aller ungesendeten Nachrichten.">
+<!ENTITY sendlater.prompt.sendlater.label "Durchgang zu SendeSpÃ¤ter">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Eingebaute Thunderbird-FunktionalitÃ¤t: verschiebt eine Nachricht in den Postausgangs-Ordner fÃ¼r die nÃ¤chste Auslieferung aller ungesendeten Nachrichten.">
 <!ENTITY sendlater.prompt.close.label "Abbruch">
-<!ENTITY sendlater.prompt.close.tooltip "Gehe zurück zum Bearbeiten der Mitteilung.">
-<!ENTITY sendlater.prompt.title.label "Sende dieses E-Mail später">
-<!ENTITY sendlater.prompt.sendat.label "SendeSpäter zu einem bestimmten Zeitpunkt">
-<!ENTITY sendlater.prompt.sendat.tooltip "Speichern der Mitteilung im Order Entwürfe für den automatischen Versand zum vorher gesetzten Zeitpunkt.">
-<!ENTITY sendlater.toolbar.sendlater.button.label "SendeSpäter">
+<!ENTITY sendlater.prompt.close.tooltip "Gehe zurÃ¼ck zum Bearbeiten der Mitteilung.">
+<!ENTITY sendlater.prompt.title.label "Sende dieses E-Mail spÃ¤ter">
+<!ENTITY sendlater.prompt.sendat.label "SendeSpÃ¤ter zu einem bestimmten Zeitpunkt">
+<!ENTITY sendlater.prompt.sendat.tooltip "Speichern der Mitteilung im Order EntwÃ¼rfe fÃ¼r den automatischen Versand zum vorher gesetzten Zeitpunkt.">
+<!ENTITY sendlater.toolbar.sendlater.button.label "SendeSpÃ¤ter">
