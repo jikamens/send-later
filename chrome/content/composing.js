@@ -167,7 +167,10 @@ var Sendlater3Composing = {
 		Recipients2CompFields(msgCompFields);
 
 		// BEGIN SENDLATER3 ADDED
-		var head = "X-Send-Later-At: " + Sendlater3Util.FormatDateTime(sendat,true) + "\r\n";
+		var head = "X-Send-Later-At: " +
+		    Sendlater3Util.FormatDateTime(sendat,true) + "\r\n" +
+		    "X-Send-Later-Uuid: " + Sendlater3Util.getInstanceUuid() +
+		    "\r\n";
 		msgCompFields.otherRandomHeaders += head;
 		// END SENDLATER3 ADDED
 

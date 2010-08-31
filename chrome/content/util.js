@@ -179,7 +179,20 @@ var Sendlater3Util = {
 	    Sendlater3Util.Leaving("Sendlater3Util.reinitLogging.observe");
 	},
     },
-    
+
+    getInstanceUuid: function() {
+	var uuid_pref = "extensions.sendlater3.instance.uuid";
+	var instance_uuid = Sendlater3Util.PrefService.getCharPref(uuid_pref);
+	if (! instance_uuid) {
+	    var uuidGenerator = 
+		Components.classes["@mozilla.org/uuid-generator;1"]
+		.getService(Components.interfaces.nsIUUIDGenerator);
+	    instance_uuid = uuidGenerator.generateUUID().toString();
+	    Sendlater3Util.PrefService.setCharPref(uuid_pref, instance_uuid);
+	}
+	return instance_uuid;
+    },
+
     initUtil: function() {
 	Sendlater3Util.Entering("Sendlater3Util.initUtil");
 	Sendlater3Util.PrefService

@@ -171,10 +171,16 @@ var Sendlater3Backgrounding = function() {
     var installedCustomHeaders = Sendlater3Util.PrefService
         .getCharPref('mailnews.customDBHeaders');
     if (installedCustomHeaders.indexOf("x-send-later-at")<0) {
-	Sendlater3Util.dump("Installing Custom Header\n");
+	Sendlater3Util.dump("Installing Custom X-Send-Later-At Header\n");
 	Sendlater3Util.PrefService.setCharPref('mailnews.customDBHeaders',
 					       installedCustomHeaders +
 					       " x-send-later-at");
+    }
+    if (installedCustomHeaders.indexOf("x-send-later-uuid")<0) {
+	Sendlater3Util.dump("Installing Custom X-Send-Later-Uuid Header\n");
+	Sendlater3Util.PrefService.setCharPref('mailnews.customDBHeaders',
+					       installedCustomHeaders +
+					       " x-send-later-uuid");
     }
 
     function checkTimeout() {
@@ -289,6 +295,30 @@ var Sendlater3Backgrounding = function() {
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.SetAnimTimer");
     }
 
+    function CheckDraftUuid(header, content) {
+	var draft_uuid = content.match(/^X-Send-Later-Uuid:.*$/mi);
+	if (draft_uuid != null) {
+	    draft_uuid = draft_uuid[0].replace(/^X-Send-Later-Uuid: *(.*)/i,
+					       "$1");
+	    var instance_uuid = Sendlater3Util.getInstanceUuid();
+	    if (draft_uuid != instance_uuid) {
+		Sendlater3Util.debug("Skipping message with " + header +
+				     " on uuid mismatch (draft " + draft_uuid +
+				     " vs. instance " + instance_uuid + ")");
+		return false;
+	    }
+	    else {
+		Sendlater3Util.debug("Draft uuid match: " +
+				     draft_uuid);
+		return true;
+	    }
+	}
+	else {
+	    Sendlater3Util.debug("No draft uuid");
+	    return true;
+	}
+    }
+
     // Can we assume that a read from a hung server will eventually time out
     // and cause onStopRequest to be called with an error status code, or are
     // we introducing a memory leak here by creating asynchronous listeners
@@ -338,11 +368,16 @@ var Sendlater3Backgrounding = function() {
 	    // header, which means that the message consists only of a header.
 	    if (this._header == null) {
 		this._header = content.match(/^X-Send-Later-At:.*$/mi);
+		if (this._header != null) {
+		    this._header = this._header[0];
+		    if (! CheckDraftUuid(this._header, content)) {
+			this._header = null;
+		    }
+		}
 	    }
 
 	    Sendlater3Util.debug("SendLaterPresent = " + this._header);
 	    if (this._header != null) {
-		this._header = this._header.toString();
 		Sendlater3Util.dump ("Found Pending Message.");
 		var sendattime = new Date (this._header.substr(16));
 		var now = new Date();
@@ -485,17 +520,27 @@ var Sendlater3Backgrounding = function() {
 	    }
 	    this._content += data;
 
-	    var eoh = this._content.search(/\n\n/);
-	    if (eoh > -1) {
-		var header = this._content.slice(0, eoh);
+	    if (this._header == null) { // only the first time we reach the end
+					// of the header
+		var eoh = this._content.search(/\n\n/);
+		if (eoh > -1) {
+		    var header = this._content.slice(0, eoh);
 
-		this._header = header.match(/^X-Send-Later-At:.*$/mi);
-		if (this._header == null) {
-		    Sendlater3Util.debug("SendLaterPresent = null");
-		    this._content = "";
-		    aInputStream.close();
-		    Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "no header");
-		    return;
+		    this._header = header.match(/^X-Send-Later-At:.*$/mi);
+		    if (this._header == null) {
+			Sendlater3Util.debug("SendLaterPresent = null");
+			this._content = "";
+			aInputStream.close();
+			Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "no header");
+			return;
+		    }
+		    this._header = this._header[0];
+		    if (! CheckDraftUuid(this._header, header)) {
+			this._content = "";
+			aInputStream.close();
+			Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "uuid mismatch");
+			return;
+		    }
 		}
 	    }
 

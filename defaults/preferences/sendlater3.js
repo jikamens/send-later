@@ -20,3 +20,4 @@ pref("extensions.sendlater3.sendunsentmessages",true);
 // Internal settings not to be messed with
 pref("extensions.sendlater3.activescanner.uuid","");
 pref("extensions.sendlater3.activescanner.time",0);
+pref("extensions.sendlater3.instance.uuid","");
