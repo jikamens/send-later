@@ -4,7 +4,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>sendlater3@kamens.us</em:id>
     <em:name>Send Later 3</em:name>
-    <em:version>3.2beta2</em:version>
+    <em:version>3.2beta3</em:version>
     <em:creator>Karthik Sivaram</em:creator>
     <em:developer>Jonathan Kamens</em:developer>
     <em:translator>Didier Journois</em:translator><!-- French -->
