@@ -178,17 +178,14 @@ var Sendlater3Prompt = {
 
     updateSummary: function() {
         Sendlater3Util.Entering("Sendlater3Prompt.updateSummary");
-	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
 	var selecteddate =  document.getElementById("dayvalue").value;
 	var selectedhour =  document.getElementById("hourvalue").value;
 	var selectedmin =  document.getElementById("minvalue").value;
-	sendat.setFullYear(parseInt(selectedyear));
-	sendat.setMonth(parseInt(selectedmonth));
-	sendat.setDate(parseInt(selecteddate));
-	sendat.setHours(parseInt(selectedhour));
-	sendat.setMinutes(parseInt(selectedmin));
+	var sendat = Sendlater3Util.toSendDate(selectedyear, selectedmonth,
+					       selecteddate, selectedhour,
+					       selectedmin);
 
 	document.getElementById("summary").value =
 	    Sendlater3Util.PromptBundleGet("willsendat") + " " +
@@ -235,12 +232,9 @@ var Sendlater3Prompt = {
 	var selecteddate =  document.getElementById("dayvalue").value;
 	var selectedhour =  document.getElementById("hourvalue").value;
 	var selectedmin =  document.getElementById("minvalue").value;
-
-	sendat.setFullYear(parseInt(selectedyear));
-	sendat.setMonth(parseInt(selectedmonth));
-	sendat.setDate(parseInt(selecteddate));
-	sendat.setHours(parseInt(selectedhour));
-	sendat.setMinutes(parseInt(selectedmin));
+	var sendat = Sendlater3Util.toSendDate(selectedyear, selectedmonth,
+					       selecteddate, selectedhour,
+					       selectedmin);
 
 	window.arguments[0].finishCallback(sendat);
         Sendlater3Util.Leaving("Sendlater3Prompt.CallSendAt");

@@ -283,18 +283,14 @@ var Sendlater3ComposeToolbar = {
 
     CallSendAt: function() {
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.CallSendAt");
-	var sendat = new Date();
 	var selectedyear =  document.getElementById("yearvalue").value;
 	var selectedmonth =  document.getElementById("monthvalue").value;
 	var selecteddate =  document.getElementById("dayvalue").value;
 	var selectedhour =  document.getElementById("hourvalue").value;
 	var selectedmin =  document.getElementById("minvalue").value;
-
-	sendat.setFullYear(parseInt(selectedyear));
-	sendat.setMonth(parseInt(selectedmonth));
-	sendat.setDate(parseInt(selecteddate));
-	sendat.setHours(parseInt(selectedhour));
-	sendat.setMinutes(parseInt(selectedmin));
+	var sendat = new Sendlater3Util.toSendDate(selectedyear, selectedmonth,
+						   selecteddate, selectedhour,
+						   selectedmin);
 
 	Sendlater3Composing.SendAtTime(sendat);
 	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.CallSendAt");

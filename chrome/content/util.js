@@ -193,6 +193,22 @@ var Sendlater3Util = {
 	return instance_uuid;
     },
 
+    toSendDate: function(year, month, day, hour, min) {
+	// We use an existing Date object to get the number of seconds
+	// so that we don't end up sending every message at exactly
+	// the same number of seconds past the minute. That would look
+	// weird.
+	var sendat = new Date();
+	// We use an existing Date object to get the number of seconds
+	// so that we don't end up sending every message at exactly
+	// the same number of seconds past the minute. That would look
+	// weird.
+	sendat = new Date(parseInt(year), parseInt(month), parseInt(day),
+			  parseInt(hour), parseInt(min), sendat.getSeconds(),
+			  0);
+	return sendat;
+    },
+
     initUtil: function() {
 	Sendlater3Util.Entering("Sendlater3Util.initUtil");
 	Sendlater3Util.PrefService
