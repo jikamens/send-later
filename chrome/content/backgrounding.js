@@ -381,7 +381,9 @@ var Sendlater3Backgrounding = function() {
 		Sendlater3Util.dump ("Found Pending Message.");
 		var sendattime = new Date (this._header.substr(16));
 		var now = new Date();
-		if (now > sendattime) {
+		if (now > sendattime &&
+		    (Sendlater3Util.PrefService
+		     .getBoolPref("extensions.sendlater3.senddrafts"))) {
 		    // Simplify search & replace in header by putting a
 		    // blank line at the beginning of the message, so that
 		    // we can match header lines starting with \n, i.e., we

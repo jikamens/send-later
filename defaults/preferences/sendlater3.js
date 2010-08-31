@@ -17,6 +17,7 @@ pref("extensions.sendlater3.quickoptions.3.showintoolbar",false);
 pref("extensions.sendlater3.logging.console","Warn");
 pref("extensions.sendlater3.logging.dump","Fatal");
 pref("extensions.sendlater3.sendunsentmessages",true);
+pref("extensions.sendlater3.senddrafts",true);
 // Internal settings not to be messed with
 pref("extensions.sendlater3.activescanner.uuid","");
 pref("extensions.sendlater3.activescanner.time",0);
