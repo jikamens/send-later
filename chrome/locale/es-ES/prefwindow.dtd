@@ -1,0 +1,23 @@
+<!ENTITY prefwindow.title "Preferencias de Envíar Después">
+<!ENTITY pane1.title "Preferencias de Envíar Después">
+<!ENTITY checktimepref.label "Comprobar cada :">
+<!ENTITY checktimepref2.label "milisegundos">
+<!ENTITY checktimepref.tooltip "Intervalo, en milisegundos, entre comprobaciones de borradores cuyo tiempo de entrega ha llegado. Incrementa este valor si tus borradores no se envían en algunas ocasiones o el conteo de mensajes pendientes en tu barra de estado no suele reflejar todos los borradores programados.">
+<!ENTITY checktimepref.accesskey "C">
+<!ENTITY general.caption "General">
+<!ENTITY quickoption1.caption "Atajo 1">
+<!ENTITY quickoption2.caption "Atajo 2">
+<!ENTITY quickoption3.caption "Atajo 3">
+<!ENTITY quickoptionname.label "Etiqueta del Botón :">
+<!ENTITY quickoptionvalue.label "Minutos :">
+<!ENTITY showtoolbarbutton.caption "Mostrar en barra de herramientas">
+<!ENTITY showsendlatercolumn.caption "Mostrar la columna de Envíar Después">
+<!ENTITY showsendlatercolumn.tooltip "Ya sea para mostrar &quot;Send Later&quot; columna cuando está viendo la carpeta de Borradores">
+<!ENTITY showsendlaterheader.caption "Mostrar el encabezado de Evíar Después">
+<!ENTITY showsendlaterheader.tooltip "Ya sea para mostrar &quot;X-Send-Later-At&quot; encabezado, i.e., la hora en la que el borrador está programado para ser enviado, en el encabezado cuando esté viendo el mensaje.">
+<!ENTITY showsendlaterprogress.caption "Mostrar el Progreso de Fondo en la Barra de Estado">
+<!ENTITY showsendlaterunsentmessages.caption "Lanza la entrega de mensajes sin envíar dde la Bandeja de Salida">
+<!ENTITY showsendlaterunsentmessages.tooltip "Si desactivas esta opción, entonces Evíar Después no enviará los mensajes completamente, but instead will just put them in your Outbox when they are scheduled for delivery. Unset this option, for example, if you use some other extension, e.g., BlunderDelay, to periodically send messages from your Outbox. Note that when this option is set, then whenever Send Later delivers a message, ALL messages in your Outbox will be delivered.">
+<!ENTITY advanced.caption "Avanzado">
+<!ENTITY dumplevel.caption "Vaciar nivel de log:">
+<!ENTITY consolelevel.caption "Nivel de log en la consola:">

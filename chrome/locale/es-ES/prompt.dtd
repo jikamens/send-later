@@ -1,0 +1,9 @@
+<!ENTITY separate.label "">
+<!ENTITY sendlater.prompt.sendlater.label "Pasar a través de Evíar Después">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Funcionalidad integrada en Thunderbird: mover los mensajes a la Bandeja de Salida, para la próxima vez que se envien los mensajes sin envíar.">
+<!ENTITY sendlater.prompt.close.label "Cancelar">
+<!ENTITY sendlater.prompt.close.tooltip "Volver a editar el mensaje.">
+<!ENTITY sendlater.prompt.title.label "Envíar este email después">
+<!ENTITY sendlater.prompt.sendat.label "Envía Después a una hora especifica">
+<!ENTITY sendlater.prompt.sendat.tooltip "Guardar el mensaje en carpeta de Borradores, para un envío automático a la hora abajo indicada.">
+<!ENTITY sendlater.toolbar.sendlater.button.label "Envíar Después">

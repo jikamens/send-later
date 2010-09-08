@@ -10,7 +10,14 @@
     <em:translator>Didier Journois</em:translator><!-- French -->
     <em:translator>Suzanne Iseli</em:translator><!-- Part of German -->
     <em:translator>Daniel S.</em:translator><!-- Part of German -->
+    <em:translator>Milcom.es</em:translator><!-- Spanish -->
     <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
+    <em:localized>
+      <Description>
+	<em:locale>es-ES</em:locale>
+	<em:description>La verdadera funcionalidad de "Envíar Después" para programar el envío de tus emails.</em:description>
+      </Description>
+    </em:localized>
     <em:localized>
       <Description>
 	<em:locale>fr-FR</em:locale>
