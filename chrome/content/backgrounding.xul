@@ -9,7 +9,7 @@
 </stringbundleset>
     <deck selectedIndex="1" id="sendlater_deck" insertafter="statusTextBox" insertbefore="unreadMessageCount" style="width:120px" >
     <progressmeter id="sendlater_anim" mode="undetermined" />
-    <label id="sendlater_status" value="Send Later 3.2beta5" style="width:100%;text-align:center;margin:4px" />
+    <label id="sendlater_status" value="Send Later 3.2beta6" style="width:100%;text-align:center;margin:4px" />
     </deck>
   </statusbar>
   
