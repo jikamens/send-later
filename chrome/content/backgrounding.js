@@ -651,9 +651,13 @@ var Sendlater3Backgrounding = function() {
 			    var messageDBHDR = messageenumerator.getNext()
 				.QueryInterface(Components.interfaces
 						.nsIMsgDBHdr);
-			    var messageURI = thisfolder
-				.getUriForMsg(messageDBHDR);
-			    CheckThisURIQueueAdd(messageURI);
+			    if (! (messageDBHDR.flags &
+				   (Components.interfaces.nsMsgMessageFlags.IMAPDeleted |
+				    Components.interfaces.nsMsgMessageFlags.Expunged))) {
+				var messageURI = thisfolder
+				    .getUriForMsg(messageDBHDR);
+				CheckThisURIQueueAdd(messageURI);
+			    }
 			}
 		    }
 		    else {
