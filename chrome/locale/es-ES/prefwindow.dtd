@@ -16,6 +16,7 @@
 <!ENTITY showsendlaterheader.caption "Mostrar el encabezado de Eviar Después">
 <!ENTITY showsendlaterheader.tooltip "Ya sea para mostrar &quot;X-Send-Later-At&quot; encabezado, i.e., la hora en la que el borrador está programado para ser enviado, en el encabezado cuando esté viendo el mensaje.">
 <!ENTITY showsendlaterprogress.caption "Mostrar el progreso de fondo en la Barra de Estado">
+<!ENTITY showsendlaterdropdowns.caption "Show Dropdowns In Toolbar">
 <!ENTITY showsendlaterunsentmessages.caption "Lanza la entrega de mensajes sin enviar dde la Bandeja de Salida">
 <!ENTITY showsendlaterunsentmessages.tooltip "Si desactivas esta opción, entonces Enviar Después no enviará los mensajes completamente, sin embargo los pondrá en la Bandeja de Salida cuando estén programados para ser enviados. Desactiva esta opción, por ejemplo, si usas alguna otra extensión como BlunderDelay para enviar mensajes periódicamente desde la Bandeja de Salida. Ten en cuenta que cuando esta opción está activa y Enviar Después envía un mensaje, todos los mensajes de tu Bandeja de Salida serán enviados.">
 <!ENTITY advanced.caption "Avanzado">

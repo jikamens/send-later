@@ -87,11 +87,43 @@ var Sendlater3ComposeToolbar = {
 		break;
 	    }
 
+	    if (Sendlater3Util.PrefService.
+		getBoolPref("extensions.sendlater3.dropdowns.showintoolbar")) {
+		// I tried putting these all inside one big box and just hiding
+		// or showing that, but then theyall grew to fill the height of
+		// the box and it was ugly, and I couldn't figure out how to
+		// make that stop.
+		document.getElementById("hourvalue").hidden = false;
+		document.getElementById("sendlater3colon").hidden = false;
+		document.getElementById("minvalue").hidden = false;
+		document.getElementById("sendlater3calsep").hidden = false;
+		document.getElementById("sendlater3toolbarcalicon").hidden = false;
+		document.getElementById("yearvalue").hidden = false;
+		document.getElementById("monthvalue").hidden = false;
+		document.getElementById("dayvalue").hidden = false;
+		document.getElementById("sendlater3toolsep").hidden = false;
+		document.getElementById("sendlater3toolbarbutton").hidden = false;
+		document.getElementById("sendlater3quicksep").hidden = false;
+	    }
+	    else {
+		document.getElementById("hourvalue").hidden = true;
+		document.getElementById("sendlater3colon").hidden = true;
+		document.getElementById("minvalue").hidden = true;
+		document.getElementById("sendlater3calsep").hidden = true;
+		document.getElementById("sendlater3toolbarcalicon").hidden = true;
+		document.getElementById("yearvalue").hidden = true;
+		document.getElementById("monthvalue").hidden = true;
+		document.getElementById("dayvalue").hidden = true;
+		document.getElementById("sendlater3toolsep").hidden = true;
+		document.getElementById("sendlater3toolbarbutton").hidden = true;
+		document.getElementById("sendlater3quicksep").hidden = true;
+	    }
+
 	    var i;
 	    for (i = 1; i <= 3; i++) {
 		var btn = "shortcutbtn_" + i;
 		var minutes = Sendlater3Util.ShortcutValue(i);
-		if (t.showquickbutton(1) && minutes != undefined) {
+		if (t.showquickbutton(i) && minutes != undefined) {
 		    var cmd = "Sendlater3ComposeToolbar.CallSendAfter(" +
 			minutes + ");"
 		    document.getElementById(btn).label =

@@ -16,6 +16,7 @@
 <!ENTITY showsendlaterheader.caption "Toon Send Later koptekst">
 <!ENTITY showsendlaterheader.tooltip "Of de &quot;X-Send-Later-At&quot; koptekst getoond moet worden als een bericht bekeken wordt, namelijk de tijd waarop een concept gepland staat verzonden te worden.">
 <!ENTITY showsendlaterprogress.caption "Toon de voortgang in de statusbalk">
+<!ENTITY showsendlaterdropdowns.caption "Show Dropdowns In Toolbar">
 <!ENTITY showsendlaterunsentmessages.caption "Verstuur niet-verzonden berichten die in Postvak UIT staan">
 <!ENTITY showsendlaterunsentmessages.tooltip "Als je deze optie ontvinkt, zal Send Later de berichten niet versturen, maar ze op het moment van versturen in je Postvak UIT plaatsen. Ontvink deze optie, bijvoorbeeld, als je een andere extensie gebruikt, zoals bijvoorbeeld BlunderDelay, die periodiek berichten in je Postvak UIT verstuurt. Merk op dat als deze optie aangevinkt is, Send Later samen met het geplande bericht ALLE berichten in je Postvak UIT verstuurt.">
 <!ENTITY advanced.caption "Advanced">
