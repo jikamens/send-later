@@ -13,7 +13,7 @@ var Sendlater3Composing = {
 	    .getService(Components.interfaces.nsIPrefBranch);
 
 	function CheckForXSendLater() {
-	    Sendlater3Util.dump("CheckforXSendLater")
+	    Sendlater3Util.Entering("Sendlater3Composing.main.CheckforXSendLater")
 	    if (gMsgCompose != null) {
 		var msgCompFields = gMsgCompose.compFields;
 		if (msgCompFields && gMsgCompose.originalMsgURI!="") {
@@ -84,6 +84,7 @@ var Sendlater3Composing = {
 		    } 
 		}
 	    }
+	    Sendlater3Util.Leaving("Sendlater3Composing.main.CheckforXSendLater");
 	}                            
 
 	var mysleventListener = {
@@ -97,18 +98,21 @@ var Sendlater3Composing = {
     },
 
     CheckSendAt: function() {
+	Sendlater3Util.Entering("Sendlater3Composing.CheckSendAt");
 	window.openDialog("chrome://sendlater3/content/prompt.xul",
 			  "SendAtWindow", "modal,chrome,centerscreen", 
 			  { finishCallback: Sendlater3Composing.SendAtTime,
 			    continueCallback: Sendlater3Composing.ContinueSendLater,
 			    cancelCallback: Sendlater3Composing.CancelSendLater,
 			    previouslyTimed: Sendlater3Composing.prevXSendLater });
+	Sendlater3Util.Leaving("Sendlater3Composing.CheckSendAt");
     },
 
     ReallySendAtTimer: null,
     ReallySendAtClosure: null,
     ReallySendAtCallback: {
 	notify: function (timer) {
+	    Sendlater3Util.Entering("Sendlater3Composing.ReallySendAtCallback.notify", timer);
 	    var sendat = Sendlater3Composing.ReallySendAtClosure;
 
 	    gCloseWindowAfterSave = true;
@@ -116,10 +120,12 @@ var Sendlater3Composing = {
 		nsIMsgCompDeliverMode.SaveAsDraft,
 		sendat);
 	    defaultSaveOperation = "draft";
+	    Sendlater3Util.Leaving("Sendlater3Composing.ReallySendAtCallback.notify");
 	}
     },
 
     SendAtTime: function(sendat) {
+	Sendlater3Util.Entering("Sendlater3Composing.SendAtTime", sendat);
 	Sendlater3Composing.ReallySendAtClosure = sendat;
 	Sendlater3Composing.ReallySendAtTimer = Components
 	    .classes["@mozilla.org/timer;1"]
@@ -129,16 +135,20 @@ var Sendlater3Composing = {
 	    500,
 	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
+	Sendlater3Util.Leaving("Sendlater3Composing.SendAtTime");
     },
 
     ContinueSendLaterTimer: null,
     ContinueSendLaterCallback: {
 	notify: function (timer) {
+	    Sendlater3Util.Entering("Sendlater3Composing.ContinueSendLaterCallback.notify");
 	    goDoCommand('cmd_sendLater');
+	    Sendlater3Util.Leaving("Sendlater3Composing.ContinueSendLaterCallback.notify");
 	}
     },
 
     ContinueSendLater: function() {
+	Sendlater3Util.Entering("Sendlater3Composing.ContinueSendLater");
 	Sendlater3Composing.ContinueSendLaterTimer = Components
 	    .classes["@mozilla.org/timer;1"]
 	    .createInstance(Components.interfaces.nsITimer);
@@ -147,6 +157,7 @@ var Sendlater3Composing = {
 	    500,
 	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
+	Sendlater3Util.Leaving("Sendlater3Composing.ContinueSendLater");
     },
 
     CancelSendLater: function() {},
@@ -159,6 +170,8 @@ var Sendlater3Composing = {
     // SENDMAIL3 CHANGED: Added "sendat" argument
     GenericSendMessage: function( msgType, sendat )
     {
+	// SENDLATER3 CHANGED: Added Entering invocation
+	Sendlater3Util.Entering("Sendlater3Composing.GenericSendMessage");
 	if (gMsgCompose != null)
 	{
 	    var msgCompFields = gMsgCompose.compFields;
@@ -204,8 +217,11 @@ var Sendlater3Composing = {
 					      "chrome,close,titlebar,modal", true, true);
 			}
 			catch(ex){}
-			if(window.cancelSendMessage)
+			// SENDLATER3 CHANGED: Added braces and Returning invocation
+			if(window.cancelSendMessage) {
+			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
+			}
 		    }
 
 		    // Strip trailing spaces and long consecutive WSP sequences from the
@@ -234,6 +250,8 @@ var Sendlater3Composing = {
 			    null, null, {value:0}) == 1)
 			{
 			    GetMsgSubjectElement().focus();
+			    // SENDLATER3 CHANGED: Added Returning invocation
+			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
 			}
 		    }
@@ -255,8 +273,11 @@ var Sendlater3Composing = {
 								    bundle.getString("attachmentReminderFalseAlarm"),
 								    bundle.getString("attachmentReminderYesIForgot"),
 								    null, null, {value:0});
-			if (hadForgotten)
+			// SENDLATER3 CHANGED: Added braces and Returning invocation
+			if (hadForgotten) {
+			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
+			}
 		    }
 
 		    // check if the user tries to send a message to a newsgroup through a mail account
@@ -286,8 +307,11 @@ var Sendlater3Composing = {
 				bundle.getString("CheckMsg"),
 				checkbox);
 
-			    if (!okToProceed)
+			    // SENDLATER3 CHANGED: Added braces and Returning invocation
+			    if (!okToProceed) {
+				Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
 				return;
+			    }
 
 			    if (checkbox.value) {
 				var branch = Components.classes["@mozilla.org/preferences-service;1"]
@@ -307,8 +331,11 @@ var Sendlater3Composing = {
 		    var action = DetermineHTMLAction(convert);
 		    // check if e-mail addresses are complete, in case user
 		    // has turned off autocomplete to local domain.
-		    if (!CheckValidEmailAddress(msgCompFields.to, msgCompFields.cc, msgCompFields.bcc))
+		    // SENDLATER3 CHANGED: Added braces and Returning invocation
+		    if (!CheckValidEmailAddress(msgCompFields.to, msgCompFields.cc, msgCompFields.bcc)) {
+			Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
 			return;
+		    }
 
 		    if (action == nsIMsgCompSendFormat.AskUser)
 		    {
@@ -321,8 +348,11 @@ var Sendlater3Composing = {
 			window.openDialog("chrome://messenger/content/messengercompose/askSendFormat.xul",
 					  "askSendFormatDialog", "chrome,modal,titlebar,centerscreen",
 					  result2);
-			if (result2.abort)
+			// SENDLATER3 CHANGED: Added braces and Returning invocation
+			if (result2.abort) {
+			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
+			}
 			action = result2.action;
 		    }
 
@@ -345,7 +375,10 @@ var Sendlater3Composing = {
 			msgCompFields.forcePlainText = false;
 			msgCompFields.useMultipartAlternative = true;
 			break;
-		    default: dump("\###SendMessage Error: invalid action value\n"); return;
+		    default: dump("\###SendMessage Error: invalid action value\n");
+			// SENDLATER3 CHANGED: Added line break before "return;" and Returning invocation
+			Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+			return;
 		    }
 		}
 
@@ -432,6 +465,8 @@ var Sendlater3Composing = {
 	}
 	else
 	    dump("###SendMessage Error: composeAppCore is null!\n");
+	// SENDLATER3 CHANGED: Added Leaving invocation
+	Sendlater3Util.Leaving("Sendlater3Composing.GenericSendMessage");
     }
 }
 
