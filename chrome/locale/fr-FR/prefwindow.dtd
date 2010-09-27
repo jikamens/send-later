@@ -16,7 +16,7 @@
 <!ENTITY showsendlaterheader.caption "Afficher les entêtes de &quot;Send Later&quot;">
 <!ENTITY showsendlaterheader.tooltip "Détermine l'affichage de l'entête &quot;X-Send-Later-At&quot;, i.e., l'heure prévue d'envoi d'un message.">
 <!ENTITY showsendlaterprogress.caption "Affichage dans la barre d'état de l'avancement des envois en tâche de fond.">
-<!ENTITY showsendlaterdropdowns.caption "Afficher les menus déroulants dans la barre de menu">
+<!ENTITY showsendlaterdropdowns.caption "Afficher les menus déroulants dans la barre de menu.">
 <!ENTITY showsendlaterunsentmessages.caption "Déclenche l'expédition des messages en attente dans la boite d'expédition.">
 <!ENTITY showsendlaterunsentmessages.tooltip "En désactivant cette option Send Later ne délivrera pas les messages programmés pour être expédiés mais les placera en boite d'expédition. Désactivez, par exemple cette option si vous utilisez une autre extension (comme BlunderDelay) pour périodiquement relever les messages de la boite d'expédition. Notez bien que lorsque cette option est activée quand Send Later expédie un message TOUS les messages de la boite d'expédition seront envoyés en même temps.">
 <!ENTITY advanced.caption "Avancé">
