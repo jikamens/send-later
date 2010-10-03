@@ -43,8 +43,11 @@ var Sendlater3Util = {
 	return label;
     },
 
-    ShortcutValue: function(num) {
-	Sendlater3Util.Entering("Sendlater3Util.ShortcutValue", num);
+    ShortcutValue: function(num, validate) {
+	Sendlater3Util.Entering("Sendlater3Util.ShortcutValue", num, validate);
+	if (validate == undefined) {
+	    validate = false;
+	}
 	var raw = Sendlater3Util.PrefService.
 	    getCharPref("extensions.sendlater3.quickoptions." + num +
 			".valuestring");
@@ -65,12 +68,14 @@ var Sendlater3Util = {
 				    ": \"" + raw + "\" is not a function");
 		return; // undefined
 	    }
-	    var v = func();
-	    if (typeof(v) != "number") {
-		Sendlater3Util.warn("Invalid setting for quick option " + num + 
-				    ": \"" + raw + 
-				    "()\" does not return a number");
-		return; // undefined
+	    if (validate) {
+		var v = func();
+		if (typeof(v) != "number") {
+		    Sendlater3Util.warn("Invalid setting for quick option " + 
+					num + ": \"" + raw + 
+					"()\" does not return a number");
+		    return; // undefined
+		}
 	    }
 	    v = raw + "()";
 	    Sendlater3Util.Returning("Sendlater3Util.ShortcutValue", v);

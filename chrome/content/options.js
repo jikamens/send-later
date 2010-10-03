@@ -2,7 +2,7 @@ var Sendlater3Options = {
     ValidatePrefs: function() {
 	var i;
 	for (i = 1; i <= 3; i++) {
-	    if (Sendlater3Util.ShortcutValue(i) == undefined) {
+	    if (Sendlater3Util.ShortcutValue(i, true) == undefined) {
 		var promptService = Components
 		    .classes["@mozilla.org/embedcomp/prompt-service;1"]
                     .getService(Components.interfaces.nsIPromptService);
