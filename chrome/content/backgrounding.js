@@ -401,6 +401,8 @@ var Sendlater3Backgrounding = function() {
 							       true)+"\n");
 		    content = content.replace(/\nX-Send-Later-At:.*\n/i,
 					      "\n");
+		    content = content.replace(/\nX-Send-Later-Uuid:.*\n/i,
+					      "\n");
 
 		    // Remove extra newline -- see comment above.
 		    content = content.slice(1);
