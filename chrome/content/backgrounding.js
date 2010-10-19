@@ -764,11 +764,23 @@ var Sendlater3Backgrounding = function() {
 			    if (folderstocheck.indexOf(thisfolder.URI)<0 &&
 				foldersdone.indexOf(thisfolder.URI)<0) {
 				folderstocheck.push (thisfolder.URI);
-				Sendlater3Util.dump("SCHEDULE - " +
-						    thisfolder.URI );
-				// thisfolder.endFolderLoading();
-				// thisfolder.startFolderLoading();
-				thisfolder.updateFolder(msgWindow);
+				var pref = "mail.server." + thisaccount
+				    .incomingServer.key + ".check_new_mail"
+				var pref_value = Sendlater3Util.PrefService
+				    .getBoolPref(pref)
+				if (pref_value) {
+				    Sendlater3Util.dump("SCHEDULE - " +
+							thisfolder.URI );
+				    // thisfolder.endFolderLoading();
+				    // thisfolder.startFolderLoading();
+				    thisfolder.updateFolder(msgWindow);
+				}
+				else {
+				    Sendlater3Util.dump("IMMEDIATE - " +
+							thisfolder.URI );
+				    folderLoadListener.OnItemEvent(thisfolder,
+								   "FolderLoaded");
+				}
 			    }
 			    else {
 				Sendlater3Util.debug("Already scheduled - " +
