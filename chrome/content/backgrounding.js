@@ -766,8 +766,15 @@ var Sendlater3Backgrounding = function() {
 				folderstocheck.push (thisfolder.URI);
 				var pref = "mail.server." + thisaccount
 				    .incomingServer.key + ".check_new_mail"
-				var pref_value = Sendlater3Util.PrefService
-				    .getBoolPref(pref)
+				var pref_value;
+				try {
+				    pref_value = Sendlater3Util.PrefService
+					.getBoolPref(pref)
+				}
+				catch (e) {
+				    // If unset, defaults to true
+				    pref_value = true;
+				}
 				if (pref_value) {
 				    Sendlater3Util.dump("SCHEDULE - " +
 							thisfolder.URI );
