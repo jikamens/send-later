@@ -264,6 +264,7 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.debug("STATUS MESSAGE - " + MessagesPending);
 	    if (document != null) {
 		document.getElementById("sendlater_deck").selectedIndex = 1;
+		document.getElementById("sendlater_anim").mode = "determined";
 		var strbundle =
 		    document.getElementById("sendlater3backgroundstrings");
 		var status;
@@ -734,8 +735,10 @@ var Sendlater3Backgrounding = function() {
 
 	    var acindex;
 	    Sendlater3Util.debug("Progress Animation SET");
-	    if (displayprogressbar())
+	    if (displayprogressbar()) {
 		document.getElementById("sendlater_deck").selectedIndex = 0;
+		document.getElementById("sendlater_anim").mode = "undetermined";
+	    }
 
 	    for (acindex = 0;acindex < allaccounts.Count();acindex++) {
 		SetAnimTimer(5000);
