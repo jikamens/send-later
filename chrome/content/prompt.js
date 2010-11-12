@@ -93,7 +93,7 @@ var Sendlater3Prompt = {
 	   document.getElementById("minvalue").value =
 	       prevXSendLater.getMinutes();
 	}
-	document.getElementById("cancelButton").focus();
+	document.getElementById("hourvalue").focus();
 	Sendlater3Prompt.AddControlReturnListeners(document);
         Sendlater3Util.Leaving("Sendlater3Prompt.SetOnLoad");
     },
