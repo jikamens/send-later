@@ -811,10 +811,8 @@ var Sendlater3Backgrounding = function() {
 				    // If unset, defaults to true
 				    pref_value = true;
 				}
-				if (! pref_value) {
-				    pref_value = Sendlater3Util.
-					GetUpdatePref(identity.key);
-				}
+				pref_value = Sendlater3Util.
+				    GetUpdatePref(identity.key) || pref_value;
 				if (pref_value) {
 				    Sendlater3Util.dump("SCHEDULE - " +
 							thisfolder.URI );

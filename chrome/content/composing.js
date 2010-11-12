@@ -117,10 +117,10 @@ var Sendlater3Composing = {
 
 	    gCloseWindowAfterSave = true;
 	    var identity = getCurrentIdentity();
-	    Sendlater3Util.SetUpdatePref(identity.key);
 	    Sendlater3Composing.GenericSendMessage(
 		nsIMsgCompDeliverMode.SaveAsDraft,
 		sendat);
+	    Sendlater3Util.SetUpdatePref(identity.key);
 	    defaultSaveOperation = "draft";
 	    Sendlater3Util.Leaving("Sendlater3Composing.ReallySendAtCallback.notify");
 	}
