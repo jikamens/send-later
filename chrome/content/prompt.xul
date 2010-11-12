@@ -14,6 +14,7 @@
 <key id="quickbutton2-key" modifiers="alt" key="2"/>
 <key id="quickbutton3-key" modifiers="alt" key="3"/>
 <key id="cancel-esc" modifiers="" keycode="VK_ESCAPE" oncommand="window.arguments[0].cancelCallback();close();"/>
+<key id="call-return" modifiers="accel" keycode="VK_RETURN" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 </keyset>
 <vbox style="margin: 10px;">
 	<hbox>
@@ -58,7 +59,7 @@
 	</hbox>
 	
 	<vbox style="border:solid #00C000 3px" >
-				<button width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
+				<button id="callsendat" width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 				<hbox>
 					<button key="quickbutton1-key" id="shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Prompt.CallSendAfter(15);close();"/>
 					<button key="quickbutton2-key" id="shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3Prompt.CallSendAfter(30);close();"/>

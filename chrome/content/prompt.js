@@ -1,4 +1,25 @@
 var Sendlater3Prompt = {
+    StealControlReturn: function(ev) {
+	if (ev.type == "keydown" && ev.ctrlKey && ev.keyCode == 13) {
+	    Sendlater3Prompt.CallSendAt();
+	    close();
+	    ev.preventDefault();
+	}
+    },
+
+    // I tried to figure out how to do this with XPath (document.evaluate)
+    // and couldn't get it to work, probably because of namespace issues.
+    AddControlReturnListeners: function(node) {
+	if (node.nodeName == "button" && node.id != "callsendat") {
+	    node.addEventListener("keydown", Sendlater3Prompt.StealControlReturn, true);
+	    Sendlater3Util.warn("Stealing " + node.id);
+	}
+	var children = node.childNodes;
+	for (var i = 0; i < children.length; i++) {
+	    Sendlater3Prompt.AddControlReturnListeners(children[i]);
+	}
+    },
+
     SetOnLoad: function() {
         Sendlater3Util.Entering("Sendlater3Prompt.SetOnLoad");
 	document.getElementById("yearvalue")
@@ -74,6 +95,7 @@ var Sendlater3Prompt = {
 	       prevXSendLater.getMinutes();
 	}
 	document.getElementById("cancelButton").focus();
+	Sendlater3Prompt.AddControlReturnListeners(document);
         Sendlater3Util.Leaving("Sendlater3Prompt.SetOnLoad");
     },
 
