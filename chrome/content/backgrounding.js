@@ -232,6 +232,32 @@ var Sendlater3Backgrounding = function() {
     }
 
     var MessagesPending=0;
+    var ProgressValue;
+    var ProgressMax;
+
+    function ProgressSet(str) {
+	var n = document.getElementById("sendlater_anim");
+	n.max = ProgressMax;
+	n.value = ProgressValue;
+	Sendlater3Util.debug(str+": value="+n.value+", max="+n.max);
+    }
+
+    function ProgressClear() {
+	ProgressValue = 0;
+	ProgressMax = 0;
+	ProgressSet("ProgressClear");
+    }
+
+    function ProgressAdd() {
+	ProgressMax++;
+	ProgressSet("ProgressAdd");
+    }
+
+    function ProgressFinish() {
+	ProgressValue++;
+	ProgressSet("ProgressFinish");
+    }
+
     var copyServiceListener =  {
 	sfileNP: null,
 	QueryInterface : function(iid) {
@@ -264,7 +290,6 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.debug("STATUS MESSAGE - " + MessagesPending);
 	    if (document != null) {
 		document.getElementById("sendlater_deck").selectedIndex = 1;
-		document.getElementById("sendlater_anim").mode = "determined";
 		var strbundle =
 		    document.getElementById("sendlater3backgroundstrings");
 		var status;
@@ -497,6 +522,7 @@ var Sendlater3Backgrounding = function() {
 					" messages still pending");
 		}
 	    }
+	    ProgressFinish();
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
 	},
 	onDataAvailable: function(aReq, aContext, aInputStream, aOffset,
@@ -537,6 +563,7 @@ var Sendlater3Backgrounding = function() {
 			this._content = "";
 			aInputStream.close();
 			Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "no header");
+			ProgressFinish();
 			return;
 		    }
 		    this._header = this._header[0];
@@ -544,6 +571,7 @@ var Sendlater3Backgrounding = function() {
 			this._content = "";
 			aInputStream.close();
 			Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "uuid mismatch");
+			ProgressFinish();
 			return;
 		    }
 		}
@@ -600,6 +628,7 @@ var Sendlater3Backgrounding = function() {
 	    );
 	}
 	CheckThisURIQueue.push(messageURI);
+	ProgressAdd();
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisURIQueueAdd");
     }
 
@@ -645,6 +674,7 @@ var Sendlater3Backgrounding = function() {
 		    Sendlater3Util.dump("FOLDER MONITORED - "+folder.URI+"\n");
 		    folderstocheck.splice(where, 1);
 		    foldersdone.push(folder.URI);
+		    ProgressFinish();
 		    var thisfolder = folder
 			.QueryInterface(Components.interfaces.nsIMsgFolder);
 		    var messageenumerator = thisfolder.messages;
@@ -690,8 +720,10 @@ var Sendlater3Backgrounding = function() {
 		return;
 	    }
 
-	    MessagesPending = 0;
 	    Sendlater3Util.debug("One cycle of checking");
+
+	    MessagesPending = 0;
+	    ProgressClear();
 
 	    cycle++;
 
@@ -715,6 +747,7 @@ var Sendlater3Backgrounding = function() {
 		local_draft_pref != folderstocheck[0]) {
 		Sendlater3Util.debug("SCHEDULE - " + local_draft_pref);
 		folderstocheck.push(local_draft_pref);
+		ProgressAdd();
 	    }
 	    //	fdrlocal.findSubFolder("Drafts").endFolderLoading();
 	    //	fdrlocal.findSubFolder("Drafts").startFolderLoading();
@@ -737,7 +770,6 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.debug("Progress Animation SET");
 	    if (displayprogressbar()) {
 		document.getElementById("sendlater_deck").selectedIndex = 0;
-		document.getElementById("sendlater_anim").mode = "undetermined";
 	    }
 
 	    for (acindex = 0;acindex < allaccounts.Count();acindex++) {
@@ -767,6 +799,7 @@ var Sendlater3Backgrounding = function() {
 			    if (folderstocheck.indexOf(thisfolder.URI)<0 &&
 				foldersdone.indexOf(thisfolder.URI)<0) {
 				folderstocheck.push (thisfolder.URI);
+				ProgressAdd();
 				var pref = "mail.server." + thisaccount
 				    .incomingServer.key + ".check_new_mail"
 				var pref_value;
