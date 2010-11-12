@@ -116,6 +116,8 @@ var Sendlater3Composing = {
 	    var sendat = Sendlater3Composing.ReallySendAtClosure;
 
 	    gCloseWindowAfterSave = true;
+	    var identity = getCurrentIdentity();
+	    Sendlater3Util.SetUpdatePref(identity.key);
 	    Sendlater3Composing.GenericSendMessage(
 		nsIMsgCompDeliverMode.SaveAsDraft,
 		sendat);

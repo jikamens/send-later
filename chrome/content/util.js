@@ -31,6 +31,32 @@ var Sendlater3Util = {
 	return formatted;
     },
 
+    UpdatePref: function(key) {
+	return "extensions.sendlater3.update_needed." + key;
+    },
+
+    SetUpdatePref: function(key) {
+	Sendlater3Util.Entering("Sendlater3Util.SetUpdatePref", key);
+	Sendlater3Util.PrefService.setBoolPref(Sendlater3Util.UpdatePref(key),
+					       true);
+	Sendlater3Util.Leaving("Sendlater3Util.SetUpdatePref", key);
+    },
+
+    GetUpdatePref: function(key) {
+	Sendlater3Util.Entering("Sendlater3Util.GetUpdatePref", key);
+	var pref = Sendlater3Util.UpdatePref(key);
+	var value;
+	try {
+	    value = Sendlater3Util.PrefService.getBoolPref(pref);
+	    Sendlater3Util.PrefService.deleteBranch(pref);
+	}
+	catch (ex) {
+	    value = false;
+	}
+	Sendlater3Util.Returning("Sendlater3Util.GetUpdatePref", value);
+	return value;
+    },
+
     ButtonLabel: function(num) {
 	Sendlater3Util.Entering("Sendlater3Util.ButtonLabel", num);
     	var label = Sendlater3Util.PrefService.
