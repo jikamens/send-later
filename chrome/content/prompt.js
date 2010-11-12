@@ -12,7 +12,6 @@ var Sendlater3Prompt = {
     AddControlReturnListeners: function(node) {
 	if (node.nodeName == "button" && node.id != "callsendat") {
 	    node.addEventListener("keydown", Sendlater3Prompt.StealControlReturn, true);
-	    Sendlater3Util.warn("Stealing " + node.id);
 	}
 	var children = node.childNodes;
 	for (var i = 0; i < children.length; i++) {
