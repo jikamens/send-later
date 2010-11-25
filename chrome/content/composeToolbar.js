@@ -305,10 +305,19 @@ var Sendlater3ComposeToolbar = {
 
     CustomizeDone: function(aToolboxChanged) {
 	var t = Sendlater3ComposeToolbar;
+	var err;
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.CustomizeDone", aToolboxChanged);
-	t.originalCustomizeDone(aToolboxChanged);
+	try {
+	    t.originalCustomizeDone(aToolboxChanged);
+	} catch (e) {
+	    err = e;
+	}
 	if (aToolboxChanged) {
 	    t.SetOnLoad();
+	}
+	if (err != null) {
+	    Sendlater3Util.debug("Sendlater3ComposeToolbar.CustomizeDone: throwing exception from original customizeDone function");
+	    throw err;
 	}
 	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.CustomizeDone");
     },
