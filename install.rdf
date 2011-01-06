@@ -11,7 +11,15 @@
     <em:translator>Suzanne Iseli</em:translator><!-- Part of German -->
     <em:translator>Daniel S.</em:translator><!-- Part of German -->
     <em:translator>Milcom.es</em:translator><!-- Spanish -->
+    <em:translator>Maciej Kobuszewski</em:translator><!-- Polish -->
     <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
+    <em:localized>
+      <Description>
+	<em:name>Send Later 3</em:name>
+	<em:locale>pl-PL</em:locale>
+	<em:description>Rozszerzenie "Wyślij później" pozwala na wysyłanie wiadomości o ustalonym wcześniej czasie.</em:description>
+      </Description>
+    </em:localized>
     <em:localized>
       <Description>
 	<em:name>Send Later 3</em:name>

@@ -818,7 +818,14 @@ var Sendlater3Backgrounding = function() {
 							thisfolder.URI );
 				    // thisfolder.endFolderLoading();
 				    // thisfolder.startFolderLoading();
-				    thisfolder.updateFolder(msgWindow);
+				    try {
+					thisfolder.updateFolder(msgWindow);
+				    }
+				    catch (e) {
+					Sendlater3Util.debug("updateFolder " +
+							     thisfolder.URI +
+							     " failed");
+				    }
 				}
 				else {
 				    Sendlater3Util.dump("IMMEDIATE - " +

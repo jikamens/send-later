@@ -1,24 +1,24 @@
-<!ENTITY prefwindow.title "Send Later preferences">
-<!ENTITY pane1.title "Send Later preferences">
-<!ENTITY checktimepref.label "Check every :">
-<!ENTITY checktimepref2.label "milliseconds">
-<!ENTITY checktimepref.tooltip "Interval, in milliseconds, between checks for drafts whose delivery time has arrived. Increase this value if your drafts sometimes aren't sent on time or the pending message count in your status bar sometimes doesn't reflect all scheduled drafts.">
+<!ENTITY prefwindow.title "Ustawienia &quot;Wyślij później&quot;">
+<!ENTITY pane1.title "Ustawienia &quot;Wyślij później&quot;">
+<!ENTITY checktimepref.label "Sprawdzaj co :">
+<!ENTITY checktimepref2.label "milisekund">
+<!ENTITY checktimepref.tooltip "Odstęp czasu w milisekundach określający częstość z jaką program będzie sprawdzał, czy nie należy wysłać zaplanowanych do wysyłki wiadomości. Zwiększ tą wartość, jezeli zaplanowane do wysyłki wiadomości nie są wysyłane o czasie lub jeśli licznik wiadomości na pasku statusu wskazuje mniejszą niż w rzeczywistości liczbę zaplanowanych do wysłania wiadomości.">
 <!ENTITY checktimepref.accesskey "C">
-<!ENTITY general.caption "General">
-<!ENTITY quickoption1.caption "Shortcut 1">
-<!ENTITY quickoption2.caption "Shortcut 2">
-<!ENTITY quickoption3.caption "Shortcut 3">
-<!ENTITY quickoptionname.label "Button Label :">
-<!ENTITY quickoptionvalue.label "Minutes :">
-<!ENTITY showtoolbarbutton.caption "Show in toolbar">
-<!ENTITY showsendlatercolumn.caption "Show Send Later Column">
-<!ENTITY showsendlatercolumn.tooltip "Whether to show the &quot;Send Later&quot; column when viewing draft folders">
-<!ENTITY showsendlaterheader.caption "Show Send Later Header">
-<!ENTITY showsendlaterheader.tooltip "Whether to show the &quot;X-Send-Later-At&quot; header, i.e., the time when a draft is scheduled to be sent, in the header when viewing a message.">
-<!ENTITY showsendlaterprogress.caption "Show Background Progress In Statusbar">
-<!ENTITY showsendlaterdropdowns.caption "Show Dropdowns In Toolbar">
-<!ENTITY showsendlaterunsentmessages.caption "Trigger unsent message delivery from Outbox">
-<!ENTITY showsendlaterunsentmessages.tooltip "If you unset this option, then Send Later will not fully deliver messages, but instead will just put them in your Outbox when they are scheduled for delivery. Unset this option, for example, if you use some other extension, e.g., BlunderDelay, to periodically send messages from your Outbox. Note that when this option is set, then whenever Send Later delivers a message, ALL messages in your Outbox will be delivered.">
-<!ENTITY advanced.caption "Advanced">
-<!ENTITY dumplevel.caption "Dump log level:">
-<!ENTITY consolelevel.caption "Console log level:">
+<!ENTITY general.caption "Głowne">
+<!ENTITY quickoption1.caption "Skrót 1">
+<!ENTITY quickoption2.caption "Skrót 2">
+<!ENTITY quickoption3.caption "Skrót 3">
+<!ENTITY quickoptionname.label "Etykieta przycisku :">
+<!ENTITY quickoptionvalue.label "Minut :">
+<!ENTITY showtoolbarbutton.caption "Pokaż w pasku narzędzi">
+<!ENTITY showsendlatercolumn.caption "Pokaż kolumnę &quot;Wyślij później&quot;">
+<!ENTITY showsendlatercolumn.tooltip "Określa, czy wyświetlać kolumnę &quot;Wyślij później&quot; w folderach ze szkicami wiadomości.">
+<!ENTITY showsendlaterheader.caption "Pokaż nagłówek &quot;Wyślij później&quot;">
+<!ENTITY showsendlaterheader.tooltip "Określa czy wyświetlać nagłówek &quot;X-Send-Later-At&quot;, tzn. zaplanowany czas wysłania wiadomości w nagłówku podglądu.">
+<!ENTITY showsendlaterprogress.caption "Pokaż informacje o postępie wysyłania wiadomości na pasku statusu.">
+<!ENTITY showsendlaterdropdowns.caption "Pokaż listy rozwijane na pasku narzędzi">
+<!ENTITY showsendlaterunsentmessages.caption "Włącz/wyłącz wysyłanie wiadomości z &quot;Wychodzących...&quot;">
+<!ENTITY showsendlaterunsentmessages.tooltip "Jeżeli ta opcja jest wyłączona wiadomości zamiast zostać wysłane w wyznaczonym czasie zostaną przeniesione do folderu &quot;Wychodzące&quot;. Wyłącz tą opcję jeżeli korzystasz z innych rozszerzeń, które okresowo wysyłają wiadomości z folderu &quot;Wychodzące&quot;, np. BlunderDelay. Zauważ, że jeżeli ta opcja jest włączona, to za każdym razem kiedy program spróbuje wysłać zaplanowaną wiadomość WSZYSTKIE inne wiadomości z folderu &quote;Wychodzące&quote; zostaną wysłane.">
+<!ENTITY advanced.caption "Zaawansowane">
+<!ENTITY dumplevel.caption "Poziom logowania do pliku:">
+<!ENTITY consolelevel.caption "Poziom logowania w konsoli:">
