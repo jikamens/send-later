@@ -18,7 +18,8 @@
 <!ENTITY showsendlaterprogress.caption "Pokaż informacje o postępie wysyłania wiadomości na pasku statusu.">
 <!ENTITY showsendlaterdropdowns.caption "Pokaż listy rozwijane na pasku narzędzi">
 <!ENTITY showsendlaterunsentmessages.caption "Włącz/wyłącz wysyłanie wiadomości z &quot;Wychodzących...&quot;">
-<!ENTITY showsendlaterunsentmessages.tooltip "Jeżeli ta opcja jest wyłączona wiadomości zamiast zostać wysłane w wyznaczonym czasie zostaną przeniesione do folderu &quot;Wychodzące&quot;. Wyłącz tą opcję jeżeli korzystasz z innych rozszerzeń, które okresowo wysyłają wiadomości z folderu &quot;Wychodzące&quot;, np. BlunderDelay. Zauważ, że jeżeli ta opcja jest włączona, to za każdym razem kiedy program spróbuje wysłać zaplanowaną wiadomość WSZYSTKIE inne wiadomości z folderu &quote;Wychodzące&quote; zostaną wysłane.">
+<!ENTITY showsendlaterunsentmessages.tooltip "Jeżeli ta opcja jest wyłączona wiadomości zamiast zostać wysłane w wyznaczonym czasie zostaną przeniesione do folderu &quot;Wychodzące&quot;. Wyłącz tą opcję jeżeli korzystasz z innych rozszerzeń, które okresowo wysyłają wiadomości z folderu &quot;Wychodzące&quot;, np. BlunderDelay. Zauważ, że jeżeli ta opcja jest włączona, to za każdym razem kiedy program spróbuje wysłać zaplanowaną wiadomość WSZYSTKIE inne wiadomości z folderu &quot;Wychodzące&quot; zostaną wysłane.">
 <!ENTITY advanced.caption "Zaawansowane">
 <!ENTITY dumplevel.caption "Poziom logowania do pliku:">
 <!ENTITY consolelevel.caption "Poziom logowania w konsoli:">
+
