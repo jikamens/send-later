@@ -1,0 +1,9 @@
+<!ENTITY separate.label "">
+<!ENTITY sendlater.prompt.sendlater.label "Passthrough to Send Later">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Built-in Thunderbird functionality: move message to Outbox for delivery next time unsent messages are sent.">
+<!ENTITY sendlater.prompt.close.label "Cancel">
+<!ENTITY sendlater.prompt.close.tooltip "Go back to editing the message.">
+<!ENTITY sendlater.prompt.title.label "Send this email later">
+<!ENTITY sendlater.prompt.sendat.label "Send Later at specified time">
+<!ENTITY sendlater.prompt.sendat.tooltip "Save message in Drafts folder for automatic delivery at the time set above.">
+<!ENTITY sendlater.toolbar.sendlater.button.label "Send Later">
