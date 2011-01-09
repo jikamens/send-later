@@ -11,7 +11,10 @@ Support recurring scheduled messages.
 
 Make it harder to accidentally press Send instead of Send Later once a
 message has been scheduled (i.e., once the settings in the toolbar
-have been modified or a previously scheduled draft is re-edited).
+have been modified or a previously scheduled draft is
+re-edited). Possibly also optionally allow the default behavior of the
+Send button to be Send Later, with perhaps a Shift modifier to get the
+original behavior.
 
 Add a preference for hiding the status message in the footer
 completely.
