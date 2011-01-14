@@ -76,7 +76,15 @@ var Sendlater3HeaderView = function() {
     }
 
     function addSENDLATER3ColumnHandler() {
-	if ( IsThisDraft(gDBView.viewFolder) ) {
+	var folder;
+	try {
+	    folder = gDBView.viewFolder;
+	}
+	catch (ex) {
+	    // TB2 bug
+	    return;
+	}
+	if ( IsThisDraft(folder) ) {
 	    if (Sendlater3Util.PrefService
 		.getBoolPref("extensions.sendlater3.showcolumn")) {
 		document.getElementById("colXSendLaterAt").hidden = false;

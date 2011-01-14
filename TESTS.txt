@@ -36,6 +36,7 @@ Show Send Later column enabled works
 Show Send Later column disabled works
 Show Background Progress in Statusbar enabled works
 Show Background Progress in Statusbar disabled works
+Progress bar shows progress
 Changing "Check every" works
 Shortcut 1 label change works
 Shortcut 1 minutes change works

@@ -25,11 +25,17 @@ var Sendlater3ComposeToolbar = {
 	var ms = then.getTime() - now.getTime();
 	this.timer = Components.classes["@mozilla.org/timer;1"]
 	    .createInstance(Components.interfaces.nsITimer);
-	this.timer.initWithCallback(this.SetOnLoad, ms,
+	this.timer.initWithCallback(this.TimerCallback, ms,
 				    Components.interfaces.nsITimer.TYPE_ONE_SHOT);
 	Sendlater3Util.debug("Currently " + now + ", next tick is " + 
 			     then + ", ms = " + ms);
 	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.setTimer");
+    },
+
+    TimerCallback: {
+	notify: function(timer) {
+	    Sendlater3ComposeToolbar.SetOnLoad();
+	}
     },
 
     SetOnLoad: function() {

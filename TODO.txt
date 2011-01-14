@@ -21,3 +21,10 @@ completely.
 
 Bug: You shouldn't be allowed to schedule a message with no recopients
 for future sending.
+
+Bug: Send Later column display doesn't work in TB2 when there are no
+messages in the folder (produces an error about gDBView not having any
+properties). This is fine until you save a message into the folder, at
+which point the Send Later column should become visible but
+doesn't. If you leave and come back to the folder once or twice the
+problem solves itself. Not sure this is worth fixing.

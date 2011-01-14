@@ -1,6 +1,10 @@
 var Sendlater3Backgrounding = function() {
     Sendlater3Util.Entering("Sendlater3Backgrounding");
 
+    var msgWindow = Components.classes["@mozilla.org/messenger/msgwindow;1"]
+	.createInstance();
+    msgWindow = msgWindow.QueryInterface(Components.interfaces.nsIMsgWindow);
+
     // If you add a message to the Outbox and call nsIMsgSendLater when it's
     // already in the middle of sending unsent messages, then it's possible
     // that the message you just added won't get sent. Therefore, when we add a
@@ -27,10 +31,16 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	    sendingUnsentMessages = false;
 	    if (needToSendUnsentMessages) {
-		var msgSendLater = Components
-		    .classes["@mozilla.org/messengercompose/sendlater;1"]
-		    .getService(Components.interfaces.nsIMsgSendLater);
-		msgSendLater.sendUnsentMessages(null);
+		if (Sendlater3Util.IsThunderbird2() &&
+		    !Sendlater3Util.IsPostbox()) {
+		    messenger.sendUnsentMessages(null, msgWindow);
+		}
+		else {
+		    var msgSendLater = Components
+			.classes["@mozilla.org/messengercompose/sendlater;1"]
+			.getService(Components.interfaces.nsIMsgSendLater);
+		    msgSendLater.sendUnsentMessages(null);
+		}
 	    }
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	}
@@ -40,6 +50,10 @@ var Sendlater3Backgrounding = function() {
 	if (sendingUnsentMessages) {
 	    Sendlater3Util.debug("Deferring sendUnsentMessages");
 	    needToSendUnsentMessages = true;
+	}
+	else if (Sendlater3Util.IsThunderbird2() && 
+		 !Sendlater3Util.IsPostbox()) {
+	    messenger.sendUnsentMessages(null, msgWindow);
 	}
 	else {
 	    msgSendLater.sendUnsentMessages(null);
@@ -51,7 +65,13 @@ var Sendlater3Backgrounding = function() {
 	var msgSendLater = Components
 	    .classes["@mozilla.org/messengercompose/sendlater;1"]
 	    .getService(Components.interfaces.nsIMsgSendLater);
-	msgSendLater.addListener(sendUnsentMessagesListener);
+	if (Sendlater3Util.IsThunderbird2() &&
+	    !Sendlater3Util.IsPostbox()) {
+	    msgSendLater.AddListener(sendUnsentMessagesListener);
+	}
+	else {
+	    msgSendLater.addListener(sendUnsentMessagesListener);
+	}
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.addMsgSendLaterListener");
     }
     function removeMsgSendLaterListener() {
@@ -59,7 +79,13 @@ var Sendlater3Backgrounding = function() {
 	var msgSendLater = Components
 	    .classes["@mozilla.org/messengercompose/sendlater;1"]
 	    .getService(Components.interfaces.nsIMsgSendLater);
-	msgSendLater.removeListener(sendUnsentMessagesListener);
+	if (Sendlater3Util.IsThunderbird2() &&
+	    !Sendlater3Util.IsPostbox()) {
+	    msgSendLater.RemoveListener(sendUnsentMessagesListener);
+	}
+	else {
+	    msgSendLater.removeListener(sendUnsentMessagesListener);
+	}
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.removeMsgSendLaterListener");
     }
 
@@ -194,10 +220,6 @@ var Sendlater3Backgrounding = function() {
 	return Sendlater3Util.PrefService
 	    .getBoolPref("extensions.sendlater3.showprogress");
     }
-
-    var msgWindow = Components.classes["@mozilla.org/messenger/msgwindow;1"]
-	.createInstance();
-    msgWindow = msgWindow.QueryInterface(Components.interfaces.nsIMsgWindow);
 
     var DisplayMessages = new Array();
 
@@ -498,9 +520,22 @@ var Sendlater3Backgrounding = function() {
 		    copyService = copyService
 			.QueryInterface( Components.interfaces
 					 .nsIMsgCopyService);
-		    if (Sendlater3Util.IsThunderbird2()) {
+		    if (Sendlater3Util.IsPostbox()) {
 			copyService.CopyFileMessage(sfile, fdrunsent,
 						    0, "",
+						    copyServiceListener,
+						    msgWindow);
+		    }
+		    else if (Sendlater3Util.IsThunderbird2()) {
+			var fileSpc = Components
+			    .classes["@mozilla.org/filespec;1"]
+			    .createInstance();
+			fileSpc = fileSpc
+			    .QueryInterface(Components.interfaces
+					    .nsIFileSpec);
+			fileSpc.nativePath = filePath;
+			copyService.CopyFileMessage(fileSpc, fdrunsent,
+						    null, false, 0,
 						    copyServiceListener,
 						    msgWindow);
 		    }

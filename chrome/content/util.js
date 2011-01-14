@@ -1,4 +1,8 @@
-Components.utils.import("resource:///modules/gloda/log4moz.js");
+try {
+    Components.utils.import("resource:///modules/gloda/log4moz.js");
+}
+catch (ex) {
+}
 
 var Sendlater3Util = {
     PrefService: Components.classes["@mozilla.org/preferences-service;1"]
@@ -40,7 +44,7 @@ var Sendlater3Util = {
     },
 
     ComposeToolboxName: function() {
-	if (Sendlater3Util.IsThunderbird2()) {
+	if (Sendlater3Util.IsPostbox()) {
 	    return "compose-toolbox2";
 	}
 	else {
@@ -212,44 +216,68 @@ var Sendlater3Util = {
     logger: null,
 
     warn: function(msg) {
-        Sendlater3Util.initLogging();
-        Sendlater3Util.logger.warn(msg);
+	try {
+            Sendlater3Util.initLogging();
+            Sendlater3Util.logger.warn(msg);
+	}
+	catch (ex) {
+	}
     },
 
     dump: function(msg) {
-        Sendlater3Util.initLogging();
-        Sendlater3Util.logger.info(msg);
+	try {
+            Sendlater3Util.initLogging();
+            Sendlater3Util.logger.info(msg);
+	}
+	catch (ex) {
+	}
     },
 
     debug: function(msg) {
-        Sendlater3Util.initLogging();
-    	Sendlater3Util.logger.debug(msg);
+	try {
+            Sendlater3Util.initLogging();
+    	    Sendlater3Util.logger.debug(msg);
+	}
+	catch (ex) {
+	}
     },
 
     trace: function(msg) {
-        Sendlater3Util.initLogging();
-    	Sendlater3Util.logger.trace(msg);
+	try {
+            Sendlater3Util.initLogging();
+    	    Sendlater3Util.logger.trace(msg);
+	}
+	catch (ex) {
+	}
     },
 
     initLogging: function() {
-        if (Sendlater3Util.logger == null) {
-	    Sendlater3Util.logger =
-	        Log4Moz.getConfiguredLogger("extensions.sendlater3",
-					    Log4Moz.Level.Trace,
-					    Log4Moz.Level.Info,
-					    Log4Moz.Level.Debug);
-	    Sendlater3Util.logger.debug("Initialized logging");
+	try {
+	    if (Sendlater3Util.logger == null) {
+		Sendlater3Util.logger =
+		    Log4Moz.getConfiguredLogger("extensions.sendlater3",
+						Log4Moz.Level.Trace,
+						Log4Moz.Level.Info,
+						Log4Moz.Level.Debug);
+		Sendlater3Util.logger.debug("Initialized logging");
+	    }
+	}
+	catch (ex) {
 	}
     },
 
     reinitLogging: {
 	observe: function() {
-	    Sendlater3Util.Entering("Sendlater3Util.reinitLogging.observe");
-	    // This is really disgusting.
-	    delete Log4Moz.repository._loggers["extensions.sendlater3"];
-	    Sendlater3Util.logger = null;
-	    Sendlater3Util.initLogging();
-	    Sendlater3Util.Leaving("Sendlater3Util.reinitLogging.observe");
+	    try {
+		Sendlater3Util.Entering("Sendlater3Util.reinitLogging.observe");
+		// This is really disgusting.
+		delete Log4Moz.repository._loggers["extensions.sendlater3"];
+		Sendlater3Util.logger = null;
+		Sendlater3Util.initLogging();
+		Sendlater3Util.Leaving("Sendlater3Util.reinitLogging.observe");
+	    }
+	    catch (ex) {
+	    }
 	},
     },
 
