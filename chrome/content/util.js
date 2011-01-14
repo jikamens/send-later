@@ -13,6 +13,9 @@ var Sendlater3Util = {
     IsThunderbird2: function() {
 	var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
             .getService(Components.interfaces.nsIXULAppInfo);
+	if (appInfo.name != "Thunderbird") {
+	    return false;
+	}
 	var versionChecker = Components
 	    .classes["@mozilla.org/xpcom/version-comparator;1"]
             .getService(Components.interfaces.nsIVersionComparator);
@@ -26,7 +29,8 @@ var Sendlater3Util = {
     },
 
     FindSubFolder: function(folder, name) {
-	if (Sendlater3Util.IsThunderbird2()) {
+	if (Sendlater3Util.IsThunderbird2() ||
+	    Sendlater3Util.IsPostbox()) {
 	    return folder.FindSubFolder(name);
 	}
 	else {
@@ -35,7 +39,7 @@ var Sendlater3Util = {
     },
 
     HeaderRowId: function(name) {
-	if (Sendlater3Util.IsThunderbird2() && !Sendlater3Util.IsPostbox()) {
+	if (Sendlater3Util.IsThunderbird2()) {
 	    return "expanded" + name + "Box";
 	}
 	else {

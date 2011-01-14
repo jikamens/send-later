@@ -31,8 +31,7 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	    sendingUnsentMessages = false;
 	    if (needToSendUnsentMessages) {
-		if (Sendlater3Util.IsThunderbird2() &&
-		    !Sendlater3Util.IsPostbox()) {
+		if (Sendlater3Util.IsThunderbird2()) {
 		    messenger.sendUnsentMessages(null, msgWindow);
 		}
 		else {
@@ -51,8 +50,7 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.debug("Deferring sendUnsentMessages");
 	    needToSendUnsentMessages = true;
 	}
-	else if (Sendlater3Util.IsThunderbird2() && 
-		 !Sendlater3Util.IsPostbox()) {
+	else if (Sendlater3Util.IsThunderbird2()) {
 	    messenger.sendUnsentMessages(null, msgWindow);
 	}
 	else {
@@ -65,8 +63,7 @@ var Sendlater3Backgrounding = function() {
 	var msgSendLater = Components
 	    .classes["@mozilla.org/messengercompose/sendlater;1"]
 	    .getService(Components.interfaces.nsIMsgSendLater);
-	if (Sendlater3Util.IsThunderbird2() &&
-	    !Sendlater3Util.IsPostbox()) {
+	if (Sendlater3Util.IsThunderbird2()) {
 	    msgSendLater.AddListener(sendUnsentMessagesListener);
 	}
 	else {
@@ -79,8 +76,7 @@ var Sendlater3Backgrounding = function() {
 	var msgSendLater = Components
 	    .classes["@mozilla.org/messengercompose/sendlater;1"]
 	    .getService(Components.interfaces.nsIMsgSendLater);
-	if (Sendlater3Util.IsThunderbird2() &&
-	    !Sendlater3Util.IsPostbox()) {
+	if (Sendlater3Util.IsThunderbird2()) {
 	    msgSendLater.RemoveListener(sendUnsentMessagesListener);
 	}
 	else {
@@ -547,7 +543,8 @@ var Sendlater3Backgrounding = function() {
 		    }
 		    if (sfile.exists()) sfile.remove(true);
 		    var dellist;
-		    if (Sendlater3Util.IsThunderbird2()) {
+		    if (Sendlater3Util.IsThunderbird2() ||
+			Sendlater3Util.IsPostbox()) {
 			dellist = Components
 			    .classes["@mozilla.org/supports-array;1"]
 			    .createInstance(Components.interfaces
@@ -720,7 +717,7 @@ var Sendlater3Backgrounding = function() {
 		// necessary, so I'm disabling them in the spirit of
 		// optimizing performance by making plugins do as little as
 		// possible.
-		// if (Sendlater3Util.IsThunderbird2()) {
+		// if (Sendlater3Util.IsThunderbird2() || Sendlater3Util.IsPostbox()) {
 		//     folder.endFolderLoading();
 		// }
 		Sendlater3Util.debug("FOLDER LOADED - " + folder.URI);
@@ -735,7 +732,8 @@ var Sendlater3Backgrounding = function() {
 		    var thisfolder = folder
 			.QueryInterface(Components.interfaces.nsIMsgFolder);
 		    var messageenumerator;
-		    if (Sendlater3Util.IsThunderbird2()) {
+		    if (Sendlater3Util.IsThunderbird2() ||
+			Sendlater3Util.IsPostbox()) {
 			messageenumerator = thisfolder.getMessages(msgWindow);
 		    }
 		    else {
@@ -749,7 +747,8 @@ var Sendlater3Backgrounding = function() {
 				.QueryInterface(Components.interfaces
 						.nsIMsgDBHdr);
 			    var flags;
-			    if (Sendlater3Util.IsThunderbird2()) {
+			    if (Sendlater3Util.IsThunderbird2() ||
+				Sendlater3Util.IsPostbox()) {
 				flags = 2097152 | 8; // Better way to do this?
 			    }
 			    else {
@@ -821,7 +820,7 @@ var Sendlater3Backgrounding = function() {
 		folderstocheck.push(local_draft_pref);
 		ProgressAdd();
 	    }
-	    // if (Sendlater3Util.IsThunderbird2()) {
+	    // if (Sendlater3Util.IsThunderbird2() || Sendlater3Util.IsPostbox()) {
 	    // 	var sub = Sendlater3Util.FindSubFolder(fdrlocal, "Drafts");
 	    // 	sub.endFolderLoading();
 	    // 	sub.startFolderLoading();
@@ -892,7 +891,7 @@ var Sendlater3Backgrounding = function() {
 				if (pref_value) {
 				    Sendlater3Util.dump("SCHEDULE - " +
 							thisfolder.URI );
-				    // if (Sendlater3Util.IsThunderbird2()) {
+				    // if (Sendlater3Util.IsThunderbird2() || Sendlater3Util.IsPostbox()) {
 				    // 	thisfolder.endFolderLoading();
 				    // 	thisfolder.startFolderLoading();
 				    // }
