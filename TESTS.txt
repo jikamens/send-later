@@ -20,8 +20,11 @@ Popup: Passthrough to Send Later
 Popup: Cancel
 Popup: Empty subject prompt send anyway works
 Popup: Empty subject cancel works
+No recipients handled correctly (currently known broken, see TODO.txt)
 Add toolbar works and dropdowns are populated
 Toolbar: Initial values populated with current date & time
+Toolbar: ticks
+Toolbar: stops ticking when modified
 Toolbar: Change year - months change
 Toolbar: Change month - days change
 Toolbar: February days are correct leap year vs. not
@@ -31,8 +34,6 @@ toolbar: Send in 30 minutes
 Toolbar: Send in 2 hours
 Show Send Later column enabled works
 Show Send Later column disabled works
-Show Send Later Header enabled works
-Show Send Later Header disabled works
 Show Background Progress in Statusbar enabled works
 Show Background Progress in Statusbar disabled works
 Changing "Check every" works
@@ -45,3 +46,9 @@ Shortcut 2 show in toolbar works
 Shortcut 3 label change works
 Shortcut 3 minutes change works
 Shortcut 3 show in toolbar works
+Drafts found in local drafts folder
+Drafts found in IMAP drafts folder
+Pending count works
+Displaying header in draft works without error
+Hiding header (empty) in draft works without error
+Hiding header (disabled) in draft works without error

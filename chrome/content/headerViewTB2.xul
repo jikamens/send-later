@@ -13,15 +13,11 @@
     </treecols>
   </tree>
 
-  <!-- Thunderbird 3 -->
-  <rows id="expandedHeader2Rows">
-    <row id="expandedx-send-later-atRow">
-      <label id="expandedx-send-later-atLabel" class="headerName"
-	     value="x-send-later-at"
-	     control="expandedx-send-later-atBox"/>
-      <mail-headerfield id="expandedx-send-later-atBox"/>
-    </row>
-  </rows>
+  <!-- Thunderbird 2 -->  
+  <vbox id="expandedHeaders">
+    <mail-headerfield id="expandedx-send-later-atBox"
+		      label="&sendlater3header.label;:"/>
+  </vbox>
 
   <script src="util.js"/>
   <script type="text/javascript" src="chrome://messenger/content/dateFormat.js" />

@@ -13,13 +13,12 @@
     </treecols>
   </tree>
 
-  <!-- Thunderbird 3 -->
-  <rows id="expandedHeader2Rows">
-    <row id="expandedx-send-later-atRow">
-      <label id="expandedx-send-later-atLabel" class="headerName"
-	     value="x-send-later-at"
-	     control="expandedx-send-later-atBox"/>
-      <mail-headerfield id="expandedx-send-later-atBox"/>
+  <!-- Postbox 2 -->
+  <rows id="headerRows">
+    <row id="expandedx-send-later-atRow" class="maiheader">
+      <label id="expandedx-send-later-atLabel" class="headerName plain"
+	     value="x-send-later-at"/>
+      <mailheadervalue id="expandedx-send-later-atBox"/>
     </row>
   </rows>
 

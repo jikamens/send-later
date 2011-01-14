@@ -56,7 +56,8 @@ var Sendlater3HeaderView = function() {
 	    .getService(Components.interfaces.nsIMsgAccountManager);
 	
 	var fdrlocal = accountManager.localFoldersServer.rootFolder;
-	if (fdrlocal.findSubFolder("Drafts").URI==msgFolder.URI) return true;
+	if (Sendlater3Util.FindSubFolder(fdrlocal, "Drafts").URI == 
+	    msgFolder.URI) return true;
 	if (Sendlater3Util.PrefService
 	    .getCharPref('mail.identity.default.draft_folder')==msgFolder.URI)
 	    return true;	
@@ -124,7 +125,7 @@ var Sendlater3HeaderView = function() {
 	    else {
 		Sendlater3Util.debug("headerView.js: dispHeader: showheader is false");
 	    }
-	    document.getElementById("expandedx-send-later-atRow").hidden = hidden;
+	    document.getElementById(Sendlater3Util.HeaderRowId("x-send-later-at")).hidden = hidden;
 	    Sendlater3Util.Leaving("Sendlater3HeaderView.sendlater3_HeaderDisplay.dispHeader");
 	},
 	noop: function() { }

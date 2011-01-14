@@ -18,3 +18,6 @@ original behavior.
 
 Add a preference for hiding the status message in the footer
 completely.
+
+Bug: You shouldn't be allowed to schedule a message with no recopients
+for future sending.

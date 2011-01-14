@@ -498,13 +498,33 @@ var Sendlater3Backgrounding = function() {
 		    copyService = copyService
 			.QueryInterface( Components.interfaces
 					 .nsIMsgCopyService);
-		    copyService.CopyFileMessage(sfile, fdrunsent, null, false,
-						0, "", copyServiceListener,
-						msgWindow);
+		    if (Sendlater3Util.IsThunderbird2()) {
+			copyService.CopyFileMessage(sfile, fdrunsent,
+						    0, "",
+						    copyServiceListener,
+						    msgWindow);
+		    }
+		    else {
+			copyService.CopyFileMessage(sfile, fdrunsent, null,
+						    false, 0, "",
+						    copyServiceListener,
+						    msgWindow);
+		    }
 		    if (sfile.exists()) sfile.remove(true);
-		    var dellist = Components.classes["@mozilla.org/array;1"]
-			.createInstance(Components.interfaces.nsIMutableArray);
-		    dellist.appendElement(messageHDR, false);
+		    var dellist;
+		    if (Sendlater3Util.IsThunderbird2()) {
+			dellist = Components
+			    .classes["@mozilla.org/supports-array;1"]
+			    .createInstance(Components.interfaces
+					    .nsISupportsArray);
+			dellist.AppendElement(messageHDR);
+		    }
+		    else {
+			dellist = Components.classes["@mozilla.org/array;1"]
+			    .createInstance(Components.interfaces
+					    .nsIMutableArray);
+			dellist.appendElement(messageHDR, false);
+		    }
 		    messageHDR.folder.deleteMessages(dellist, msgWindow, true,
 						     false, null, false);
 		    if (Sendlater3Util.PrefService.getBoolPref("extensions.sendlater3.sendunsentmessages")) {
@@ -665,7 +685,9 @@ var Sendlater3Backgrounding = function() {
 		// necessary, so I'm disabling them in the spirit of
 		// optimizing performance by making plugins do as little as
 		// possible.
-		// folder.endFolderLoading();
+		// if (Sendlater3Util.IsThunderbird2()) {
+		//     folder.endFolderLoading();
+		// }
 		Sendlater3Util.debug("FOLDER LOADED - " + folder.URI);
 		var where = folderstocheck.indexOf(folder.URI);
 		if (where >= 0) {
@@ -677,16 +699,29 @@ var Sendlater3Backgrounding = function() {
 		    ProgressFinish();
 		    var thisfolder = folder
 			.QueryInterface(Components.interfaces.nsIMsgFolder);
-		    var messageenumerator = thisfolder.messages;
+		    var messageenumerator;
+		    if (Sendlater3Util.IsThunderbird2()) {
+			messageenumerator = thisfolder.getMessages(msgWindow);
+		    }
+		    else {
+			messageenumerator = thisfolder.messages;
+		    }
 		    if ( messageenumerator ) {
 			Sendlater3Util.dump ("Got Enumerator\n");
 			while ( messageenumerator.hasMoreElements() ) {
+			    Sendlater3Util.dump("hasMoreElements=true\n");
 			    var messageDBHDR = messageenumerator.getNext()
 				.QueryInterface(Components.interfaces
 						.nsIMsgDBHdr);
-			    if (! (messageDBHDR.flags &
-				   (Components.interfaces.nsMsgMessageFlags.IMAPDeleted |
-				    Components.interfaces.nsMsgMessageFlags.Expunged))) {
+			    var flags;
+			    if (Sendlater3Util.IsThunderbird2()) {
+				flags = 2097152 | 8; // Better way to do this?
+			    }
+			    else {
+				var f = Components.interfaces.nsMsgMessageFlags;
+				flags = f.IMAPDeleted | f.Expunged;
+			    }
+			    if (! (messageDBHDR.flags & flags)) {
 				var messageURI = thisfolder
 				    .getUriForMsg(messageDBHDR);
 				CheckThisURIQueueAdd(messageURI);
@@ -734,7 +769,9 @@ var Sendlater3Backgrounding = function() {
 
 	    folderstocheck = new Array();
 	    foldersdone = new Array();
-	    folderstocheck.push(fdrlocal.findSubFolder("Drafts").URI);
+	    folderstocheck.push(
+		Sendlater3Util.FindSubFolder(fdrlocal, "Drafts").URI
+	    );
 	    Sendlater3Util.dump("SCHEDULE - " + folderstocheck[0]);
 	    // Local Drafts folder might have different name, e.g., in other
 	    // locales.
@@ -749,8 +786,11 @@ var Sendlater3Backgrounding = function() {
 		folderstocheck.push(local_draft_pref);
 		ProgressAdd();
 	    }
-	    //	fdrlocal.findSubFolder("Drafts").endFolderLoading();
-	    //	fdrlocal.findSubFolder("Drafts").startFolderLoading();
+	    // if (Sendlater3Util.IsThunderbird2()) {
+	    // 	var sub = Sendlater3Util.FindSubFolder(fdrlocal, "Drafts");
+	    // 	sub.endFolderLoading();
+	    // 	sub.startFolderLoading();
+	    // }
 	    try {
 		// Documentation for nsiMsgFolder says, "Note: Even if the
 		// folder doesn't currently exist, a nsIMsgFolder may be
@@ -758,7 +798,8 @@ var Sendlater3Backgrounding = function() {
 		// an error. I can't find any way to check whether the folder
 		// currently exists before calling this, so I'm just discarding
 		// the error.
-		fdrlocal.findSubFolder("Drafts").updateFolder(msgWindow);
+		Sendlater3Util.FindSubFolder(fdrlocal, "Drafts")
+		    .updateFolder(msgWindow);
 	    }
 	    catch (e) {
 		Sendlater3Util.debug("updateFolder on local Drafts folder failed");
@@ -816,8 +857,10 @@ var Sendlater3Backgrounding = function() {
 				if (pref_value) {
 				    Sendlater3Util.dump("SCHEDULE - " +
 							thisfolder.URI );
-				    // thisfolder.endFolderLoading();
-				    // thisfolder.startFolderLoading();
+				    // if (Sendlater3Util.IsThunderbird2()) {
+				    // 	thisfolder.endFolderLoading();
+				    // 	thisfolder.startFolderLoading();
+				    // }
 				    try {
 					thisfolder.updateFolder(msgWindow);
 				    }

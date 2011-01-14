@@ -1,6 +1,6 @@
 var Sendlater3ComposeToolbar = {
     timer: null,
-    originalCustomizeDone: null,
+    origCustomizeDone: null,
 
     updateModified: function() {
 	var t = Sendlater3ComposeToolbar;
@@ -39,13 +39,11 @@ var Sendlater3ComposeToolbar = {
 	// We need to detect when the toolbar is first added to
 	// the message window, so we can populate it at that
 	// point.
-	if (! t.originalCustomizeDone) {
-	    t.originalCustomizeDone = document
-		.getElementById("compose-toolbox").customizeDone;
-	    Sendlater3Util.debug("t.originalCustomizeDone=" + 
-				 t.originalCustomizeDone);
-	    document.getElementById("compose-toolbox").customizeDone =
-		t.CustomizeDone;
+	if (! t.origCustomizeDone) {
+	    var name = Sendlater3Util.ComposeToolboxName();
+	    t.origCustomizeDone = document.getElementById(name).customizeDone;
+	    Sendlater3Util.debug("t.origCustomizeDone=" + t.origCustomizeDone);
+	    document.getElementById(name).customizeDone = t.CustomizeDone;
 	}
 
 	if (document.getElementById('sendlater3_toolbar')) {
@@ -308,7 +306,7 @@ var Sendlater3ComposeToolbar = {
 	var err;
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.CustomizeDone", aToolboxChanged);
 	try {
-	    t.originalCustomizeDone(aToolboxChanged);
+	    t.origCustomizeDone(aToolboxChanged);
 	} catch (e) {
 	    err = e;
 	}

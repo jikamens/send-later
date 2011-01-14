@@ -6,6 +6,48 @@ var Sendlater3Util = {
 
     _PromptBundle: null,
 
+    IsThunderbird2: function() {
+	var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+            .getService(Components.interfaces.nsIXULAppInfo);
+	var versionChecker = Components
+	    .classes["@mozilla.org/xpcom/version-comparator;1"]
+            .getService(Components.interfaces.nsIVersionComparator);
+	return(versionChecker.compare(appInfo.version, "3.0") < 0);
+    },
+
+    IsPostbox: function() {
+	var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+            .getService(Components.interfaces.nsIXULAppInfo);
+	return(appInfo.name == "Postbox");
+    },
+
+    FindSubFolder: function(folder, name) {
+	if (Sendlater3Util.IsThunderbird2()) {
+	    return folder.FindSubFolder(name);
+	}
+	else {
+	    return folder.findSubFolder(name);
+	}
+    },
+
+    HeaderRowId: function(name) {
+	if (Sendlater3Util.IsThunderbird2() && !Sendlater3Util.IsPostbox()) {
+	    return "expanded" + name + "Box";
+	}
+	else {
+	    return "expanded" + name + "Row";
+	}
+    },
+
+    ComposeToolboxName: function() {
+	if (Sendlater3Util.IsThunderbird2()) {
+	    return "compose-toolbox2";
+	}
+	else {
+	    return "compose-toolbox";
+	}
+    },
+
     PromptBundleGet: function(name) {
 	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGet", name);
 	if (Sendlater3Util._PromptBundle == null) {
