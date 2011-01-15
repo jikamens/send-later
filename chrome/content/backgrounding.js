@@ -599,7 +599,7 @@ var Sendlater3Backgrounding = function() {
 	    data = data.replace(/\r\n/g, "\n");
 	    if (this._content.length && this._content.slice(-1) == "\r"
 		&& data.slice(0, 1) == "\n") {
-		this._content = this._content.slice(0, this.content.length -1);
+		this._content = this._content.slice(0, this._content.length -1);
 	    }
 	    this._content += data;
 
