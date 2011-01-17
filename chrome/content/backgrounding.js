@@ -43,7 +43,7 @@ var Sendlater3Backgrounding = function() {
 		    }
 		}
 		catch (ex) {
-		    alert("Error sending unsent messages. Your Outbox may be corrupt, and your scheduled messages may not have been sent. See http://blog.kamens.us/send-later-3/#outbox.");
+		    alert(Sendlater3Util.PromptBundleGet("SendingUnsentError"));
 		}
 	    }
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
@@ -64,7 +64,7 @@ var Sendlater3Backgrounding = function() {
 	    }
 	}
 	catch (ex) {
-	    alert("Error sending unsent messages. Your Outbox may be corrupt, and your scheduled messages may not have been sent. See http://blog.kamens.us/send-later-3/#outbox.");
+	    alert(Sendlater3Util.PromptBundleGet("SendingUnsentError"));
 	}
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.queueSendUnsentMessages");
     }

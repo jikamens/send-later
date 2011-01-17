@@ -15,7 +15,7 @@
 <!ENTITY showsendlatercolumn.tooltip "Określa, czy wyświetlać kolumnę &quot;Wyślij później&quot; w folderach ze szkicami wiadomości.">
 <!ENTITY showsendlaterheader.caption "Pokaż nagłówek &quot;Wyślij później&quot;">
 <!ENTITY showsendlaterheader.tooltip "Określa czy wyświetlać nagłówek &quot;X-Send-Later-At&quot;, tzn. zaplanowany czas wysłania wiadomości w nagłówku podglądu.">
-<!ENTITY showsendlaterstatus.caption "Show Send Later 3 In Status Bar">
+<!ENTITY showsendlaterstatus.caption "Wyświetlaj Send Later 3 na pasku statusu">
 <!ENTITY showsendlaterprogress.caption "Pokaż informacje o postępie wysyłania wiadomości na pasku statusu.">
 <!ENTITY showsendlaterdropdowns.caption "Pokaż listy rozwijane na pasku narzędzi">
 <!ENTITY showsendlaterunsentmessages.caption "Włącz/wyłącz wysyłanie wiadomości z &quot;Wychodzących...&quot;">
