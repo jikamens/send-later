@@ -15,6 +15,7 @@
 <!ENTITY showsendlatercolumn.tooltip "Ya sea para mostrar &quot;Send Later&quot; columna cuando está viendo la carpeta de Borradores">
 <!ENTITY showsendlaterheader.caption "Mostrar el encabezado de Eviar Después">
 <!ENTITY showsendlaterheader.tooltip "Ya sea para mostrar &quot;X-Send-Later-At&quot; encabezado, i.e., la hora en la que el borrador está programado para ser enviado, en el encabezado cuando esté viendo el mensaje.">
+<!ENTITY showsendlaterstatus.caption "Show Send Later 3 In Status Bar">
 <!ENTITY showsendlaterprogress.caption "Mostrar el progreso de fondo en la Barra de Estado">
 <!ENTITY showsendlaterdropdowns.caption "Show Dropdowns In Toolbar">
 <!ENTITY showsendlaterunsentmessages.caption "Lanza la entrega de mensajes sin enviar dde la Bandeja de Salida">

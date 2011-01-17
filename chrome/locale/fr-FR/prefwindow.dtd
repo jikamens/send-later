@@ -15,6 +15,7 @@
 <!ENTITY showsendlatercolumn.tooltip "Détermine l'affichage de la colonne &quot;Send Later&quot; en mode visualisation des messages en attente">
 <!ENTITY showsendlaterheader.caption "Afficher les entêtes de &quot;Send Later&quot;">
 <!ENTITY showsendlaterheader.tooltip "Détermine l'affichage de l'entête &quot;X-Send-Later-At&quot;, i.e., l'heure prévue d'envoi d'un message.">
+<!ENTITY showsendlaterstatus.caption "Show Send Later 3 In Status Bar">
 <!ENTITY showsendlaterprogress.caption "Affichage dans la barre d'état de l'avancement des envois en tâche de fond.">
 <!ENTITY showsendlaterdropdowns.caption "Afficher les menus déroulants dans la barre de menu.">
 <!ENTITY showsendlaterunsentmessages.caption "Déclenche l'expédition des messages en attente dans la boite d'expédition.">

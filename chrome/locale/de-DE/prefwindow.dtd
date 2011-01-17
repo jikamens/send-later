@@ -15,6 +15,7 @@
 <!ENTITY showsendlatercolumn.tooltip "Zeigen, die &quot;SendeSpäter&quot; Spalte beim Ansehen des Ordners Entwürfe">
 <!ENTITY showsendlaterheader.caption "Zeige SendeSpäter Kopfzeile">
 <!ENTITY showsendlaterheader.tooltip "Zeigen, die &quot;X-SendeSpäter:&quot; Kopfzeile, z.B. die Zeit, wann ein Entwurf zum Senden geplant ist, in der Kopfzeile beim Ansehen einer Nachricht.">
+<!ENTITY showsendlaterstatus.caption "Show Send Later 3 In Status Bar">
 <!ENTITY showsendlaterprogress.caption "Zeige Hintergrund-Fortschritt in der Symbolleiste">
 <!ENTITY showsendlaterdropdowns.caption "Zeige das Dropdownmenü in der Symbolleiste">
 <!ENTITY showsendlaterunsentmessages.caption "Auslösen des Versands der pendenten Nachrichten aus dem Postausgangsordner">
