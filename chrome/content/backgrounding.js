@@ -928,6 +928,15 @@ var Sendlater3Backgrounding = function() {
 	}
     }
 
+    var SetUpStatusBar = {
+	observe: function() {
+	    var showStatus = Sendlater3Util
+		.PrefService.getBoolPref("extensions.sendlater3.showstatus");
+	    document.getElementById("sendlater_deck")
+		.setAttribute("hidden", ! showStatus);
+	}
+    };
+
     function StartMonitorCallback() {
 	Sendlater3Util.Entering("Sendlater3Backgrounding.StartMonitorCallback");
 	Sendlater3Util.debug("Starting monitor [for every " + checkTimeout() +
@@ -972,6 +981,12 @@ var Sendlater3Backgrounding = function() {
     //     5000,
     //     Components.interfaces.nsITimer.TYPE_ONE_SHOT
     //     );
+
+    window.addEventListener("load", SetUpStatusBar.observe, false);
+    Sendlater3Util.PrefService
+	.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    Sendlater3Util.PrefService.addObserver(
+	"extensions.sendlater3.showstatus", SetUpStatusBar, false);
 
     window.addEventListener("load", StartMonitorCallback,false);
     window.addEventListener("unload", StopMonitorCallback, false);
