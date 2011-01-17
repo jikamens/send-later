@@ -413,7 +413,15 @@ var Sendlater3Composing = {
 	    }
 	    msgWindow.SetDOMWindow(window);
 	    msgWindow.rootDocShell.allowAuth = true;
+	    // SENDLATER3 ADDED
+	    var type = gMsgCompose.type;
+	    var originalURI = gMsgCompose.originalMsgURI;
+	    // END SENDLATER3 ADDED
 	    gMsgCompose.SendMsg(msgType, getCurrentIdentity(), currentAccountKey, msgWindow, progress);
+	    // SENDLATER3 ADDED
+	    Sendlater3Composing.SetReplyForwardedFlag(type,
+						      originalURI);
+	    // END SENDLATER3 ADDED
 	  }
 	  catch (ex) {
 	    dump("failed to SendMsg: " + ex + "\n");
@@ -730,7 +738,15 @@ var Sendlater3Composing = {
 	    }
 	    msgWindow.domWindow = window;
 	    msgWindow.rootDocShell.allowAuth = true;
+	    // SENDLATER3 ADDED
+	    var type = gMsgCompose.type;
+	    var originalURI = gMsgCompose.originalMsgURI;
+	    // END SENDLATER3 ADDED
 	    gMsgCompose.SendMsg(msgType, getCurrentIdentity(), currentAccountKey, msgWindow, progress);
+	    // SENDLATER3 ADDED
+	    Sendlater3Composing.SetReplyForwardedFlag(type,
+						      originalURI);
+	    // END SENDLATER3 ADDED
 	    // only tag slam on send if we have references.  we don't want to tag slam the original thread
 	    // this can happen if we've changed the subject (and cleared the references) or if we are sending a template.
 	    // see bug #3476 for details
@@ -1042,7 +1058,15 @@ var Sendlater3Composing = {
 		    }
 		    msgWindow.domWindow = window;
 		    msgWindow.rootDocShell.allowAuth = true;
+		    // SENDLATER3 ADDED
+		    var type = gMsgCompose.type;
+		    var originalURI = gMsgCompose.originalMsgURI;
+		    // END SENDLATER3 ADDED
 		    gMsgCompose.SendMsg(msgType, getCurrentIdentity(), currentAccountKey, msgWindow, progress);
+		    // SENDLATER3 ADDED
+		    Sendlater3Composing.SetReplyForwardedFlag(type,
+							      originalURI);
+		    // END SENDLATER3 ADDED
 		}
 		catch (ex) {
 		    dump("failed to SendMsg: " + ex + "\n");
@@ -1058,6 +1082,37 @@ var Sendlater3Composing = {
 	    dump("###SendMessage Error: composeAppCore is null!\n");
 	// SENDLATER3 CHANGED: Added Leaving invocation
 	Sendlater3Util.Leaving("Sendlater3Composing.GenericSendMessage");
+    },
+
+    SetReplyForwardedFlag: function(type, originalURI) {
+	var state;
+	if (! originalURI) {
+	    return;
+	}
+	try {
+	    var messenger = Components
+		.classes["@mozilla.org/messenger;1"]
+		.getService(Components.interfaces.nsIMessenger);
+	    var hdr = messenger.msgHdrFromURI(originalURI);
+	    switch (type) {
+	    case nsIMsgCompType.Reply:
+	    case nsIMsgCompType.ReplyAll:
+	    case nsIMsgCompType.ReplyToSender:
+	    case nsIMsgCompType.ReplyToGroup:
+	    case nsIMsgCompType.ReplyToSenderAndGroup:
+	    case nsIMsgCompType.ReplyWithTemplate:
+	    case nsIMsgCompType.ReplyToList:
+		hdr.folder.addMessageDispositionState(hdr, hdr.folder.nsMsgDispositionState_Replied);
+		break;
+	    case nsIMsgCompType.ForwardAsAttachment:
+	    case nsIMsgCompType.ForwardInline:
+		hdr.folder.addMessageDispositionState(hdr, hdr.folder.nsMsgDispositionState_Forwarded);
+		break;
+	    }
+	}
+	catch (ex) {
+	    Sendlater3Util.debug("Failed to set flag for reply / forward");
+	}
     }
 }
 
