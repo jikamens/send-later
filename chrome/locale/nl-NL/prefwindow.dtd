@@ -15,7 +15,7 @@
 <!ENTITY showsendlatercolumn.tooltip "Of de &quot;Send Later&quot; kolom getoond moet worden in de conceptenmap">
 <!ENTITY showsendlaterheader.caption "Toon Send Later koptekst">
 <!ENTITY showsendlaterheader.tooltip "Of de &quot;X-Send-Later-At&quot; koptekst getoond moet worden als een bericht bekeken wordt, namelijk de tijd waarop een concept gepland staat verzonden te worden.">
-<!ENTITY showsendlaterstatus.caption "Show Send Later 3 In Status Bar">
+<!ENTITY showsendlaterstatus.caption "Toon Send Later 3 in de statusbalk">
 <!ENTITY showsendlaterprogress.caption "Toon de voortgang in de statusbalk">
 <!ENTITY showsendlaterdropdowns.caption "Toon dropdown-knoppen in werkbalk">
 <!ENTITY showsendlaterunsentmessages.caption "Verstuur niet-verzonden berichten die in Postvak UIT staan">
