@@ -31,14 +31,19 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	    sendingUnsentMessages = false;
 	    if (needToSendUnsentMessages) {
-		if (Sendlater3Util.IsThunderbird2()) {
-		    messenger.sendUnsentMessages(null, msgWindow);
+		try {
+		    if (Sendlater3Util.IsThunderbird2()) {
+			messenger.sendUnsentMessages(null, msgWindow);
+		    }
+		    else {
+			var msgSendLater = Components
+			    .classes["@mozilla.org/messengercompose/sendlater;1"]
+			    .getService(Components.interfaces.nsIMsgSendLater);
+			msgSendLater.sendUnsentMessages(null);
+		    }
 		}
-		else {
-		    var msgSendLater = Components
-			.classes["@mozilla.org/messengercompose/sendlater;1"]
-			.getService(Components.interfaces.nsIMsgSendLater);
-		    msgSendLater.sendUnsentMessages(null);
+		catch (ex) {
+		    alert("Error sending unsent messages. Your Outbox may be corrupt, and your scheduled messages may not have been sent. See http://blog.kamens.us/send-later-3/#outbox.");
 		}
 	    }
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
@@ -46,15 +51,20 @@ var Sendlater3Backgrounding = function() {
     }
     function queueSendUnsentMessages(msgSendLater) {
 	Sendlater3Util.Entering("Sendlater3Backgrounding.queueSendUnsentMessages");
-	if (sendingUnsentMessages) {
-	    Sendlater3Util.debug("Deferring sendUnsentMessages");
-	    needToSendUnsentMessages = true;
+	try {
+	    if (sendingUnsentMessages) {
+		Sendlater3Util.debug("Deferring sendUnsentMessages");
+		needToSendUnsentMessages = true;
+	    }
+	    else if (Sendlater3Util.IsThunderbird2()) {
+		messenger.sendUnsentMessages(null, msgWindow);
+	    }
+	    else {
+		msgSendLater.sendUnsentMessages(null);
+	    }
 	}
-	else if (Sendlater3Util.IsThunderbird2()) {
-	    messenger.sendUnsentMessages(null, msgWindow);
-	}
-	else {
-	    msgSendLater.sendUnsentMessages(null);
+	catch (ex) {
+	    alert("Error sending unsent messages. Your Outbox may be corrupt, and your scheduled messages may not have been sent. See http://blog.kamens.us/send-later-3/#outbox.");
 	}
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.queueSendUnsentMessages");
     }
