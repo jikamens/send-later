@@ -25,3 +25,7 @@ properties). This is fine until you save a message into the folder, at
 which point the Send Later column should become visible but
 doesn't. If you leave and come back to the folder once or twice the
 problem solves itself. Not sure this is worth fixing.
+
+Add buttons on pop-up to copy current date/time setting to clipboard
+and fetch setting from current clipboard contents, to make it easy to
+schedule multiple messages to be sent at the same time.
