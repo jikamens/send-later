@@ -1,5 +1,5 @@
-<!ENTITY prefwindow.title "Préférences &quot;Send Later&quot;">
-<!ENTITY pane1.title "Préférences &quot;Send Later&quot;">
+<!ENTITY prefwindow.title "Préférences &quot;Send Later 3&quot;">
+<!ENTITY pane1.title "Préférences &quot;Send Later 3&quot;">
 <!ENTITY checktimepref.label "Vérifie toutes les :">
 <!ENTITY checktimepref2.label "millisecondes">
 <!ENTITY checktimepref.tooltip "Intervalle en millisecondes entre les recherches de messages à expédier. Augmenter cette valeur si il arrive que vos messages ne soient pas envoyés à l'heure prévue ou si le nombre de message en attente est erroné.">

@@ -1,5 +1,5 @@
-<!ENTITY prefwindow.title "Send Later voorkeuren">
-<!ENTITY pane1.title "Send Later voorkeuren">
+<!ENTITY prefwindow.title "&quot;Send Later 3&quot; voorkeuren">
+<!ENTITY pane1.title "&quot;Send Later 3&quot; voorkeuren">
 <!ENTITY checktimepref.label "Controleer elke :">
 <!ENTITY checktimepref2.label "milliseconden">
 <!ENTITY checktimepref.tooltip "Interval, in milliseconden, tussen de controles van de concepten die verstuurd moeten worden. Vergroot dit getal als uw concepten niet altijd op tijd verstuurd worden of als het aantal van de te behandelen berichten in uw statusbalk niet altijd overeenkomt met het werkelijke aantal.">
@@ -15,7 +15,7 @@
 <!ENTITY showsendlatercolumn.tooltip "Of de &quot;Send Later&quot; kolom getoond moet worden in de conceptenmap">
 <!ENTITY showsendlaterheader.caption "Toon Send Later koptekst">
 <!ENTITY showsendlaterheader.tooltip "Of de &quot;X-Send-Later-At&quot; koptekst getoond moet worden als een bericht bekeken wordt, namelijk de tijd waarop een concept gepland staat verzonden te worden.">
-<!ENTITY showsendlaterstatus.caption "Toon Send Later 3 in de statusbalk">
+<!ENTITY showsendlaterstatus.caption "Toon &quot;Send Later 3&quot; in de statusbalk">
 <!ENTITY showsendlaterprogress.caption "Toon de voortgang in de statusbalk">
 <!ENTITY showsendlaterdropdowns.caption "Toon dropdown-knoppen in werkbalk">
 <!ENTITY showsendlaterunsentmessages.caption "Verstuur niet-verzonden berichten die in Postvak UIT staan">

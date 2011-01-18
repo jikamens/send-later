@@ -4,6 +4,6 @@
 <!ENTITY sendlater.prompt.close.label "Cancelar">
 <!ENTITY sendlater.prompt.close.tooltip "Volver a edición del mensaje.">
 <!ENTITY sendlater.prompt.title.label "Enviar este email después">
-<!ENTITY sendlater.prompt.sendat.label "Envía Después a una hora especifica">
+<!ENTITY sendlater.prompt.sendat.label "Envía más tarde a una hora especifica">
 <!ENTITY sendlater.prompt.sendat.tooltip "Guardar el mensaje en carpeta de Borradores, para un envío automático a la hora arriba indicada.">
 <!ENTITY sendlater.toolbar.sendlater.button.label "Enviar Después">

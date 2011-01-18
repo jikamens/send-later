@@ -1,5 +1,5 @@
-<!ENTITY prefwindow.title "SendeSpäter Präferenzen">
-<!ENTITY pane1.title "SendeSpäter Präferenzen">
+<!ENTITY prefwindow.title "&quot;Send Later 3&quot; Präferenzen">
+<!ENTITY pane1.title "&quot;Send Later 3&quot; Präferenzen">
 <!ENTITY checktimepref.label "Überprüfe alle :">
 <!ENTITY checktimepref2.label "Millisekunden">
 <!ENTITY checktimepref.tooltip "Intervall, in Millisekunden, zwischen dem Überprüfen der Entwürfe, ob deren Lieferzeit erreicht ist. Erhöhe diesen Wert, wenn die Entwürfe manchmal nicht rechtzeitig gesendet werden oder der Mitteilungszähler in der Statuszeile nicht alle zeitlich geplanten Entwürfe wiedergibt.">

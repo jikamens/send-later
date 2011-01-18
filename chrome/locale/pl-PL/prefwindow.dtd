@@ -1,5 +1,5 @@
-<!ENTITY prefwindow.title "Ustawienia &quot;Wyślij później&quot;">
-<!ENTITY pane1.title "Ustawienia &quot;Wyślij później&quot;">
+<!ENTITY prefwindow.title "Ustawienia &quot;Send Later 3&quot;">
+<!ENTITY pane1.title "Ustawienia &quot;Send Later 3&quot;">
 <!ENTITY checktimepref.label "Sprawdzaj co :">
 <!ENTITY checktimepref2.label "milisekund">
 <!ENTITY checktimepref.tooltip "Odstęp czasu w milisekundach określający częstość z jaką program będzie sprawdzał, czy nie należy wysłać zaplanowanych do wysyłki wiadomości. Zwiększ tą wartość, jezeli zaplanowane do wysyłki wiadomości nie są wysyłane o czasie lub jeśli licznik wiadomości na pasku statusu wskazuje mniejszą niż w rzeczywistości liczbę zaplanowanych do wysłania wiadomości.">
@@ -15,7 +15,7 @@
 <!ENTITY showsendlatercolumn.tooltip "Określa, czy wyświetlać kolumnę &quot;Wyślij później&quot; w folderach ze szkicami wiadomości.">
 <!ENTITY showsendlaterheader.caption "Pokaż nagłówek &quot;Wyślij później&quot;">
 <!ENTITY showsendlaterheader.tooltip "Określa czy wyświetlać nagłówek &quot;X-Send-Later-At&quot;, tzn. zaplanowany czas wysłania wiadomości w nagłówku podglądu.">
-<!ENTITY showsendlaterstatus.caption "Wyświetlaj Send Later 3 na pasku statusu">
+<!ENTITY showsendlaterstatus.caption "Wyświetlaj &quot;Send Later 3&quot; na pasku statusu">
 <!ENTITY showsendlaterprogress.caption "Pokaż informacje o postępie wysyłania wiadomości na pasku statusu.">
 <!ENTITY showsendlaterdropdowns.caption "Pokaż listy rozwijane na pasku narzędzi">
 <!ENTITY showsendlaterunsentmessages.caption "Włącz/wyłącz wysyłanie wiadomości z &quot;Wychodzących...&quot;">
