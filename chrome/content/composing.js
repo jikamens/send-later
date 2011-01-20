@@ -53,35 +53,33 @@ var Sendlater3Composing = {
 						  msgWindow, null, false,null);
 		    }
 		    catch (ex) {}
-		    ScriptInputStream .available();
-		    var headerready=false;
 		    var xsendlaterpresent=false;
 		    
-		    while ((ScriptInputStream .available()) &&
-			   ( (!headerready) || 
-			     (headerready && xsendlaterpresent) )) {
+		    while ((ScriptInputStream.available()) &&
+			   ! content.match(/\n\r?\n/)) {
 			content = content + ScriptInputStream .read(512);
-			if (!headerready && content.match(/\n\r?\n/)) {
-			    headerready = true;
-			    if (content.match(/\nX-Send-Later-At:.*/))
-				xsendlaterpresent = true;
-			}
 		    }
-		    Sendlater3Util.dump("HeaderReady = " + headerready +
-					" , SendLaterPresent = " + 
-					xsendlaterpresent);
-		    var gotcha;
-		    if (xsendlaterpresent) {
-			gotcha = content.match(/\nX-Send-Later-At:\s*(.*)/);
-			gotcha = gotcha[1];
+
+		    var eoh = content.search(/\n\r?\n/);
+		    if (eoh > -1) {
+			content = content.slice(0, eoh);
 		    }
-		    else
-			gotcha = false;
-		    if (gotcha) {
-			Sendlater3Composing.prevXSendLater = new Date(gotcha);
-			Sendlater3Util.dump("PrevXSendLater = " +
-					    Sendlater3Composing.prevXSendLater);
-		    } 
+
+		    var hdr = content.match(/\nX-Send-Later-At:\s*(.*)/i);
+		    if (hdr) {
+			Sendlater3Composing.prevXSendLater =
+			    new Date(hdr[1]);
+		    }
+
+		    hdr = content.match(/\nX-Send-Later-Recur:\s*(.*)/i);
+		    if (hdr) {
+			Sendlater3Composing.prevRecurring = hdr[1];
+		    }
+
+		    Sendlater3Util.dump("prevXSendLater= " +
+					Sendlater3Composing.prevXSendLater +
+					", prevRecurring=" +
+					Sendlater3Composing.prevRecurring);
 		}
 	    }
 	    Sendlater3Util.Leaving("Sendlater3Composing.main.CheckforXSendLater");
@@ -104,7 +102,9 @@ var Sendlater3Composing = {
 			  { finishCallback: Sendlater3Composing.SendAtTime,
 			    continueCallback: Sendlater3Composing.ContinueSendLater,
 			    cancelCallback: Sendlater3Composing.CancelSendLater,
-			    previouslyTimed: Sendlater3Composing.prevXSendLater });
+			    previouslyTimed: Sendlater3Composing.prevXSendLater,
+			    previouslyRecurring: Sendlater3Composing.prevRecurring,
+ });
 	Sendlater3Util.Leaving("Sendlater3Composing.CheckSendAt");
     },
 
@@ -113,24 +113,25 @@ var Sendlater3Composing = {
     ReallySendAtCallback: {
 	notify: function (timer) {
 	    Sendlater3Util.Entering("Sendlater3Composing.ReallySendAtCallback.notify", timer);
-	    var sendat = Sendlater3Composing.ReallySendAtClosure;
+	    var sendat = Sendlater3Composing.ReallySendAtClosure.at;
+	    var recur = Sendlater3Composing.ReallySendAtClosure.recur;
 
 	    gCloseWindowAfterSave = true;
 	    var identity = getCurrentIdentity();
 	    if (Sendlater3Util.IsPostbox()) {
 		Sendlater3Composing.GenericSendMessagePostbox(
 		    nsIMsgCompDeliverMode.SaveAsDraft,
-		    sendat);
+		    sendat, recur);
 	    }
 	    else if (Sendlater3Util.IsThunderbird2()) {
 		Sendlater3Composing.GenericSendMessageTB2(
 		    nsIMsgCompDeliverMode.SaveAsDraft,
-		    sendat);
+		    sendat, recur);
 	    }
 	    else {
 		Sendlater3Composing.GenericSendMessage(
 		    nsIMsgCompDeliverMode.SaveAsDraft,
-		    sendat);
+		    sendat, recur);
 	    }
 
 	    Sendlater3Util.SetUpdatePref(identity.key);
@@ -139,9 +140,25 @@ var Sendlater3Composing = {
 	}
     },
 
-    SendAtTime: function(sendat) {
-	Sendlater3Util.Entering("Sendlater3Composing.SendAtTime", sendat);
-	Sendlater3Composing.ReallySendAtClosure = sendat;
+    RecurHeader: function(sendat, recur) {
+	var header = "X-Send-Later-Recur: " + recur;
+	switch (recur) {
+	case "monthly":
+	    header += " " + sendat.getDate();
+	    break;
+	case "yearly":
+	    header += " " + sendat.getMonth() + " " + sendat.getDate();
+	    break;
+	}
+	header += "\r\n";
+	return header;
+    },
+
+    SendAtTime: function(sendat, recur_value) {
+	Sendlater3Util.Entering("Sendlater3Composing.SendAtTime",
+				sendat, recur_value);
+	Sendlater3Composing.ReallySendAtClosure = { at: sendat,
+						    recur: recur_value };
 	Sendlater3Composing.ReallySendAtTimer = Components
 	    .classes["@mozilla.org/timer;1"]
 	    .createInstance(Components.interfaces.nsITimer);
@@ -178,12 +195,13 @@ var Sendlater3Composing = {
     CancelSendLater: function() {},
 
     prevXSendLater: false,
+    prevRecurring: false,
 
     // Copied from MsgComposeCommands.js in Fedora 10 Thunderbird
     // 2.0.0.23.
     // SENDLATER3 CHANGED: Added "TB2" to end of function name, added
-    // "sendat" argument.
-    GenericSendMessageTB2: function( msgType, sendat )
+    // "sendat", "recur" arguments.
+    GenericSendMessageTB2: function( msgType, sendat, recur )
     {
       dump("GenericSendMessage from XUL\n");
 
@@ -201,6 +219,9 @@ var Sendlater3Composing = {
 	      Sendlater3Util.FormatDateTime(sendat,true) + "\r\n" +
 	      "X-Send-Later-Uuid: " + Sendlater3Util.getInstanceUuid() +
 	      "\r\n";
+	  if (recur) {
+	      head += Sendlater3Composing.RecurHeader(sendat, recur);
+	  }
 	  msgCompFields.otherRandomHeaders += head;
 	  // END SENDLATER3 ADDED
 
@@ -438,8 +459,8 @@ var Sendlater3Composing = {
     // Copied from mail/components/compose/content/MsgComposeCommands.js
     // in Postbox 2 source.
     // SENDLATER3 CHANGED: Added "Postbox" to end of function name; added
-    // "sendat" argument.
-    GenericSendMessagePostbox: function(msgType, sendat,
+    // "sendat", "recur" arguments.
+    GenericSendMessagePostbox: function(msgType, sendat, recur,
 				  aDontClearReferencesOnSubjectChange)
     {
       dump("GenericSendMessage from XUL\n");
@@ -462,6 +483,9 @@ var Sendlater3Composing = {
 	      Sendlater3Util.FormatDateTime(sendat,true) + "\r\n" +
 	      "X-Send-Later-Uuid: " + Sendlater3Util.getInstanceUuid() +
 	      "\r\n";
+	  if (recur) {
+	      head += Sendlater3Composing.RecurHeader(sendat, recur);
+	  }
 	  msgCompFields.otherRandomHeaders += head;
 	  // END SENDLATER3 ADDED
 
@@ -774,8 +798,8 @@ var Sendlater3Composing = {
     // Copied from mail/components/compose/content/MsgComposeCommands.js
     // in Thunderbird 3.1 source. Unfortunately, I can't find a better way
     // than this to interpose Send Later into the message send flow.
-    // SENDLATER3 CHANGED: Added "sendat" argument
-    GenericSendMessage: function( msgType, sendat )
+    // SENDLATER3 CHANGED: Added "sendat", "recur" arguments.
+    GenericSendMessage: function( msgType, sendat, recur)
     {
 	// SENDLATER3 CHANGED: Added Entering invocation
 	Sendlater3Util.Entering("Sendlater3Composing.GenericSendMessage");
@@ -791,6 +815,9 @@ var Sendlater3Composing = {
 		    Sendlater3Util.FormatDateTime(sendat,true) + "\r\n" +
 		    "X-Send-Later-Uuid: " + Sendlater3Util.getInstanceUuid() +
 		    "\r\n";
+		if (recur) {
+		    head += Sendlater3Composing.RecurHeader(sendat, recur);
+		}
 		msgCompFields.otherRandomHeaders += head;
 		// END SENDLATER3 ADDED
 

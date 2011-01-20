@@ -4,6 +4,10 @@
 <overlay id="sendlater3-header-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+  <stringbundleset id="strbundles">
+    <stringbundle id="promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
+  </stringbundleset>
+
   <tree id="threadTree">
     <treecols id="threadCols">
       <splitter class="tree-splitter" />

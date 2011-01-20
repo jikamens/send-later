@@ -57,7 +57,22 @@
 	<hbox >
 		<description style="text-align:center;" flex="1" id="summary"></description>
 	</hbox>
-	
+
+	<hbox align="center">
+	  <description flex="1">&separate.label;</description>
+	  <label valign="center" value="&sendlater.prompt.recur.label;"/>
+	  <radiogroup id="recur-group" valign="center" orient="horizontal"
+		      onselect="Sendlater3Prompt.CheckRecurring();">
+	    <radio id="recur-none" label="&sendlater.prompt.none.label;"
+		   selected="true"/>
+	    <radio id="recur-daily" label="&sendlater.prompt.daily.label;"/>
+	    <radio id="recur-weekly" label="&sendlater.prompt.weekly.label;"/>
+	    <radio id="recur-monthly" label="&sendlater.prompt.monthly.label;"/>
+	    <radio id="recur-yearly" label="&sendlater.prompt.yearly.label;"/>
+	  </radiogroup>
+	  <description flex="1">&separate.label;</description>
+	</hbox>
+
 	<vbox style="border:solid #00C000 3px" >
 				<button id="callsendat" width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 				<hbox>

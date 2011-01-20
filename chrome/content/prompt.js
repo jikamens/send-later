@@ -1,4 +1,17 @@
 var Sendlater3Prompt = {
+    // Disable preset buttons if recurrence is enabled, or vice versa
+    SetRecurring: function(recurring) {
+	var dis = !!recurring;
+	var i;
+	for (i = 1; i <= 3; i++) {
+	    document.getElementById("shortcutbtn_" + i).disabled = dis;
+	}
+    },
+
+    CheckRecurring: function() {
+	Sendlater3Prompt.SetRecurring(!document.getElementById("recur-none").selected);
+    },
+
     StealControlReturn: function(ev) {
 	if (ev.type == "keydown" && ev.ctrlKey && ev.keyCode == 13) {
 	    Sendlater3Prompt.CallSendAt();
@@ -80,6 +93,14 @@ var Sendlater3Prompt = {
 	    }
 	}
 
+	var prevRecurring = window.arguments[0].previouslyRecurring;
+	Sendlater3Prompt.SetRecurring(prevRecurring);
+	if (prevRecurring) {
+	    var settings = prevRecurring.split(" ");
+	    var group = document.getElementById("recur-group");
+	    group.selectedItem = document.getElementById("recur-"+settings[0]);
+	}
+	    
 	var prevXSendLater = window.arguments[0].previouslyTimed;
 	if (prevXSendLater) {
 	   document.getElementById("yearvalue").value =
@@ -256,8 +277,12 @@ var Sendlater3Prompt = {
 	var sendat = Sendlater3Util.toSendDate(selectedyear, selectedmonth,
 					       selecteddate, selectedhour,
 					       selectedmin);
-
-	window.arguments[0].finishCallback(sendat);
+	var recur = document.getElementById("recur-group").selectedItem.id
+	    .replace(/recur-/, "");
+	if (recur == "none") {
+	    recur = null;
+	}
+	window.arguments[0].finishCallback(sendat, recur);
         Sendlater3Util.Leaving("Sendlater3Prompt.CallSendAt");
     }
 }

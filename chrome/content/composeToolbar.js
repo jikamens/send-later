@@ -2,6 +2,13 @@ var Sendlater3ComposeToolbar = {
     timer: null,
     origCustomizeDone: null,
 
+    SetRecurring: function(recurring) {
+	var bar = document.getElementById("sendlater3_toolbar");
+	if (bar) {
+	    Sendlater3Util.SetTreeAttribute(bar, "disabled", recurring);
+	}
+    },
+
     updateModified: function() {
 	var t = Sendlater3ComposeToolbar;
 	Sendlater3Util.Entering("Sendlater3ComposeToolbar.updateModified");
@@ -160,11 +167,14 @@ var Sendlater3ComposeToolbar = {
 		    Sendlater3Composing.prevXSendLater.getHours();
 		document.getElementById("minvalue").value =
 		    Sendlater3Composing.prevXSendLater.getMinutes();
+		t.setTimer();
 	    }
 	    else {
 		Sendlater3Util.dump("No previous time");
 	    }
-	    t.setTimer();
+	    if (Sendlater3Composing.prevRecurring) {
+		Sendlater3ComposeToolbar.SetRecurring(true);
+	    }
 	}
 	Sendlater3Util.Leaving("Sendlater3ComposeToolbar.SetOnLoad");
     },

@@ -6,11 +6,12 @@ var Sendlater3HeaderView = function() {
 	    var hdr = gDBView.db.GetMsgHdrForKey(key);
 	    var retval = hdr.getStringProperty("x-send-later-at");
 	    if (retval != "") {
+		var recur = hdr.getStringProperty("x-send-later-recur");
 		var retdate = new Date(retval);
 		var dateFormatService = Components
 		    .classes["@mozilla.org/intl/scriptabledateformat;1"]
                     .getService(Components.interfaces.nsIScriptableDateFormat);
-		return dateFormatService
+		var val = dateFormatService
 		    .FormatDateTime("",
 				    dateFormatService.dateFormatShort,
 				    dateFormatService.timeFormatNoSeconds,
@@ -20,9 +21,16 @@ var Sendlater3HeaderView = function() {
 				    retdate.getHours(),
 				    retdate.getMinutes(),
 				    0);
+		if (recur) {
+		    var settings = recur.split(" ");
+		    val += " (" + Sendlater3Util.PromptBundleGet(settings[0]) +
+			")";
+		}
+		return val;
 	    }
-	    else
+	    else {
 		return null;
+	    }
 	},
 
 	getSortStringForRow: function(hdr) {
@@ -110,11 +118,20 @@ var Sendlater3HeaderView = function() {
 		if (IsThisDraft(gDBView.viewFolder)) {
 		    var msghdr = gDBView.hdrForFirstSelectedMessage;
 		    if (msghdr!=null) {
-			if (msghdr.getStringProperty("x-send-later-at")!="") {
-			    var xsendlater = new Date(msghdr.getStringProperty("x-send-later-at"));
+			var sendat =msghdr.getStringProperty("x-send-later-at");
+			if (sendat) {
+			    var xsendlater = new Date(sendat);
+			    var val = xsendlater.toLocaleString();
+			    var recur = msghdr
+				.getStringProperty("x-send-later-recur");
+			    if (recur) {
+				var settings = recur.split(" ");
+				val += " (" + Sendlater3Util
+				    .PromptBundleGet(settings[0]) + ")";
+			    }
 			    document
 				.getElementById("expandedx-send-later-atBox")
-				.headerValue = xsendlater.toLocaleString();
+				.headerValue = val;
 			    hidden = false;
 			    Sendlater3Util.debug("headerView.js: dispHeader: showing header");
 			}	

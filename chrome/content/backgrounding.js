@@ -23,6 +23,8 @@ var Sendlater3Backgrounding = function() {
 	onMessageStartSending: function(aCurrentMessage, aTotalMessageCount,
 					aMessageHeader, aIdentity) {},
 	onProgress: function(aCurrentMessage, aTotalMessage) {},
+	onMessageSendError: function(aCurrentMessage, aMessageHeader, aSstatus,
+				     aMsg) {},
 	onMessageSendProgress: function(aCurrentMessage, aTotalMessageCount,
 					aMessageSendPercent,
 					aMessageCopyPercent) {},
@@ -49,7 +51,7 @@ var Sendlater3Backgrounding = function() {
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	}
     }
-    function queueSendUnsentMessages(msgSendLater) {
+    function queueSendUnsentMessages() {
 	Sendlater3Util.Entering("Sendlater3Backgrounding.queueSendUnsentMessages");
 	try {
 	    if (sendingUnsentMessages) {
@@ -60,6 +62,9 @@ var Sendlater3Backgrounding = function() {
 		messenger.sendUnsentMessages(null, msgWindow);
 	    }
 	    else {
+		var msgSendLater = Components
+		    .classes["@mozilla.org/messengercompose/sendlater;1"]
+		    .getService(Components.interfaces.nsIMsgSendLater);
 		msgSendLater.sendUnsentMessages(null);
 	    }
 	}
@@ -214,6 +219,12 @@ var Sendlater3Backgrounding = function() {
 					       installedCustomHeaders +
 					       " x-send-later-uuid");
     }
+    if (installedCustomHeaders.indexOf("x-send-later-recur")<0) {
+	Sendlater3Util.dump("Installing Custom X-Send-Later-Recur Header\n");
+	Sendlater3Util.PrefService.setCharPref('mailnews.customDBHeaders',
+					       installedCustomHeaders +
+					       " x-send-later-recur");
+    }
 
     function checkTimeout() {
 	var timeout = Sendlater3Util.PrefService
@@ -286,18 +297,138 @@ var Sendlater3Backgrounding = function() {
 	ProgressSet("ProgressFinish");
     }
 
-    var copyServiceListener =  {
-	sfileNP: null,
+    function CopyUnsentListener(content, hdr, sendat, recur) {
+	this._content = content;
+	this._hdr = hdr;
+	this._sendat = sendat;
+	this._recur = recur;
+    }
+
+    CopyUnsentListener.prototype = {
 	QueryInterface : function(iid) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.copyServiceListener.QueryInterface");
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.CopyUnsentListener.QueryInterface");
 	    if (iid.equals(Components.interfaces.nsIMsgCopyServiceListener) ||
 		iid.equals(Components.interfaces.nsISupports)) {
 		Sendlater3Util.Returning("Sendlater3Backgrounding.copyServiceListener.QueryInterface",
 					 this);
 		return this;
 	    }
-	    Sendlater3Util.Throwing("Sendlater3Backgrounding.copyServiceListener.QueryInterface",
+	    Sendlater3Util.Throwing("Sendlater3Backgrounding.CopyUnsentListener.QueryInterface",
 				    Components.results.NS_NOINTERFACE);
+	    throw Components.results.NS_NOINTERFACE;
+	},
+
+	OnProgress: function (progress, progressMax) {
+	},
+
+	OnStartCopy: function () {
+	},
+
+	OnStopCopy: function ( status ) {
+	    Sendlater3Util.Entering("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy");
+	    var copying = this.localFile;
+	    if (copying.exists()) {
+		try {
+		    copying.remove(true);
+		}
+		catch (ex) {
+		    // Windows still has it open.
+		    Sendlater3Util.dump("Failed to delete " + copying.path +
+					"; queuing.");
+		    Sendlater3Util.WaitAndDelete(copying);
+		}
+	    }
+	    if (! Components.isSuccessCode(status)) {
+		alert(Sendlater3Util.PromptBundleGetFormatted("CopyUnsentError",
+							      [status]));
+		Sendlater3Util.Returning("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy", "");
+		return;
+	    }
+	    var messageHDR = this._hdr;
+	    var sendat = this._sendat;
+	    var recur = this._recur;
+	    var folder = messageHDR.folder;
+	    var dellist;
+	    if (Sendlater3Util.IsThunderbird2() ||
+		Sendlater3Util.IsPostbox()) {
+		dellist = Components.classes["@mozilla.org/supports-array;1"]
+		    .createInstance(Components.interfaces.nsISupportsArray);
+		dellist.AppendElement(messageHDR);
+	    }
+	    else {
+		dellist = Components.classes["@mozilla.org/array;1"]
+		    .createInstance(Components.interfaces.nsIMutableArray);
+		dellist.appendElement(messageHDR, false);
+	    }
+	    messageHDR.folder.deleteMessages(dellist, msgWindow, true, false,
+					     null, false);
+	    if (Sendlater3Util.PrefService.getBoolPref("extensions.sendlater3.sendunsentmessages")) {
+		queueSendUnsentMessages();
+		Sendlater3Util.dump ("Sending Message.");
+	    }
+	    else {
+		Sendlater3Util.dump("Message deposited in Outbox.");
+	    }
+	    SetAnimTimer(3000);
+	    if (recur) {
+		var settings = recur.split(" ");
+		var next = new Date(sendat);
+		var now = new Date();
+		while (next < now) {
+		    switch (settings[0]) {
+		    case "daily":
+			next.setDate(next.getDate()+1);
+			break;
+		    case "weekly":
+			next.setDate(next.getDate()+7);
+			break;
+		    case "monthly":
+			if (next.getDate() == settings[1]) {
+			    next.setMonth(next.getMonth()+1);
+			}
+			else {
+			    // Wrapped around end of previous month
+			    next.setDate(settings[1]);
+			}
+			break;
+		    case "yearly":
+			next.setFullYear(next.getFullYear()+1);
+			next.setMonth(settings[1]);
+			next.setDate(settings[2]);
+			break;
+		    default:
+			throw "Send Later 3 internal error: unrecognized recurrence type: " + settings[0];
+			break;
+		    }
+		}
+		var content = this._content;
+		content = content.replace(/\r\n\r\n/, "\r\nX-Send-Later-At: " +
+					  Sendlater3Util.FormatDateTime(next,
+									true) +
+					  "\r\n" + "X-Send-Later-Uuid: " +
+					  Sendlater3Util.getInstanceUuid() +
+					  "\r\n" + "X-Send-Later-Recur: " +
+					  recur + "\r\n\r\n");
+		var listener = new CopyRecurListener(folder);
+		Sendlater3Util.CopyStringMessageToFolder(content, folder,
+							 listener);
+	    }
+	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy");
+	},
+
+	SetMessageKey: function (key ) {}
+    };
+
+    function CopyRecurListener(folder) {
+	this._folder = folder;
+    }
+
+    CopyRecurListener.prototype = {
+	QueryInterface : function(iid) {
+	    if (iid.equals(Components.interfaces.nsIMsgCopyServiceListener) ||
+		iid.equals(Components.interfaces.nsISupports)) {
+		return this;
+	    }
 	    throw Components.results.NS_NOINTERFACE;
 	},
 
@@ -305,10 +436,44 @@ var Sendlater3Backgrounding = function() {
 
 	OnStartCopy: function () {},
 
-	OnStopCopy: function ( status ) {},
+	OnStopCopy: function ( status ) {
+	    var copying = this.localFile;
+	    if (copying.exists()) {
+		try {
+		    copying.remove(true);
+		}
+		catch (ex) {
+		    // Windows still has it open.
+		    Sendlater3Util.dump("Failed to delete " + copying.path +
+					"; queuing.");
+		    Sendlater3Util.WaitAndDelete(copying);
+		}
+	    }
 
-	SetMessageKey: function (key ) {}
+	    var listener = new Sendlater3Backgrounding
+		.markReadListener(this._folder, this._key);
+	    var notificationService = Components
+		.classes["@mozilla.org/messenger/msgnotificationservice;1"]
+		.getService(Components.interfaces
+			    .nsIMsgFolderNotificationService);
+	    if (UndigestifyKamensUs.IsThunderbird2() ||
+		UndigestifyKamensUs.IsPostbox()) {
+		notificationService.addListener(listener);
+	    }
+	    else {
+		notificationService.addListener(listener, 
+						notificationService.msgAdded);
+	    }
+	    if (! Components.isSuccessCode(status)) {
+		alert(Sendlater3Util.PromptBundleGetFormatted("CopyRecurError",
+							      [status]));
+		return;
+	    }
+	},
 
+	SetMessageKey: function (key) {
+	    this._key = key;
+	}
     };
 
     var AnimTimer = null;
@@ -350,13 +515,12 @@ var Sendlater3Backgrounding = function() {
     }
 
     function CheckDraftUuid(header, content) {
-	var draft_uuid = content.match(/^X-Send-Later-Uuid:.*$/mi);
-	if (draft_uuid != null) {
-	    draft_uuid = draft_uuid[0].replace(/^X-Send-Later-Uuid: *(.*)/i,
-					       "$1");
+	var matches = content.match(/^X-Send-Later-Uuid:\s*(.*)/mi);
+	if (matches) {
+	    var draft_uuid = matches[1];
 	    var instance_uuid = Sendlater3Util.getInstanceUuid();
 	    if (draft_uuid != instance_uuid) {
-		Sendlater3Util.debug("Skipping message with " + header +
+		Sendlater3Util.debug("Skipping message with date " + header +
 				     " on uuid mismatch (draft " + draft_uuid +
 				     " vs. instance " + instance_uuid + ")");
 		return false;
@@ -389,6 +553,7 @@ var Sendlater3Backgrounding = function() {
 	this._cycle = cycle;
 	this._messageHDR = messageHDR;
 	this._header = null;
+	this._recur = null;
 	Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener");
     }
 
@@ -421,19 +586,23 @@ var Sendlater3Backgrounding = function() {
 	    // get to this point, it's because we never hit the end of the
 	    // header, which means that the message consists only of a header.
 	    if (this._header == null) {
-		this._header = content.match(/^X-Send-Later-At:.*$/mi);
-		if (this._header != null) {
-		    this._header = this._header[0];
+		var matches = content.match(/^X-Send-Later-At:\s*(.*)$/mi);
+		if (matches) {
+		    this._header = matches[1];
 		    if (! CheckDraftUuid(this._header, content)) {
 			this._header = null;
 		    }
 		}
+		var recur = content.match(/^X-Send-Later-Recur:\s*(.*)/mi);
+		if (recur) {
+		    this._recur = recur[1];
+		}
 	    }
 
 	    Sendlater3Util.debug("SendLaterPresent = " + this._header);
-	    if (this._header != null) {
+	    if (this._header) {
 		Sendlater3Util.dump ("Found Pending Message.");
-		var sendattime = new Date (this._header.substr(16));
+		var sendattime = new Date (this._header);
 		var now = new Date();
 		if (now > sendattime &&
 		    (Sendlater3Util.PrefService
@@ -456,6 +625,8 @@ var Sendlater3Backgrounding = function() {
 		    content = content.replace(/\nX-Send-Later-At:.*\n/i,
 					      "\n");
 		    content = content.replace(/\nX-Send-Later-Uuid:.*\n/i,
+					      "\n");
+		    content = content.replace(/\nX-Send-Later-Recur:.*\n/i,
 					      "\n");
 
 		    // Remove extra newline -- see comment above.
@@ -489,94 +660,11 @@ var Sendlater3Backgrounding = function() {
 			.classes["@mozilla.org/messengercompose/sendlater;1"]
 			.getService(Components.interfaces.nsIMsgSendLater);
 		    var fdrunsent = msgSendLater.getUnsentMessagesFolder(null);
-
-		    var dirService = Components
-			.classes["@mozilla.org/file/directory_service;1"]
-			.getService(Components.interfaces.nsIProperties);
-		    var tempDir = dirService
-			.get("TmpD", Components.interfaces.nsIFile);
-		    var sfile = Components
-			.classes["@mozilla.org/file/local;1"]
-			.createInstance(Components.interfaces.nsILocalFile);
-		    sfile.initWithPath(tempDir.path);
-		    sfile.appendRelativePath("tempMsg" + messageHDR.messageId +
-					     ".eml");
-		    var filePath = sfile.path;
-		    Sendlater3Util.dump("Saving message to " + filePath);
-		    if (sfile.exists()) sfile.remove(true);
-		    sfile.create(sfile.NORMAL_FILE_TYPE, 0600);
-		    var stream = Components
-			.classes['@mozilla.org/network/file-output-stream;1']
-			.createInstance(Components.interfaces
-					.nsIFileOutputStream);
-		    stream.init(sfile, 2, 0x200, false);
-		    stream.write(content, content.length);
-		    stream.close();
-		    // Separate stream required for reading, since
-		    // nsIFileOutputStream is write-only on Windows (and for
-		    // that matter should probably be write-only on Linux as
-		    // well, since it's an *output* stream, but it doesn't
-		    // actually behave that way).
-		    sfile = Components.classes["@mozilla.org/file/local;1"]
-			.createInstance(Components.interfaces.nsILocalFile);
-		    sfile.initWithPath(filePath);
-		    var copyService = Components
-			.classes["@mozilla.org/messenger/messagecopyservice;1"]
-			.createInstance();
-		    copyService = copyService
-			.QueryInterface( Components.interfaces
-					 .nsIMsgCopyService);
-		    if (Sendlater3Util.IsPostbox()) {
-			copyService.CopyFileMessage(sfile, fdrunsent,
-						    0, "",
-						    copyServiceListener,
-						    msgWindow);
-		    }
-		    else if (Sendlater3Util.IsThunderbird2()) {
-			var fileSpc = Components
-			    .classes["@mozilla.org/filespec;1"]
-			    .createInstance();
-			fileSpc = fileSpc
-			    .QueryInterface(Components.interfaces
-					    .nsIFileSpec);
-			fileSpc.nativePath = filePath;
-			copyService.CopyFileMessage(fileSpc, fdrunsent,
-						    null, false, 0,
-						    copyServiceListener,
-						    msgWindow);
-		    }
-		    else {
-			copyService.CopyFileMessage(sfile, fdrunsent, null,
-						    false, 0, "",
-						    copyServiceListener,
-						    msgWindow);
-		    }
-		    if (sfile.exists()) sfile.remove(true);
-		    var dellist;
-		    if (Sendlater3Util.IsThunderbird2() ||
-			Sendlater3Util.IsPostbox()) {
-			dellist = Components
-			    .classes["@mozilla.org/supports-array;1"]
-			    .createInstance(Components.interfaces
-					    .nsISupportsArray);
-			dellist.AppendElement(messageHDR);
-		    }
-		    else {
-			dellist = Components.classes["@mozilla.org/array;1"]
-			    .createInstance(Components.interfaces
-					    .nsIMutableArray);
-			dellist.appendElement(messageHDR, false);
-		    }
-		    messageHDR.folder.deleteMessages(dellist, msgWindow, true,
-						     false, null, false);
-		    if (Sendlater3Util.PrefService.getBoolPref("extensions.sendlater3.sendunsentmessages")) {
-			queueSendUnsentMessages(msgSendLater);
-			Sendlater3Util.dump ("Sending Message.");
-		    }
-		    else {
-			Sendlater3Util.dump("Message deposited in Outbox.");
-		    }
-		    SetAnimTimer(3000);
+		    var listener = new CopyUnsentListener(content, messageHDR,
+							  this._header,
+							  this._recur)
+		    Sendlater3Util.CopyStringMessageToFolder(content, fdrunsent,
+							     listener);
 		}
 		else {
 		    MessagesPending++;
@@ -613,14 +701,14 @@ var Sendlater3Backgrounding = function() {
 	    }
 	    this._content += data;
 
-	    if (this._header == null) { // only the first time we reach the end
-					// of the header
+	    if (this._header) { // only the first time we reach the end
+                                // of the header
 		var eoh = this._content.search(/\n\n/);
 		if (eoh > -1) {
 		    var header = this._content.slice(0, eoh);
 
-		    this._header = header.match(/^X-Send-Later-At:.*$/mi);
-		    if (this._header == null) {
+		    var matches = header.match(/^X-Send-Later-At:\s*(.*)/mi);
+		    if (! matches) {
 			Sendlater3Util.debug("SendLaterPresent = null");
 			this._content = "";
 			aInputStream.close();
@@ -628,13 +716,17 @@ var Sendlater3Backgrounding = function() {
 			ProgressFinish();
 			return;
 		    }
-		    this._header = this._header[0];
+		    this._header = matches[1];
 		    if (! CheckDraftUuid(this._header, header)) {
 			this._content = "";
 			aInputStream.close();
 			Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "uuid mismatch");
 			ProgressFinish();
 			return;
+		    }
+		    var recur = header.match(/^X-Send-Later-Recur:\s*(.*)/mi);
+		    if (recur) {
+			this._recur = recur[1];
 		    }
 		}
 	    }
@@ -660,7 +752,7 @@ var Sendlater3Backgrounding = function() {
 		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
 		return;
 	    }
-		
+
 	    var messageURI = CheckThisURIQueue.shift();
 	    Sendlater3Util.debug("Checking message : " + messageURI + "\n");
 
@@ -1004,5 +1096,43 @@ var Sendlater3Backgrounding = function() {
     addMsgSendLaterListener();
 }
 
+Sendlater3Backgrounding.markReadListener = function(folder, key) {
+    this._folder = folder;
+    this._key = key;
+}
+
+Sendlater3Backgrounding.markReadListener.prototype = {
+    // Thunderbird 2 and Postbox
+    itemAdded: function(item) {
+	var aMsgHdr = item.QueryInterface(Components.interfaces.nsIMsgDBHdr);
+	this.msgAdded(aMsgHdr);
+    },
+
+    // Thunderbird 3
+    msgAdded: function(aMsgHdr) {
+	if (this._folder == aMsgHdr.folder &&
+	    this._key == aMsgHdr.messageKey) {
+	    if (Sendlater3Util.IsThunderbird2() ||
+		Sendlater3Util.IsPostbox()) {
+		readlist = Components.classes["@mozilla.org/supports-array;1"]
+		    .createInstance(Components.interfaces.nsISupportsArray);
+		readlist.AppendElement(aMsgHdr);
+	    }
+	    else {
+		readlist = Components.classes["@mozilla.org/array;1"]
+		    .createInstance(Components.interfaces.nsIMutableArray);
+		readlist.appendElement(aMsgHdr, false);
+	    }
+	    aMsgHdr.folder.markMessagesRead(readlist, true);
+	    dump("MarkRead\n");
+	}
+	var notificationService = Components
+	    .classes["@mozilla.org/messenger/msgnotificationservice;1"]
+	    .getService(Components.interfaces
+			.nsIMsgFolderNotificationService);
+	notificationService.removeListener(this);
+    }
+};
+    
 Sendlater3Util.initUtil();
 Sendlater3Backgrounding.apply();

@@ -56,6 +56,18 @@ var Sendlater3Util = {
 	}
     },
 
+    SetTreeAttribute: function(object, attribute, value) {
+	// if object doesn't have setAttribute, it also doesn't have children
+	try {
+	    object.setAttribute(attribute, value);
+	    var i;
+	    for (i = 0; i < object.childNodes.length; i++) {
+		this.SetTreeAttribute(object.childNodes[i], attribute, value);
+	    }
+	}
+	catch (ex) {}
+    },
+
     PromptBundleGet: function(name) {
 	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGet", name);
 	if (Sendlater3Util._PromptBundle == null) {
@@ -348,6 +360,89 @@ var Sendlater3Util = {
 	if (val < 10) ret = "0" + val; else ret = val;
 	Sendlater3Util.Returning("Sendlater3Util.DZFormat", ret);
 	return ret;
+    },
+
+    copyService: null,
+    fileNumber: 0,
+
+    CopyStringMessageToFolder: function(content, folder, listener) {
+	var dirService = Components
+	    .classes["@mozilla.org/file/directory_service;1"]
+	    .getService(Components.interfaces.nsIProperties);
+	var tempDir = dirService.get("TmpD", Components.interfaces.nsIFile);
+	var sfile = Components.classes["@mozilla.org/file/local;1"]
+	    .createInstance(Components.interfaces.nsILocalFile);
+	sfile.initWithPath(tempDir.path);
+	sfile.appendRelativePath("tempMsg" + Sendlater3Util.getInstanceUuid()
+				 + Sendlater3Util.fileNumber++ + ".eml");
+	var filePath = sfile.path;
+	Sendlater3Util.dump("Saving message to " + filePath);
+	if (sfile.exists()) sfile.remove(true);
+	sfile.create(sfile.NORMAL_FILE_TYPE, 0600);
+	var stream = Components
+	    .classes['@mozilla.org/network/file-output-stream;1']
+	    .createInstance(Components.interfaces.nsIFileOutputStream);
+	stream.init(sfile, 2, 0x200, false);
+	stream.write(content, content.length);
+	stream.close();
+	// Separate stream required for reading, since
+	// nsIFileOutputStream is write-only on Windows (and for
+	// that matter should probably be write-only on Linux as
+	// well, since it's an *output* stream, but it doesn't
+	// actually behave that way).
+	sfile = Components.classes["@mozilla.org/file/local;1"]
+	    .createInstance(Components.interfaces.nsILocalFile);
+	sfile.initWithPath(filePath);
+	listener.localFile = sfile;
+	if (! Sendlater3Util.copyService) {
+	    Sendlater3Util.copyService = Components
+		.classes["@mozilla.org/messenger/messagecopyservice;1"]
+		.getService(Components.interfaces.nsIMsgCopyService);
+	}
+	if (Sendlater3Util.IsPostbox()) {
+	    Sendlater3Util.copyService.CopyFileMessage(sfile, folder, 0, "",
+						       listener, msgWindow);
+	}
+	else if (Sendlater3Util.IsThunderbird2()) {
+	    var fileSpc = Components.classes["@mozilla.org/filespec;1"]
+		.createInstance();
+	    fileSpc = fileSpc.QueryInterface(Components.interfaces.nsIFileSpec);
+	    fileSpc.nativePath = filePath;
+	    Sendlater3Util.copyService.CopyFileMessage(fileSpc, folder, null,
+						       false, 0, listener,
+						       msgWindow);
+	}
+	else {
+	    Sendlater3Util.copyService.CopyFileMessage(sfile, folder, null,
+						       false, 0, "", listener,
+						       msgWindow);
+	}
+    },
+
+    WaitAndDelete: function(file_arg) {
+	var timer = Components.classes["@mozilla.org/timer;1"]
+	    .createInstance(Components.interfaces.nsITimer);
+	var callback = {
+	    file: file_arg,
+	    // creating a circular reference on purpose so objects won't be
+	    // deleted until we eliminate the circular reference.
+	    timer_ref: timer,
+	    notify: function(timer) {
+		try {
+		    this.file.remove(true);
+		    this.timer_ref = undefined;
+		    timer.cancel();
+		    Sendlater3Util.dump("Successfully deleted queued "
+					+ this.file.path);
+		}
+		catch (ex) {
+		    Sendlater3Util.dump("Failed to delete "
+					+ this.file.path);
+		}
+	    }
+	};
+	timer.initWithCallback(callback, 100, Components.interfaces.nsITimer
+			       .TYPE_REPEATING_SLACK);
     },
 
     Entering: function() {

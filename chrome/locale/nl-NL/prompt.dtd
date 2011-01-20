@@ -6,4 +6,10 @@
 <!ENTITY sendlater.prompt.title.label "Verstuur deze email later">
 <!ENTITY sendlater.prompt.sendat.label "Verstuur later op de aangegeven tijd">
 <!ENTITY sendlater.prompt.sendat.tooltip "Sla het bericht op in de map Concepten voor automatisch verzenden op het hierboven aangegeven tijdstip.">
+<!ENTITY sendlater.prompt.recur.label "Recur:">
+<!ENTITY sendlater.prompt.none.label "none">
+<!ENTITY sendlater.prompt.daily.label "daily">
+<!ENTITY sendlater.prompt.weekly.label "weekly">
+<!ENTITY sendlater.prompt.monthly.label "monthly">
+<!ENTITY sendlater.prompt.yearly.label "yearly">
 <!ENTITY sendlater.toolbar.sendlater.button.label "Send Later">

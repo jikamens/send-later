@@ -7,8 +7,6 @@ a delayed reply/forward?
 
 Send Later column doesn't work in unified Drafts folder.
 
-Support recurring scheduled messages.
-
 Make it harder to accidentally press Send instead of Send Later once a
 message has been scheduled (i.e., once the settings in the toolbar
 have been modified or a previously scheduled draft is

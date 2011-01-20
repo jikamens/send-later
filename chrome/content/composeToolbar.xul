@@ -17,7 +17,7 @@
       </stringbundleset>
       <script src="util.js"/>
       <script src="chrome://sendlater3/content/composeToolbar.js"/>
-      <hbox  align="center"  >
+      <hbox id="sendlater3toolbarbox" align="center"  >
 	<separator flex="1" width="8" />			
 	<hbox id="sendlater3toolbartimeicon" width="24" >
 	  <image  src="chrome://sendlater3/content/timeIcon.png" />
