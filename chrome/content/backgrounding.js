@@ -339,6 +339,8 @@ var Sendlater3Backgrounding = function() {
 		}
 	    }
 	    if (! Components.isSuccessCode(status)) {
+		Sendlater3Backgrounding.BackgroundTimer.cancel();
+		Sendlater3Backgrounding.BackgroundTimer = undefined;
 		alert(Sendlater3Util.PromptBundleGetFormatted("CopyUnsentError",
 							      [status]));
 		Sendlater3Util.Returning("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy", "");
@@ -465,6 +467,8 @@ var Sendlater3Backgrounding = function() {
 						notificationService.msgAdded);
 	    }
 	    if (! Components.isSuccessCode(status)) {
+		Sendlater3Backgrounding.BackgroundTimer.cancel();
+		Sendlater3Backgrounding.BackgroundTimer = undefined;
 		alert(Sendlater3Util.PromptBundleGetFormatted("CopyRecurError",
 							      [status]));
 		return;
@@ -491,9 +495,13 @@ var Sendlater3Backgrounding = function() {
 		    status = strbundle.getString("PendingMessage") + " " +
 			MessagesPending;
 		}
-		else {
+		else if (Sendlater3Backgrounding.BackgroundTimer) {
 		    status = strbundle.getString("IdleMessage");
 		}
+		else {
+		    status = strbundle.getString("DisabledMessage");
+		}
+
 		StatusReportMsg("SENDLATER3 [" + status + "]");
 	    }
 	    Sendlater3Util.Leaving("Sendlater3Backgrounding.AnimCallback.notify");
@@ -874,13 +882,11 @@ var Sendlater3Backgrounding = function() {
     };
 
 
-    var BackgroundTimer;
-
     var CheckForSendLaterCallback = {
 	notify: function (timer) {
 	    Sendlater3Util.Entering("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
 
-	    BackgroundTimer.initWithCallback(
+	    Sendlater3Backgrounding.BackgroundTimer.initWithCallback(
 		CheckForSendLaterCallback,
 		checkTimeout() + Math.ceil(Math.random()*3000)-1500,
 		Components.interfaces.nsITimer.TYPE_ONE_SHOT
@@ -1049,10 +1055,10 @@ var Sendlater3Backgrounding = function() {
 	mailSession
 	    .AddFolderListener(folderLoadListener,
 			       Components.interfaces.nsIFolderListener.event);
-	BackgroundTimer = Components
+	Sendlater3Backgrounding.BackgroundTimer = Components
 	    .classes["@mozilla.org/timer;1"]
-	    .createInstance(Components.interfaces.nsITimer);
-	BackgroundTimer.initWithCallback(
+	    .createInstance(Components.interfaces.nsITimer);    
+	Sendlater3Backgrounding.BackgroundTimer.initWithCallback(
 	    CheckForSendLaterCallback,
 	    2000,
 	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
@@ -1066,8 +1072,9 @@ var Sendlater3Backgrounding = function() {
 	    .classes["@mozilla.org/messenger/services/session;1"]
 	    .getService(Components.interfaces.nsIMsgMailSession);
 	mailSession.RemoveFolderListener(folderLoadListener);
-	if (BackgroundTimer) {
-	    BackgroundTimer.cancel();
+	if (Sendlater3Backgrounding.BackgroundTimer) {
+	    Sendlater3Backgrounding.BackgroundTimer.cancel();
+	    Sendlater3Backgrounding.BackgroundTimer = undefined;
 	}
 	clearActiveUuidCallback();
 	removeMsgSendLaterListener();
@@ -1133,6 +1140,6 @@ Sendlater3Backgrounding.markReadListener.prototype = {
 	notificationService.removeListener(this);
     }
 };
-    
+
 Sendlater3Util.initUtil();
 Sendlater3Backgrounding.apply();
