@@ -27,3 +27,6 @@ problem solves itself. Not sure this is worth fixing.
 Add buttons on pop-up to copy current date/time setting to clipboard
 and fetch setting from current clipboard contents, to make it easy to
 schedule multiple messages to be sent at the same time.
+
+Prompt for confirmation if the user tries to "schedule" a message but
+the time specified is now or in the past.
