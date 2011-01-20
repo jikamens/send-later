@@ -5,6 +5,8 @@ var Sendlater3Prompt = {
 	var i;
 	for (i = 1; i <= 3; i++) {
 	    document.getElementById("shortcutbtn_" + i).disabled = dis;
+	    document.getElementById("quickbutton" + i + "-key")
+		.setAttribute("disabled", dis);
 	}
     },
 
