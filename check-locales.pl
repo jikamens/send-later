@@ -22,16 +22,16 @@ exit($errors);
 
 sub check_dtd {
     my($file) = @_;
-    &check_generic($file, qr/^<!ENTITY\s+(\S+)/);
+    &check_generic($file, qr/^<!ENTITY\s+(\S+)/, qr/\&(?!quot)(?!;)/);
 }
 
 sub check_properties {
     my($file) = @_;
-    &check_generic($file, qr/^([^=]+)=/);
+    &check_generic($file, qr/^([^=]+)=/, qr/[^ -~\s]|\&(?!quot)(?!;)/);
 }
 
 sub check_generic {
-    my($file, $pattern) = @_;
+    my($file, $pattern, $error_pattern) = @_;
     my(@keys);
     &debug("Reading $master/$file\n");
     open(MASTER, "<", "$master/$file") or die;
@@ -53,6 +53,10 @@ sub check_generic {
 	    next;
 	}
 	while (<SLAVE>) {
+	    if ($error_pattern and /$error_pattern/) {
+		warn "Bad content on line $. of $locale/$file: $_";
+		$errors++;
+	    }
 	    if (! /$pattern/) {
 		warn "Unrecognized line $. of $locale/$file: $_";
 		$errors++;
