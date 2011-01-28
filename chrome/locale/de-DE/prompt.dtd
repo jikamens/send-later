@@ -4,12 +4,12 @@
 <!ENTITY sendlater.prompt.close.label "Abbruch">
 <!ENTITY sendlater.prompt.close.tooltip "Gehe zurück zum Bearbeiten der Mitteilung.">
 <!ENTITY sendlater.prompt.title.label "Sende dieses E-Mail später">
-<!ENTITY sendlater.prompt.sendat.label "SendeSpäter zu einem bestimmten Zeitpunkt">
+<!ENTITY sendlater.prompt.sendat.label "Sende später zu einem bestimmten Zeitpunkt">
 <!ENTITY sendlater.prompt.sendat.tooltip "Speichern der Mitteilung im Order Entwürfe für den automatischen Versand zum vorher gesetzten Zeitpunkt.">
-<!ENTITY sendlater.prompt.recur.label "Recur:">
-<!ENTITY sendlater.prompt.none.label "none">
-<!ENTITY sendlater.prompt.daily.label "daily">
-<!ENTITY sendlater.prompt.weekly.label "weekly">
-<!ENTITY sendlater.prompt.monthly.label "monthly">
-<!ENTITY sendlater.prompt.yearly.label "yearly">
+<!ENTITY sendlater.prompt.recur.label "wiederholen:">
+<!ENTITY sendlater.prompt.none.label "nichts">
+<!ENTITY sendlater.prompt.daily.label "täglich">
+<!ENTITY sendlater.prompt.weekly.label "wöchentlich">
+<!ENTITY sendlater.prompt.monthly.label "monatlich">
+<!ENTITY sendlater.prompt.yearly.label "jährlich">
 <!ENTITY sendlater.toolbar.sendlater.button.label "SendeSpäter">
