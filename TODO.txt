@@ -35,3 +35,7 @@ Prompt for confirmation if the user tries to "schedule" a message but
 the time specified is now or in the past.
 
 Need to figure out why Enigmail is bypassed when Send Later 3 is used.
+
+Look into whether it might be possible to use a slider to send the
+scheduled send time instead of drop-downs. (idea from Daniel N. Lang
+[daniel@sonnefueralle.de]).
