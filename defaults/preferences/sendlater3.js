@@ -24,3 +24,5 @@ pref("extensions.sendlater3.senddrafts",true);
 pref("extensions.sendlater3.activescanner.uuid","");
 pref("extensions.sendlater3.activescanner.time",0);
 pref("extensions.sendlater3.instance.uuid","");
+pref("extensions.sendlater3.ask.time", 0);
+pref("extensions.sendlater3.ask.sent", 0);

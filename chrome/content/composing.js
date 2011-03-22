@@ -134,6 +134,31 @@ var Sendlater3Composing = {
 		    sendat, recur);
 	    }
 
+	    // If it has been at least a week since we last asked the
+	    // user to donate, and the user has scheduled at least
+	    // five messages since the last time we asked, and the
+	    // user hasn't previously told us to stop asking, pop up a
+	    // donation dialog.
+	    var pp = "extensions.sendlater3.";
+	    var p1 = pp + "ask.time";
+	    var p2 = pp + "ask.sent";
+	    var last_ask = Sendlater3Util.PrefService.getIntPref(p1);
+	    var sent = Sendlater3Util.PrefService.getIntPref(p2);
+	    var now = Math.round((new Date()).getTime() / 1000);
+	    if ((sent >= 4) && (last_ask > 0) &&
+		(now - last_ask >= 60 * 60 * 24 * 7)) {
+		Sendlater3Util.PrefService.setIntPref(p1, now);
+		Sendlater3Util.PrefService.setIntPref(p2, 0);
+		window.openDialog("chrome://sendlater3/content/ask.xul",
+				  "AskWindow", "modal,chrome,centerscreen", {});
+	    }
+	    else if (sent > -1) {
+		if (last_ask == 0) {
+		    Sendlater3Util.PrefService.setIntPref(p1, now);
+		}
+		Sendlater3Util.PrefService.setIntPref(p2, sent + 1);
+	    }
+
 	    Sendlater3Util.SetUpdatePref(identity.key);
 	    defaultSaveOperation = "draft";
 	    Sendlater3Util.Leaving("Sendlater3Composing.ReallySendAtCallback.notify");
