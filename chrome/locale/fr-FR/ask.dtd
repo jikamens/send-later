@@ -1,17 +1,17 @@
-<!ENTITY sendlater.ask.title.label "Support Send Later 3">
+<!ENTITY sendlater.ask.title.label "Aidez Send Later 3">
 
-<!ENTITY sendlater.ask.message1 "Countless hours have gone into the development, maintenance and support of this add-on.">
-<!ENTITY sendlater.ask.message2 "Please consider making a donation to support its continued development!">
-<!ENTITY sendlater.ask.message3 "Thank you!">
+<!ENTITY sendlater.ask.message1 "De nombreuses heures de travail ont été nécessaires pour le développement, la maintenance et l'assistance à l'utilisation de ce add-on.">
+<!ENTITY sendlater.ask.message2 "Merci d'aider son développement en faisant un don!">
+<!ENTITY sendlater.ask.message3 "Merci!">
 
-<!ENTITY sendlater.ask.donate.key   "D">
-<!ENTITY sendlater.ask.donate.label "Donate now">
+<!ENTITY sendlater.ask.donate.key   "F">
+<!ENTITY sendlater.ask.donate.label "Faire un don">
 
 <!ENTITY sendlater.ask.remind.key   "R">
-<!ENTITY sendlater.ask.remind.label "Remind me later">
+<!ENTITY sendlater.ask.remind.label "Rappelez le moi">
 
-<!ENTITY sendlater.ask.already.key   "a">
-<!ENTITY sendlater.ask.already.label "I already donated">
+<!ENTITY sendlater.ask.already.key   "d">
+<!ENTITY sendlater.ask.already.label "J'ai donné, déjà !">
 
-<!ENTITY sendlater.ask.stop.key   "S">
-<!ENTITY sendlater.ask.stop.label "Stop asking">
+<!ENTITY sendlater.ask.stop.key   "A">
+<!ENTITY sendlater.ask.stop.label "Arrête de demander...">
