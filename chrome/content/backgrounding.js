@@ -207,23 +207,25 @@ var Sendlater3Backgrounding = function() {
     //mailnews.customDBHeaders 
     var installedCustomHeaders = Sendlater3Util.PrefService
         .getCharPref('mailnews.customDBHeaders');
+    var changed = false;
     if (installedCustomHeaders.indexOf("x-send-later-at")<0) {
 	Sendlater3Util.dump("Installing Custom X-Send-Later-At Header\n");
-	Sendlater3Util.PrefService.setCharPref('mailnews.customDBHeaders',
-					       installedCustomHeaders +
-					       " x-send-later-at");
+	installedCustomHeaders += " x-send-later-at";
+	changed = true;
     }
     if (installedCustomHeaders.indexOf("x-send-later-uuid")<0) {
 	Sendlater3Util.dump("Installing Custom X-Send-Later-Uuid Header\n");
-	Sendlater3Util.PrefService.setCharPref('mailnews.customDBHeaders',
-					       installedCustomHeaders +
-					       " x-send-later-uuid");
+	installedCustomHeaders += " x-send-later-uuid";
+	changed = true;
     }
     if (installedCustomHeaders.indexOf("x-send-later-recur")<0) {
 	Sendlater3Util.dump("Installing Custom X-Send-Later-Recur Header\n");
+	installedCustomHeaders += " x-send-later-recur";
+	changed = true;
+    }
+    if (changed) {
 	Sendlater3Util.PrefService.setCharPref('mailnews.customDBHeaders',
-					       installedCustomHeaders +
-					       " x-send-later-recur");
+					       installedCustomHeaders);
     }
 
     function checkTimeout() {
