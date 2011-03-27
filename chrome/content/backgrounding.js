@@ -1091,7 +1091,7 @@ var Sendlater3Backgrounding = function() {
     window.addEventListener("load", StartMonitorCallback,false);
     window.addEventListener("unload", StopMonitorCallback, false);
 
-    window.addEventListener("load", DisplayReleaseNotes, false);e
+    window.addEventListener("load", DisplayReleaseNotes, false);
 
     SL3U.Leaving("Sendlater3Backgrounding");
     addMsgSendLaterListener();
