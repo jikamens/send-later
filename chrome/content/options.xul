@@ -49,7 +49,7 @@
         <label align="bottom" accesskey="&checktimepref.accesskey;" control="textintpref">&checktimepref.label;</label><textbox id="textintpref" preference="checktimepref"/><label >&checktimepref2.label;</label>
     </hbox>
 	<separator label="-"/>
-	<hbox align="center" tooltiptext="&sendlatersendbutton.tooltip;">
+	<hbox id="sendbutton_hbox" align="center" tooltiptext="&sendlatersendbutton.tooltip;">
 		<checkbox id="sendbuttonpref" preference="sendlater3_sendbutton" label="&sendlatersendbutton.caption;" />
 	</hbox>
 	<hbox align="center" tooltiptext="&showsendlatercolumn.tooltip;">

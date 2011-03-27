@@ -103,12 +103,7 @@ var Sendlater3Composing = {
 		     msgtype == nsIMsgCompDeliverMode.Background) &&
 		    SL3U.getBoolPref("sendbutton")) {
 		    Sendlater3Composing.CheckSendAt();
-		    if (SL3U.IsThunderbird2()) {
-			throw Components.results.NS_ERROR_ABORT;
-		    }
-		    else {
-			event.preventDefault();
-		    }
+		    event.preventDefault();
 		}
 	    }
 	}
@@ -116,8 +111,12 @@ var Sendlater3Composing = {
 	var msgcomposeWindow = document.getElementById("msgcomposeWindow");
 	msgcomposeWindow.addEventListener("compose-window-init",
 					  mysleventListener, false);
-	msgcomposeWindow.addEventListener("compose-send-message",
-					  sendMessageListener, false);
+	if (! SL3U.IsThunderbird2()) {
+	    // This doesn't work on Thunderbird 2, since its
+	    // GenericSendFunction doesn't check PreventDefault.
+	    msgcomposeWindow.addEventListener("compose-send-message",
+					      sendMessageListener, false);
+	}
     },
 
     CheckSendAt: function() {

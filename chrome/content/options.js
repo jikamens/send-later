@@ -18,8 +18,15 @@ var Sendlater3Options = {
 	    }
 	}
 	return true;
+    },
+
+    SetOnLoad: function() {
+	if (SL3U.IsThunderbird2()) {
+	    document.getElementById("sendbutton_hbox").hidden = true;
+	}
     }
 };
 
 SL3U.initUtil();
+window.addEventListener("load", Sendlater3Options.SetOnLoad, false);
 window.addEventListener("unload", SL3U.uninitUtil, false);
