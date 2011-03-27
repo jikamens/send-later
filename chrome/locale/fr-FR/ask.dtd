@@ -11,7 +11,7 @@
 <!ENTITY sendlater.ask.remind.label "Rappelez le moi">
 
 <!ENTITY sendlater.ask.already.key   "d">
-<!ENTITY sendlater.ask.already.label "J'ai donné, déjà !">
+<!ENTITY sendlater.ask.already.label "J'ai donné, déjà">
 
 <!ENTITY sendlater.ask.stop.key   "A">
-<!ENTITY sendlater.ask.stop.label "Arrête de demander...">
+<!ENTITY sendlater.ask.stop.label "Arrête de demander">

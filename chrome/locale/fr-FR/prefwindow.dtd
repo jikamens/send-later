@@ -15,13 +15,13 @@
 <!ENTITY showsendlatercolumn.tooltip "Détermine l'affichage de la colonne &quot;Send Later&quot; en mode visualisation des messages en attente">
 <!ENTITY showsendlaterheader.caption "Afficher les entêtes de &quot;Send Later&quot;">
 <!ENTITY showsendlaterheader.tooltip "Détermine l'affichage de l'entête &quot;X-Send-Later-At&quot;, i.e., l'heure prévue d'envoi d'un message.">
-<!ENTITY showsendlaterstatus.caption "Show Send Later 3 In Status Bar">
+<!ENTITY showsendlaterstatus.caption "Voir &quot;Send Later 3&quot; dans la barre d'état">
 <!ENTITY showsendlaterprogress.caption "Affichage dans la barre d'état de l'avancement des envois en tâche de fond.">
 <!ENTITY showsendlaterdropdowns.caption "Afficher les menus déroulants dans la barre de menu.">
 <!ENTITY showsendlaterunsentmessages.caption "Déclenche l'expédition des messages en attente dans la boite d'expédition.">
 <!ENTITY showsendlaterunsentmessages.tooltip "En désactivant cette option Send Later ne délivrera pas les messages programmés pour être expédiés mais les placera en boite d'expédition. Désactivez, par exemple cette option si vous utilisez une autre extension (comme BlunderDelay) pour périodiquement relever les messages de la boite d'expédition. Notez bien que lorsque cette option est activée quand Send Later expédie un message TOUS les messages de la boite d'expédition seront envoyés en même temps.">
-<!ENTITY sendlatersendbutton.caption "&quot;Send&quot; does &quot;Send Later&quot;">
-<!ENTITY sendlatersendbutton.tooltip "With this option enabled, the &quot;Send&quot; command (either the button or typing Ctrl-Enter) acts the same as &quot;Send Later&quot;.">
+<!ENTITY sendlatersendbutton.caption "&quot;Envoyer&quot; utilise &quot;Envoyer plus tard&quot;">
+<!ENTITY sendlatersendbutton.tooltip "Avec cette option, la commande &quot;Envoyer&quot; (soit le bouton soit en tapant Ctrl-Entrée) agit comme &quot;Envoyer plus tard&quot;.">
 <!ENTITY advanced.caption "Avancé">
 <!ENTITY dumplevel.caption "Niveau de journalisation :">
 <!ENTITY consolelevel.caption "Console de journalisation :">
