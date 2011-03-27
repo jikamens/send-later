@@ -1060,19 +1060,11 @@ var Sendlater3Backgrounding = function() {
 	    var current_version = matches[1];
 	    var relnotes = SL3U.getCharPref("relnotes");
 	    SL3U.setCharPref("relnotes", current_version);
-	    // Grossness. I wanted a way to be able to display release
-	    // notes the first time someone upgrades from a version
-	    // prior to the version version that knows how to do
-	    // this. Conveniently enough, I discovered this obsolete,
-	    // incorrect resource at the same time as when I was
-	    // adding the release notes functionality, so I can use it
-	    // as a hint that an earlier version was installed!
-	    var badpref = "extensions.sendlater3@unsignedbyte.com.description";
-	    var badpref_value = SL3U.PrefService.getCharPref(badpref);
-	    if (badpref_value) {
-		SL3U.PrefService.deleteBranch(badpref);
-	    }
-	    if (badpref_value || (relnotes && current_version != relnotes)) {
+	    // Release notes displaying was introduced in 3.2.7. This special
+	    // case can be removed once 3.2.7 has been in the field for a while
+	    // so most people have upgraded to it.
+	    if ((current_version == "3.2.7") ||
+		(relnotes && current_version != relnotes)) {
 		var url = "http://blog.kamens.us/send-later-3/#notes";
 		Components.classes['@mozilla.org/appshell/window-mediator;1']
 		    .getService(Components.interfaces.nsIWindowMediator)
