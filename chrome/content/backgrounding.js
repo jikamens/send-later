@@ -595,11 +595,11 @@ var Sendlater3Backgrounding = function() {
 
 	    SL3U.debug("SendLaterPresent = " + this._header);
 	    if (this._header) {
-		Sendlater3Util.dump ("Found Pending Message.");
+		SL3U.dump ("Found Pending Message.");
 		var sendattime = new Date (this._header);
 		var now = new Date();
 		if (now > sendattime &&
-		    Sendlater3Util.getBoolPref("senddrafts")) {
+		    SL3U.getBoolPref("senddrafts")) {
 		    // Simplify search & replace in header by putting a
 		    // blank line at the beginning of the message, so that
 		    // we can match header lines starting with \n, i.e., we
@@ -613,8 +613,7 @@ var Sendlater3Backgrounding = function() {
 
 		    content = content
 			.replace(/(\nDate:).*\n/i,"$1 " +
-				 Sendlater3Util.FormatDateTime(new Date(),
-							       true)+"\n");
+				 SL3U.FormatDateTime(new Date(), true)+"\n");
 		    content = content.replace(/\nX-Send-Later-At:.*\n/i,
 					      "\n");
 		    content = content.replace(/\nX-Send-Later-Uuid:.*\n/i,
@@ -656,28 +655,26 @@ var Sendlater3Backgrounding = function() {
 		    var listener = new CopyUnsentListener(content, messageHDR,
 							  this._header,
 							  this._recur)
-		    Sendlater3Util.CopyStringMessageToFolder(content, fdrunsent,
-							     listener);
+		    SL3U.CopyStringMessageToFolder(content, fdrunsent,listener);
 		}
 		else {
 		    MessagesPending++;
-		    Sendlater3Util.dump(MessagesPending +
-					" messages still pending");
+		    SL3U.dump(MessagesPending + " messages still pending");
 		}
 	    }
 	    ProgressFinish();
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
+	    SL3U.Leaving("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
 	},
 	onDataAvailable: function(aReq, aContext, aInputStream, aOffset,
 				  aCount) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener.onDataAvailable");
+	    SL3U.Entering("Sendlater3Backgrounding.UriStreamListener.onDataAvailable");
 	    var uuidOk = checkUuid(false);
 	    var cycleOk = cycle == this._cycle;
 	    if (! (uuidOk && cycleOk)) {
 		this._content = "";
 		aInputStream.close();
-		Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable",
-					 uuidOk ? "obsolete cycle" : "inactive window");
+		SL3U.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable",
+			       uuidOk ? "obsolete cycle" : "inactive window");
 		return;
 	    }
 	    var stream = Components
@@ -695,17 +692,17 @@ var Sendlater3Backgrounding = function() {
 	    this._content += data;
 
 	    if (this._header) { // only the first time we reach the end
-                                // of the header
+                // of the header
 		var eoh = this._content.search(/\n\n/);
 		if (eoh > -1) {
 		    var header = this._content.slice(0, eoh);
 
 		    var matches = header.match(/^X-Send-Later-At:\s*(.*)/mi);
 		    if (! matches) {
-			Sendlater3Util.debug("SendLaterPresent = null");
+			SL3U.debug("SendLaterPresent = null");
 			this._content = "";
 			aInputStream.close();
-			Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "no header");
+			SL3U.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "no header");
 			ProgressFinish();
 			return;
 		    }
@@ -713,7 +710,7 @@ var Sendlater3Backgrounding = function() {
 		    if (! CheckDraftUuid(this._header, header)) {
 			this._content = "";
 			aInputStream.close();
-			Sendlater3Util.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "uuid mismatch");
+			SL3U.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "uuid mismatch");
 			ProgressFinish();
 			return;
 		    }
@@ -724,7 +721,7 @@ var Sendlater3Backgrounding = function() {
 		}
 	    }
 
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener.onDataAvailable");
+	    SL3U.Leaving("Sendlater3Backgrounding.UriStreamListener.onDataAvailable");
 	}
     };
 
@@ -733,21 +730,21 @@ var Sendlater3Backgrounding = function() {
 
     var CheckThisURICallback = {
 	notify: function (timer) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisUriCallback.notify");
+	    SL3U.Entering("Sendlater3Backgrounding.CheckThisUriCallback.notify");
 	    if (CheckThisURIQueue.length == 0) {
 		timer.cancel();
-		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
+		SL3U.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
 		return;
 	    }
 
 	    if (! checkUuid(false)) {
 		CheckThisURIQueue = new Array();
-		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
+		SL3U.Returning("Sendlater3Backgrounding.CheckThisUriCallback.notify", "");
 		return;
 	    }
 
 	    var messageURI = CheckThisURIQueue.shift();
-	    Sendlater3Util.debug("Checking message : " + messageURI + "\n");
+	    SL3U.debug("Checking message : " + messageURI + "\n");
 
 	    var MsgService = messenger.messageServiceFromURI(messageURI);
 	    var messageHDR = messenger.msgHdrFromURI(messageURI);
@@ -755,7 +752,7 @@ var Sendlater3Backgrounding = function() {
 				     new UriStreamListener(messageHDR),
 				     msgWindow, null, false, null);
 	    SetAnimTimer(3000);
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisUriCallback.notify");
+	    SL3U.Leaving("Sendlater3Backgrounding.CheckThisUriCallback.notify");
 	}
     }
 
@@ -764,7 +761,7 @@ var Sendlater3Backgrounding = function() {
     // long time checking drafts and cause the UI to hang or respond
     // sluggishly.
     function CheckThisURIQueueAdd(messageURI) {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.CheckThisURIQueueAdd", messageURI);
+	SL3U.Entering("Sendlater3Backgrounding.CheckThisURIQueueAdd", messageURI);
 	if (CheckThisURIQueue.length == 0) {
 	    CheckThisURITimer = Components.classes["@mozilla.org/timer;1"]
 		.createInstance(Components.interfaces.nsITimer);
@@ -776,7 +773,7 @@ var Sendlater3Backgrounding = function() {
 	}
 	CheckThisURIQueue.push(messageURI);
 	ProgressAdd();
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckThisURIQueueAdd");
+	SL3U.Leaving("Sendlater3Backgrounding.CheckThisURIQueueAdd");
     }
 
     // folderstocheck is a list of folders waiting to be checked in this
@@ -796,10 +793,10 @@ var Sendlater3Backgrounding = function() {
 
     var folderLoadListener = {
 	OnItemEvent: function(folder, event) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
+	    SL3U.Entering("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
 
 	    if (! checkUuid(false)) {
-		Sendlater3Util.Returning("Sendlater3Backgrounding.folderLoadListener.OnItemEvent", "");
+		SL3U.Returning("Sendlater3Backgrounding.folderLoadListener.OnItemEvent", "");
 		return;
 	    }
 
@@ -812,38 +809,36 @@ var Sendlater3Backgrounding = function() {
 		// necessary, so I'm disabling them in the spirit of
 		// optimizing performance by making plugins do as little as
 		// possible.
-		// if (Sendlater3Util.IsThunderbird2() || Sendlater3Util.IsPostbox()) {
+		// if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 		//     folder.endFolderLoading();
 		// }
-		Sendlater3Util.debug("FOLDER LOADED - " + folder.URI);
+		SL3U.debug("FOLDER LOADED - " + folder.URI);
 		var where = folderstocheck.indexOf(folder.URI);
 		if (where >= 0) {
 		    SetAnimTimer(3000);
 
-		    Sendlater3Util.dump("FOLDER MONITORED - "+folder.URI+"\n");
+		    SL3U.dump("FOLDER MONITORED - "+folder.URI+"\n");
 		    folderstocheck.splice(where, 1);
 		    foldersdone.push(folder.URI);
 		    ProgressFinish();
 		    var thisfolder = folder
 			.QueryInterface(Components.interfaces.nsIMsgFolder);
 		    var messageenumerator;
-		    if (Sendlater3Util.IsThunderbird2() ||
-			Sendlater3Util.IsPostbox()) {
+		    if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 			messageenumerator = thisfolder.getMessages(msgWindow);
 		    }
 		    else {
 			messageenumerator = thisfolder.messages;
 		    }
 		    if ( messageenumerator ) {
-			Sendlater3Util.dump ("Got Enumerator\n");
+			SL3U.dump ("Got Enumerator\n");
 			while ( messageenumerator.hasMoreElements() ) {
-			    Sendlater3Util.dump("hasMoreElements=true\n");
+			    SL3U.dump("hasMoreElements=true\n");
 			    var messageDBHDR = messageenumerator.getNext()
 				.QueryInterface(Components.interfaces
 						.nsIMsgDBHdr);
 			    var flags;
-			    if (Sendlater3Util.IsThunderbird2() ||
-				Sendlater3Util.IsPostbox()) {
+			    if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 				flags = 2097152 | 8; // Better way to do this?
 			    }
 			    else {
@@ -858,18 +853,18 @@ var Sendlater3Backgrounding = function() {
 			}
 		    }
 		    else {
-			Sendlater3Util.dump("No Enumerator\n");
+			SL3U.dump("No Enumerator\n");
 		    }
 		}
 	    } 
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
+	    SL3U.Leaving("Sendlater3Backgrounding.folderLoadListener.OnItemEvent");
 	}
     };
 
 
     var CheckForSendLaterCallback = {
 	notify: function (timer) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
+	    SL3U.Entering("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
 
 	    Sendlater3Backgrounding.BackgroundTimer.initWithCallback(
 		CheckForSendLaterCallback,
@@ -878,11 +873,11 @@ var Sendlater3Backgrounding = function() {
 	    );
 
 	    if (! checkUuid(true)) {
-		Sendlater3Util.Returning("Sendlater3Backgrounding.CheckForSendLaterCallback.notify", "");
+		SL3U.Returning("Sendlater3Backgrounding.CheckForSendLaterCallback.notify", "");
 		return;
 	    }
 
-	    Sendlater3Util.debug("One cycle of checking");
+	    SL3U.debug("One cycle of checking");
 
 	    MessagesPending = 0;
 	    ProgressClear();
@@ -896,25 +891,22 @@ var Sendlater3Backgrounding = function() {
 
 	    folderstocheck = new Array();
 	    foldersdone = new Array();
-	    folderstocheck.push(
-		Sendlater3Util.FindSubFolder(fdrlocal, "Drafts").URI
-	    );
-	    Sendlater3Util.dump("SCHEDULE - " + folderstocheck[0]);
+	    folderstocheck.push(SL3U.FindSubFolder(fdrlocal, "Drafts").URI);
+	    SL3U.dump("SCHEDULE - " + folderstocheck[0]);
 	    // Local Drafts folder might have different name, e.g., in other
 	    // locales.
-	    var local_draft_pref = Sendlater3Util.PrefService
+	    var local_draft_pref = SL3U.PrefService
 		.getComplexValue('mail.identity.default.draft_folder',
 				 Components.interfaces.nsISupportsString).data;
-	    Sendlater3Util.debug("mail.identity.default.draft_folder=" +
-				 local_draft_pref);
+	    SL3U.debug("mail.identity.default.draft_folder=" +local_draft_pref);
 	    if (local_draft_pref != null &&
 		local_draft_pref != folderstocheck[0]) {
-		Sendlater3Util.debug("SCHEDULE - " + local_draft_pref);
+		SL3U.debug("SCHEDULE - " + local_draft_pref);
 		folderstocheck.push(local_draft_pref);
 		ProgressAdd();
 	    }
-	    // if (Sendlater3Util.IsThunderbird2() || Sendlater3Util.IsPostbox()) {
-	    // 	var sub = Sendlater3Util.FindSubFolder(fdrlocal, "Drafts");
+	    // if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
+	    // 	var sub = SL3U.FindSubFolder(fdrlocal, "Drafts");
 	    // 	sub.endFolderLoading();
 	    // 	sub.startFolderLoading();
 	    // }
@@ -925,32 +917,31 @@ var Sendlater3Backgrounding = function() {
 		// an error. I can't find any way to check whether the folder
 		// currently exists before calling this, so I'm just discarding
 		// the error.
-		Sendlater3Util.FindSubFolder(fdrlocal, "Drafts")
-		    .updateFolder(msgWindow);
+		SL3U.FindSubFolder(fdrlocal, "Drafts").updateFolder(msgWindow);
 	    }
 	    catch (e) {
-		Sendlater3Util.debug("updateFolder on local Drafts folder failed");
+		SL3U.debug("updateFolder on local Drafts folder failed");
 	    }
 
 	    var allaccounts = accountManager.accounts;
 
 	    var acindex;
-	    Sendlater3Util.debug("Progress Animation SET");
+	    SL3U.debug("Progress Animation SET");
 	    if (displayprogressbar()) {
 		document.getElementById("sendlater_deck").selectedIndex = 0;
 	    }
 
 	    for (acindex = 0;acindex < allaccounts.Count();acindex++) {
 		SetAnimTimer(5000);
-		Sendlater3Util.debug("Progress Animation RESET");
+		SL3U.debug("Progress Animation RESET");
 		var thisaccount = allaccounts.GetElementAt(acindex);
 		if (thisaccount) {
 		    thisaccount = thisaccount
 			.QueryInterface(Components.interfaces.nsIMsgAccount);
 
-		    Sendlater3Util.debug(thisaccount.incomingServer.type +
-					 " - Identities [" +
-					 thisaccount.identities.Count() + "]");
+		    SL3U.debug(thisaccount.incomingServer.type + 
+			       " - Identities [" +
+			       thisaccount.identities.Count() + "]");
 		    switch (thisaccount.incomingServer.type) {
 		    case "pop3":
 		    case "imap":
@@ -972,19 +963,18 @@ var Sendlater3Backgrounding = function() {
 				    .incomingServer.key + ".check_new_mail"
 				var pref_value;
 				try {
-				    pref_value = Sendlater3Util.PrefService
-					.getBoolPref(pref)
+				    pref_value = SL3U.PrefService
+					.getBoolPref(pref);
 				}
 				catch (e) {
 				    // If unset, defaults to true
 				    pref_value = true;
 				}
-				pref_value = Sendlater3Util.
-				    GetUpdatePref(identity.key) || pref_value;
+				pref_value = SL3U.GetUpdatePref(identity.key) ||
+				    pref_value;
 				if (pref_value) {
-				    Sendlater3Util.dump("SCHEDULE - " +
-							thisfolder.URI );
-				    // if (Sendlater3Util.IsThunderbird2() || Sendlater3Util.IsPostbox()) {
+				    SL3U.dump("SCHEDULE - " + thisfolder.URI );
+				    // if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 				    // 	thisfolder.endFolderLoading();
 				    // 	thisfolder.startFolderLoading();
 				    // }
@@ -992,47 +982,43 @@ var Sendlater3Backgrounding = function() {
 					thisfolder.updateFolder(msgWindow);
 				    }
 				    catch (e) {
-					Sendlater3Util.debug("updateFolder " +
-							     thisfolder.URI +
-							     " failed");
+					SL3U.debug("updateFolder " +
+						   thisfolder.URI + " failed");
 				    }
 				}
 				else {
-				    Sendlater3Util.dump("IMMEDIATE - " +
-							thisfolder.URI );
+				    SL3U.dump("IMMEDIATE - " + thisfolder.URI);
 				    folderLoadListener.OnItemEvent(thisfolder,
 								   "FolderLoaded");
 				}
 			    }
 			    else {
-				Sendlater3Util.debug("Already scheduled - " +
-						     thisfolder.URI);
+				SL3U.debug("Already scheduled - " +
+					   thisfolder.URI);
 			    }
 			}
 			break;
 		    default:
-			Sendlater3Util.debug("skipping this server type - " +
-					     thisaccount);
+			SL3U.debug("skipping this server type - " +thisaccount);
 			break;
 		    }
 		}
 	    }
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
+	    SL3U.Leaving("Sendlater3Backgrounding.CheckForSendLaterCallback.notify");
 	}
     }
 
     var SetUpStatusBar = {
 	observe: function() {
-	    var showStatus = Sendlater3Util.getBoolPref("showstatus");
+	    var showStatus = SL3U.getBoolPref("showstatus");
 	    document.getElementById("sendlater_deck")
 		.setAttribute("hidden", ! showStatus);
 	}
     };
 
     function StartMonitorCallback() {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.StartMonitorCallback");
-	Sendlater3Util.debug("Starting monitor [for every " + checkTimeout() +
-			     "ms]");
+	SL3U.Entering("Sendlater3Backgrounding.StartMonitorCallback");
+	SL3U.debug("Starting monitor [for every " + checkTimeout() + "ms]");
 	var mailSession = Components
 	    .classes["@mozilla.org/messenger/services/session;1"]
 	    .getService(Components.interfaces.nsIMsgMailSession);
@@ -1047,11 +1033,11 @@ var Sendlater3Backgrounding = function() {
 	    2000,
 	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.StartMonitorCallback");
+	SL3U.Leaving("Sendlater3Backgrounding.StartMonitorCallback");
     }
 
     function StopMonitorCallback() {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.StopMonitorCallback");
+	SL3U.Entering("Sendlater3Backgrounding.StopMonitorCallback");
 	var mailSession = Components
 	    .classes["@mozilla.org/messenger/services/session;1"]
 	    .getService(Components.interfaces.nsIMsgMailSession);
@@ -1062,8 +1048,39 @@ var Sendlater3Backgrounding = function() {
 	}
 	clearActiveUuidCallback();
 	removeMsgSendLaterListener();
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.StopMonitorCallback");
-	Sendlater3Util.uninitUtil();
+	SL3U.Leaving("Sendlater3Backgrounding.StopMonitorCallback");
+	SL3U.uninitUtil();
+    }
+
+    function DisplayReleaseNotes() {
+	var enabledItems = SL3U.PrefService
+	    .getCharPref("extensions.enabledItems");
+	var matches = enabledItems.match(/sendlater3@kamens\.us:([^,]+)/);
+	if (matches) {
+	    var current_version = matches[1];
+	    var relnotes = SL3U.getCharPref("relnotes");
+	    SL3U.setCharPref("relnotes", current_version);
+	    // Grossness. I wanted a way to be able to display release
+	    // notes the first time someone upgrades from a version
+	    // prior to the version version that knows how to do
+	    // this. Conveniently enough, I discovered this obsolete,
+	    // incorrect resource at the same time as when I was
+	    // adding the release notes functionality, so I can use it
+	    // as a hint that an earlier version was installed!
+	    var badpref = "extensions.sendlater3@unsignedbyte.com.description";
+	    var badpref_value = SL3U.PrefService.getCharPref(badpref);
+	    if (badpref_value) {
+		SL3U.PrefService.deleteBranch(badpref);
+	    }
+	    if (badpref_value || (relnotes && current_version != relnotes)) {
+		var url = "http://blog.kamens.us/send-later-3/#notes";
+		Components.classes['@mozilla.org/appshell/window-mediator;1']
+		    .getService(Components.interfaces.nsIWindowMediator)
+		    .getMostRecentWindow("mail:3pane")
+		    .document.getElementById("tabmail")
+		    .openTab("contentTab", {contentPage: url});
+	    }
+	}	
     }
 
     // BackgroundTimer = Components
@@ -1076,14 +1093,15 @@ var Sendlater3Backgrounding = function() {
     //     );
 
     window.addEventListener("load", SetUpStatusBar.observe, false);
-    Sendlater3Util.PrefService
-	.QueryInterface(Components.interfaces.nsIPrefBranch2);
-    Sendlater3Util.PrefService.addObserver(
-	SL3U.pref("showstatus"), SetUpStatusBar, false);
+    SL3U.PrefService.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    SL3U.PrefService.addObserver(SL3U.pref("showstatus"),SetUpStatusBar, false);
 
     window.addEventListener("load", StartMonitorCallback,false);
     window.addEventListener("unload", StopMonitorCallback, false);
-    Sendlater3Util.Leaving("Sendlater3Backgrounding");
+
+    window.addEventListener("load", DisplayReleaseNotes, false);e
+
+    SL3U.Leaving("Sendlater3Backgrounding");
     addMsgSendLaterListener();
 }
 
@@ -1103,8 +1121,7 @@ Sendlater3Backgrounding.markReadListener.prototype = {
     msgAdded: function(aMsgHdr) {
 	if (this._folder == aMsgHdr.folder &&
 	    this._key == aMsgHdr.messageKey) {
-	    if (Sendlater3Util.IsThunderbird2() ||
-		Sendlater3Util.IsPostbox()) {
+	    if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 		readlist = Components.classes["@mozilla.org/supports-array;1"]
 		    .createInstance(Components.interfaces.nsISupportsArray);
 		readlist.AppendElement(aMsgHdr);
@@ -1125,5 +1142,5 @@ Sendlater3Backgrounding.markReadListener.prototype = {
     }
 };
 
-Sendlater3Util.initUtil();
+SL3U.initUtil();
 Sendlater3Backgrounding.apply();
