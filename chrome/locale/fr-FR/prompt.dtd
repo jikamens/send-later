@@ -1,6 +1,7 @@
 <!ENTITY separate.label "">
 <!ENTITY sendlater.prompt.sendlater.label "Contourner Send Later">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Fonctionnalité de Thunderbird: déplace le message vers la boite d'envoi pour expédition dès qu'un message est envoyé.">
+<!ENTITY sendlater.prompt.sendnow.label "Send Now">
 <!ENTITY sendlater.prompt.close.label "Annuler">
 <!ENTITY sendlater.prompt.close.tooltip "Reprendre la rédaction du message.">
 <!ENTITY sendlater.prompt.title.label "Envoyer ce courriel plus tard">

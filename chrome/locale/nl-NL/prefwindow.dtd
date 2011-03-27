@@ -20,6 +20,8 @@
 <!ENTITY showsendlaterdropdowns.caption "Toon dropdown-knoppen in werkbalk">
 <!ENTITY showsendlaterunsentmessages.caption "Verstuur niet-verzonden berichten die in Postvak UIT staan">
 <!ENTITY showsendlaterunsentmessages.tooltip "Als je deze optie ontvinkt, zal Send Later de berichten niet versturen, maar ze op het moment van versturen in je Postvak UIT plaatsen. Ontvink deze optie, bijvoorbeeld, als je een andere extensie gebruikt, zoals bijvoorbeeld BlunderDelay, die periodiek berichten in je Postvak UIT verstuurt. Merk op dat als deze optie aangevinkt is, Send Later samen met het geplande bericht ALLE berichten in je Postvak UIT verstuurt.">
+<!ENTITY sendlatersendbutton.caption "&quot;Send&quot; does &quot;Send Later&quot;">
+<!ENTITY sendlatersendbutton.tooltip "With this option enabled, the &quot;Send&quot; command (either the button or typing Ctrl-Enter) acts the same as &quot;Send Later&quot;.">
 <!ENTITY advanced.caption "Advanced">
 <!ENTITY dumplevel.caption "Dump log level:">
 <!ENTITY consolelevel.caption "Console log level:">

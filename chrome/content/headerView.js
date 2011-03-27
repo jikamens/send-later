@@ -2,7 +2,7 @@ var Sendlater3HeaderView = function() {
 
     var sendlater3columnHandler = {
 	getCellText: function(row, col) {
-	    Sendlater3Util.Entering("Sendlater3HeaderView.sendlater3columnHandler.getCellText", row, col);
+	    SL3U.Entering("Sendlater3HeaderView.sendlater3columnHandler.getCellText", row, col);
 	    var key = gDBView.getKeyAt(row);
 	    var hdr = gDBView.db.GetMsgHdrForKey(key);
 	    var retval = hdr.getStringProperty("x-send-later-at");
@@ -24,20 +24,19 @@ var Sendlater3HeaderView = function() {
 				    0);
 		if (recur) {
 		    var settings = recur.split(" ");
-		    val += " (" + Sendlater3Util.PromptBundleGet(settings[0]) +
-			")";
+		    val += " (" + SL3U.PromptBundleGet(settings[0]) + ")";
 		}
-		Sendlater3Util.Returning("Sendlater3HeaderView.sendlater3columnHandler.getCellText", val);
+		SL3U.Returning("Sendlater3HeaderView.sendlater3columnHandler.getCellText", val);
 		return val;
 	    }
 	    else {
-		Sendlater3Util.Returning("Sendlater3HeaderView.sendlater3columnHandler.getCellText", null);
+		SL3U.Returning("Sendlater3HeaderView.sendlater3columnHandler.getCellText", null);
 		return null;
 	    }
 	},
 
 	getSortStringForRow: function(hdr) {
-	    Sendlater3Util.Entering("Sendlater3HeaderView.sendlater3columnHandler.getSortStringForRow", hdr);
+	    SL3U.Entering("Sendlater3HeaderView.sendlater3columnHandler.getSortStringForRow", hdr);
 	    return null;
 	},
 	
@@ -47,25 +46,25 @@ var Sendlater3HeaderView = function() {
 	getRowProperties:    function(row,props){},
 	getColumnProperties: function(colid,col,props){},
 	getSortLongForRow:   function(hdr) {
-	    Sendlater3Util.Entering("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", hdr);
+	    SL3U.Entering("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", hdr);
 	    if (hdr.getStringProperty("x-send-later-at")) {
 		var hdrdate =
 		    new Date(hdr.getStringProperty("x-send-later-at"));
-		Sendlater3Util.Returning("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", hdrdate.valueOf());
+		SL3U.Returning("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", hdrdate.valueOf());
 		return hdrdate.valueOf();
 	    }
 	    else {
-		Sendlater3Util.Returning("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", 0);
+		SL3U.Returning("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", 0);
 		return 0;
 	    }
 	}
     }
 
     function IsThisDraft(msgFolder) {
-	Sendlater3Util.Entering("Sendlater3HeaderView.IsThisDraft", msgFolder);
+	SL3U.Entering("Sendlater3HeaderView.IsThisDraft", msgFolder);
 	if (msgFolder == null) {
-	    Sendlater3Util.Returning("Sendlater3HeaderView.IsThisDraft",
-				     "false (msgFolder == null)");
+	    SL3U.Returning("Sendlater3HeaderView.IsThisDraft",
+			   "false (msgFolder == null)");
 	    return false;
 	}
 
@@ -74,12 +73,12 @@ var Sendlater3HeaderView = function() {
 	    .getService(Components.interfaces.nsIMsgAccountManager);
 	
 	var fdrlocal = accountManager.localFoldersServer.rootFolder;
-	if (Sendlater3Util.FindSubFolder(fdrlocal, "Drafts").URI == 
-	    msgFolder.URI) return true;
-	if (Sendlater3Util.PrefService
-	    .getCharPref('mail.identity.default.draft_folder')==msgFolder.URI) {
-	    Sendlater3Util.Returning("Sendlater3HeaderView.IsThisDraft",
-				     "true (default)");
+	if (SL3U.FindSubFolder(fdrlocal, "Drafts").URI == msgFolder.URI) {
+	    return true;
+	}
+	if (SL3U.PrefService.getCharPref('mail.identity.default.draft_folder')
+	    == msgFolder.URI) {
+	    SL3U.Returning("Sendlater3HeaderView.IsThisDraft","true (default)");
 	    return true;	
 	}
 
@@ -90,31 +89,29 @@ var Sendlater3HeaderView = function() {
 	    if (identities.GetElementAt(idindex)
 		.QueryInterface(Components.interfaces.nsIMsgIdentity)
 		.draftFolder==msgFolder.URI) {
-		Sendlater3Util.Returning("Sendlater3HeaderView.IsThisDraft",
-					 "true (identity)");
+		SL3U.Returning("Sendlater3HeaderView.IsThisDraft",
+			       "true (identity)");
 		return true;
 	    }
 	}
 
-	Sendlater3Util.Returning("Sendlater3HeaderView.IsThisDraft",
-				 "false (not found)");
+	SL3U.Returning("Sendlater3HeaderView.IsThisDraft", "false (not found)");
 	return false;
     }
 
     function addSENDLATER3ColumnHandler() {
-	Sendlater3Util.Entering("Sendlater3HeaderView.addSENDLATER3ColumnHandler");
+	SL3U.Entering("Sendlater3HeaderView.addSENDLATER3ColumnHandler");
 	var folder;
 	try {
 	    folder = gDBView.viewFolder;
 	}
 	catch (ex) {
 	    // TB2 bug
-	    Sendlater3Util.warn("addSENDLATER3ColumnHandler: gDBView problem");
+	    SL3U.warn("addSENDLATER3ColumnHandler: gDBView problem");
 	    return;
 	}
 	if ( IsThisDraft(folder) ) {
-	    if (Sendlater3Util.PrefService
-		.getBoolPref("extensions.sendlater3.showcolumn")) {
+	    if (SL3U.getBoolPref("showcolumn")) {
 		document.getElementById("colXSendLaterAt").hidden = false;
 	    }
 	    else {
@@ -126,16 +123,15 @@ var Sendlater3HeaderView = function() {
 	else {
 	    document.getElementById("colXSendLaterAt").hidden = true;
 	}
-	Sendlater3Util.Leaving("Sendlater3HeaderView.addSENDLATER3ColumnHandler");
+	SL3U.Leaving("Sendlater3HeaderView.addSENDLATER3ColumnHandler");
     }
 
     var sendlater3_HeaderDisplay = {
 	dispHeader: function () {
-	    Sendlater3Util.Entering("Sendlater3HeaderView.sendlater3_HeaderDisplay.dispHeader");
+	    SL3U.Entering("Sendlater3HeaderView.sendlater3_HeaderDisplay.dispHeader");
 	    var hidden = true;
-	    if (Sendlater3Util.PrefService
-		.getBoolPref("extensions.sendlater3.showheader")) {
-		Sendlater3Util.debug("headerView.js: dispHeader: showheader is true");
+	    if (SL3U.getBoolPref("showheader")) {
+		SL3U.debug("headerView.js: dispHeader: showheader is true");
 		if (IsThisDraft(gDBView.viewFolder)) {
 		    var msghdr = gDBView.hdrForFirstSelectedMessage;
 		    if (msghdr!=null) {
@@ -154,25 +150,25 @@ var Sendlater3HeaderView = function() {
 				.getElementById("expandedx-send-later-atBox")
 				.headerValue = val;
 			    hidden = false;
-			    Sendlater3Util.debug("headerView.js: dispHeader: showing header");
+			    SL3U.debug("headerView.js: dispHeader: showing header");
 			}	
 			else {
-			    Sendlater3Util.debug("headerView.js: dispHeader: hiding header (empty)");
+			    SL3U.debug("headerView.js: dispHeader: hiding header (empty)");
 			}
 		    }
 		    else {
-			Sendlater3Util.debug("headerView.js: dispHeader: hiding header (null msghdr)");
+			SL3U.debug("headerView.js: dispHeader: hiding header (null msghdr)");
 		    }
 		}
 		else {
-		    Sendlater3Util.debug("headerView.js: dispHeader: hiding header (not draft)");
+		    SL3U.debug("headerView.js: dispHeader: hiding header (not draft)");
 		}
 	    }
 	    else {
-		Sendlater3Util.debug("headerView.js: dispHeader: showheader is false");
+		SL3U.debug("headerView.js: dispHeader: showheader is false");
 	    }
-	    document.getElementById(Sendlater3Util.HeaderRowId("x-send-later-at")).hidden = hidden;
-	    Sendlater3Util.Leaving("Sendlater3HeaderView.sendlater3_HeaderDisplay.dispHeader");
+	    document.getElementById(SL3U.HeaderRowId("x-send-later-at")).hidden = hidden;
+	    SL3U.Leaving("Sendlater3HeaderView.sendlater3_HeaderDisplay.dispHeader");
 	},
 	noop: function() { }
 
@@ -188,9 +184,9 @@ var Sendlater3HeaderView = function() {
     }
 
     window.addEventListener("load",sendlater3_HeaderView_SetupListener,false);
-    window.addEventListener("unload", Sendlater3Util.uninitUtil, false);
+    window.addEventListener("unload", SL3U.uninitUtil, false);
 
 }
 
-Sendlater3Util.initUtil();
+SL3U.initUtil();
 Sendlater3HeaderView.apply();

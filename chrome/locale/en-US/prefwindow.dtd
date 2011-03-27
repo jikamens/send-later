@@ -19,7 +19,9 @@
 <!ENTITY showsendlaterprogress.caption "Show Background Progress In Status Bar">
 <!ENTITY showsendlaterdropdowns.caption "Show Dropdowns In Toolbar">
 <!ENTITY showsendlaterunsentmessages.caption "Trigger unsent message delivery from Outbox">
-<!ENTITY showsendlaterunsentmessages.tooltip "If you unset this option, then Send Later will not fully deliver messages, but instead will just put them in your Outbox when they are scheduled for delivery. Unset this option, for example, if you use some other extension, e.g., BlunderDelay, to periodically send messages from your Outbox. Note that when this option is set, then whenever Send Later delivers a message, ALL messages in your Outbox will be delivered.">
+<!ENTITY showsendlaterunsentmessages.tooltip "If you unset this option, then Send Later 3 will not fully deliver messages, but instead will just put them in your Outbox when they are scheduled for delivery. Unset this option, for example, if you use some other extension, e.g., BlunderDelay, to periodically send messages from your Outbox. Note that when this option is set, then whenever Send Later delivers a message, ALL messages in your Outbox will be delivered.">
+<!ENTITY sendlatersendbutton.caption "&quot;Send&quot; does &quot;Send Later&quot;">
+<!ENTITY sendlatersendbutton.tooltip "With this option enabled, the &quot;Send&quot; command (either the button or typing Ctrl-Enter) acts the same as &quot;Send Later&quot;.">
 <!ENTITY advanced.caption "Advanced">
 <!ENTITY dumplevel.caption "Dump log level:">
 <!ENTITY consolelevel.caption "Console log level:">

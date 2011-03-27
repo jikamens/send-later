@@ -1,5 +1,5 @@
 var Sendlater3Backgrounding = function() {
-    Sendlater3Util.Entering("Sendlater3Backgrounding");
+    SL3U.Entering("Sendlater3Backgrounding");
 
     var msgWindow = Components.classes["@mozilla.org/messenger/msgwindow;1"]
 	.createInstance();
@@ -15,10 +15,10 @@ var Sendlater3Backgrounding = function() {
     var needToSendUnsentMessages = false;
     var sendUnsentMessagesListener = {
 	onStartSending: function(aTotalMessageCount) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStartSending");
+	    SL3U.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStartSending");
 	    sendingUnsentMessages = true;
 	    needToSendUnsentMessages = false;
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStartSending");
+	    SL3U.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStartSending");
 	},
 	onMessageStartSending: function(aCurrentMessage, aTotalMessageCount,
 					aMessageHeader, aIdentity) {},
@@ -30,11 +30,11 @@ var Sendlater3Backgrounding = function() {
 					aMessageCopyPercent) {},
 	onStatus: function(aMsg) {},
 	onStopSending: function(aStatus, aMsg, aTotalTried, aSuccessful) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
+	    SL3U.Entering("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	    sendingUnsentMessages = false;
 	    if (needToSendUnsentMessages) {
 		try {
-		    if (Sendlater3Util.IsThunderbird2()) {
+		    if (SL3U.IsThunderbird2()) {
 			messenger.sendUnsentMessages(null, msgWindow);
 		    }
 		    else {
@@ -45,20 +45,20 @@ var Sendlater3Backgrounding = function() {
 		    }
 		}
 		catch (ex) {
-		    alert(Sendlater3Util.PromptBundleGet("SendingUnsentError"));
+		    alert(SL3U.PromptBundleGet("SendingUnsentError"));
 		}
 	    }
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
+	    SL3U.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
 	}
     }
     function queueSendUnsentMessages() {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.queueSendUnsentMessages");
+	SL3U.Entering("Sendlater3Backgrounding.queueSendUnsentMessages");
 	try {
 	    if (sendingUnsentMessages) {
-		Sendlater3Util.debug("Deferring sendUnsentMessages");
+		SL3U.debug("Deferring sendUnsentMessages");
 		needToSendUnsentMessages = true;
 	    }
-	    else if (Sendlater3Util.IsThunderbird2()) {
+	    else if (SL3U.IsThunderbird2()) {
 		messenger.sendUnsentMessages(null, msgWindow);
 	    }
 	    else {
@@ -69,35 +69,35 @@ var Sendlater3Backgrounding = function() {
 	    }
 	}
 	catch (ex) {
-	    alert(Sendlater3Util.PromptBundleGet("SendingUnsentError"));
+	    alert(SL3U.PromptBundleGet("SendingUnsentError"));
 	}
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.queueSendUnsentMessages");
+	SL3U.Leaving("Sendlater3Backgrounding.queueSendUnsentMessages");
     }
     function addMsgSendLaterListener() {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.addMsgSendLaterListener");
+	SL3U.Entering("Sendlater3Backgrounding.addMsgSendLaterListener");
 	var msgSendLater = Components
 	    .classes["@mozilla.org/messengercompose/sendlater;1"]
 	    .getService(Components.interfaces.nsIMsgSendLater);
-	if (Sendlater3Util.IsThunderbird2()) {
+	if (SL3U.IsThunderbird2()) {
 	    msgSendLater.AddListener(sendUnsentMessagesListener);
 	}
 	else {
 	    msgSendLater.addListener(sendUnsentMessagesListener);
 	}
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.addMsgSendLaterListener");
+	SL3U.Leaving("Sendlater3Backgrounding.addMsgSendLaterListener");
     }
     function removeMsgSendLaterListener() {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.removeMsgSendLaterListener");
+	SL3U.Entering("Sendlater3Backgrounding.removeMsgSendLaterListener");
 	var msgSendLater = Components
 	    .classes["@mozilla.org/messengercompose/sendlater;1"]
 	    .getService(Components.interfaces.nsIMsgSendLater);
-	if (Sendlater3Util.IsThunderbird2()) {
+	if (SL3U.IsThunderbird2()) {
 	    msgSendLater.RemoveListener(sendUnsentMessagesListener);
 	}
 	else {
 	    msgSendLater.removeListener(sendUnsentMessagesListener);
 	}
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.removeMsgSendLaterListener");
+	SL3U.Leaving("Sendlater3Backgrounding.removeMsgSendLaterListener");
     }
 
     // I had to change the type of one of my preferences from int to char to be
@@ -111,18 +111,18 @@ var Sendlater3Backgrounding = function() {
     // any old values, and delete the old one. I don't know if there's a better
     // way to do this.
     function MigrateQuickOptionValue(num) {
-	var oldp = "extensions.sendlater3.quickoptions." + num + ".value";
+	var oldp = "quickoptions." + num + ".value";
 	var newp = oldp + "string";
 	
 	var v;
 	try {
-	    v = Sendlater3Util.PrefService.getIntPref(oldp);
+	    v = SL3U.getIntPref(oldp);
 	}
 	catch (e) {}
 
 	if (v != null) {
-	    Sendlater3Util.PrefService.setCharPref(newp, v);
-	    Sendlater3Util.PrefService.deleteBranch(oldp);
+	    SL3U.setCharPref(newp, v);
+	    SL3U.PrefService.deleteBranch(SL3U.pref(oldp));
 	}
     }
     var i;
@@ -144,7 +144,6 @@ var Sendlater3Backgrounding = function() {
     // instance to its own UUID and proceeds, thus taking over for the other
     // instance that has apparently given up the ghost.
     var uuid;
-    var pref_prefix = "extensions.sendlater3.activescanner.";
     function checkUuid(capturable) {
 	if (! uuid) {
 	    var uuidGenerator = 
@@ -153,10 +152,8 @@ var Sendlater3Backgrounding = function() {
 	    uuid = uuidGenerator.generateUUID().toString();
 	}
 	var current_time = Math.round((new Date()).getTime() / 1000);
-	var active_uuid = Sendlater3Util.PrefService
-	    .getCharPref(pref_prefix + "uuid");
-	var active_time = Sendlater3Util.PrefService
-	    .getIntPref(pref_prefix + "time");
+	var active_uuid = SL3U.getCharPref("activescanner.uuid");
+	var active_time = SL3U.getIntPref("activescanner.time");
 	var timeout = Math.round(checkTimeout() / 1000);
 	var func = "Sendlater3Backgrounding.checkUuid: ";
 	var dbgMsg =
@@ -168,76 +165,71 @@ var Sendlater3Backgrounding = function() {
 	if (active_uuid && active_uuid != "" && active_uuid != uuid) {
 	    if (current_time - active_time > 2 * timeout) {
 		if (capturable) {
-		    Sendlater3Util.debug(func + "capturing: " + dbgMsg);
-		    Sendlater3Util.PrefService.setCharPref(pref_prefix + "uuid",
-							   uuid);
+		    SL3U.debug(func + "capturing: " + dbgMsg);
+		    SL3U.setCharPref("activescanner.uuid", uuid);
 		}
 		else {
-		    Sendlater3Util.debug(func + "can't capture: " + dbgMsg);
+		    SL3U.debug(func + "can't capture: " + dbgMsg);
 		    return false;
 		}
 	    }
 	    else {
-		Sendlater3Util.debug(func + "non-active window: " + dbgMsg);
+		SL3U.debug(func + "non-active window: " + dbgMsg);
 		return false;
 	    }
 	}
 	else if (active_uuid && active_uuid != "") {
-	    Sendlater3Util.debug(func + "active window: " + dbgMsg);
+	    SL3U.debug(func + "active window: " + dbgMsg);
 	}
 	else {
-	    Sendlater3Util.debug(func + "first window: " + dbgMsg);
-	    Sendlater3Util.PrefService.setCharPref(pref_prefix + "uuid", uuid);
+	    SL3U.debug(func + "first window: " + dbgMsg);
+	    SL3U.setCharPref("activescanner.uuid", uuid);
 	}
-	Sendlater3Util.PrefService.setIntPref(pref_prefix + "time",
-					      current_time);
+	SL3U.setIntPref("activescanner.time", current_time);
 	return true;
     }
 
     function clearActiveUuidCallback() {
 	if (! uuid) return;
-	var active_uuid = Sendlater3Util.PrefService
-	    .getCharPref(pref_prefix + "uuid");
+	var active_uuid = SL3U.getCharPref("activescanner.uuid");
 	if (active_uuid != uuid) return;
 	var func = "Sendlater3Backgrounding.clearActiveUuidCallback: ";
-	Sendlater3Util.debug(func + "clearing: uuid=" + uuid);
-	Sendlater3Util.PrefService.setCharPref(pref_prefix + "uuid", "");
+	SL3U.debug(func + "clearing: uuid=" + uuid);
+	SL3U.setCharPref("activescanner.uuid", "");
     }
 
     //mailnews.customDBHeaders 
-    var installedCustomHeaders = Sendlater3Util.PrefService
-        .getCharPref('mailnews.customDBHeaders');
+    var installedCustomHeaders =
+	SL3U.PrefService.getCharPref('mailnews.customDBHeaders');
     var changed = false;
     if (installedCustomHeaders.indexOf("x-send-later-at")<0) {
-	Sendlater3Util.dump("Installing Custom X-Send-Later-At Header\n");
+	SL3U.dump("Installing Custom X-Send-Later-At Header\n");
 	installedCustomHeaders += " x-send-later-at";
 	changed = true;
     }
     if (installedCustomHeaders.indexOf("x-send-later-uuid")<0) {
-	Sendlater3Util.dump("Installing Custom X-Send-Later-Uuid Header\n");
+	SL3U.dump("Installing Custom X-Send-Later-Uuid Header\n");
 	installedCustomHeaders += " x-send-later-uuid";
 	changed = true;
     }
     if (installedCustomHeaders.indexOf("x-send-later-recur")<0) {
-	Sendlater3Util.dump("Installing Custom X-Send-Later-Recur Header\n");
+	SL3U.dump("Installing Custom X-Send-Later-Recur Header\n");
 	installedCustomHeaders += " x-send-later-recur";
 	changed = true;
     }
     if (changed) {
-	Sendlater3Util.PrefService.setCharPref('mailnews.customDBHeaders',
-					       installedCustomHeaders);
+	SL3U.PrefService.setCharPref('mailnews.customDBHeaders',
+				     installedCustomHeaders);
     }
 
     function checkTimeout() {
-	var timeout = Sendlater3Util.PrefService
-	    .getIntPref("extensions.sendlater3.checktimepref");
+	var timeout = SL3U.getIntPref("checktimepref");
 	if (timeout < 5000) timeout = 60000;
 	return timeout;
     }
 
     function displayprogressbar() {
-	return Sendlater3Util.PrefService
-	    .getBoolPref("extensions.sendlater3.showprogress");
+	return SL3U.getBoolPref("showprogress");
     }
 
     var DisplayMessages = new Array();
@@ -245,7 +237,7 @@ var Sendlater3Backgrounding = function() {
     var DisplayReportTimer;
     var DisplayReportCallback = {
 	notify: function(timer) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.DisplayReportCallback.notify");
+	    SL3U.Entering("Sendlater3Backgrounding.DisplayReportCallback.notify");
 	    if (DisplayMessages.length>0) {
 		var msg = DisplayMessages.shift();
 		document.getElementById("sendlater_status").value = msg;
@@ -253,12 +245,12 @@ var Sendlater3Backgrounding = function() {
 	    else {
 		timer.cancel();
 	    }
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.DisplayReportCallback.notify");
+	    SL3U.Leaving("Sendlater3Backgrounding.DisplayReportCallback.notify");
 	}
     }
 
     function StatusReportMsg(msg) {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.StatusReportMsg");
+	SL3U.Entering("Sendlater3Backgrounding.StatusReportMsg");
 	if (!DisplayMessages.length) {
 	    DisplayReportTimer = Components.classes["@mozilla.org/timer;1"]
 		.createInstance(Components.interfaces.nsITimer);
@@ -269,7 +261,7 @@ var Sendlater3Backgrounding = function() {
 	    );
 	}
 	DisplayMessages.push(msg);   
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.StatusReportMsg");
+	SL3U.Leaving("Sendlater3Backgrounding.StatusReportMsg");
     }
 
     var MessagesPending=0;
@@ -280,7 +272,7 @@ var Sendlater3Backgrounding = function() {
 	var n = document.getElementById("sendlater_anim");
 	n.max = ProgressMax;
 	n.value = ProgressValue;
-	Sendlater3Util.debug(str+": value="+n.value+", max="+n.max);
+	SL3U.debug(str+": value="+n.value+", max="+n.max);
     }
 
     function ProgressClear() {
@@ -308,14 +300,14 @@ var Sendlater3Backgrounding = function() {
 
     CopyUnsentListener.prototype = {
 	QueryInterface : function(iid) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.CopyUnsentListener.QueryInterface");
+	    SL3U.Entering("Sendlater3Backgrounding.CopyUnsentListener.QueryInterface");
 	    if (iid.equals(Components.interfaces.nsIMsgCopyServiceListener) ||
 		iid.equals(Components.interfaces.nsISupports)) {
-		Sendlater3Util.Returning("Sendlater3Backgrounding.copyServiceListener.QueryInterface",
+		SL3U.Returning("Sendlater3Backgrounding.copyServiceListener.QueryInterface",
 					 this);
 		return this;
 	    }
-	    Sendlater3Util.Throwing("Sendlater3Backgrounding.CopyUnsentListener.QueryInterface",
+	    SL3U.Throwing("Sendlater3Backgrounding.CopyUnsentListener.QueryInterface",
 				    Components.results.NS_NOINTERFACE);
 	    throw Components.results.NS_NOINTERFACE;
 	},
@@ -327,7 +319,7 @@ var Sendlater3Backgrounding = function() {
 	},
 
 	OnStopCopy: function ( status ) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy");
+	    SL3U.Entering("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy");
 	    var copying = this.localFile;
 	    if (copying.exists()) {
 		try {
@@ -335,17 +327,16 @@ var Sendlater3Backgrounding = function() {
 		}
 		catch (ex) {
 		    // Windows still has it open.
-		    Sendlater3Util.dump("Failed to delete " + copying.path +
-					"; queuing.");
-		    Sendlater3Util.WaitAndDelete(copying);
+		    SL3U.dump("Failed to delete " + copying.path +"; queuing.");
+		    SL3U.WaitAndDelete(copying);
 		}
 	    }
 	    if (! Components.isSuccessCode(status)) {
 		Sendlater3Backgrounding.BackgroundTimer.cancel();
 		Sendlater3Backgrounding.BackgroundTimer = undefined;
-		alert(Sendlater3Util.PromptBundleGetFormatted("CopyUnsentError",
-							      [status]));
-		Sendlater3Util.Returning("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy", "");
+		alert(SL3U.PromptBundleGetFormatted("CopyUnsentError",
+						    [status]));
+		SL3U.Returning("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy", "");
 		return;
 	    }
 	    var messageHDR = this._hdr;
@@ -353,8 +344,7 @@ var Sendlater3Backgrounding = function() {
 	    var recur = this._recur;
 	    var folder = messageHDR.folder;
 	    var dellist;
-	    if (Sendlater3Util.IsThunderbird2() ||
-		Sendlater3Util.IsPostbox()) {
+	    if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 		dellist = Components.classes["@mozilla.org/supports-array;1"]
 		    .createInstance(Components.interfaces.nsISupportsArray);
 		dellist.AppendElement(messageHDR);
@@ -366,12 +356,12 @@ var Sendlater3Backgrounding = function() {
 	    }
 	    messageHDR.folder.deleteMessages(dellist, msgWindow, true, false,
 					     null, false);
-	    if (Sendlater3Util.PrefService.getBoolPref("extensions.sendlater3.sendunsentmessages")) {
+	    if (SL3U.getBoolPref("sendunsentmessages")) {
 		queueSendUnsentMessages();
-		Sendlater3Util.dump ("Sending Message.");
+		SL3U.dump ("Sending Message.");
 	    }
 	    else {
-		Sendlater3Util.dump("Message deposited in Outbox.");
+		SL3U.dump("Message deposited in Outbox.");
 	    }
 	    SetAnimTimer(3000);
 	    if (recur) {
@@ -407,17 +397,15 @@ var Sendlater3Backgrounding = function() {
 		}
 		var content = this._content;
 		content = content.replace(/\r\n\r\n/, "\r\nX-Send-Later-At: " +
-					  Sendlater3Util.FormatDateTime(next,
-									true) +
+					  SL3U.FormatDateTime(next, true) +
 					  "\r\n" + "X-Send-Later-Uuid: " +
-					  Sendlater3Util.getInstanceUuid() +
-					  "\r\n" + "X-Send-Later-Recur: " +
-					  recur + "\r\n\r\n");
+					  SL3U.getInstanceUuid() + "\r\n" +
+					  "X-Send-Later-Recur: " + recur +
+					  "\r\n\r\n");
 		var listener = new CopyRecurListener(folder);
-		Sendlater3Util.CopyStringMessageToFolder(content, folder,
-							 listener);
+		SL3U.CopyStringMessageToFolder(content, folder, listener);
 	    }
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy");
+	    SL3U.Leaving("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy");
 	},
 
 	SetMessageKey: function (key ) {}
@@ -448,9 +436,8 @@ var Sendlater3Backgrounding = function() {
 		}
 		catch (ex) {
 		    // Windows still has it open.
-		    Sendlater3Util.dump("Failed to delete " + copying.path +
-					"; queuing.");
-		    Sendlater3Util.WaitAndDelete(copying);
+		    SL3U.dump("Failed to delete " + copying.path +"; queuing.");
+		    SL3U.WaitAndDelete(copying);
 		}
 	    }
 
@@ -471,8 +458,7 @@ var Sendlater3Backgrounding = function() {
 	    if (! Components.isSuccessCode(status)) {
 		Sendlater3Backgrounding.BackgroundTimer.cancel();
 		Sendlater3Backgrounding.BackgroundTimer = undefined;
-		alert(Sendlater3Util.PromptBundleGetFormatted("CopyRecurError",
-							      [status]));
+		alert(SL3U.PromptBundleGetFormatted("CopyRecurError",[status]));
 		return;
 	    }
 	},
@@ -485,8 +471,8 @@ var Sendlater3Backgrounding = function() {
     var AnimTimer = null;
     var AnimCallback = {
 	notify: function(timer) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.AnimCallback.notify");
-	    Sendlater3Util.debug("STATUS MESSAGE - " + MessagesPending);
+	    SL3U.Entering("Sendlater3Backgrounding.AnimCallback.notify");
+	    SL3U.debug("STATUS MESSAGE - " + MessagesPending);
 	    if (document != null) {
 		document.getElementById("sendlater_deck").selectedIndex = 1;
 		var strbundle =
@@ -506,11 +492,11 @@ var Sendlater3Backgrounding = function() {
 
 		StatusReportMsg("SENDLATER3 [" + status + "]");
 	    }
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.AnimCallback.notify");
+	    SL3U.Leaving("Sendlater3Backgrounding.AnimCallback.notify");
 	}
     }
     function SetAnimTimer(timeout) {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.SetAnimTimer");
+	SL3U.Entering("Sendlater3Backgrounding.SetAnimTimer");
 	if (AnimTimer != null) {
 	    AnimTimer.cancel();
 	}
@@ -521,28 +507,27 @@ var Sendlater3Backgrounding = function() {
 	    timeout,
 	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.SetAnimTimer");
+	SL3U.Leaving("Sendlater3Backgrounding.SetAnimTimer");
     }
 
     function CheckDraftUuid(header, content) {
 	var matches = content.match(/^X-Send-Later-Uuid:\s*(.*)/mi);
 	if (matches) {
 	    var draft_uuid = matches[1];
-	    var instance_uuid = Sendlater3Util.getInstanceUuid();
+	    var instance_uuid = SL3U.getInstanceUuid();
 	    if (draft_uuid != instance_uuid) {
-		Sendlater3Util.debug("Skipping message with date " + header +
-				     " on uuid mismatch (draft " + draft_uuid +
-				     " vs. instance " + instance_uuid + ")");
+		SL3U.debug("Skipping message with date " + header + " on uid" +
+			   " mismatch (draft " + draft_uuid + " vs. instance " +
+			   instance_uuid + ")");
 		return false;
 	    }
 	    else {
-		Sendlater3Util.debug("Draft uuid match: " +
-				     draft_uuid);
+		SL3U.debug("Draft uuid match: " + draft_uuid);
 		return true;
 	    }
 	}
 	else {
-	    Sendlater3Util.debug("No draft uuid");
+	    SL3U.debug("No draft uuid");
 	    return true;
 	}
     }
@@ -557,14 +542,13 @@ var Sendlater3Backgrounding = function() {
     var cycle = 0;
 
     function UriStreamListener(messageHDR) {
-	Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener",
-			       messageHDR);
+	SL3U.Entering("Sendlater3Backgrounding.UriStreamListener", messageHDR);
     	this._content = "";
 	this._cycle = cycle;
 	this._messageHDR = messageHDR;
 	this._header = null;
 	this._recur = null;
-	Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener");
+	SL3U.Leaving("Sendlater3Backgrounding.UriStreamListener");
     }
 
     UriStreamListener.prototype = {
@@ -577,11 +561,11 @@ var Sendlater3Backgrounding = function() {
 	    return null;
 	},
 	onStartRequest: function(aReq, aContext) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener.onStartRequest");
-	    Sendlater3Util.Leaving("Sendlater3Backgrounding.UriStreamListener.onStartRequest");
+	    SL3U.Entering("Sendlater3Backgrounding.UriStreamListener.onStartRequest");
+	    SL3U.Leaving("Sendlater3Backgrounding.UriStreamListener.onStartRequest");
 	},
 	onStopRequest: function(aReq, aContext, aStatusCode) {
-	    Sendlater3Util.Entering("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
+	    SL3U.Entering("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
 	    if (! checkUuid(false) || cycle != this._cycle || 
 		this._content == "") {
 		return;
@@ -609,14 +593,13 @@ var Sendlater3Backgrounding = function() {
 		}
 	    }
 
-	    Sendlater3Util.debug("SendLaterPresent = " + this._header);
+	    SL3U.debug("SendLaterPresent = " + this._header);
 	    if (this._header) {
 		Sendlater3Util.dump ("Found Pending Message.");
 		var sendattime = new Date (this._header);
 		var now = new Date();
 		if (now > sendattime &&
-		    (Sendlater3Util.PrefService
-		     .getBoolPref("extensions.sendlater3.senddrafts"))) {
+		    Sendlater3Util.getBoolPref("senddrafts")) {
 		    // Simplify search & replace in header by putting a
 		    // blank line at the beginning of the message, so that
 		    // we can match header lines starting with \n, i.e., we
@@ -1040,8 +1023,7 @@ var Sendlater3Backgrounding = function() {
 
     var SetUpStatusBar = {
 	observe: function() {
-	    var showStatus = Sendlater3Util
-		.PrefService.getBoolPref("extensions.sendlater3.showstatus");
+	    var showStatus = Sendlater3Util.getBoolPref("showstatus");
 	    document.getElementById("sendlater_deck")
 		.setAttribute("hidden", ! showStatus);
 	}
@@ -1097,7 +1079,7 @@ var Sendlater3Backgrounding = function() {
     Sendlater3Util.PrefService
 	.QueryInterface(Components.interfaces.nsIPrefBranch2);
     Sendlater3Util.PrefService.addObserver(
-	"extensions.sendlater3.showstatus", SetUpStatusBar, false);
+	SL3U.pref("showstatus"), SetUpStatusBar, false);
 
     window.addEventListener("load", StartMonitorCallback,false);
     window.addEventListener("unload", StopMonitorCallback, false);

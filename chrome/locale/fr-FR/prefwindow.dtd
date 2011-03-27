@@ -20,6 +20,8 @@
 <!ENTITY showsendlaterdropdowns.caption "Afficher les menus déroulants dans la barre de menu.">
 <!ENTITY showsendlaterunsentmessages.caption "Déclenche l'expédition des messages en attente dans la boite d'expédition.">
 <!ENTITY showsendlaterunsentmessages.tooltip "En désactivant cette option Send Later ne délivrera pas les messages programmés pour être expédiés mais les placera en boite d'expédition. Désactivez, par exemple cette option si vous utilisez une autre extension (comme BlunderDelay) pour périodiquement relever les messages de la boite d'expédition. Notez bien que lorsque cette option est activée quand Send Later expédie un message TOUS les messages de la boite d'expédition seront envoyés en même temps.">
+<!ENTITY sendlatersendbutton.caption "&quot;Send&quot; does &quot;Send Later&quot;">
+<!ENTITY sendlatersendbutton.tooltip "With this option enabled, the &quot;Send&quot; command (either the button or typing Ctrl-Enter) acts the same as &quot;Send Later&quot;.">
 <!ENTITY advanced.caption "Avancé">
 <!ENTITY dumplevel.caption "Niveau de journalisation :">
 <!ENTITY consolelevel.caption "Console de journalisation :">

@@ -13,7 +13,7 @@ function Sendlater3AskDonate() {
         .newURI(url, null, null);
     protocolSvc.loadURI(uri);
     // -1 == already donated, -2 == stop asking
-    Sendlater3Util.PrefService.setIntPref("extensions.sendlater3.ask.sent", -1);
+    SL3U.setIntPref("ask.sent", -1);
     window.close();
 }
 
@@ -24,14 +24,14 @@ function Sendlater3AskRemind() {
 
 function Sendlater3AskAlready() {
     // -1 == already donated, -2 == stop asking
-    Sendlater3Util.PrefService.setIntPref("extensions.sendlater3.ask.sent", -1);
+    SL3U.setIntPref("ask.sent", -1);
     window.close();
 }
 
 function Sendlater3AskStop() {
     // -1 == already donated, -2 == stop asking
-    Sendlater3Util.PrefService.setIntPref("extensions.sendlater3.ask.sent", -2);
+    SL3U.setIntPref("ask.sent", -2);
     window.close();
 }
 
-Sendlater3Util.initUtil();
+SL3U.initUtil();

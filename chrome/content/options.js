@@ -2,18 +2,16 @@ var Sendlater3Options = {
     ValidatePrefs: function() {
 	var i;
 	for (i = 1; i <= 3; i++) {
-	    if (Sendlater3Util.ShortcutValue(i, true) == undefined) {
+	    if (SL3U.ShortcutValue(i, true) == undefined) {
 		var promptService = Components
 		    .classes["@mozilla.org/embedcomp/prompt-service;1"]
                     .getService(Components.interfaces.nsIPromptService);
-		var value = Sendlater3Util.PrefService
-		    .getCharPref("extensions.sendlater3.quickoptions." + i +
-				 ".valuestring");
-		var msg = Sendlater3Util.PromptBundleGetFormatted(
+		var value = SL3U.getCharPref("quickoptions."+i+".valuestring");
+		var msg = SL3U.PromptBundleGetFormatted(
 		    "OptionShortcutAlertText",
 		    [i, value]);
 		promptService.alert(window,
-				    Sendlater3Util.PromptBundleGet(
+				    SL3U.PromptBundleGet(
 					"OptionShortcutAlertTitle"),
 				    msg);
 		return false;
@@ -23,5 +21,5 @@ var Sendlater3Options = {
     }
 };
 
-Sendlater3Util.initUtil();
-window.addEventListener("unload", Sendlater3Util.uninitUtil, false);
+SL3U.initUtil();
+window.addEventListener("unload", SL3U.uninitUtil, false);

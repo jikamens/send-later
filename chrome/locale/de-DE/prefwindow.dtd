@@ -20,6 +20,8 @@
 <!ENTITY showsendlaterdropdowns.caption "Zeige das Dropdownmenü in der Symbolleiste">
 <!ENTITY showsendlaterunsentmessages.caption "Auslösen des Versands der pendenten Nachrichten aus dem Postausgangsordner">
 <!ENTITY showsendlaterunsentmessages.tooltip "Wird diese Option zurückgesetzt, dann wird &quot;Send Later 3&quot; die Nachrichten nicht in vollem Umfang ausliefern, stattdessen werden sie für die geplante Lieferung direkt in den Postausgang verschoben. Setze diese Option zurück, wenn eine andere Erweiterung, wie z.B. BlunderDelay, verwendet wird, um periodisch Nachrichten aus dem Postausgang zu versenden. Beachte: ist diese Option gesetzt, wird &quot;Send Later 3&quot;, wann immer es Nachrichten ausliefert, melden: ALLE Nachrichten im Postausgang wurden ausgeliefert.">
+<!ENTITY sendlatersendbutton.caption "&quot;Send&quot; does &quot;Send Later&quot;">
+<!ENTITY sendlatersendbutton.tooltip "With this option enabled, the &quot;Send&quot; command (either the button or typing Ctrl-Enter) acts the same as &quot;Send Later&quot;.">
 <!ENTITY advanced.caption "Erweiterte">
 <!ENTITY dumplevel.caption "Dump Log Level:">
 <!ENTITY consolelevel.caption "Konsolen Log Level:">

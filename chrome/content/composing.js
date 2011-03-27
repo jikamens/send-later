@@ -13,12 +13,11 @@ var Sendlater3Composing = {
 	    .getService(Components.interfaces.nsIPrefBranch);
 
 	function CheckForXSendLater() {
-	    Sendlater3Util.Entering("Sendlater3Composing.main.CheckforXSendLater")
+	    SL3U.Entering("Sendlater3Composing.main.CheckforXSendLater")
 	    if (gMsgCompose != null) {
 		var msgCompFields = gMsgCompose.compFields;
 		if (msgCompFields && gMsgCompose.originalMsgURI!="") {
-		    Sendlater3Util.dump("Checking " +
-					gMsgCompose.originalMsgURI);
+		    SL3U.dump("Checking " + gMsgCompose.originalMsgURI);
 		    var messageURI = gMsgCompose.originalMsgURI;
 		    var accountManager = Components
 			.classes["@mozilla.org/messenger/account-manager;1"]
@@ -76,13 +75,13 @@ var Sendlater3Composing = {
 			Sendlater3Composing.prevRecurring = hdr[1];
 		    }
 
-		    Sendlater3Util.dump("prevXSendLater= " +
-					Sendlater3Composing.prevXSendLater +
-					", prevRecurring=" +
-					Sendlater3Composing.prevRecurring);
+		    SL3U.dump("prevXSendLater= " +
+			      Sendlater3Composing.prevXSendLater +
+			      ", prevRecurring=" +
+			      Sendlater3Composing.prevRecurring);
 		}
 	    }
-	    Sendlater3Util.Leaving("Sendlater3Composing.main.CheckforXSendLater");
+	    SL3U.Leaving("Sendlater3Composing.main.CheckforXSendLater");
 	}                            
 
 	var mysleventListener = {
@@ -91,39 +90,69 @@ var Sendlater3Composing = {
 	    } 
 	}
 
-	document.getElementById("msgcomposeWindow")
-	    .addEventListener("compose-window-init",mysleventListener,false);
+	var sendMessageListener = {
+	    handleEvent: function(event) {
+		var msgcomposeWindow = document
+		    .getElementById("msgcomposeWindow");
+		if (msgcomposeWindow.getAttribute("sending_later")) {
+		    msgcomposeWindow.removeAttribute("sending_later");
+		    return;
+		}
+		var msgtype = msgcomposeWindow.getAttribute("msgtype");
+		if (msgtype == nsIMsgCompDeliverMode.Now &&
+		    SL3U.getBoolPref("sendbutton")) {
+		    Sendlater3Composing.CheckSendAt();
+		    if (SL3U.IsThunderbird2()) {
+			throw Components.results.NS_ERROR_ABORT;
+		    }
+		    else {
+			event.preventDefault();
+		    }
+		}
+	    }
+	}
+
+	var msgcomposeWindow = document.getElementById("msgcomposeWindow");
+	msgcomposeWindow.addEventListener("compose-window-init",
+					  mysleventListener, false);
+	msgcomposeWindow.addEventListener("compose-send-message",
+					  sendMessageListener, false);
     },
 
     CheckSendAt: function() {
-	Sendlater3Util.Entering("Sendlater3Composing.CheckSendAt");
+	SL3U.Entering("Sendlater3Composing.CheckSendAt");
 	window.openDialog("chrome://sendlater3/content/prompt.xul",
 			  "SendAtWindow", "modal,chrome,centerscreen", 
 			  { finishCallback: Sendlater3Composing.SendAtTime,
 			    continueCallback: Sendlater3Composing.ContinueSendLater,
+			    sendCallback: function() {
+				document.getElementById("msgcomposeWindow")
+				    .setAttribute("sending_later", true);
+				SendMessage();
+			    },
 			    cancelCallback: Sendlater3Composing.CancelSendLater,
 			    previouslyTimed: Sendlater3Composing.prevXSendLater,
 			    previouslyRecurring: Sendlater3Composing.prevRecurring,
  });
-	Sendlater3Util.Leaving("Sendlater3Composing.CheckSendAt");
+	SL3U.Leaving("Sendlater3Composing.CheckSendAt");
     },
 
     ReallySendAtTimer: null,
     ReallySendAtClosure: null,
     ReallySendAtCallback: {
 	notify: function (timer) {
-	    Sendlater3Util.Entering("Sendlater3Composing.ReallySendAtCallback.notify", timer);
+	    SL3U.Entering("Sendlater3Composing.ReallySendAtCallback.notify", timer);
 	    var sendat = Sendlater3Composing.ReallySendAtClosure.at;
 	    var recur = Sendlater3Composing.ReallySendAtClosure.recur;
 
 	    gCloseWindowAfterSave = true;
 	    var identity = getCurrentIdentity();
-	    if (Sendlater3Util.IsPostbox()) {
+	    if (SL3U.IsPostbox()) {
 		Sendlater3Composing.GenericSendMessagePostbox(
 		    nsIMsgCompDeliverMode.SaveAsDraft,
 		    sendat, recur);
 	    }
-	    else if (Sendlater3Util.IsThunderbird2()) {
+	    else if (SL3U.IsThunderbird2()) {
 		Sendlater3Composing.GenericSendMessageTB2(
 		    nsIMsgCompDeliverMode.SaveAsDraft,
 		    sendat, recur);
@@ -139,29 +168,28 @@ var Sendlater3Composing = {
 	    // five messages since the last time we asked, and the
 	    // user hasn't previously told us to stop asking, pop up a
 	    // donation dialog.
-	    var pp = "extensions.sendlater3.";
-	    var p1 = pp + "ask.time";
-	    var p2 = pp + "ask.sent";
-	    var last_ask = Sendlater3Util.PrefService.getIntPref(p1);
-	    var sent = Sendlater3Util.PrefService.getIntPref(p2);
+	    var p1 = "ask.time";
+	    var p2 = "ask.sent";
+	    var last_ask = SL3U.getIntPref(p1);
+	    var sent = SL3U.getIntPref(p2);
 	    var now = Math.round((new Date()).getTime() / 1000);
 	    if ((sent >= 4) && (last_ask > 0) &&
 		(now - last_ask >= 60 * 60 * 24 * 7)) {
-		Sendlater3Util.PrefService.setIntPref(p1, now);
-		Sendlater3Util.PrefService.setIntPref(p2, 0);
+		SL3U.setIntPref(p1, now);
+		SL3U.setIntPref(p2, 0);
 		window.openDialog("chrome://sendlater3/content/ask.xul",
 				  "AskWindow", "modal,chrome,centerscreen", {});
 	    }
 	    else if (sent > -1) {
 		if (last_ask == 0) {
-		    Sendlater3Util.PrefService.setIntPref(p1, now);
+		    SL3U.setIntPref(p1, now);
 		}
-		Sendlater3Util.PrefService.setIntPref(p2, sent + 1);
+		SL3U.setIntPref(p2, sent + 1);
 	    }
 
-	    Sendlater3Util.SetUpdatePref(identity.key);
+	    SL3U.SetUpdatePref(identity.key);
 	    defaultSaveOperation = "draft";
-	    Sendlater3Util.Leaving("Sendlater3Composing.ReallySendAtCallback.notify");
+	    SL3U.Leaving("Sendlater3Composing.ReallySendAtCallback.notify");
 	}
     },
 
@@ -180,8 +208,7 @@ var Sendlater3Composing = {
     },
 
     SendAtTime: function(sendat, recur_value) {
-	Sendlater3Util.Entering("Sendlater3Composing.SendAtTime",
-				sendat, recur_value);
+	SL3U.Entering("Sendlater3Composing.SendAtTime", sendat, recur_value);
 	Sendlater3Composing.ReallySendAtClosure = { at: sendat,
 						    recur: recur_value };
 	Sendlater3Composing.ReallySendAtTimer = Components
@@ -192,20 +219,20 @@ var Sendlater3Composing = {
 	    500,
 	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
-	Sendlater3Util.Leaving("Sendlater3Composing.SendAtTime");
+	SL3U.Leaving("Sendlater3Composing.SendAtTime");
     },
 
     ContinueSendLaterTimer: null,
     ContinueSendLaterCallback: {
 	notify: function (timer) {
-	    Sendlater3Util.Entering("Sendlater3Composing.ContinueSendLaterCallback.notify");
+	    SL3U.Entering("Sendlater3Composing.ContinueSendLaterCallback.notify");
 	    goDoCommand('cmd_sendLater');
-	    Sendlater3Util.Leaving("Sendlater3Composing.ContinueSendLaterCallback.notify");
+	    SL3U.Leaving("Sendlater3Composing.ContinueSendLaterCallback.notify");
 	}
     },
 
     ContinueSendLater: function() {
-	Sendlater3Util.Entering("Sendlater3Composing.ContinueSendLater");
+	SL3U.Entering("Sendlater3Composing.ContinueSendLater");
 	Sendlater3Composing.ContinueSendLaterTimer = Components
 	    .classes["@mozilla.org/timer;1"]
 	    .createInstance(Components.interfaces.nsITimer);
@@ -214,7 +241,7 @@ var Sendlater3Composing = {
 	    500,
 	    Components.interfaces.nsITimer.TYPE_ONE_SHOT
 	);
-	Sendlater3Util.Leaving("Sendlater3Composing.ContinueSendLater");
+	SL3U.Leaving("Sendlater3Composing.ContinueSendLater");
     },
 
     CancelSendLater: function() {},
@@ -240,10 +267,8 @@ var Sendlater3Composing = {
 	  Recipients2CompFields(msgCompFields);
 
 	  // BEGIN SENDLATER3 ADDED
-	  var head = "X-Send-Later-At: " +
-	      Sendlater3Util.FormatDateTime(sendat,true) + "\r\n" +
-	      "X-Send-Later-Uuid: " + Sendlater3Util.getInstanceUuid() +
-	      "\r\n";
+	  var head = "X-Send-Later-At: " + SL3U.FormatDateTime(sendat,true) +
+		"\r\n" + "X-Send-Later-Uuid: " + SL3U.getInstanceUuid() +"\r\n";
 	  if (recur) {
 	      head += Sendlater3Composing.RecurHeader(sendat, recur);
 	  }
@@ -436,7 +461,13 @@ var Sendlater3Composing = {
 	    // such as smime so they can do any pre-security work such as fetching certificates before sending
 	    var event = document.createEvent('Events');
 	    event.initEvent('compose-send-message', false, true);
-	    document.getElementById("msgcomposeWindow").dispatchEvent(event);
+	    // SENDLATER3 ADDED
+	    var msgcomposeWindow = document.getElementById("msgcomposeWindow");
+	    msgcomposeWindow.setAttribute("sending_later", true);
+	    // END SENDLATER3 ADDED
+	    // SENDLATER3 CHANGED: Use msgcomposeWindow variable instead of
+	    // calling document.getElementById("msgcomposeWindow").
+	    msgcomposeWindow.dispatchEvent(event);
 	    gAutoSaving = (msgType == nsIMsgCompDeliverMode.AutoSaveAsDraft);
 	    // disable the ui if we're not auto-saving
 	    if (!gAutoSaving)
@@ -504,10 +535,8 @@ var Sendlater3Composing = {
 	  Recipients2CompFields(msgCompFields);
 
 	  // BEGIN SENDLATER3 ADDED
-	  var head = "X-Send-Later-At: " +
-	      Sendlater3Util.FormatDateTime(sendat,true) + "\r\n" +
-	      "X-Send-Later-Uuid: " + Sendlater3Util.getInstanceUuid() +
-	      "\r\n";
+	  var head = "X-Send-Later-At: " + SL3U.FormatDateTime(sendat,true) +
+		"\r\n" + "X-Send-Later-Uuid: " + SL3U.getInstanceUuid() +"\r\n";
 	  if (recur) {
 	      head += Sendlater3Composing.RecurHeader(sendat, recur);
 	  }
@@ -760,6 +789,9 @@ var Sendlater3Composing = {
 	    var event = document.createEvent('UIEvents');
 	    event.initEvent('compose-send-message', false, true);
 	    var msgcomposeWindow = document.getElementById("msgcomposeWindow");
+	    // SENDLATER3 ADDED
+	    msgcomposeWindow.setAttribute("sending_later", true);
+	    // END SENDLATER3 ADDED
 	    msgcomposeWindow.setAttribute("msgtype", msgType);
 	    msgcomposeWindow.dispatchEvent(event);
 	    if (event.getPreventDefault())
@@ -827,7 +859,7 @@ var Sendlater3Composing = {
     GenericSendMessage: function( msgType, sendat, recur)
     {
 	// SENDLATER3 CHANGED: Added Entering invocation
-	Sendlater3Util.Entering("Sendlater3Composing.GenericSendMessage");
+	SL3U.Entering("Sendlater3Composing.GenericSendMessage");
 	if (gMsgCompose != null)
 	{
 	    var msgCompFields = gMsgCompose.compFields;
@@ -837,9 +869,8 @@ var Sendlater3Composing = {
 
 		// BEGIN SENDLATER3 ADDED
 		var head = "X-Send-Later-At: " +
-		    Sendlater3Util.FormatDateTime(sendat,true) + "\r\n" +
-		    "X-Send-Later-Uuid: " + Sendlater3Util.getInstanceUuid() +
-		    "\r\n";
+		    SL3U.FormatDateTime(sendat,true) + "\r\n" +
+		    "X-Send-Later-Uuid: " + SL3U.getInstanceUuid() + "\r\n";
 		if (recur) {
 		    head += Sendlater3Composing.RecurHeader(sendat, recur);
 		}
@@ -878,7 +909,7 @@ var Sendlater3Composing = {
 			catch(ex){}
 			// SENDLATER3 CHANGED: Added braces and Returning invocation
 			if(window.cancelSendMessage) {
-			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+			    SL3U.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
 			}
 		    }
@@ -910,7 +941,7 @@ var Sendlater3Composing = {
 			{
 			    GetMsgSubjectElement().focus();
 			    // SENDLATER3 CHANGED: Added Returning invocation
-			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+			    SL3U.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
 			}
 		    }
@@ -934,7 +965,7 @@ var Sendlater3Composing = {
 								    null, null, {value:0});
 			// SENDLATER3 CHANGED: Added braces and Returning invocation
 			if (hadForgotten) {
-			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+			    SL3U.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
 			}
 		    }
@@ -968,7 +999,7 @@ var Sendlater3Composing = {
 
 			    // SENDLATER3 CHANGED: Added braces and Returning invocation
 			    if (!okToProceed) {
-				Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+				SL3U.Returning("Sendlater3Composing.GenericSendMessage", "");
 				return;
 			    }
 
@@ -992,7 +1023,7 @@ var Sendlater3Composing = {
 		    // has turned off autocomplete to local domain.
 		    // SENDLATER3 CHANGED: Added braces and Returning invocation
 		    if (!CheckValidEmailAddress(msgCompFields.to, msgCompFields.cc, msgCompFields.bcc)) {
-			Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+			SL3U.Returning("Sendlater3Composing.GenericSendMessage", "");
 			return;
 		    }
 
@@ -1009,7 +1040,7 @@ var Sendlater3Composing = {
 					  result2);
 			// SENDLATER3 CHANGED: Added braces and Returning invocation
 			if (result2.abort) {
-			    Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+			    SL3U.Returning("Sendlater3Composing.GenericSendMessage", "");
 			    return;
 			}
 			action = result2.action;
@@ -1036,7 +1067,7 @@ var Sendlater3Composing = {
 			break;
 		    default: dump("\###SendMessage Error: invalid action value\n");
 			// SENDLATER3 CHANGED: Added line break before "return;" and Returning invocation
-			Sendlater3Util.Returning("Sendlater3Composing.GenericSendMessage", "");
+			SL3U.Returning("Sendlater3Composing.GenericSendMessage", "");
 			return;
 		    }
 		}
@@ -1083,6 +1114,9 @@ var Sendlater3Composing = {
 		    var event = document.createEvent('UIEvents');
 		    event.initEvent('compose-send-message', false, true);
 		    var msgcomposeWindow = document.getElementById("msgcomposeWindow");
+		    // SENDLATER3 ADDED
+		    msgcomposeWindow.setAttribute("sending_later", true);
+		    // END SENDLATER3 ADDED
 		    msgcomposeWindow.setAttribute("msgtype", msgType);
 		    msgcomposeWindow.dispatchEvent(event);
 		    if (event.getPreventDefault())
@@ -1133,7 +1167,7 @@ var Sendlater3Composing = {
 	else
 	    dump("###SendMessage Error: composeAppCore is null!\n");
 	// SENDLATER3 CHANGED: Added Leaving invocation
-	Sendlater3Util.Leaving("Sendlater3Composing.GenericSendMessage");
+	SL3U.Leaving("Sendlater3Composing.GenericSendMessage");
     },
 
     SetReplyForwardedFlag: function(type, originalURI) {
@@ -1163,9 +1197,11 @@ var Sendlater3Composing = {
 	    }
 	}
 	catch (ex) {
-	    Sendlater3Util.debug("Failed to set flag for reply / forward");
+	    SL3U.debug("Failed to set flag for reply / forward");
 	}
     }
 }
 
+SL3U.initUtil();
+window.addEventListener("unload", SL3U.uninitUtil, false);
 Sendlater3Composing.main();

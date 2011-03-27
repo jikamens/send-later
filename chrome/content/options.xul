@@ -30,6 +30,7 @@
       <preference id="sendlater3_sendunsentmessages" name="extensions.sendlater3.sendunsentmessages" type="bool"/>
       <preference id="sendlater3_dumplevel" name="extensions.sendlater3.logging.dump" type="string"/>
       <preference id="sendlater3_consolelevel" name="extensions.sendlater3.logging.console" type="string"/>
+      <preference id="sendlater3_sendbutton" name="extensions.sendlater3.sendbutton" type="bool"/>
 
 
     </preferences>
@@ -65,6 +66,9 @@
 	</hbox>
 	<hbox align="center" tooltiptext="&showsendlaterunsentmessages.tooltip;">
 		<checkbox id="sendunsentmessagespref" preference="sendlater3_sendunsentmessages" label="&showsendlaterunsentmessages.caption;" />
+	</hbox>
+	<hbox align="center" tooltiptext="&sendlatersendbutton.tooltip;">
+		<checkbox id="sendbuttonpref" preference="sendlater3_sendbutton" label="&sendlatersendbutton.caption;" />
 	</hbox>
 	</vbox>
 	</tabpanel>

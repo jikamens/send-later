@@ -8,6 +8,40 @@ var Sendlater3Util = {
     PrefService: Components.classes["@mozilla.org/preferences-service;1"]
         .getService(Components.interfaces.nsIPrefBranch),
 
+    pref: function(tail) {
+	return "extensions.sendlater3." + tail;
+    },
+
+    getCharPref: function(tail) {
+	var pref = Sendlater3Util.pref(tail);
+	return Sendlater3Util.PrefService.getCharPref(pref);
+    },
+
+    setCharPref: function(tail, value) {
+	var pref = Sendlater3Util.pref(tail);
+	return Sendlater3Util.PrefService.setCharPref(pref, value);
+    },
+
+    getIntPref: function(tail) {
+	var pref = Sendlater3Util.pref(tail);
+	return Sendlater3Util.PrefService.getIntPref(pref);
+    },
+
+    setIntPref: function(tail, value) {
+	var pref = Sendlater3Util.pref(tail);
+	return Sendlater3Util.PrefService.setIntPref(pref, value);
+    },
+
+    getBoolPref: function(tail) {
+	var pref = Sendlater3Util.pref(tail);
+	return Sendlater3Util.PrefService.getBoolPref(pref);
+    },
+
+    setBoolPref: function(tail, value) {
+	var pref = Sendlater3Util.pref(tail);
+	return Sendlater3Util.PrefService.setBoolPref(pref, value);
+    },
+
     _PromptBundle: null,
 
     IsThunderbird2: function() {
@@ -94,7 +128,7 @@ var Sendlater3Util = {
     },
 
     UpdatePref: function(key) {
-	return "extensions.sendlater3.update_needed." + key;
+	return Sendlater3Util.pref("update_needed." + key);
     },
 
     SetUpdatePref: function(key) {
@@ -122,7 +156,8 @@ var Sendlater3Util = {
     ButtonLabel: function(num) {
 	Sendlater3Util.Entering("Sendlater3Util.ButtonLabel", num);
     	var label = Sendlater3Util.PrefService.
-	    getComplexValue("extensions.sendlater3.quickoptions." + num + ".label",
+	    getComplexValue(Sendlater3Util.pref("quickoptions." + num +
+						".label"),
 			    Components.interfaces.nsISupportsString).data;
 	if (label == "<from locale>") {
 	    label = Sendlater3Util.PromptBundleGet("Button" + num + "Label");
@@ -136,9 +171,8 @@ var Sendlater3Util = {
 	if (validate == undefined) {
 	    validate = false;
 	}
-	var raw = Sendlater3Util.PrefService.
-	    getCharPref("extensions.sendlater3.quickoptions." + num +
-			".valuestring");
+	var raw = Sendlater3Util.getCharPref("quickoptions." + num +
+					     ".valuestring");
 	if (raw.match(/^[0-9]+$/)) {
 	    Sendlater3Util.Returning("Sendlater3Util.ShortcutValue", raw);
 	    return raw;
@@ -298,14 +332,13 @@ var Sendlater3Util = {
     },
 
     getInstanceUuid: function() {
-	var uuid_pref = "extensions.sendlater3.instance.uuid";
-	var instance_uuid = Sendlater3Util.PrefService.getCharPref(uuid_pref);
+	var instance_uuid = Sendlater3Util.getCharPref("instance.uuid");
 	if (! instance_uuid) {
 	    var uuidGenerator = 
 		Components.classes["@mozilla.org/uuid-generator;1"]
 		.getService(Components.interfaces.nsIUUIDGenerator);
 	    instance_uuid = uuidGenerator.generateUUID().toString();
-	    Sendlater3Util.PrefService.setCharPref(uuid_pref, instance_uuid);
+	    Sendlater3Util.setCharPref("instance.uuid", instance_uuid);
 	}
 	return instance_uuid;
     },
@@ -332,11 +365,11 @@ var Sendlater3Util = {
 	    .QueryInterface(Components.interfaces.nsIPrefBranch2);
 	Sendlater3Util.consoleObserver =
 	    Sendlater3Util.PrefService.addObserver(
-		"extensions.sendlater3.logging.console",
+		Sendlater3Util.pref("logging.console"),
 		Sendlater3Util.reinitLogging, false);
 	Sendlater3Util.dumpObserver =
 	    Sendlater3Util.PrefService.addObserver(
-		"extensions.sendlater3.logging.dump",
+		Sendlater3Util.pref("logging.dump"),
 		Sendlater3Util.reinitLogging, false);
 	Sendlater3Util.Leaving("Sendlater3Util.initUtil");
     },
@@ -346,10 +379,10 @@ var Sendlater3Util = {
 	Sendlater3Util.PrefService
 	    .QueryInterface(Components.interfaces.nsIPrefBranch2);
 	Sendlater3Util.PrefService.removeObserver(
-	    "extensions.sendlater3.logging.console",
+	    Sendlater3Util.pref("logging.console"),
 	    Sendlater3Util.reinitLogging);
 	Sendlater3Util.PrefService.removeObserver(
-	    "extensions.sendlater3.logging.dump",
+	    Sendlater3Util.pref("logging.dump"),
 	    Sendlater3Util.reinitLogging);
 	Sendlater3Util.Leaving("Sendlater3Util.uninitUtil");
     },
@@ -470,4 +503,6 @@ var Sendlater3Util = {
     Throwing: function(func, error) {
         Sendlater3Util.trace("Throwing \"" + error + "\" from " + func);
     }
-}
+};
+
+var SL3U = Sendlater3Util;

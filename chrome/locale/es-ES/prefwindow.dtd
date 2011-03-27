@@ -20,6 +20,8 @@
 <!ENTITY showsendlaterdropdowns.caption "Show Dropdowns In Toolbar">
 <!ENTITY showsendlaterunsentmessages.caption "Lanza la entrega de mensajes sin enviar dde la Bandeja de Salida">
 <!ENTITY showsendlaterunsentmessages.tooltip "Si desactivas esta opción, entonces &quot;Send Later 3&quot; no enviará los mensajes completamente, sin embargo los pondrá en la Bandeja de Salida cuando estén programados para ser enviados. Desactiva esta opción, por ejemplo, si usas alguna otra extensión como &quot;BlunderDelay&quot; para enviar mensajes periódicamente desde la Bandeja de Salida. Ten en cuenta que cuando esta opción está activa y &quot;Send Later 3&quot; envía un mensaje, todos los mensajes de tu Bandeja de Salida serán enviados.">
+<!ENTITY sendlatersendbutton.caption "&quot;Send&quot; does &quot;Send Later&quot;">
+<!ENTITY sendlatersendbutton.tooltip "With this option enabled, the &quot;Send&quot; command (either the button or typing Ctrl-Enter) acts the same as &quot;Send Later&quot;.">
 <!ENTITY advanced.caption "Avanzado">
 <!ENTITY dumplevel.caption "Vaciar nivel de log:">
 <!ENTITY consolelevel.caption "Nivel de log en la consola:">
