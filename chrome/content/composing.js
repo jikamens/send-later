@@ -99,7 +99,8 @@ var Sendlater3Composing = {
 		    return;
 		}
 		var msgtype = msgcomposeWindow.getAttribute("msgtype");
-		if (msgtype == nsIMsgCompDeliverMode.Now &&
+		if ((msgtype == nsIMsgCompDeliverMode.Now ||
+		     msgtype == nsIMsgCompDeliverMode.Background) &&
 		    SL3U.getBoolPref("sendbutton")) {
 		    Sendlater3Composing.CheckSendAt();
 		    if (SL3U.IsThunderbird2()) {
