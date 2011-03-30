@@ -24,6 +24,7 @@ var Sendlater3Options = {
 	if (SL3U.IsThunderbird2()) {
 	    document.getElementById("sendbutton_hbox").hidden = true;
 	    document.getElementById("help_link").hidden = true;
+	    document.getElementById("donate_link").hidden = true;
 	}
 	else {
 	    document.getElementById("help_text").hidden = true;
