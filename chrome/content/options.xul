@@ -31,119 +31,125 @@
       <preference id="sendlater3_dumplevel" name="extensions.sendlater3.logging.dump" type="string"/>
       <preference id="sendlater3_consolelevel" name="extensions.sendlater3.logging.console" type="string"/>
       <preference id="sendlater3_sendbutton" name="extensions.sendlater3.sendbutton" type="bool"/>
-
-
     </preferences>
-	<tabbox>
-	<tabs>
+    <tabbox>
+      <tabs>
 	<tab label="&general.caption;"/>
 	<tab label="&quickoption1.caption;"/>
 	<tab label="&quickoption2.caption;"/>
 	<tab label="&quickoption3.caption;"/>
 	<tab label="&advanced.caption;"/>
-	</tabs>
-	<tabpanels>
+      </tabs>
+      <tabpanels>
 	<tabpanel>
-	<vbox>
-    <hbox align="center" tooltiptext="&checktimepref.tooltip;">
-        <label align="bottom" accesskey="&checktimepref.accesskey;" control="textintpref">&checktimepref.label;</label><textbox id="textintpref" preference="checktimepref"/><label >&checktimepref2.label;</label>
-    </hbox>
-	<separator label="-"/>
-	<hbox id="sendbutton_hbox" align="center" tooltiptext="&sendlatersendbutton.tooltip;">
-		<checkbox id="sendbuttonpref" preference="sendlater3_sendbutton" label="&sendlatersendbutton.caption;" />
-	</hbox>
-	<hbox align="center" tooltiptext="&showsendlatercolumn.tooltip;">
-		<checkbox id="showcolumnpref" preference="sendlater3_showcolumn" label="&showsendlatercolumn.caption;" />
-	</hbox>
-	<hbox align="center" tooltiptext="&showsendlaterheader.tooltip;">
-		<checkbox id="showheaderpref" preference="sendlater3_showheader" label="&showsendlaterheader.caption;" />
-	</hbox>
-	<hbox align="center" >
-		<checkbox id="showstatuspref" preference="sendlater3_showstatus" label="&showsendlaterstatus.caption;" />
-	</hbox>
-	<hbox align="center" >
-		<checkbox id="showprogresspref" preference="sendlater3_showprogress" label="&showsendlaterprogress.caption;" />
-	</hbox>
-	<hbox align="center" >
-		<checkbox id="showdropdownspref" preference="sendlater3_showdropdowns" label="&showsendlaterdropdowns.caption;" />
-	</hbox>
-	<hbox align="center" tooltiptext="&showsendlaterunsentmessages.tooltip;">
-		<checkbox id="sendunsentmessagespref" preference="sendlater3_sendunsentmessages" label="&showsendlaterunsentmessages.caption;" />
-	</hbox>
-	</vbox>
+	  <vbox>
+	    <hbox align="center" tooltiptext="&checktimepref.tooltip;">
+	      <label align="bottom" accesskey="&checktimepref.accesskey;" control="textintpref">&checktimepref.label;</label><textbox id="textintpref" preference="checktimepref"/><label >&checktimepref2.label;</label>
+	    </hbox>
+	    <separator label="-"/>
+	    <hbox id="sendbutton_hbox" align="center" tooltiptext="&sendlatersendbutton.tooltip;">
+	      <checkbox id="sendbuttonpref" preference="sendlater3_sendbutton" label="&sendlatersendbutton.caption;" />
+	    </hbox>
+	    <hbox align="center" tooltiptext="&showsendlatercolumn.tooltip;">
+	      <checkbox id="showcolumnpref" preference="sendlater3_showcolumn" label="&showsendlatercolumn.caption;" />
+	    </hbox>
+	    <hbox align="center" tooltiptext="&showsendlaterheader.tooltip;">
+	      <checkbox id="showheaderpref" preference="sendlater3_showheader" label="&showsendlaterheader.caption;" />
+	    </hbox>
+	    <hbox align="center" >
+	      <checkbox id="showstatuspref" preference="sendlater3_showstatus" label="&showsendlaterstatus.caption;" />
+	    </hbox>
+	    <hbox align="center" >
+	      <checkbox id="showprogresspref" preference="sendlater3_showprogress" label="&showsendlaterprogress.caption;" />
+	    </hbox>
+	    <hbox align="center" >
+	      <checkbox id="showdropdownspref" preference="sendlater3_showdropdowns" label="&showsendlaterdropdowns.caption;" />
+	    </hbox>
+	    <hbox align="center" tooltiptext="&showsendlaterunsentmessages.tooltip;">
+	      <checkbox id="sendunsentmessagespref" preference="sendlater3_sendunsentmessages" label="&showsendlaterunsentmessages.caption;" />
+	    </hbox>
+	    <separator label="-"/>
+	    <hbox>
+	      <label id="contact_author" tooltiptext="&contactauthor.tooltip;" value="&contactauthor.value;" class="text-link" onclick="Components.classes['@mozilla.org/messengercompose;1'].getService(Components.interfaces.nsIMsgComposeService).OpenComposeWindowWithURI(null, Components.classes['@mozilla.org/network/io-service;1'].getService(Components.interfaces.nsIIOService).newURI('mailto:jik@kamens.us?subject=Send%20Later%203', null, null));"/>
+	      <!-- Postbox, Thunderbird 3+ -->
+	      <label id="help_link" tooltiptext="&helplink.tooltip;" value="&helplink.value;" class="text-link" onclick="Components.classes['@mozilla.org/uriloader/external-protocol-service;1'].getService(Components.interfaces.nsIExternalProtocolService).loadURI(Components.classes['@mozilla.org/network/io-service;1'].getService(Components.interfaces.nsIIOService).newURI('http://blog.kamens.us/send-later-3/', null, null));"/>
+	      <!-- Thunderbird 2 -->
+	      <label id="help_text" value="&helplink.value;: http://blog.kamens.us/send-later-3/"/>
+	    </hbox>
+	  </vbox>
 	</tabpanel>
 	<tabpanel>
-	<vbox>
-	<hbox align="center">
-    	<label align="bottom" control="quickoption_label1">&quickoptionname.label;</label><textbox id="quickoption_label1" preference="sendlater3_quickoption_label1"/>
-        <label align="bottom" control="quickoption_value1">&quickoptionvalue.label;</label><textbox id="quickoption_value1" preference="sendlater3_quickoption_value1"/>
-	</hbox>
-	<separator label="-"/>
-    <hbox align="center" >
-		<checkbox id="quickbutton_tb1" preference="sendlater3_quickoption_showtb1" label="&showtoolbarbutton.caption;" />
-	</hbox>
-	</vbox>
+	  <vbox>
+	    <hbox align="center">
+	      <label align="bottom" control="quickoption_label1">&quickoptionname.label;</label><textbox id="quickoption_label1" preference="sendlater3_quickoption_label1"/>
+	      <label align="bottom" control="quickoption_value1">&quickoptionvalue.label;</label><textbox id="quickoption_value1" preference="sendlater3_quickoption_value1"/>
+	    </hbox>
+	    <separator label="-"/>
+	    <hbox align="center" >
+	      <checkbox id="quickbutton_tb1" preference="sendlater3_quickoption_showtb1" label="&showtoolbarbutton.caption;" />
+	    </hbox>
+	  </vbox>
 	</tabpanel>
 	<tabpanel>
-	<vbox>
-	<hbox align="center">
-    	<label align="bottom" control="quickoption_label2">&quickoptionname.label;</label><textbox id="quickoption_label2" preference="sendlater3_quickoption_label2"/>
-        <label align="bottom" control="quickoption_value2">&quickoptionvalue.label;</label><textbox id="quickoption_value2" preference="sendlater3_quickoption_value2"/>
-	</hbox>
-	<separator label="-"/>
-    <hbox align="center" >
-		<checkbox id="quickbutton_tb2" preference="sendlater3_quickoption_showtb2" label="&showtoolbarbutton.caption;" />
-	</hbox>
-	</vbox>
-    </tabpanel>
+	  <vbox>
+	    <hbox align="center">
+	      <label align="bottom" control="quickoption_label2">&quickoptionname.label;</label><textbox id="quickoption_label2" preference="sendlater3_quickoption_label2"/>
+	      <label align="bottom" control="quickoption_value2">&quickoptionvalue.label;</label><textbox id="quickoption_value2" preference="sendlater3_quickoption_value2"/>
+	    </hbox>
+	    <separator label="-"/>
+	    <hbox align="center" >
+	      <checkbox id="quickbutton_tb2" preference="sendlater3_quickoption_showtb2" label="&showtoolbarbutton.caption;" />
+	    </hbox>
+	  </vbox>
+	</tabpanel>
 	<tabpanel>
-	<vbox>
-	<hbox align="center">
-    	<label align="bottom" control="quickoption_label3">&quickoptionname.label;</label><textbox id="quickoption_label3" preference="sendlater3_quickoption_label3"/>
-        <label align="bottom" control="quickoption_value3">&quickoptionvalue.label;</label><textbox id="quickoption_value3" preference="sendlater3_quickoption_value3"/>
-	</hbox>
-	<separator label="-"/>
-    <hbox align="center" >
-		<checkbox id="quickbutton_tb3" preference="sendlater3_quickoption_showtb3" label="&showtoolbarbutton.caption;" />
-	</hbox>
-	</vbox>
+	  <vbox>
+	    <hbox align="center">
+	      <label align="bottom" control="quickoption_label3">&quickoptionname.label;</label><textbox id="quickoption_label3" preference="sendlater3_quickoption_label3"/>
+	      <label align="bottom" control="quickoption_value3">&quickoptionvalue.label;</label><textbox id="quickoption_value3" preference="sendlater3_quickoption_value3"/>
+	    </hbox>
+	    <separator label="-"/>
+	    <hbox align="center" >
+	      <checkbox id="quickbutton_tb3" preference="sendlater3_quickoption_showtb3" label="&showtoolbarbutton.caption;" />
+	    </hbox>
+	  </vbox>
 
-    </tabpanel>
-    <tabpanel>
-      <vbox>
-	<hbox align="center">
-	  <label>&dumplevel.caption;</label>
-	  <menulist id="sendlater3_dumplevel_menu" preference="sendlater3_dumplevel">
-	    <menupopup>
-	      <menuitem name="dumplevel" label="Fatal"  value="Fatal" />
-	      <menuitem name="dumplevel" label="Error"  value="Error" />
-	      <menuitem name="dumplevel" label="Warn"   value="Warn"  />
-	      <menuitem name="dumplevel" label="Info"   value="Info"  />
-	      <menuitem name="dumplevel" label="Config" value="Config"/>
-	      <menuitem name="dumplevel" label="Debug"  value="Debug" />
-	      <menuitem name="dumplevel" label="Trace"  value="Trace" />
-	      <menuitem name="dumplevel" label="All"    value="All"   />
-	    </menupopup>
-	  </menulist>
-	</hbox>
-	<hbox align="center">
-	  <label>&consolelevel.caption;</label>
-	  <menulist id="sendlater3_consolelevel_menu" preference="sendlater3_consolelevel">
-	    <menupopup>
-	      <menuitem name="consolelevel" label="Fatal"  value="Fatal" />
-	      <menuitem name="consolelevel" label="Error"  value="Error" />
-	      <menuitem name="consolelevel" label="Warn"   value="Warn"  />
-	      <menuitem name="consolelevel" label="Info"   value="Info"  />
-	      <menuitem name="consolelevel" label="Config" value="Config"/>
-	      <menuitem name="consolelevel" label="Debug"  value="Debug" />
-	      <menuitem name="consolelevel" label="Trace"  value="Trace" />
-	      <menuitem name="consolelevel" label="All"    value="All"   />
-	    </menupopup>
-	  </menulist>
-	</hbox>
-      </vbox>
-    </tabpanel>
-	</tabpanels>
-	</tabbox>
+	</tabpanel>
+	<tabpanel>
+	  <vbox>
+	    <hbox align="center">
+	      <label>&dumplevel.caption;</label>
+	      <menulist id="sendlater3_dumplevel_menu" preference="sendlater3_dumplevel">
+		<menupopup>
+		  <menuitem name="dumplevel" label="Fatal"  value="Fatal" />
+		  <menuitem name="dumplevel" label="Error"  value="Error" />
+		  <menuitem name="dumplevel" label="Warn"   value="Warn"  />
+		  <menuitem name="dumplevel" label="Info"   value="Info"  />
+		  <menuitem name="dumplevel" label="Config" value="Config"/>
+		  <menuitem name="dumplevel" label="Debug"  value="Debug" />
+		  <menuitem name="dumplevel" label="Trace"  value="Trace" />
+		  <menuitem name="dumplevel" label="All"    value="All"   />
+		</menupopup>
+	      </menulist>
+	    </hbox>
+	    <hbox align="center">
+	      <label>&consolelevel.caption;</label>
+	      <menulist id="sendlater3_consolelevel_menu" preference="sendlater3_consolelevel">
+		<menupopup>
+		  <menuitem name="consolelevel" label="Fatal"  value="Fatal" />
+		  <menuitem name="consolelevel" label="Error"  value="Error" />
+		  <menuitem name="consolelevel" label="Warn"   value="Warn"  />
+		  <menuitem name="consolelevel" label="Info"   value="Info"  />
+		  <menuitem name="consolelevel" label="Config" value="Config"/>
+		  <menuitem name="consolelevel" label="Debug"  value="Debug" />
+		  <menuitem name="consolelevel" label="Trace"  value="Trace" />
+		  <menuitem name="consolelevel" label="All"    value="All"   />
+		</menupopup>
+	      </menulist>
+	    </hbox>
+	  </vbox>
+	</tabpanel>
+      </tabpanels>
+    </tabbox>
   </prefpane>
 </prefwindow>

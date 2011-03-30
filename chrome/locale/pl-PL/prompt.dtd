@@ -7,10 +7,10 @@
 <!ENTITY sendlater.prompt.title.label "Wyślij tą wiadomość później">
 <!ENTITY sendlater.prompt.sendat.label "Wyślij o określonym czasie">
 <!ENTITY sendlater.prompt.sendat.tooltip "Zapisz wiadomość w folderze &quot;Szkice&quot;, aby dostarczyć ją w wyznaczonym powyżej czasie.">
-<!ENTITY sendlater.prompt.recur.label "Recur:">
-<!ENTITY sendlater.prompt.none.label "none">
-<!ENTITY sendlater.prompt.daily.label "daily">
-<!ENTITY sendlater.prompt.weekly.label "weekly">
-<!ENTITY sendlater.prompt.monthly.label "monthly">
-<!ENTITY sendlater.prompt.yearly.label "yearly">
+<!ENTITY sendlater.prompt.recur.label "Powtarzać się:">
+<!ENTITY sendlater.prompt.none.label "żaden">
+<!ENTITY sendlater.prompt.daily.label "na dobę">
+<!ENTITY sendlater.prompt.weekly.label "tygodniowo">
+<!ENTITY sendlater.prompt.monthly.label "miesięcznie">
+<!ENTITY sendlater.prompt.yearly.label "rocznie">
 <!ENTITY sendlater.toolbar.sendlater.button.label "Wyślij później">

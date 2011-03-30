@@ -25,3 +25,7 @@
 <!ENTITY advanced.caption "Erweiterte">
 <!ENTITY dumplevel.caption "Dump Log Level:">
 <!ENTITY consolelevel.caption "Konsolen Log Level:">
+<!ENTITY contactauthor.tooltip "Senden Sie eine Mail-Nachricht an den Autor Send Later 3 (in englischer Sprache bitte!).">
+<!ENTITY contactauthor.value "Kontakt zum Autor">
+<!ENTITY helplink.tooltip "Sehen Sie sich die Dokumentation Send Later 3 (in Englisch).">
+<!ENTITY helplink.value "Gebrauchsanweisung">

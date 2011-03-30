@@ -25,3 +25,7 @@
 <!ENTITY advanced.caption "Avancé">
 <!ENTITY dumplevel.caption "Niveau de journalisation :">
 <!ENTITY consolelevel.caption "Console de journalisation :">
+<!ENTITY contactauthor.tooltip "Envoyer un message à l'auteur de Send Later 3 (en anglais, s'il vous plaît!).">
+<!ENTITY contactauthor.value "Contacter l'auteur">
+<!ENTITY helplink.tooltip "Voir la documentation pour Send Later 3 (en anglais).">
+<!ENTITY helplink.value "Guide de l'utilisateur">

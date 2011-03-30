@@ -1,16 +1,16 @@
 <!ENTITY separate.label "">
 <!ENTITY sendlater.prompt.sendlater.label "Pasar a través de Enviar Después">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Funcionalidad integrada en Thunderbird: mover los mensajes a la Bandeja de Salida, para la próxima vez que se envien los mensajes sin enviar.">
-<!ENTITY sendlater.prompt.sendnow.label "Send Now">
+<!ENTITY sendlater.prompt.sendnow.label "Enviar ahora">
 <!ENTITY sendlater.prompt.close.label "Cancelar">
 <!ENTITY sendlater.prompt.close.tooltip "Volver a edición del mensaje.">
 <!ENTITY sendlater.prompt.title.label "Enviar este email después">
 <!ENTITY sendlater.prompt.sendat.label "Envía más tarde a una hora especifica">
 <!ENTITY sendlater.prompt.sendat.tooltip "Guardar el mensaje en carpeta de Borradores, para un envío automático a la hora arriba indicada.">
-<!ENTITY sendlater.prompt.recur.label "Recur:">
-<!ENTITY sendlater.prompt.none.label "none">
-<!ENTITY sendlater.prompt.daily.label "daily">
-<!ENTITY sendlater.prompt.weekly.label "weekly">
-<!ENTITY sendlater.prompt.monthly.label "monthly">
-<!ENTITY sendlater.prompt.yearly.label "yearly">
+<!ENTITY sendlater.prompt.recur.label "Repetirse:">
+<!ENTITY sendlater.prompt.none.label "ninguno">
+<!ENTITY sendlater.prompt.daily.label "todos los días">
+<!ENTITY sendlater.prompt.weekly.label "semanales">
+<!ENTITY sendlater.prompt.monthly.label "mensuales">
+<!ENTITY sendlater.prompt.yearly.label "anuales">
 <!ENTITY sendlater.toolbar.sendlater.button.label "Enviar Después">

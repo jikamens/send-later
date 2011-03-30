@@ -1,16 +1,16 @@
 <!ENTITY separate.label "">
 <!ENTITY sendlater.prompt.sendlater.label "Doorsturen naar Send Later">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Standaard Thunderbird functie: verplaats bericht naar Postvak UIT voor latere verzending.">
-<!ENTITY sendlater.prompt.sendnow.label "Send Now">
+<!ENTITY sendlater.prompt.sendnow.label "Nu verzenden">
 <!ENTITY sendlater.prompt.close.label "Annuleren">
 <!ENTITY sendlater.prompt.close.tooltip "Terug naar het bewerken van het bericht.">
 <!ENTITY sendlater.prompt.title.label "Verstuur deze email later">
 <!ENTITY sendlater.prompt.sendat.label "Verstuur later op de aangegeven tijd">
 <!ENTITY sendlater.prompt.sendat.tooltip "Sla het bericht op in de map Concepten voor automatisch verzenden op het hierboven aangegeven tijdstip.">
-<!ENTITY sendlater.prompt.recur.label "Recur:">
-<!ENTITY sendlater.prompt.none.label "none">
-<!ENTITY sendlater.prompt.daily.label "daily">
-<!ENTITY sendlater.prompt.weekly.label "weekly">
-<!ENTITY sendlater.prompt.monthly.label "monthly">
-<!ENTITY sendlater.prompt.yearly.label "yearly">
-<!ENTITY sendlater.toolbar.sendlater.button.label "Send Later">
+<!ENTITY sendlater.prompt.recur.label "Terugkeren:">
+<!ENTITY sendlater.prompt.none.label "geen">
+<!ENTITY sendlater.prompt.daily.label "dagelijkse">
+<!ENTITY sendlater.prompt.weekly.label "wekelijkse">
+<!ENTITY sendlater.prompt.monthly.label "maandelijkse">
+<!ENTITY sendlater.prompt.yearly.label "jaarlijks">
+<!ENTITY sendlater.toolbar.sendlater.button.label "Later verzenden">

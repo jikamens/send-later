@@ -7,10 +7,10 @@
 <!ENTITY sendlater.prompt.title.label "Envoyer ce courriel plus tard">
 <!ENTITY sendlater.prompt.sendat.label "Envoyer à une heure donnée">
 <!ENTITY sendlater.prompt.sendat.tooltip "Enregistrer le message pour envoi automatique à l'heure précisée ci-dessus.">
-<!ENTITY sendlater.prompt.recur.label "Recur:">
+<!ENTITY sendlater.prompt.recur.label "Se reproduire:">
 <!ENTITY sendlater.prompt.none.label "none">
-<!ENTITY sendlater.prompt.daily.label "daily">
-<!ENTITY sendlater.prompt.weekly.label "weekly">
-<!ENTITY sendlater.prompt.monthly.label "monthly">
-<!ENTITY sendlater.prompt.yearly.label "yearly">
-<!ENTITY sendlater.toolbar.sendlater.button.label "Send Later">
+<!ENTITY sendlater.prompt.daily.label "quotidienne">
+<!ENTITY sendlater.prompt.weekly.label "hebdomadaires">
+<!ENTITY sendlater.prompt.monthly.label "par mois">
+<!ENTITY sendlater.prompt.yearly.label "annuelle">
+<!ENTITY sendlater.toolbar.sendlater.button.label "Envoyer plus tard">

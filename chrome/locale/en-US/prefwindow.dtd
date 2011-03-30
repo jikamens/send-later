@@ -25,3 +25,7 @@
 <!ENTITY advanced.caption "Advanced">
 <!ENTITY dumplevel.caption "Dump log level:">
 <!ENTITY consolelevel.caption "Console log level:">
+<!ENTITY contactauthor.tooltip "Send a mail message to the author of Send Later 3.">
+<!ENTITY contactauthor.value "Contact the author">
+<!ENTITY helplink.tooltip "View the Send Later 3 documentation.">
+<!ENTITY helplink.value "User guide">

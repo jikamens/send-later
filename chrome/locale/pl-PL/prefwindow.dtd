@@ -25,3 +25,7 @@
 <!ENTITY advanced.caption "Zaawansowane">
 <!ENTITY dumplevel.caption "Poziom logowania do pliku:">
 <!ENTITY consolelevel.caption "Poziom logowania w konsoli:">
+<!ENTITY contactauthor.tooltip "Wyślij wiadomość e-mail do autora Send Later3 (w języku angielskim, proszę!).">
+<!ENTITY contactauthor.value "Kontakt z autorem">
+<!ENTITY helplink.tooltip "Zobacz w dokumentacji Send Later 3 (w języku angielskim).">
+<!ENTITY helplink.value "Podręcznik użytkownika">
