@@ -2,20 +2,7 @@ Share common code between toolbar and popup.
 
 Stupid interval should be in seconds, not milliseconds.
 
-Should Send Later mark a message "replied" or "forwarded" when sending
-a delayed reply/forward?
-
 Send Later column doesn't work in unified Drafts folder.
-
-Fix intermittent bug with Send Later column not working in drafts
-folder.
-
-Make it harder to accidentally press Send instead of Send Later once a
-message has been scheduled (i.e., once the settings in the toolbar
-have been modified or a previously scheduled draft is
-re-edited). Possibly also optionally allow the default behavior of the
-Send button to be Send Later, with perhaps a Shift modifier to get the
-original behavior.
 
 Bug: You shouldn't be allowed to schedule a message with no recopients
 for future sending.
@@ -39,3 +26,7 @@ Need to figure out why Enigmail is bypassed when Send Later 3 is used.
 Look into whether it might be possible to use a slider to send the
 scheduled send time instead of drop-downs. (idea from Daniel N. Lang
 [daniel@sonnefueralle.de]).
+
+Allow user to specify period of recurrence, e.g., every 2 weeks
+instead of weekly, every 6 months instead of monthly, or perhaps even
+ever 0.5 weeks.
