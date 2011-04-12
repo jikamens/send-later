@@ -30,3 +30,12 @@ scheduled send time instead of drop-downs. (idea from Daniel N. Lang
 Allow user to specify period of recurrence, e.g., every 2 weeks
 instead of weekly, every 6 months instead of monthly, or perhaps even
 ever 0.5 weeks.
+
+Make the shortcut buttons and detailed drop-downs separate toolbar
+customization items rather than one big chunk, so that people can
+decide by drag-and-drop which buttons to include (rather than using
+checkboxes in the prefs) and put the buttons wherever they want on the
+toolbar.
+
+Enable the standard "Send Later" button, which is currently only
+enabled when working offline.
