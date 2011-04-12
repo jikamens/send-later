@@ -39,3 +39,6 @@ toolbar.
 
 Enable the standard "Send Later" button, which is currently only
 enabled when working offline.
+
+Investigate why DispMUA 1.6.5 doesn't work in TB2 when Send Later 3 is
+installed.
