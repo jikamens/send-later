@@ -5,7 +5,7 @@
     <em:type>2</em:type>
     <em:id>sendlater3@kamens.us</em:id>
     <em:name>Send Later 3</em:name>
-    <em:version>3.2.7</em:version>
+    <em:version>3.2.8beta1</em:version>
     <em:creator>Karthik Sivaram</em:creator>
     <em:developer>Jonathan Kamens</em:developer>
     <em:translator>Didier Journois</em:translator><!-- French -->
@@ -13,6 +13,7 @@
     <em:translator>Daniel S.</em:translator><!-- Part of German -->
     <em:translator>Milcom.es</em:translator><!-- Spanish -->
     <em:translator>Maciej Kobuszewski</em:translator><!-- Polish -->
+    <em:translator>Mikael Hiort af Ornäs</em:translator><!-- Swedish -->
     <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
     <em:localized>
       <Description>
@@ -47,6 +48,14 @@
 	<em:name>Send Later 3</em:name>
 	<em:locale>de-DE</em:locale>
 	<em:description>Eine echte "SendeSpäter" Funktionalität zur Planung der Sendezeit von Emails.</em:description>
+      </Description>
+    </em:localized>
+	<em:localized>
+      <Description>
+	<em:name>Send Later 3</em:name>
+	<em:locale>sv-SE</em:locale>
+	<em:description>"Skicka senare"-funktion som låter användaren schemalägga tidpunkten för sändning av ett e-brev.</em:description>
+	<em:translator>Mikael Hiort af Ornäs</em:translator>
       </Description>
     </em:localized>
     <em:homepageURL>http://blog.kamens.us/send-later-3</em:homepageURL>

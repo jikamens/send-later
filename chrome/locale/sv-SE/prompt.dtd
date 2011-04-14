@@ -1,0 +1,16 @@
+<!ENTITY separate.label "">
+<!ENTITY sendlater.prompt.sendlater.label "Till Utkorgen för att skickas senare">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Inbyggd Thunderbird-funktion: Flytta meddelandet till Utkorgen för sändning nästa gång ej skickade meddelanden skickas.">
+<!ENTITY sendlater.prompt.sendnow.label "Skicka nu">
+<!ENTITY sendlater.prompt.close.label "Avbryt">
+<!ENTITY sendlater.prompt.close.tooltip "Gå tillbaka för att redigera meddelandet.">
+<!ENTITY sendlater.prompt.title.label "Skicka detta e-brev senare">
+<!ENTITY sendlater.prompt.sendat.label "Skicka senare vid angiven tidpunkt">
+<!ENTITY sendlater.prompt.sendat.tooltip "Spara meddelandet i Utkast-mappen för automatisk sändning vid ovan angivna tidpunkt.">
+<!ENTITY sendlater.prompt.recur.label "Upprepning:">
+<!ENTITY sendlater.prompt.none.label "ingen">
+<!ENTITY sendlater.prompt.daily.label "varje dag">
+<!ENTITY sendlater.prompt.weekly.label "varje vecka">
+<!ENTITY sendlater.prompt.monthly.label "varje månad">
+<!ENTITY sendlater.prompt.yearly.label "varje år">
+<!ENTITY sendlater.toolbar.sendlater.button.label "Skicka senare">
