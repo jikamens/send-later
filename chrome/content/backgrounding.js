@@ -1061,11 +1061,7 @@ var Sendlater3Backgrounding = function() {
 		var current_version = matches[1];
 		var relnotes = SL3U.getCharPref("relnotes");
 		SL3U.setCharPref("relnotes", current_version);
-		// Release notes displaying was introduced in 3.2.7. This
-		// special case can be removed once 3.2.7 has been in the field
-		// for a while so most people have upgraded to it.
-		if ((!relnotes && current_version == "3.2.7") ||
-		    (relnotes && current_version != relnotes)) {
+		if (relnotes && current_version != relnotes) {
 		    var url = "http://blog.kamens.us/send-later-3/#notes";
 		    Components
 			.classes['@mozilla.org/appshell/window-mediator;1']
