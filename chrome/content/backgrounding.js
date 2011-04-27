@@ -1,3 +1,8 @@
+try {
+    Components.utils.import("resource:///modules/MailUtils.js");
+}
+catch (ex) {}
+
 var Sendlater3Backgrounding = function() {
     SL3U.Entering("Sendlater3Backgrounding");
 
@@ -892,19 +897,8 @@ var Sendlater3Backgrounding = function() {
 	    folderstocheck = new Array();
 	    foldersdone = new Array();
 	    folderstocheck.push(SL3U.FindSubFolder(fdrlocal, "Drafts").URI);
+	    ProgressAdd();
 	    SL3U.dump("SCHEDULE - " + folderstocheck[0]);
-	    // Local Drafts folder might have different name, e.g., in other
-	    // locales.
-	    var local_draft_pref = SL3U.PrefService
-		.getComplexValue('mail.identity.default.draft_folder',
-				 Components.interfaces.nsISupportsString).data;
-	    SL3U.debug("mail.identity.default.draft_folder=" +local_draft_pref);
-	    if (local_draft_pref != null &&
-		local_draft_pref != folderstocheck[0]) {
-		SL3U.debug("SCHEDULE - " + local_draft_pref);
-		folderstocheck.push(local_draft_pref);
-		ProgressAdd();
-	    }
 	    // if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 	    // 	var sub = SL3U.FindSubFolder(fdrlocal, "Drafts");
 	    // 	sub.endFolderLoading();
@@ -921,6 +915,25 @@ var Sendlater3Backgrounding = function() {
 	    }
 	    catch (e) {
 		SL3U.debug("updateFolder on local Drafts folder failed");
+	    }
+
+	    // Local Drafts folder might have different name, e.g., in other
+	    // locales.
+	    var local_draft_pref = SL3U.PrefService
+		.getComplexValue('mail.identity.default.draft_folder',
+				 Components.interfaces.nsISupportsString).data;
+	    SL3U.debug("mail.identity.default.draft_folder=" +local_draft_pref);
+	    if (local_draft_pref != null &&
+		local_draft_pref != folderstocheck[0]) {
+		SL3U.debug("SCHEDULE - " + local_draft_pref);
+		folderstocheck.push(local_draft_pref);
+		try {
+		    MailUtils.getFolderForURI(local_draft_pref, false).updateFolder(msgWindow);
+		}
+		catch (e) {
+		    SL3U.debug("updateFolder on " + local_draft_pref + " failed");
+		}
+		ProgressAdd();
 	    }
 
 	    var allaccounts = accountManager.accounts;
