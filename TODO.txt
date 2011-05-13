@@ -49,3 +49,13 @@ installed.
 
 Spell check pops up twice if there's a spelling error you don't
 correct when Send Does Send Later is enabled.
+
+If user has not yet entered master password in current Thunderbird
+setting when message is scheduled to be sent, user gets prompted for
+it, and if he's not there, the mail won't get sent. Need to look into
+prompting for master password if needed when message is
+scheduled. Other issue: can't save the password, so what if user
+schedules message and then exits Thunderbird and restarts it later
+without entering master password? Maybe need to have the backgrounding
+process notice that master password is needed and prompt for it
+whenever there are scheduled messages.
