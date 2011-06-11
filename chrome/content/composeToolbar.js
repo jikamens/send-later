@@ -40,7 +40,9 @@ var Sendlater3ComposeToolbar = {
 
     TimerCallback: {
 	notify: function(timer) {
+	    SL3U.Entering("Sendlater3ComposeToolbar.TimerCallback.notify");
 	    Sendlater3ComposeToolbar.SetOnLoad();
+	    SL3U.Leaving("Sendlater3ComposeToolbar.TimerCallback.notify");
 	}
     },
 
@@ -164,10 +166,10 @@ var Sendlater3ComposeToolbar = {
 		    Sendlater3Composing.prevXSendLater.getHours();
 		document.getElementById("minvalue").value =
 		    Sendlater3Composing.prevXSendLater.getMinutes();
-		t.setTimer();
 	    }
 	    else {
 		SL3U.dump("No previous time");
+		t.setTimer();
 	    }
 	    if (Sendlater3Composing.prevRecurring) {
 		Sendlater3ComposeToolbar.SetRecurring(true);
