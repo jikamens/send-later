@@ -32,6 +32,11 @@ Toolbar: Send at specified time
 Toolbar: Send in 15 minutes
 toolbar: Send in 30 minutes
 Toolbar: Send in 2 hours
+Toolbar: Hour values visible in drop-down
+Toolbar: Minute values visible in drop-down
+Toolbar: Year values visible in drop-down
+Toolbar: Month values visible in drop-down
+Toolbar: Day values visible in drop-down
 Show Send Later column enabled works
 Show Send Later column disabled works
 Show Background Progress in Statusbar enabled works
