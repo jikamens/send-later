@@ -59,3 +59,5 @@ schedules message and then exits Thunderbird and restarts it later
 without entering master password? Maybe need to have the backgrounding
 process notice that master password is needed and prompt for it
 whenever there are scheduled messages.
+
+TODO: Seamonkey compatibility?
