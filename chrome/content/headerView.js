@@ -85,6 +85,7 @@ var Sendlater3HeaderView = function() {
 	var identities = accountManager
 	    .GetIdentitiesForServer(msgFolder.server);
 	
+	var idindex;
 	for (idindex = 0;idindex < identities.Count(); idindex++) {
 	    if (identities.GetElementAt(idindex)
 		.QueryInterface(Components.interfaces.nsIMsgIdentity)
