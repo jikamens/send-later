@@ -86,6 +86,10 @@ var Sendlater3Composing = {
 
 	var mysleventListener = {
 	    handleEvent : function(event) { 
+		var msgcomposeWindow = document
+		    .getElementById("msgcomposeWindow");
+		msgcomposeWindow.removeAttribute("sending_later");
+		msgcomposeWindow.removeAttribute("sl3_send_button");
 		CheckForXSendLater(); 
 	    } 
 	}
@@ -102,7 +106,7 @@ var Sendlater3Composing = {
 		if ((msgtype == nsIMsgCompDeliverMode.Now ||
 		     msgtype == nsIMsgCompDeliverMode.Background) &&
 		    SL3U.getBoolPref("sendbutton")) {
-		    Sendlater3Composing.CheckSendAt();
+		    Sendlater3Composing.CheckSendAt(true);
 		    event.preventDefault();
 		}
 	    }
@@ -117,17 +121,33 @@ var Sendlater3Composing = {
 	    msgcomposeWindow.addEventListener("compose-send-message",
 					      sendMessageListener, false);
 	}
+
+	if (typeof(DoSpellCheckBeforeSend) == 'function' &&
+	    DoSpellCheckBeforeSend !=
+	    Sendlater3Composing.MyDoSpellCheckBeforeSend) {
+	    Sendlater3Composing.OldDoSpellCheckBeforeSend =
+		DoSpellCheckBeforeSend;
+	    DoSpellCheckBeforeSend =
+		Sendlater3Composing.MyDoSpellCheckBeforeSend;
+	}
     },
 
-    CheckSendAt: function() {
+    CheckSendAt: function(send_button) {
 	SL3U.Entering("Sendlater3Composing.CheckSendAt");
+	if (send_button)
+	    document.getElementById("msgcomposeWindow")
+		.setAttribute("sl3_send_button", true);
+	else
+	    document.getElementById("msgcomposeWindow")
+		.removeAttribute("sl3_send_button");
 	window.openDialog("chrome://sendlater3/content/prompt.xul",
 			  "SendAtWindow", "modal,chrome,centerscreen", 
 			  { finishCallback: Sendlater3Composing.SendAtTime,
 			    continueCallback: Sendlater3Composing.ContinueSendLater,
 			    sendCallback: function() {
-				document.getElementById("msgcomposeWindow")
-				    .setAttribute("sending_later", true);
+				var w = document
+				    .getElementById("msgcomposeWindow");
+				w.setAttribute("sending_later", true);
 				SendMessage();
 			    },
 			    cancelCallback: Sendlater3Composing.CancelSendLater,
@@ -248,6 +268,17 @@ var Sendlater3Composing = {
 
     prevXSendLater: false,
     prevRecurring: false,
+
+    MyDoSpellCheckBeforeSend: function() {
+	var msgcomposeWindow = document
+	    .getElementById("msgcomposeWindow");
+	if (msgcomposeWindow.getAttribute("sl3_send_button"))
+	    return false;
+	if (Sendlater3Composing.OldDoSpellCheckBeforeSend === undefined)
+	    return SL3U.PrefService.getBoolPref("mail.SpellCheckBeforeSend");
+	else
+	    return Sendlater3Composing.OldDoSpellCheckBeforeSend();
+    },
 
     // Copied from MsgComposeCommands.js in Fedora 10 Thunderbird
     // 2.0.0.23.
@@ -586,7 +617,12 @@ var Sendlater3Composing = {
 	     )
 	  {
 	    //Do we need to check the spelling?
-	    if (sPrefs.getBoolPref("mail.SpellCheckBeforeSend"))
+	    // SENDLATER3 CHANGED: use MyDoSpellCheckBeforeSend
+	    // NOTE: Eventually, when my DoSpellCheckBeforeSend patch to the
+	    // standard GenericSendMessage function is shipped with Postbox,
+	    // we'll be able to just call DoSpellCheckBeforeSend here like in
+	    // the standard function.
+	    if (Sendlater3Composing.MyDoSpellCheckBeforeSend())
 	    {
 	      // We disable spellcheck for the following -subject line, attachment pane, identity and addressing widget
 	      // therefore we need to explicitly focus on the mail body when we have to do a spellcheck.
@@ -896,7 +932,12 @@ var Sendlater3Composing = {
 		   )
 		{
 		    //Do we need to check the spelling?
-		    if (getPref("mail.SpellCheckBeforeSend"))
+		    // SENDLATER3 CHANGED: use MyDoSpellCheckBeforeSend
+		    // NOTE: Eventually, when my DoSpellCheckBeforeSend patch to the
+		    // standard GenericSendMessage function is shipped with Postbox,
+		    // we'll be able to just call DoSpellCheckBeforeSend here like in
+		    // the standard function.
+		    if (Sendlater3Composing.MyDoSpellCheckBeforeSend())
 		    {
 			// We disable spellcheck for the following -subject line, attachment pane, identity and addressing widget
 			// therefore we need to explicitly focus on the mail body when we have to do a spellcheck.

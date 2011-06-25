@@ -58,3 +58,15 @@ Pending count works
 Displaying header in draft works without error
 Hiding header (empty) in draft works without error
 Hiding header (disabled) in draft works without error
+Spell check enabled: called once with Send Button -> send at specified time
+Spell check enabled: called once with Send Button -> pass through
+Spell check enabled: called once with Send Button -> send now
+Spell check enabled: called once with Send Later -> send at specified time
+Spell check enabled: called once with Send Later -> pass through
+Spell check enabled: called once with Send Later -> send now
+Spell check disabled: not called with Send Button -> send at specified time
+Spell check disabled: not called with Send Button -> pass through
+Spell check disabled: not called with Send Button -> send now
+Spell check disabled: not called with Send Later -> send at specified time
+Spell check disabled: not called with Send Later -> pass through
+Spell check disabled: not called with Send Later -> send now

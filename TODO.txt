@@ -47,9 +47,6 @@ enabled when working offline.
 Investigate why DispMUA 1.6.5 doesn't work in TB2 when Send Later 3 is
 installed.
 
-Spell check pops up twice if there's a spelling error you don't
-correct when Send Does Send Later is enabled.
-
 If user has not yet entered master password in current Thunderbird
 setting when message is scheduled to be sent, user gets prompted for
 it, and if he's not there, the mail won't get sent. Need to look into
