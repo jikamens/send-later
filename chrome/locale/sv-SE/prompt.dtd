@@ -5,7 +5,7 @@
 <!ENTITY sendlater.prompt.close.label "Avbryt">
 <!ENTITY sendlater.prompt.close.tooltip "Gå tillbaka för att redigera meddelandet.">
 <!ENTITY sendlater.prompt.title.label "Skicka detta e-brev senare">
-<!ENTITY sendlater.prompt.sendat.label "Skicka senare vid angiven tidpunkt">
+<!ENTITY sendlater.prompt.sendat.label "Skicka senare vid den/de tidpunkt(er) som anges ovan">
 <!ENTITY sendlater.prompt.sendat.tooltip "Spara meddelandet i Utkast-mappen för automatisk sändning vid ovan angivna tidpunkt.">
 <!ENTITY sendlater.prompt.recur.label "Upprepning:">
 <!ENTITY sendlater.prompt.none.label "ingen">
