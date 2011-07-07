@@ -268,27 +268,29 @@ var Sendlater3Backgrounding = function() {
     var ProgressValue;
     var ProgressMax;
 
-    function ProgressSet(str) {
+    function ProgressSet(str, where) {
 	var n = document.getElementById("sendlater_anim");
 	n.max = ProgressMax;
 	n.value = ProgressValue;
-	SL3U.debug(str+": value="+n.value+", max="+n.max);
+	SL3U.debug(str+"("+where+"): value="+n.value+", max="+n.max+
+		   ", ProgressValue="+ProgressValue+", ProgressMax="+
+		   ProgressMax);
     }
 
-    function ProgressClear() {
+    function ProgressClear(where) {
 	ProgressValue = 0;
 	ProgressMax = 0;
-	ProgressSet("ProgressClear");
+	ProgressSet("ProgressClear", where);
     }
 
-    function ProgressAdd() {
+    function ProgressAdd(where) {
 	ProgressMax++;
-	ProgressSet("ProgressAdd");
+	ProgressSet("ProgressAdd", where);
     }
 
-    function ProgressFinish() {
+    function ProgressFinish(where) {
 	ProgressValue++;
-	ProgressSet("ProgressFinish");
+	ProgressSet("ProgressFinish", where);
     }
 
     function CopyUnsentListener(content, hdr, sendat, recur) {
@@ -546,8 +548,8 @@ var Sendlater3Backgrounding = function() {
     	this._content = "";
 	this._cycle = cycle;
 	this._messageHDR = messageHDR;
-	this._header = null;
-	this._recur = null;
+	this._header = messageHDR.getStringProperty("x-send-later-at");
+	this._recur = messageHDR.getStringProperty("x-send-later-recur");
 	SL3U.Leaving("Sendlater3Backgrounding.UriStreamListener");
     }
 
@@ -575,94 +577,63 @@ var Sendlater3Backgrounding = function() {
 	    this._messageHDR = null;
 	    this._content = null;
 
-	    // We check if we've reached the end of the header below, in
-	    // onDataAvailable, as each block of data is read. Therefore, if we
-	    // get to this point, it's because we never hit the end of the
-	    // header, which means that the message consists only of a header.
-	    if (this._header == null) {
-		var matches = content.match(/^X-Send-Later-At:\s*(.*)$/mi);
-		if (matches) {
-		    this._header = matches[1];
-		    if (! CheckDraftUuid(this._header, content)) {
-			this._header = null;
-		    }
-		}
-		var recur = content.match(/^X-Send-Later-Recur:\s*(.*)/mi);
-		if (recur) {
-		    this._recur = recur[1];
-		}
+	    // Simplify search & replace in header by putting a
+	    // blank line at the beginning of the message, so that
+	    // we can match header lines starting with \n, i.e., we
+	    // can assume that there's always a newline immediately
+	    // before any header line. This prevents false
+	    // negatives when the header line we're looking for
+	    // happens to be the first header line in the
+	    // message. We'll remove the extra newline when we're
+	    // done mucking with the headers.
+	    content = "\n" + content;
+
+	    content = content
+		.replace(/(\nDate:).*\n/i,"$1 " +
+			 SL3U.FormatDateTime(new Date(), true)+"\n");
+	    content = content.replace(/\nX-Send-Later-At:.*\n/i,
+				      "\n");
+	    content = content.replace(/\nX-Send-Later-Uuid:.*\n/i,
+				      "\n");
+	    content = content.replace(/\nX-Send-Later-Recur:.*\n/i,
+				      "\n");
+
+	    // Remove extra newline -- see comment above.
+	    content = content.slice(1);
+
+	    // There is a bug in Thunderbird (3.1, at least) where when
+	    // a message is being sent from the user's Outbox and then
+	    // a copy is being uploaded into an IMAP server's Sent
+	    // Items folder, Thunderbird doesn't convert bare \n to
+	    // \r\n before trying to upload the message copy.  This is
+	    // a violation of the IMAP spec, and some IMAP servers,
+	    // e.g., Cyrus IMAPd, reject the message because of the
+	    // bare newlines.  So we have to make sure that the message
+	    // has only \r\n line terminators in it before we put it
+	    // into the Outbox.  It might *already* have \r\n line
+	    // terminators in it, so first we replace \r\n with \n, and
+	    // then we replace \n with \r\n.  The reason why we prepend
+	    // a "From - <date>" line to the message before doing this
+	    // is because if we don't, then CopyFileMessage will
+	    // prepend a couple of useless X-Mozilla-* headers to the
+	    // top of the message, and the headers it adds will end
+	    // with bare \n's on them, so we're back to the original
+	    // problem.
+	    if (content.slice(0,5) != "From ") {
+		content = "From - " + Date().toString() + "\n"
+		    + content;
 	    }
+	    content = content.replace(/\n/g,"\r\n");
 
-	    SL3U.debug("SendLaterPresent = " + this._header);
-	    if (this._header) {
-		SL3U.dump ("Found Pending Message.");
-		var sendattime = new Date (this._header);
-		var now = new Date();
-		if (now > sendattime &&
-		    SL3U.getBoolPref("senddrafts")) {
-		    // Simplify search & replace in header by putting a
-		    // blank line at the beginning of the message, so that
-		    // we can match header lines starting with \n, i.e., we
-		    // can assume that there's always a newline immediately
-		    // before any header line. This prevents false
-		    // negatives when the header line we're looking for
-		    // happens to be the first header line in the
-		    // message. We'll remove the extra newline when we're
-		    // done mucking with the headers.
-		    content = "\n" + content;
-
-		    content = content
-			.replace(/(\nDate:).*\n/i,"$1 " +
-				 SL3U.FormatDateTime(new Date(), true)+"\n");
-		    content = content.replace(/\nX-Send-Later-At:.*\n/i,
-					      "\n");
-		    content = content.replace(/\nX-Send-Later-Uuid:.*\n/i,
-					      "\n");
-		    content = content.replace(/\nX-Send-Later-Recur:.*\n/i,
-					      "\n");
-
-		    // Remove extra newline -- see comment above.
-		    content = content.slice(1);
-
-		    // There is a bug in Thunderbird (3.1, at least) where when
-		    // a message is being sent from the user's Outbox and then
-		    // a copy is being uploaded into an IMAP server's Sent
-		    // Items folder, Thunderbird doesn't convert bare \n to
-		    // \r\n before trying to upload the message copy.  This is
-		    // a violation of the IMAP spec, and some IMAP servers,
-		    // e.g., Cyrus IMAPd, reject the message because of the
-		    // bare newlines.  So we have to make sure that the message
-		    // has only \r\n line terminators in it before we put it
-		    // into the Outbox.  It might *already* have \r\n line
-		    // terminators in it, so first we replace \r\n with \n, and
-		    // then we replace \n with \r\n.  The reason why we prepend
-		    // a "From - <date>" line to the message before doing this
-		    // is because if we don't, then CopyFileMessage will
-		    // prepend a couple of useless X-Mozilla-* headers to the
-		    // top of the message, and the headers it adds will end
-		    // with bare \n's on them, so we're back to the original
-		    // problem.
-		    if (content.slice(0,5) != "From ") {
-			content = "From - " + Date().toString() + "\n"
-			    + content;
-		    }
-		    content = content.replace(/\n/g,"\r\n");
-
-		    var msgSendLater = Components
-			.classes["@mozilla.org/messengercompose/sendlater;1"]
-			.getService(Components.interfaces.nsIMsgSendLater);
-		    var fdrunsent = msgSendLater.getUnsentMessagesFolder(null);
-		    var listener = new CopyUnsentListener(content, messageHDR,
-							  this._header,
-							  this._recur)
-		    SL3U.CopyStringMessageToFolder(content, fdrunsent,listener);
-		}
-		else {
-		    MessagesPending++;
-		    SL3U.dump(MessagesPending + " messages still pending");
-		}
-	    }
-	    ProgressFinish();
+	    var msgSendLater = Components
+		.classes["@mozilla.org/messengercompose/sendlater;1"]
+		.getService(Components.interfaces.nsIMsgSendLater);
+	    var fdrunsent = msgSendLater.getUnsentMessagesFolder(null);
+	    var listener = new CopyUnsentListener(content, messageHDR,
+						  this._header,
+						  this._recur)
+	    SL3U.CopyStringMessageToFolder(content, fdrunsent,listener);
+	    ProgressFinish("finish streaming message");
 	    SL3U.Leaving("Sendlater3Backgrounding.UriStreamListener.onStopRequest");
 	},
 	onDataAvailable: function(aReq, aContext, aInputStream, aOffset,
@@ -690,37 +661,6 @@ var Sendlater3Backgrounding = function() {
 		this._content = this._content.slice(0, this._content.length -1);
 	    }
 	    this._content += data;
-
-	    if (this._header) { // only the first time we reach the end
-                // of the header
-		var eoh = this._content.search(/\n\n/);
-		if (eoh > -1) {
-		    var header = this._content.slice(0, eoh);
-
-		    var matches = header.match(/^X-Send-Later-At:\s*(.*)/mi);
-		    if (! matches) {
-			SL3U.debug("SendLaterPresent = null");
-			this._content = "";
-			aInputStream.close();
-			SL3U.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "no header");
-			ProgressFinish();
-			return;
-		    }
-		    this._header = matches[1];
-		    if (! CheckDraftUuid(this._header, header)) {
-			this._content = "";
-			aInputStream.close();
-			SL3U.Returning("Sendlater3Backgrounding.UriStreamListener.onDataAvailable", "uuid mismatch");
-			ProgressFinish();
-			return;
-		    }
-		    var recur = header.match(/^X-Send-Later-Recur:\s*(.*)/mi);
-		    if (recur) {
-			this._recur = recur[1];
-		    }
-		}
-	    }
-
 	    SL3U.Leaving("Sendlater3Backgrounding.UriStreamListener.onDataAvailable");
 	}
     };
@@ -748,9 +688,36 @@ var Sendlater3Backgrounding = function() {
 
 	    var MsgService = messenger.messageServiceFromURI(messageURI);
 	    var messageHDR = messenger.msgHdrFromURI(messageURI);
-	    MsgService.streamMessage(messageURI,
-				     new UriStreamListener(messageHDR),
-				     msgWindow, null, false, null);
+	    var h_at = messageHDR.getStringProperty("x-send-later-at");
+	    while (1) {
+		if (! h_at) {
+		    SL3U.debug(messageURI + ": no x-send-later-at");
+		    break;
+		}
+		var h_uuid = messageHDR.getStringProperty("x-send-later-uuid");
+		if (h_uuid != SL3U.getInstanceUuid()) {
+		    SL3U.debug(messageURI + ": wrong uuid=" + h_uuid);
+		    break;
+		}
+		SL3U.debug(messageURI + ": good uuid=" + h_uuid);
+		if (new Date() < new Date(h_at)) {
+		    SL3U.debug(messageURI + ": early x-send-later-at=" + h_at);
+		    MessagesPending++;
+		    SL3U.dump(MessagesPending + " messages still pending");
+		    break;
+		}
+		SL3U.debug(messageURI + ": due x-send-later-at=" + h_at);
+		if (! SL3U.getBoolPref("senddrafts")) {
+		    SL3U.debug(messageURI + ": senddrafts is false");
+		    break;
+		}
+		ProgressAdd("start streaming message");
+		MsgService.streamMessage(messageURI,
+					 new UriStreamListener(messageHDR),
+					 msgWindow, null, false, null);
+		break;
+	    }
+	    ProgressFinish("finish checking message");
 	    SetAnimTimer(3000);
 	    SL3U.Leaving("Sendlater3Backgrounding.CheckThisUriCallback.notify");
 	}
@@ -772,7 +739,7 @@ var Sendlater3Backgrounding = function() {
 	    );
 	}
 	CheckThisURIQueue.push(messageURI);
-	ProgressAdd();
+	ProgressAdd("CheckThisURIQueueAdd");
 	SL3U.Leaving("Sendlater3Backgrounding.CheckThisURIQueueAdd");
     }
 
@@ -820,7 +787,7 @@ var Sendlater3Backgrounding = function() {
 		    SL3U.dump("FOLDER MONITORED - "+folder.URI+"\n");
 		    folderstocheck.splice(where, 1);
 		    foldersdone.push(folder.URI);
-		    ProgressFinish();
+		    ProgressFinish("finish checking folder");
 		    var thisfolder = folder
 			.QueryInterface(Components.interfaces.nsIMsgFolder);
 		    var messageenumerator;
@@ -880,7 +847,7 @@ var Sendlater3Backgrounding = function() {
 	    SL3U.debug("One cycle of checking");
 
 	    MessagesPending = 0;
-	    ProgressClear();
+	    ProgressClear("CheckForSendLaterCallback.notify");
 
 	    cycle++;
 
@@ -892,7 +859,7 @@ var Sendlater3Backgrounding = function() {
 	    folderstocheck = new Array();
 	    foldersdone = new Array();
 	    folderstocheck.push(SL3U.FindSubFolder(fdrlocal, "Drafts").URI);
-	    ProgressAdd();
+	    ProgressAdd("local Drafts folder");
 	    SL3U.dump("SCHEDULE local folder - " + folderstocheck[0]);
 	    // if (SL3U.IsThunderbird2() || SL3U.IsPostbox()) {
 	    // 	var sub = SL3U.FindSubFolder(fdrlocal, "Drafts");
@@ -929,7 +896,7 @@ var Sendlater3Backgrounding = function() {
 		catch (e) {
 		    SL3U.debug("updateFolder on " + local_draft_pref + " failed");
 		}
-		ProgressAdd();
+		ProgressAdd("default Drafts folder");
 	    }
 
 	    var allaccounts = accountManager.accounts;
@@ -967,7 +934,8 @@ var Sendlater3Backgrounding = function() {
 			    if (folderstocheck.indexOf(thisfolder.URI)<0 &&
 				foldersdone.indexOf(thisfolder.URI)<0) {
 				folderstocheck.push (thisfolder.URI);
-				ProgressAdd();
+				ProgressAdd("identity "+identityNum+
+					    " Drafts folder");
 				var pref = "mail.server." + thisaccount
 				    .incomingServer.key + ".check_new_mail"
 				var pref_value;
