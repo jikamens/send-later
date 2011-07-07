@@ -5,7 +5,7 @@
 <!ENTITY sendlater.prompt.close.label "Annuleren">
 <!ENTITY sendlater.prompt.close.tooltip "Terug naar het bewerken van het bericht.">
 <!ENTITY sendlater.prompt.title.label "Verstuur deze email later">
-<!ENTITY sendlater.prompt.sendat.label "Verstuur later op de aangegeven tijd">
+<!ENTITY sendlater.prompt.sendat.label "Verstuur later op het bovengenoemde tijdstip">
 <!ENTITY sendlater.prompt.sendat.tooltip "Sla het bericht op in de map Concepten voor automatisch verzenden op het hierboven aangegeven tijdstip.">
 <!ENTITY sendlater.prompt.recur.label "Terugkeren:">
 <!ENTITY sendlater.prompt.none.label "geen">
