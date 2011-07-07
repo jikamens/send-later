@@ -734,7 +734,7 @@ var Sendlater3Backgrounding = function() {
 		.createInstance(Components.interfaces.nsITimer);
 	    CheckThisURITimer.initWithCallback(
 		CheckThisURICallback,
-		100,
+		1,
 		Components.interfaces.nsITimer.TYPE_REPEATING_SLACK
 	    );
 	}
@@ -800,7 +800,6 @@ var Sendlater3Backgrounding = function() {
 		    if ( messageenumerator ) {
 			SL3U.dump ("Got Enumerator\n");
 			while ( messageenumerator.hasMoreElements() ) {
-			    SL3U.dump("hasMoreElements=true\n");
 			    var messageDBHDR = messageenumerator.getNext()
 				.QueryInterface(Components.interfaces
 						.nsIMsgDBHdr);
