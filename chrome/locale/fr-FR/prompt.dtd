@@ -5,7 +5,7 @@
 <!ENTITY sendlater.prompt.close.label "Annuler">
 <!ENTITY sendlater.prompt.close.tooltip "Reprendre la rédaction du message.">
 <!ENTITY sendlater.prompt.title.label "Envoyer ce courriel plus tard">
-<!ENTITY sendlater.prompt.sendat.label "Send Later aux temps désignés ci-dessus">
+<!ENTITY sendlater.prompt.sendat.label "Envoyer aux temps désignés ci-dessus">
 <!ENTITY sendlater.prompt.sendat.tooltip "Enregistrer le message pour envoi automatique à l'heure précisée ci-dessus.">
 <!ENTITY sendlater.prompt.recur.label "Se reproduire:">
 <!ENTITY sendlater.prompt.none.label "none">
