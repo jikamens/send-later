@@ -17,6 +17,7 @@
 <key id="call-return" modifiers="accel" keycode="VK_RETURN" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 </keyset>
 <vbox style="margin: 10px;">
+	<vbox style="border:solid #00C000 3px; padding-top: 2px;" >
 	<hbox>
 		<hbox  align="center"  >
 		<separator flex="1" width="8" />			
@@ -73,7 +74,6 @@
 	  <description flex="1">&separate.label;</description>
 	</hbox>
 
-	<vbox style="border:solid #00C000 3px" >
 				<button id="callsendat" width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 				<hbox>
 					<button key="quickbutton1-key" id="shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Prompt.CallSendAfter(15);close();"/>

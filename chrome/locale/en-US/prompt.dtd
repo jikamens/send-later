@@ -5,7 +5,7 @@
 <!ENTITY sendlater.prompt.close.label "Cancel">
 <!ENTITY sendlater.prompt.close.tooltip "Go back to editing the message.">
 <!ENTITY sendlater.prompt.title.label "Send this email later">
-<!ENTITY sendlater.prompt.sendat.label "Send Later at specified time">
+<!ENTITY sendlater.prompt.sendat.label "Send Later at time(s) specified above">
 <!ENTITY sendlater.prompt.sendat.tooltip "Save message in Drafts folder for automatic delivery at the time set above.">
 <!ENTITY sendlater.prompt.recur.label "Recur:">
 <!ENTITY sendlater.prompt.none.label "none">
