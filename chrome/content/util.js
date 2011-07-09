@@ -388,10 +388,8 @@ var Sendlater3Util = {
     },
 
     DZFormat: function(val) {
-    	Sendlater3Util.Entering("Sendlater3Util.DZFormat", val);
 	var ret;
 	if (val < 10) ret = "0" + val; else ret = val;
-	Sendlater3Util.Returning("Sendlater3Util.DZFormat", ret);
 	return ret;
     },
 

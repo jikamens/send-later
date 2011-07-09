@@ -1,4 +1,16 @@
 var Sendlater3Composing = {
+    composeListener: {
+	NotifyComposeBodyReady: function() {
+	    gContentChanged = true;
+	    AutoSave();
+	    gContentChanged = false;
+	    alert(SL3U.PromptBundleGet("draftSaveWarning"));
+	},
+	NotifyComposeFieldsReady: function() {},
+	ComposeProcessDone: function() {},
+	SaveInFolderDone: function() {}
+    },
+
     main: function() {
 
 	var composelogMngr = null;
@@ -32,48 +44,15 @@ var Sendlater3Composing = {
 		    var MsgService = messenger
 			.messageServiceFromURI(messageURI);
 		    var messageHDR = messenger.msgHdrFromURI(messageURI);
-		    var MsgStream = Components
-			.classes["@mozilla.org/network/sync-stream-listener;1"]
-			.createInstance();
-		    var consumer = MsgStream
-			.QueryInterface(Components.interfaces.nsIInputStream);
-		    var ScriptInput = Components
-			.classes["@mozilla.org/scriptableinputstream;1"]
-			.createInstance();
-		    var ScriptInputStream = ScriptInput
-			.QueryInterface(Components.interfaces
-					.nsIScriptableInputStream);
-		    
-		    //dump("Checking message : " + messageURI + "\n");
-		    
-		    ScriptInputStream .init(consumer);
-		    try {
-			MsgService .streamMessage(messageURI, MsgStream,
-						  msgWindow, null, false,null);
-		    }
-		    catch (ex) {}
-		    var xsendlaterpresent=false;
-		    
-		    while ((ScriptInputStream.available()) &&
-			   ! content.match(/\n\r?\n/)) {
-			content = content + ScriptInputStream .read(512);
-		    }
-
-		    var eoh = content.search(/\n\r?\n/);
-		    if (eoh > -1) {
-			content = content.slice(0, eoh);
-		    }
-
-		    var hdr = content.match(/\nX-Send-Later-At:\s*(.*)/i);
+		    var hdr = messageHDR.getStringProperty("x-send-later-at");
 		    if (hdr) {
-			Sendlater3Composing.prevXSendLater =
-			    new Date(hdr[1]);
+			Sendlater3Composing.prevXSendLater = new Date(hdr);
+			gMsgCompose.RegisterStateListener(Sendlater3Composing
+							  .composeListener);
 		    }
-
-		    hdr = content.match(/\nX-Send-Later-Recur:\s*(.*)/i);
-		    if (hdr) {
-			Sendlater3Composing.prevRecurring = hdr[1];
-		    }
+		    hdr = messageHDR.getStringProperty("x-send-later-recur");
+		    if (hdr)
+			Sendlater3Composing.prevRecurring = hdr;
 
 		    SL3U.dump("prevXSendLater= " +
 			      Sendlater3Composing.prevXSendLater +
