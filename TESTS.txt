@@ -70,3 +70,6 @@ Spell check disabled: not called with Send Button -> send now
 Spell check disabled: not called with Send Later -> send at specified time
 Spell check disabled: not called with Send Later -> pass through
 Spell check disabled: not called with Send Later -> send now
+Scheduled draft is auto-saved without schedule when loaded for editing.
+Alert is popped up about scheduled draft being auto-saved when edited.
+Old send later header is found when draft is edited.
