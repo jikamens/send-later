@@ -4,7 +4,8 @@ var Sendlater3Composing = {
 	    gContentChanged = true;
 	    AutoSave();
 	    gContentChanged = false;
-	    alert(SL3U.PromptBundleGet("draftSaveWarning"));
+	    if (SL3U.getBoolPref("show_edit_alert"))
+		alert(SL3U.PromptBundleGet("draftSaveWarning"));
 	},
 	NotifyComposeFieldsReady: function() {},
 	ComposeProcessDone: function() {},
