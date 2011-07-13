@@ -933,7 +933,7 @@ var Sendlater3Backgrounding = function() {
 			    if (folderstocheck.indexOf(thisfolder.URI)<0 &&
 				foldersdone.indexOf(thisfolder.URI)<0) {
 				folderstocheck.push (thisfolder.URI);
-				ProgressAdd("identity "+identityNum+
+				ProgressAdd("identity "+acindex+"."+identityNum+
 					    " Drafts folder");
 				var pref = "mail.server." + thisaccount
 				    .incomingServer.key + ".check_new_mail"
