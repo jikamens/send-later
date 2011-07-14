@@ -5,6 +5,13 @@ catch (ex) {
 }
 
 var Sendlater3Util = {
+    alert: function(window, title, text) {
+	var promptService = Components
+	    .classes["@mozilla.org/embedcomp/prompt-service;1"]
+            .getService(Components.interfaces.nsIPromptService);
+	promptService.alert(window, title, text);
+    },
+
     PrefService: Components.classes["@mozilla.org/preferences-service;1"]
         .getService(Components.interfaces.nsIPrefBranch),
 

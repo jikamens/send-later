@@ -3,17 +3,13 @@ var Sendlater3Options = {
 	var i;
 	for (i = 1; i <= 3; i++) {
 	    if (SL3U.ShortcutValue(i, true) == undefined) {
-		var promptService = Components
-		    .classes["@mozilla.org/embedcomp/prompt-service;1"]
-                    .getService(Components.interfaces.nsIPromptService);
 		var value = SL3U.getCharPref("quickoptions."+i+".valuestring");
 		var msg = SL3U.PromptBundleGetFormatted(
 		    "OptionShortcutAlertText",
 		    [i, value]);
-		promptService.alert(window,
-				    SL3U.PromptBundleGet(
-					"OptionShortcutAlertTitle"),
-				    msg);
+		SL3U.alert(window,
+			   SL3U.PromptBundleGet("OptionShortcutAlertTitle"),
+			   msg);
 		return false;
 	    }
 	}

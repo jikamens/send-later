@@ -4,8 +4,10 @@ var Sendlater3Composing = {
 	    gContentChanged = true;
 	    AutoSave();
 	    gContentChanged = false;
-	    if (SL3U.getBoolPref("show_edit_alert"))
-		alert(SL3U.PromptBundleGet("draftSaveWarning"));
+	    if (SL3U.getBoolPref("show_edit_alert")) {
+		SL3U.alert(window, null,
+			   SL3U.PromptBundleGet("draftSaveWarning"));
+	    }
 	},
 	NotifyComposeFieldsReady: function() {},
 	ComposeProcessDone: function() {},
@@ -18,9 +20,6 @@ var Sendlater3Composing = {
 	var composelogger = null;
 	var sComposeMsgsBundle = document.getElementById("bundle_composeMsgs");
 
-	var msgWindow = Components
-	    .classes["@mozilla.org/messenger/msgwindow;1"].createInstance()
-	    .QueryInterface(Components.interfaces.nsIMsgWindow);
 	var sendlater3ComposePrefs = Components
 	    .classes["@mozilla.org/preferences-service;1"]
 	    .getService(Components.interfaces.nsIPrefBranch);

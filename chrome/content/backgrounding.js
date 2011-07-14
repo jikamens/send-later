@@ -45,7 +45,8 @@ var Sendlater3Backgrounding = function() {
 		    }
 		}
 		catch (ex) {
-		    alert(SL3U.PromptBundleGet("SendingUnsentError"));
+		    SL3U.alert(window, null,
+			       SL3U.PromptBundleGet("SendingUnsentError"));
 		}
 	    }
 	    SL3U.Leaving("Sendlater3Backgrounding.sendUnsentMessagesListener.onStopSending");
@@ -69,7 +70,8 @@ var Sendlater3Backgrounding = function() {
 	    }
 	}
 	catch (ex) {
-	    alert(SL3U.PromptBundleGet("SendingUnsentError"));
+	    SL3U.alert(window, null,
+		       SL3U.PromptBundleGet("SendingUnsentError"));
 	}
 	SL3U.Leaving("Sendlater3Backgrounding.queueSendUnsentMessages");
     }
@@ -336,8 +338,9 @@ var Sendlater3Backgrounding = function() {
 	    if (! Components.isSuccessCode(status)) {
 		Sendlater3Backgrounding.BackgroundTimer.cancel();
 		Sendlater3Backgrounding.BackgroundTimer = undefined;
-		alert(SL3U.PromptBundleGetFormatted("CopyUnsentError",
-						    [status]));
+		SL3U.alert(window, null,
+			   SL3U.PromptBundleGetFormatted("CopyUnsentError",
+							 [status]));
 		SL3U.Returning("Sendlater3Backgrounding.CopyUnsentListener.OnStopCopy", "");
 		return;
 	    }
@@ -460,7 +463,9 @@ var Sendlater3Backgrounding = function() {
 	    if (! Components.isSuccessCode(status)) {
 		Sendlater3Backgrounding.BackgroundTimer.cancel();
 		Sendlater3Backgrounding.BackgroundTimer = undefined;
-		alert(SL3U.PromptBundleGetFormatted("CopyRecurError",[status]));
+		SL3U.alert(window, null,
+			   SL3U.PromptBundleGetFormatted("CopyRecurError",
+							 [status]));
 		return;
 	    }
 	},
