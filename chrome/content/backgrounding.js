@@ -34,7 +34,10 @@ var Sendlater3Backgrounding = function() {
 	    sendingUnsentMessages = false;
 	    if (needToSendUnsentMessages) {
 		try {
-		    if (SL3U.IsThunderbird2()) {
+		    if (! MailOfflineMgr.isOnline()) {
+			SL3U.warn("Deferring sendUnsentMessages while offline");
+		    }
+		    else if (SL3U.IsThunderbird2()) {
 			messenger.sendUnsentMessages(null, msgWindow);
 		    }
 		    else {
@@ -55,7 +58,10 @@ var Sendlater3Backgrounding = function() {
     function queueSendUnsentMessages() {
 	SL3U.Entering("Sendlater3Backgrounding.queueSendUnsentMessages");
 	try {
-	    if (sendingUnsentMessages) {
+	    if (! MailOfflineMgr.isOnline()) {
+		SL3U.warn("Deferring sendUnsentMessages while offline");
+	    }
+	    else if (sendingUnsentMessages) {
 		SL3U.debug("Deferring sendUnsentMessages");
 		needToSendUnsentMessages = true;
 	    }
