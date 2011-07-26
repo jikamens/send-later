@@ -113,7 +113,7 @@ var Sendlater3Util = {
 	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGet", name);
 	if (Sendlater3Util._PromptBundle == null) {
 	    Sendlater3Util._PromptBundle =
-		document.getElementById("promptstrings");
+		document.getElementById("sl3_promptstrings");
 	}
 	Sendlater3Util.Returning("Sendlater3Util.PromptBundleGet",
 				 Sendlater3Util._PromptBundle.getString(name));
@@ -125,7 +125,7 @@ var Sendlater3Util = {
 				params, length);
 	if (Sendlater3Util._PromptBundle == null) {
 	    Sendlater3Util._PromptBundle =
-		document.getElementById("promptstrings");
+		document.getElementById("sl3_promptstrings");
 	}
 	var formatted = Sendlater3Util._PromptBundle
 	    .getFormattedString(name, params)

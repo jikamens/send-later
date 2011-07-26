@@ -4,8 +4,8 @@
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
         title="&sendlater.prompt.title.label;" onload="Sendlater3Prompt.SetOnLoad();">
-<stringbundleset id="strbundles">
-	<stringbundle id="promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
+<stringbundleset id="sl3_strbundles">
+	<stringbundle id="sl3_promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
 </stringbundleset>
 <script src="util.js"/>
 <script src="chrome://sendlater3/content/prompt.js"/>
