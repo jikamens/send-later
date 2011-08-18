@@ -66,3 +66,7 @@ BlunderDelay. Even better, make it really easy to use Send Later 3
 like BlunderDelay by adding a preference to override the Send button
 and Ctrl-Return to automatically delay messages by a fixed amount of
 time.
+
+Use compose-send-message event rather than hijacking the send later
+command, to play nicely with other add-ons that do stuff during
+message send (e.g., UseBccInstead).
