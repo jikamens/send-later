@@ -413,6 +413,7 @@ var Sendlater3Backgrounding = function() {
 					  SL3U.getInstanceUuid() + "\r\n" +
 					  "X-Send-Later-Recur: " + recur +
 					  "\r\n\r\n");
+		content = content.replace(/^From .*\r\n/, "");
 		var listener = new CopyRecurListener(folder);
 		SL3U.CopyStringMessageToFolder(content, folder, listener);
 	    }
