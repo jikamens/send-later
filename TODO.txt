@@ -7,6 +7,10 @@ Send Later column doesn't work in unified Drafts folder.
 Bug: You shouldn't be allowed to schedule a message with no recopients
 for future sending.
 
+Send Later 3 should replicate Thunderbird behavior (after confirming
+that in fact TB behaves this way) of adding "To:
+undisclosed-recipients:;" to messages that are only being BCC'd.
+
 Bug: Send Later column display doesn't work in TB2 when there are no
 messages in the folder (produces an error about gDBView not having any
 properties). This is fine until you save a message into the folder, at
