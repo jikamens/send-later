@@ -74,3 +74,6 @@ time.
 Use compose-send-message event rather than hijacking the send later
 command, to play nicely with other add-ons that do stuff during
 message send (e.g., UseBccInstead).
+
+Make the add-on compatible with Tag Toolbar, in particular with
+tagging replies / forwards with the same tags as their prior messages.
