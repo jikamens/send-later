@@ -1,16 +1,16 @@
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Contourner Send Later">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Fonctionnalité de Thunderbird: déplace le message vers la boite d'envoi pour expédition dès qu'un message est envoyé.">
+<!ENTITY sendlater.prompt.sendlater.label "Donner à TB &quot;Envoyer plus tard&quot;">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Fonctionnalité de Thunderbird : déplace le message vers &quot;Message en attente&quot; pour un envoi ultérieur">
 <!ENTITY sendlater.prompt.sendnow.label "Envoyer maintenant">
 <!ENTITY sendlater.prompt.close.label "Annuler">
-<!ENTITY sendlater.prompt.close.tooltip "Reprendre la rédaction du message.">
-<!ENTITY sendlater.prompt.title.label "Envoyer ce courriel plus tard">
-<!ENTITY sendlater.prompt.sendat.label "Envoyer aux temps désignés ci-dessus">
-<!ENTITY sendlater.prompt.sendat.tooltip "Enregistrer le message pour envoi automatique à l'heure précisée ci-dessus.">
-<!ENTITY sendlater.prompt.recur.label "Se reproduire:">
-<!ENTITY sendlater.prompt.none.label "none">
+<!ENTITY sendlater.prompt.close.tooltip "Revenir à la rédaction du message">
+<!ENTITY sendlater.prompt.title.label "Programmation d'envoi différé de courriel">
+<!ENTITY sendlater.prompt.sendat.label "Envoyer au moment indiqué">
+<!ENTITY sendlater.prompt.sendat.tooltip "Enregistre le message dans &quot;Brouillons&quot; jusqu'au moment prévu ci-dessus">
+<!ENTITY sendlater.prompt.recur.label "Répétition :">
+<!ENTITY sendlater.prompt.none.label "aucune">
 <!ENTITY sendlater.prompt.daily.label "quotidienne">
-<!ENTITY sendlater.prompt.weekly.label "hebdomadaires">
-<!ENTITY sendlater.prompt.monthly.label "par mois">
+<!ENTITY sendlater.prompt.weekly.label "hebdomadaire">
+<!ENTITY sendlater.prompt.monthly.label "mensuelle">
 <!ENTITY sendlater.prompt.yearly.label "annuelle">
 <!ENTITY sendlater.toolbar.sendlater.button.label "Envoyer plus tard">
