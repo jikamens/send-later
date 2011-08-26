@@ -61,7 +61,7 @@ var Sendlater3HeaderView = function() {
     }
 
     function IsThisDraft(msgFolder) {
-	SL3U.Entering("Sendlater3HeaderView.IsThisDraft", msgFolder);
+	SL3U.Entering("Sendlater3HeaderView.IsThisDraft", msgFolder.URI);
 	if (msgFolder == null) {
 	    SL3U.Returning("Sendlater3HeaderView.IsThisDraft",
 			   "false (msgFolder == null)");
