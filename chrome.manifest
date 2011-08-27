@@ -1,9 +1,10 @@
 content	sendlater3	chrome/content/
-locale	sendlater3	en-US	chrome/locale/en-US/
-locale	sendlater3	nl-NL	chrome/locale/nl-NL/
-locale	sendlater3	fr-FR	chrome/locale/fr-FR/
 locale	sendlater3	de-DE	chrome/locale/de-DE/
+locale	sendlater3	en-US	chrome/locale/en-US/
 locale	sendlater3	es-ES	chrome/locale/es-ES/
+locale	sendlater3	fr-FR	chrome/locale/fr-FR/
+locale	sendlater3	ja-JP	chrome/locale/ja-JP/
+locale	sendlater3	nl-NL	chrome/locale/nl-NL/
 locale	sendlater3	pl-PL	chrome/locale/pl-PL/
 locale	sendlater3	sv-SE	chrome/locale/sv-SE/
 overlay	chrome://messenger/content/messenger.xul	chrome://sendlater3/content/backgrounding.xul
