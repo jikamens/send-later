@@ -13,5 +13,5 @@
 <!ENTITY sendlater.ask.already.key   "S">
 <!ENTITY sendlater.ask.already.label "すでに寄付しました">
 
-<!ENTITY sendlater.ask.stop.key   "O">
+<!ENTITY sendlater.ask.stop.key   "U">
 <!ENTITY sendlater.ask.stop.label "もう聞かないでください">
