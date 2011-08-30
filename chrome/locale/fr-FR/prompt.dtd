@@ -1,6 +1,6 @@
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Donner à TB &quot;Envoyer plus tard&quot;">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Fonctionnalité de Thunderbird : déplace le message vers &quot;Message en attente&quot; pour un envoi ultérieur">
+<!ENTITY sendlater.prompt.sendlater.label "Comportement par défaut">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Fonctionnalité de Thunderbird : le message est placé dans &quot;Message en attente&quot;">
 <!ENTITY sendlater.prompt.sendnow.label "Envoyer maintenant">
 <!ENTITY sendlater.prompt.close.label "Annuler">
 <!ENTITY sendlater.prompt.close.tooltip "Revenir à la rédaction du message">
