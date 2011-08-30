@@ -11,15 +11,15 @@
 <!ENTITY quickoptionname.label "ボタンラベル :">
 <!ENTITY quickoptionvalue.label "分 :">
 <!ENTITY showtoolbarbutton.caption "ツールバーに表示する">
-<!ENTITY showsendlatercolumn.caption "Send Later カラムを表示する">
-<!ENTITY showsendlatercolumn.tooltip "[下書き] フォルダに &quot;Send Later&quot; カラムを表示するかどうかを設定します。">
-<!ENTITY showsendlaterheader.caption "Send Later ヘッダーを表示する">
+<!ENTITY showsendlatercolumn.caption "&quot;後で送信&quot; カラムを表示する">
+<!ENTITY showsendlatercolumn.tooltip "[下書き] フォルダに &quot;後で送信&quot; カラムを表示するかどうかを設定します。">
+<!ENTITY showsendlaterheader.caption "&quot;後で送信&quot; ヘッダーを表示する">
 <!ENTITY showsendlaterheader.tooltip "メッセージを開く際に、&quot;X-Send-Later-At&quot; ヘッダー（下書きの送信予定日時）を表示するかどうかを設定します。">
 <!ENTITY showsendlaterstatus.caption "Send Later 3 をステータスバーに表示する">
 <!ENTITY showsendlaterprogress.caption "バックグラウンドの動きをステータスバーに表示する">
 <!ENTITY showsendlaterdropdowns.caption "ドロップダウンをツールバーに表示する">
 <!ENTITY showsendlaterunsentmessages.caption "未送信メッセージを [送信トレイ] から送信する">
-<!ENTITY showsendlaterunsentmessages.tooltip "このオプションを無効にすると、Send Later 3 はメッセージを送信せず、送信予定日時になると [送信トレイ] へメッセージを移します。他の拡張機能（たとえば BlunderDelay）を使って、メッセージを [送信トレイ] から定期的に送信するようにしている場合には、このオプションを無効にしてください。注意: このオプションを有効にすると、メッセージを送信する際に、Send Later は [送信トレイ] にあるすべてのメッセージを送信します。">
+<!ENTITY showsendlaterunsentmessages.tooltip "このオプションを無効にすると、Send Later 3 はメッセージを送信せず、送信予定日時になると [送信トレイ] へメッセージを移します。他の拡張機能（たとえば BlunderDelay）を使って、メッセージを [送信トレイ] から定期的に送信するようにしている場合には、このオプションを無効にしてください。注意: このオプションを有効にすると、メッセージを送信する際に、Send Later 3 は [送信トレイ] にあるすべてのメッセージを送信します。">
 <!ENTITY sendlatersendbutton.caption "&quot;送信&quot; を &quot;後で送信&quot; にする">
 <!ENTITY sendlatersendbutton.tooltip "このオプションを有効にすると、&quot;送信&quot; コマンド（ボタンと Ctrl-Enter の両方とも）は &quot;後で送信&quot; と同じ動作をします。">
 <!ENTITY advanced.caption "詳細">
