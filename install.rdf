@@ -16,6 +16,7 @@
     <em:translator>Maciej Kobuszewski</em:translator><!-- Polish -->
     <em:translator>Mikael Hiort af Ornäs</em:translator><!-- Swedish -->
     <em:translator>Ryo Matsui</em:translator><!-- Japanese -->
+    <em:translator>Cesare</em:translator><!-- Italian -->
     <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
     <em:localized>
       <Description>
