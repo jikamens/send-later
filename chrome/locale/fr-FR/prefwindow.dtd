@@ -19,7 +19,7 @@
 <!ENTITY showsendlaterprogress.caption "Afficher les tâches en arrière-plan dans la barre d'état">
 <!ENTITY showsendlaterdropdowns.caption "Afficher les listes déroulantes dans la barre de menu">
 <!ENTITY showsendlaterunsentmessages.caption "Expédier automatiquement les messages programmés">
-<!ENTITY showsendlaterunsentmessages.tooltip "Effectue les envois planifiés sans les placer dans &quot;Message en attente&quot;. Désactiver l'option, par exemple, lors de l'utilisation d'une extension automatisant l'envoi des messages en attente (tel que BlunderDelay). Remarque : si cette option est activée ; quand Send Later déclenche un envoi, TOUS les messages en attente sont expédiés">
+<!ENTITY showsendlaterunsentmessages.tooltip "Effectue les envois planifiés sans les placer dans &quot;Message en attente&quot;. Désactiver l'option, par exemple, lors de l'utilisation d'une extension automatisant l'envoi des messages en attente (tel que BlunderDelay). Remarque : si cette option est activée ; quand &quot;Send Later 3&quot; déclenche un envoi, TOUS les messages en attente sont expédiés">
 <!ENTITY sendlatersendbutton.caption "Remplacer &quot;Envoyer&quot; par &quot;Envoyer plus tard&quot;">
 <!ENTITY sendlatersendbutton.tooltip "Remplace l'action par défaut d'&quot;Envoyer&quot; (bouton ou raccourci &quot;Ctrl+Entrée&quot;) par celle d'&quot;Envoyer plus tard&quot;">
 <!ENTITY advanced.caption "Avancé">
