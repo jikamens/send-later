@@ -53,12 +53,18 @@
 	<em:description>Eine echte "SendeSpäter" Funktionalität zur Planung der Sendezeit von Emails.</em:description>
       </Description>
     </em:localized>
-	<em:localized>
+    <em:localized>
       <Description>
 	<em:name>Send Later 3</em:name>
 	<em:locale>sv-SE</em:locale>
 	<em:description>"Skicka senare"-funktion som låter användaren schemalägga tidpunkten för sändning av ett e-brev.</em:description>
-	<em:translator>Mikael Hiort af Ornäs</em:translator>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
+	<em:name>Send Later 3</em:name>
+	<em:locale>it-IT</em:locale>
+	<em:description>Una vera funzione di "Invia dopo" per pianificare quando inviare le e-mail.</em:description>
       </Description>
     </em:localized>
     <em:homepageURL>http://blog.kamens.us/send-later-3</em:homepageURL>
