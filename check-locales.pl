@@ -37,6 +37,7 @@ sub check_generic {
     open(MASTER, "<", "$master/$file") or die;
     while (<MASTER>) {
 	next if (/^$/);
+	next if (/-\*-.*-\*-/);
 	if (! /$pattern/) {
 	    die "Unrecognized line $. of $master/$file: $_";
 	}
@@ -55,6 +56,7 @@ sub check_generic {
 	}
 	while (<SLAVE>) {
 	    next if (/^$/);
+	    next if (/-\*-.*-\*-/);
 	    if ($error_pattern and /$error_pattern/) {
 		warn "Bad content on line $. of $locale/$file: $_";
 		$errors++;
