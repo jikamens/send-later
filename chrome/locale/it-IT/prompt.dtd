@@ -1,3 +1,4 @@
+<!-- -*- coding: utf-8 -*- -->
 <!ENTITY separate.label "">
 <!ENTITY sendlater.prompt.sendlater.label "Invia dopo standard">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Funzione &quot;Invia dopo&quot; standard di Thunderbird: sposta il massaggio nella &quot;Posta in uscita&quot; per inviarlo non appena i messaggi da inviare verranno spediti.">
@@ -7,7 +8,7 @@
 <!ENTITY sendlater.prompt.title.label "Invia questa e-mail dopo">
 <!ENTITY sendlater.prompt.sendat.label "Invia dopo, all'orario sopra indicato">
 <!ENTITY sendlater.prompt.sendat.tooltip "Salva il messaggio nella cartella &quot;Bozze&quot; per l'invio automatico all'orario sopra impostato.">
-<!ENTITY sendlater.prompt.recur.label "Periodicità">
+<!ENTITY sendlater.prompt.recur.label "PeriodicitÃ ">
 <!ENTITY sendlater.prompt.none.label "nessuna">
 <!ENTITY sendlater.prompt.daily.label "giornaliera">
 <!ENTITY sendlater.prompt.weekly.label "settimanale">
