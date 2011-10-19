@@ -77,3 +77,9 @@ message send (e.g., UseBccInstead).
 
 Make the add-on compatible with Tag Toolbar, in particular with
 tagging replies / forwards with the same tags as their prior messages.
+
+Bug: If you search in your drafts folder, then the "Send Later" column
+in the search results isn't populated for matching drafts that are
+scheduled to be sent later. It remains unpopulated when you cancel the
+search, until you leave and return to the folder. Need to investigate
+this!
