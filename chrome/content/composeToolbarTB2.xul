@@ -4,9 +4,9 @@
 <overlay id="sendlater3-toolbar-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <keyset>
-    <key id="quickbutton1-key" modifiers="control alt" key="1"/>
-    <key id="quickbutton2-key" modifiers="control alt" key="2"/>
-    <key id="quickbutton3-key" modifiers="control alt" key="3"/>
+    <key id="sl3-quickbutton1-key" modifiers="control alt" key="1"/>
+    <key id="sl3-quickbutton2-key" modifiers="control alt" key="2"/>
+    <key id="sl3-quickbutton3-key" modifiers="control alt" key="3"/>
   </keyset>
 
   <toolbarpalette id="MsgComposeToolbarPalette">
@@ -23,13 +23,13 @@
 	  <image  src="chrome://sendlater3/content/timeIcon.png" />
 	  <separator flex="1" />
 	</hbox>
-	<menulist label="HH" id="hourvalue" style="margin: 0px; padding-right: 15px;" >
-	  <menupopup id="hours">
+	<menulist label="HH" id="sl3-hourvalue" style="margin: 0px; padding-right: 15px;" >
+	  <menupopup id="sl3-hours">
 	  </menupopup>
 	</menulist>
 	<description id="sendlater3colon">:</description>
-	<menulist label="MM" id="minvalue" style="margin: 0px; padding-right: 15px;">
-	  <menupopup id="mins">
+	<menulist label="MM" id="sl3-minvalue" style="margin: 0px; padding-right: 15px;">
+	  <menupopup id="sl3-mins">
 	  </menupopup>
 	</menulist>
 	<separator id="sendlater3calsep" flex="1" width="4" />
@@ -37,16 +37,16 @@
 	  <image src="chrome://sendlater3/content/calIcon.png"  />
 	  <separator flex="1" />
 	</hbox>
-	<menulist label="Years" id="yearvalue"  style="margin: 0px; padding-right: 15px;">
-	  <menupopup id="years">
+	<menulist label="Years" id="sl3-yearvalue"  style="margin: 0px; padding-right: 15px;">
+	  <menupopup id="sl3-years">
 	  </menupopup>
 	</menulist>
-	<menulist label="Months" id="monthvalue" style="margin: 0px; padding-right: 15px;">
-	  <menupopup id="months">
+	<menulist label="Months" id="sl3-monthvalue" style="margin: 0px; padding-right: 15px;">
+	  <menupopup id="sl3-months">
 	  </menupopup>
 	</menulist>
-	<menulist label="Days" id="dayvalue" style="margin: 0px; padding-right: 15px;">
-	  <menupopup id="days">
+	<menulist label="Days" id="sl3-dayvalue" style="margin: 0px; padding-right: 15px;">
+	  <menupopup id="sl3-days">
 	  </menupopup>
 	</menulist>
 	<separator id="sendlater3toolsep" flex="1" width="8px" /> 
@@ -54,9 +54,9 @@
 	  <toolbarbutton orient="horizontal" image="chrome://sendlater3/content/sendlater3icon20.png" label="&sendlater.toolbar.sendlater.button.label;" oncommand="Sendlater3ComposeToolbar.CallSendAt();"  />
 	</hbox>
 	<separator id="sendlater3quicksep" flex="1" width="8px" /> 
-	<button key="quickbutton1-key" id="shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3ComposeToolbar.CallSendAfter(15);close();"/>
-	<button key="quickbutton2-key" id="shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3ComposeToolbar.CallSendAfter(30);close();"/>
-	<button key="quickbutton3-key" id="shortcutbtn_3" flex="1" label="2 hours" oncommand="Sendlater3ComposeToolbar.CallSendAfter(120);close();"/>
+	<button key="sl3-quickbutton1-key" id="sl3-shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3ComposeToolbar.CallSendAfter(15);close();"/>
+	<button key="sl3-quickbutton2-key" id="sl3-shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3ComposeToolbar.CallSendAfter(30);close();"/>
+	<button key="sl3-quickbutton3-key" id="sl3-shortcutbtn_3" flex="1" label="2 hours" oncommand="Sendlater3ComposeToolbar.CallSendAfter(120);close();"/>
 	<separator flex="1" width="8px" /> 
 	
 	

@@ -61,27 +61,27 @@ var Sendlater3ComposeToolbar = {
 	}
 
 	if (document.getElementById('sendlater3_toolbar')) {
-	    document.getElementById("yearvalue")
+	    document.getElementById("sl3-yearvalue")
 		.removeEventListener("ValueChange", t.populateMonths, false);
-	    document.getElementById("monthvalue")
+	    document.getElementById("sl3-monthvalue")
 		.removeEventListener("ValueChange", t.populateDays, false);
-	    document.getElementById("yearvalue")
+	    document.getElementById("sl3-yearvalue")
 		.addEventListener("ValueChange", t.populateMonths, false);
-	    document.getElementById("monthvalue")
+	    document.getElementById("sl3-monthvalue")
 		.addEventListener("ValueChange", t.populateDays, false);
 
-	    document.getElementById("dayvalue")
+	    document.getElementById("sl3-dayvalue")
 		.addEventListener("ValueChange", t.updateModified, false);
-	    document.getElementById("hourvalue")
+	    document.getElementById("sl3-hourvalue")
 		.addEventListener("ValueChange", t.updateModified, false);
-	    document.getElementById("minvalue")
+	    document.getElementById("sl3-minvalue")
 		.addEventListener("ValueChange", t.updateModified, false);
 	    t.populateYears();
 	    t.populateHours();
 	    t.populateMins();
 	    var hhmm = new Date();
-	    document.getElementById("hourvalue").value = hhmm.getHours();
-	    document.getElementById("minvalue").value = hhmm.getMinutes();
+	    document.getElementById("sl3-hourvalue").value = hhmm.getHours();
+	    document.getElementById("sl3-minvalue").value = hhmm.getMinutes();
 	    switch (document.getElementById("sendlater3_toolbar")
 		    .parentNode.getAttribute("mode")) {
 	    case "full":
@@ -104,27 +104,27 @@ var Sendlater3ComposeToolbar = {
 		// or showing that, but then theyall grew to fill the height of
 		// the box and it was ugly, and I couldn't figure out how to
 		// make that stop.
-		document.getElementById("hourvalue").hidden = false;
+		document.getElementById("sl3-hourvalue").hidden = false;
 		document.getElementById("sendlater3colon").hidden = false;
-		document.getElementById("minvalue").hidden = false;
+		document.getElementById("sl3-minvalue").hidden = false;
 		document.getElementById("sendlater3calsep").hidden = false;
 		document.getElementById("sendlater3toolbarcalicon").hidden = false;
-		document.getElementById("yearvalue").hidden = false;
-		document.getElementById("monthvalue").hidden = false;
-		document.getElementById("dayvalue").hidden = false;
+		document.getElementById("sl3-yearvalue").hidden = false;
+		document.getElementById("sl3-monthvalue").hidden = false;
+		document.getElementById("sl3-dayvalue").hidden = false;
 		document.getElementById("sendlater3toolsep").hidden = false;
 		document.getElementById("sendlater3toolbarbutton").hidden = false;
 		document.getElementById("sendlater3quicksep").hidden = false;
 	    }
 	    else {
-		document.getElementById("hourvalue").hidden = true;
+		document.getElementById("sl3-hourvalue").hidden = true;
 		document.getElementById("sendlater3colon").hidden = true;
-		document.getElementById("minvalue").hidden = true;
+		document.getElementById("sl3-minvalue").hidden = true;
 		document.getElementById("sendlater3calsep").hidden = true;
 		document.getElementById("sendlater3toolbarcalicon").hidden = true;
-		document.getElementById("yearvalue").hidden = true;
-		document.getElementById("monthvalue").hidden = true;
-		document.getElementById("dayvalue").hidden = true;
+		document.getElementById("sl3-yearvalue").hidden = true;
+		document.getElementById("sl3-monthvalue").hidden = true;
+		document.getElementById("sl3-dayvalue").hidden = true;
 		document.getElementById("sendlater3toolsep").hidden = true;
 		document.getElementById("sendlater3toolbarbutton").hidden = true;
 		document.getElementById("sendlater3quicksep").hidden = true;
@@ -132,7 +132,7 @@ var Sendlater3ComposeToolbar = {
 
 	    var i;
 	    for (i = 1; i <= 3; i++) {
-		var btn = "shortcutbtn_" + i;
+		var btn = "sl3-shortcutbtn_" + i;
 		var minutes = SL3U.ShortcutValue(i);
 		if (t.showquickbutton(i) && minutes != undefined) {
 		    var cmd = "Sendlater3ComposeToolbar.CallSendAfter(" +
@@ -156,15 +156,15 @@ var Sendlater3ComposeToolbar = {
 	    if (Sendlater3Composing.prevXSendLater) {
 		SL3U.dump("PrevXSendlater is Set to " +
 			  Sendlater3Composing.prevXSendLater);
-		document.getElementById("yearvalue").value =
+		document.getElementById("sl3-yearvalue").value =
 		    Sendlater3Composing.prevXSendLater.getFullYear();
-		document.getElementById("monthvalue").value =
+		document.getElementById("sl3-monthvalue").value =
 		    Sendlater3Composing.prevXSendLater.getMonth();
-		document.getElementById("dayvalue").value =
+		document.getElementById("sl3-dayvalue").value =
 		    Sendlater3Composing.prevXSendLater.getDate();
-		document.getElementById("hourvalue").value =
+		document.getElementById("sl3-hourvalue").value =
 		    Sendlater3Composing.prevXSendLater.getHours();
-		document.getElementById("minvalue").value =
+		document.getElementById("sl3-minvalue").value =
 		    Sendlater3Composing.prevXSendLater.getMinutes();
 	    }
 	    else {
@@ -185,7 +185,7 @@ var Sendlater3ComposeToolbar = {
     populateHours: function() {
 	SL3U.Entering("Sendlater3ComposeToolbar.populateHours");
 	var t = Sendlater3ComposeToolbar;
-	var container = document.getElementById("hours");
+	var container = document.getElementById("sl3-hours");
 	t.clearChildren(container);
 	var i;
 	for (i=0;i<24;i++) {
@@ -200,7 +200,7 @@ var Sendlater3ComposeToolbar = {
     populateMins: function() {
 	SL3U.Entering("Sendlater3ComposeToolbar.populateMins");
 	var t = Sendlater3ComposeToolbar;
-	var container = document.getElementById("mins");
+	var container = document.getElementById("sl3-mins");
 	t.clearChildren(container);
 	var i;
 	for (i=0;i<60;i++) {
@@ -216,7 +216,7 @@ var Sendlater3ComposeToolbar = {
 	SL3U.Entering("Sendlater3ComposeToolbar.populateYears");
 	var today = new Date();
 	var t = Sendlater3ComposeToolbar;
-	var container = document.getElementById("years");
+	var container = document.getElementById("sl3-years");
 	t.clearChildren(container);
 	var i;
 	for (i=0;i<5;i++) {
@@ -228,7 +228,7 @@ var Sendlater3ComposeToolbar = {
 	    container.appendChild(newitem);
 	}
 
-	document.getElementById("yearvalue").selectedIndex = 0;
+	document.getElementById("sl3-yearvalue").selectedIndex = 0;
 	SL3U.Leaving("Sendlater3ComposeToolbar.populateYears");
     },
 
@@ -243,7 +243,7 @@ var Sendlater3ComposeToolbar = {
     populateMonths: function() {
 	var t = Sendlater3ComposeToolbar;
 	SL3U.Entering("Sendlater3ComposeToolbar.populateMonths");
-	var selectedyear =  document.getElementById("yearvalue").value;
+	var selectedyear =  document.getElementById("sl3-yearvalue").value;
 	var today = new Date();
 	var monthStr = [ SL3U.PromptBundleGet("January"),
 			 SL3U.PromptBundleGet("February"),
@@ -257,7 +257,7 @@ var Sendlater3ComposeToolbar = {
 			 SL3U.PromptBundleGet("October"),
 			 SL3U.PromptBundleGet("November"),
 			 SL3U.PromptBundleGet("December") ];
-	var container = document.getElementById("months");
+	var container = document.getElementById("sl3-months");
 	t.clearChildren(container);
 	var i = 0;
 	if (selectedyear == today.getFullYear()) {
@@ -269,7 +269,7 @@ var Sendlater3ComposeToolbar = {
 	    newitem.setAttribute("value",i);
 	    container.appendChild(newitem);
 	}
-	document.getElementById("monthvalue").selectedIndex = 0;
+	document.getElementById("sl3-monthvalue").selectedIndex = 0;
 	SL3U.Leaving("Sendlater3ComposeToolbar.populateMonths");
     },
 
@@ -292,8 +292,8 @@ var Sendlater3ComposeToolbar = {
 	SL3U.Entering("Sendlater3ComposeToolbar.populateDays");
 	var today = new Date();
 
-	var selectedyear =  document.getElementById("yearvalue").value;
-	var selectedmonth =  document.getElementById("monthvalue").value;
+	var selectedyear =  document.getElementById("sl3-yearvalue").value;
+	var selectedmonth =  document.getElementById("sl3-monthvalue").value;
 
 	var container = document.getElementById("days");
 	t.clearChildren(container);
@@ -334,11 +334,11 @@ var Sendlater3ComposeToolbar = {
 
     CallSendAt: function() {
 	SL3U.Entering("Sendlater3ComposeToolbar.CallSendAt");
-	var selectedyear =  document.getElementById("yearvalue").value;
-	var selectedmonth =  document.getElementById("monthvalue").value;
+	var selectedyear =  document.getElementById("sl3-yearvalue").value;
+	var selectedmonth =  document.getElementById("sl3-monthvalue").value;
 	var selecteddate =  document.getElementById("dayvalue").value;
-	var selectedhour =  document.getElementById("hourvalue").value;
-	var selectedmin =  document.getElementById("minvalue").value;
+	var selectedhour =  document.getElementById("sl3-hourvalue").value;
+	var selectedmin =  document.getElementById("sl3-minvalue").value;
 	var sendat = new SL3U.toSendDate(selectedyear, selectedmonth,
 					 selecteddate, selectedhour,
 					 selectedmin);
