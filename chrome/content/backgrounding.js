@@ -1042,8 +1042,16 @@ var Sendlater3Backgrounding = function() {
 
     function DisplayReleaseNotes() {
 	if (! (SL3U.IsPostbox() || SL3U.IsThunderbird2())) {
-	    var enabledItems = SL3U.PrefService
-		.getCharPref("extensions.enabledItems");
+	    var enabledItems;
+	    try {
+		var enabledItems = SL3U.PrefService
+		    .getCharPref("extensions.enabledAddons");
+	    }
+	    catch (e) {
+		var enabledItems = SL3U.PrefService
+		    .getCharPref("extensions.enabledItems");
+	    }
+
 	    var matches = enabledItems.match(/sendlater3@kamens\.us:([^,]+)/);
 	    if (matches) {
 		var current_version = matches[1];
