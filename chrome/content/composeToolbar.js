@@ -141,10 +141,10 @@ var Sendlater3ComposeToolbar = {
 		    // See comment about removeAttribute above similar code
 		    // in prompt.js.
 		    document.getElementById(btn).removeAttribute("oncommand");
-		    document.getElementById("quickbutton" + i + "-key")
+		    document.getElementById("sl3-quickbutton" + i + "-key")
 			.removeAttribute("oncommand");
 		    document.getElementById(btn).setAttribute("oncommand", cmd);
-		    document.getElementById("quickbutton" + i + "-key")
+		    document.getElementById("sl3-quickbutton" + i + "-key")
 			.setAttribute("oncommand", cmd);
 		    document.getElementById(btn).hidden = false;
 		}
