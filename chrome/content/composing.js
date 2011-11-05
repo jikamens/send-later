@@ -26,11 +26,12 @@ var Sendlater3Composing = {
 
 	function CheckForXSendLater() {
 	    SL3U.Entering("Sendlater3Composing.main.CheckforXSendLater")
+	    Sendlater3Composing.prevXSendLater = false;
+	    Sendlater3Composing.prevRecurring = false;
 	    if (gMsgCompose != null) {
 		var msgCompFields = gMsgCompose.compFields;
-		if (msgCompFields && gMsgCompose.originalMsgURI!="") {
-		    var messageURI = gMsgCompose.compFields.draftId
-			.replace(/\?.*/, "");
+		if (msgCompFields && msgCompFields.draftId!="") {
+		    var messageURI = msgCompFields.draftId.replace(/\?.*/, "");
 		    SL3U.dump("Checking " + messageURI);
 		    var accountManager = Components
 			.classes["@mozilla.org/messenger/account-manager;1"]
@@ -52,7 +53,7 @@ var Sendlater3Composing = {
 		    hdr = messageHDR.getStringProperty("x-send-later-recur");
 		    if (hdr)
 			Sendlater3Composing.prevRecurring = hdr;
-
+			
 		    SL3U.dump("prevXSendLater= " +
 			      Sendlater3Composing.prevXSendLater +
 			      ", prevRecurring=" +
