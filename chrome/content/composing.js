@@ -29,8 +29,9 @@ var Sendlater3Composing = {
 	    if (gMsgCompose != null) {
 		var msgCompFields = gMsgCompose.compFields;
 		if (msgCompFields && gMsgCompose.originalMsgURI!="") {
-		    SL3U.dump("Checking " + gMsgCompose.originalMsgURI);
-		    var messageURI = gMsgCompose.originalMsgURI;
+		    var messageURI = gMsgCompose.compFields.draftId
+			.replace(/\?.*/, "");
+		    SL3U.dump("Checking " + messageURI);
 		    var accountManager = Components
 			.classes["@mozilla.org/messenger/account-manager;1"]
 			.getService(Components.interfaces
@@ -38,8 +39,6 @@ var Sendlater3Composing = {
 		    var messenger = Components
 			.classes["@mozilla.org/messenger;1"]
 			.getService(Components.interfaces.nsIMessenger);
-		    var fdrlocal = accountManager.localFoldersServer
-			.rootFolder;
 		    var content = "";
 		    var MsgService = messenger
 			.messageServiceFromURI(messageURI);
