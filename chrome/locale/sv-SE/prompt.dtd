@@ -1,7 +1,8 @@
 <!ENTITY separate.label "">
 <!ENTITY sendlater.prompt.sendlater.label "Till Utkorgen för att skickas senare">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Inbyggd Thunderbird-funktion: Flytta meddelandet till Utkorgen för sändning nästa gång ej skickade meddelanden skickas.">
-<!ENTITY sendlater.prompt.sendnow.label "Skicka nu">
+<!ENTITY sendlater.prompt.sendnow.label "Skicka Nu">
+<!ENTITY sendlater.prompt.sendnow.accesskey "N">
 <!ENTITY sendlater.prompt.close.label "Avbryt">
 <!ENTITY sendlater.prompt.close.tooltip "Gå tillbaka för att redigera meddelandet.">
 <!ENTITY sendlater.prompt.title.label "Skicka detta e-brev senare">

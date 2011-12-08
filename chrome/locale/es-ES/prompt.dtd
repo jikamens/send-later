@@ -1,7 +1,8 @@
 <!ENTITY separate.label "">
 <!ENTITY sendlater.prompt.sendlater.label "Pasar a través de Enviar Después">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Funcionalidad integrada en Thunderbird: mover los mensajes a la Bandeja de Salida, para la próxima vez que se envien los mensajes sin enviar.">
-<!ENTITY sendlater.prompt.sendnow.label "Enviar ahora">
+<!ENTITY sendlater.prompt.sendnow.label "Enviar Ahora">
+<!ENTITY sendlater.prompt.sendnow.accesskey "A">
 <!ENTITY sendlater.prompt.close.label "Cancelar">
 <!ENTITY sendlater.prompt.close.tooltip "Volver a edición del mensaje.">
 <!ENTITY sendlater.prompt.title.label "Enviar este email después">

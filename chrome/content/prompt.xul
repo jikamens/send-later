@@ -15,6 +15,7 @@
 <key id="quickbutton3-key" modifiers="alt" key="3"/>
 <key id="cancel-esc" modifiers="" keycode="VK_ESCAPE" oncommand="window.arguments[0].cancelCallback();close();"/>
 <key id="call-return" modifiers="accel" keycode="VK_RETURN" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
+<key id="send-now-key" modifiers="alt" key="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
 </keyset>
 <vbox style="margin: 10px;">
 	<vbox style="border:solid #00C000 3px; padding-top: 2px;" >
@@ -92,7 +93,7 @@
 	<hbox align="center" style="border:solid red 2px">
 		<button label="&sendlater.prompt.sendlater.label;" tooltiptext="&sendlater.prompt.sendlater.tooltip;" oncommand="window.arguments[0].continueCallback();close();"/>
 		<description flex="1">&separate.label;</description>
-		<button label="&sendlater.prompt.sendnow.label;" oncommand="window.arguments[0].sendCallback();close();"/>
+		<button label="&sendlater.prompt.sendnow.label;" accesskey="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
 		<description flex="1">&separate.label;</description>
 		<button id="cancelButton" key="cancel-esc" label="&sendlater.prompt.close.label;" tooltiptext="&sendlater.prompt.close.tooltip;" oncommand="window.arguments[0].cancelCallback();close();"/>
 	</hbox>

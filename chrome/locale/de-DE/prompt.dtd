@@ -2,6 +2,7 @@
 <!ENTITY sendlater.prompt.sendlater.label "Durchgang zu SendeSpäter">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Eingebaute Thunderbird-Funktionalität: verschiebt eine Nachricht in den Postausgangs-Ordner für die nächste Auslieferung aller ungesendeten Nachrichten.">
 <!ENTITY sendlater.prompt.sendnow.label "Jetzt senden">
+<!ENTITY sendlater.prompt.sendnow.accesskey "J">
 <!ENTITY sendlater.prompt.close.label "Abbruch">
 <!ENTITY sendlater.prompt.close.tooltip "Gehe zurück zum Bearbeiten der Mitteilung.">
 <!ENTITY sendlater.prompt.title.label "Sende dieses E-Mail später">
