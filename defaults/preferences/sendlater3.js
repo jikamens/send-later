@@ -22,6 +22,7 @@ pref("extensions.sendlater3.sendunsentmessages",true);
 pref("extensions.sendlater3.senddrafts",true);
 pref("extensions.sendlater3.sendbutton",false);
 pref("extensions.sendlater3.show_edit_alert",true);
+pref("extensions.sendlater3.alt_binding",false);
 // Internal settings not to be messed with
 pref("extensions.sendlater3.activescanner.uuid","");
 pref("extensions.sendlater3.activescanner.time",0);

@@ -10,6 +10,9 @@
   <keyset id="tasksKeys">
   <key oncommand="Sendlater3Composing.CheckSendAt()" id="key_sendLater"
      keycode="VK_RETURN" observes="cmd_sendLater" modifiers="accel, shift"/>
+  <key oncommand="Sendlater3Composing.CheckSendAt()" id="key_sendLater3"
+     keycode="VK_RETURN" observes="cmd_sendLater" modifiers="alt, shift"
+     disabled="true"/>
   </keyset>
   
 </overlay>

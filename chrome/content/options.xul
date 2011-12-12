@@ -31,6 +31,7 @@
       <preference id="sendlater3_dumplevel" name="extensions.sendlater3.logging.dump" type="string"/>
       <preference id="sendlater3_consolelevel" name="extensions.sendlater3.logging.console" type="string"/>
       <preference id="sendlater3_sendbutton" name="extensions.sendlater3.sendbutton" type="bool"/>
+      <preference id="sendlater3_altbinding" name="extensions.sendlater3.alt_binding" type="bool"/>
     </preferences>
     <tabbox>
       <tabs>
@@ -49,6 +50,9 @@
 	    <separator label="-"/>
 	    <hbox id="sendbutton_hbox" align="center" tooltiptext="&sendlatersendbutton.tooltip;">
 	      <checkbox id="sendbuttonpref" preference="sendlater3_sendbutton" label="&sendlatersendbutton.caption;" />
+	    </hbox>
+	    <hbox id="altbinding_hbox" align="center">
+	      <checkbox id="altbindingpref" preference="sendlater3_altbinding" label="&altbinding.caption;" />
 	    </hbox>
 	    <hbox align="center" tooltiptext="&showsendlatercolumn.tooltip;">
 	      <checkbox id="showcolumnpref" preference="sendlater3_showcolumn" label="&showsendlatercolumn.caption;" />

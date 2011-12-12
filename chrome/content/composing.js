@@ -14,6 +14,24 @@ var Sendlater3Composing = {
 	SaveInFolderDone: function() {}
     },
 
+    setBindings: {
+	observe: function() {
+	    if (! SL3U.getBoolPref("alt_binding")) {
+		document.getElementById("key_sendLater")
+		    .setAttribute("oncommand",
+				  "Sendlater3Composing.CheckSendAt()");
+		document.getElementById("key_sendLater3")
+		    .setAttribute("disabled", true);
+	    }
+	    else {
+		document.getElementById("key_sendLater")
+		    .setAttribute("oncommand", "goDoCommand('cmd_sendLater')");
+		document.getElementById("key_sendLater3")
+		    .setAttribute("disabled", false);
+	    }
+	}
+    },
+
     main: function() {
 
 	var composelogMngr = null;
@@ -60,6 +78,10 @@ var Sendlater3Composing = {
 			      Sendlater3Composing.prevRecurring);
 		}
 	    }
+	    SL3U.PrefService.addObserver(SL3U.pref("alt_binding"),
+					 Sendlater3Composing.setBindings,
+					 false);
+	    Sendlater3Composing.setBindings.observe();
 	    SL3U.Leaving("Sendlater3Composing.main.CheckforXSendLater");
 	}                            
 
@@ -1219,9 +1241,15 @@ var Sendlater3Composing = {
 	catch (ex) {
 	    SL3U.debug("Failed to set flag for reply / forward");
 	}
+    },
+
+    uninit: function() {
+	SL3U.PrefService.RemoveObserver(SL3U.pref("alt_binding"),
+					Sendlater3Composing.setBindings);
+	SL3U.ininitUtil();
     }
 }
 
 SL3U.initUtil();
-window.addEventListener("unload", SL3U.uninitUtil, false);
+window.addEventListener("unload", Sendlater3Composing.uninit, false);
 Sendlater3Composing.main();
