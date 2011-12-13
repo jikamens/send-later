@@ -23,7 +23,7 @@
 <!ENTITY showsendlaterunsentmessages.tooltip "Se non spunti questa opzione, Send Later 3 non provvederà all'invio del messaggio, ma quando arriverà l'ora pianificata per la spedizione, lo parcheggerà semplicemente nella &quot;Posta in Uscita&quot;. Togliere la spunta nel caso di utilizzo con altri componenti aggiuntivi come ad esempio BlunderDelay, per inviare i messaggi presenti nella &quot;Posta in Uscita&quot; periodicamente. Da notare che se questa opzione è selezionata, quando Send Later 3 invia un messaggio, anche TUTTI gli altri messaggi presenti nella &quot;Posta in Uscita&quot; verranno inviati.">
 <!ENTITY sendlatersendbutton.caption "&quot;Invia&quot; diventa &quot;Invia dopo&quot;">
 <!ENTITY sendlatersendbutton.tooltip "Con questa opzione attivata, il comando &quot;Invia&quot; (sia il pulsante che la pressione di Ctrl-Invio) si comporta come &quot;Invia dopo&quot;.">
-<!ENTITY altbinding.caption "Bind Alt-Shift-Enter instead of Ctrl-Shift-Enter">
+<!ENTITY altbinding.caption "Associa a Alt-Maiusc-Invio anziché a Ctrl-Maiusc-Invio">
 <!ENTITY advanced.caption "Avanzate">
 <!ENTITY dumplevel.caption "Livello log Dump:">
 <!ENTITY consolelevel.caption "Livello log Console:">

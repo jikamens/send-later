@@ -22,7 +22,7 @@
 <!ENTITY showsendlaterunsentmessages.tooltip "Om du avmarkerar detta alternativ, så skickar inte Send Later 3 iväg dina meddelanden, utan lägger dem i din utkorg när de har schemalagts för avsändning. Avmarkera detta alternativ om du, exempelvis, använder något annat tillägg, t.ex. BlunderDelay, för att med regelbundna intervall skicka meddelanden från Utkorgen. Observera att när detta alternativ är markerat, så skickar Send Later 3 SAMTLIGA meddelanden i din utkorg varje gång ett meddelande skall skickas.">
 <!ENTITY sendlatersendbutton.caption "&quot;Skicka&quot; innebär &quot;Skicka senare&quot;">
 <!ENTITY sendlatersendbutton.tooltip "Om detta alternativ är aktiverat, så utförs kommandot &quot;Skicka&quot; (antingen via knappen eller genom att trycka ner Ctrl+Retur) precis som &quot;Skicka senare&quot;.">
-<!ENTITY altbinding.caption "Bind Alt-Shift-Enter instead of Ctrl-Shift-Enter">
+<!ENTITY altbinding.caption "Tilldela Alt+Skift+Retur istället för Ctrl+Skift+Retur">
 <!ENTITY advanced.caption "Avancerat">
 <!ENTITY dumplevel.caption "Loggningsnivå för loggdump:">
 <!ENTITY consolelevel.caption "Loggningsnivå för konsol:">
