@@ -22,7 +22,7 @@
 <!ENTITY showsendlaterunsentmessages.tooltip "Effectue les envois planifiés sans les placer dans &quot;Message en attente&quot;. Désactiver l'option, par exemple, lors de l'utilisation d'une extension automatisant l'envoi des messages en attente (tel que BlunderDelay). Remarque : si cette option est activée ; quand &quot;Send Later 3&quot; déclenche un envoi, TOUS les messages en attente sont expédiés">
 <!ENTITY sendlatersendbutton.caption "Remplacer &quot;Envoyer&quot; par &quot;Envoyer plus tard&quot;">
 <!ENTITY sendlatersendbutton.tooltip "Remplace l'action par défaut d'&quot;Envoyer&quot; (bouton ou raccourci &quot;Ctrl+Entrée&quot;) par celle d'&quot;Envoyer plus tard&quot;">
-<!ENTITY altbinding.caption "Bind Alt-Shift-Enter instead of Ctrl-Shift-Enter">
+<!ENTITY altbinding.caption "Préférer Alt-Maj-Entrée à la place de Ctrl-Maj-Entrée">
 <!ENTITY advanced.caption "Avancé">
 <!ENTITY dumplevel.caption "Niveau de journalisation :">
 <!ENTITY consolelevel.caption "Console de journalisation :">
