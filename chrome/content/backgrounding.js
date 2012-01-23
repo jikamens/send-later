@@ -807,7 +807,16 @@ var Sendlater3Backgrounding = function() {
 			messageenumerator = thisfolder.getMessages(msgWindow);
 		    }
 		    else {
-			messageenumerator = thisfolder.messages;
+			try {
+			    messageenumerator = thisfolder.messages;
+			}
+			catch (e) {
+			    SL3U.alert(msgWindow, null,
+				       SL3U.PromptBundleGetFormatted(
+					   "CorruptFolderError",
+					   [folder.URI]));
+			    throw e;
+			}
 		    }
 		    if ( messageenumerator ) {
 			SL3U.dump ("Got Enumerator\n");
