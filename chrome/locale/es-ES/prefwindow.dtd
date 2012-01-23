@@ -22,7 +22,7 @@
 <!ENTITY showsendlaterunsentmessages.tooltip "Si desactivas esta opción, entonces &quot;Send Later 3&quot; no enviará los mensajes completamente, sin embargo los pondrá en la Bandeja de Salida cuando estén programados para ser enviados. Desactiva esta opción, por ejemplo, si usas alguna otra extensión como &quot;BlunderDelay&quot; para enviar mensajes periódicamente desde la Bandeja de Salida. Ten en cuenta que cuando esta opción está activa y &quot;Send Later 3&quot; envía un mensaje, todos los mensajes de tu Bandeja de Salida serán enviados.">
 <!ENTITY sendlatersendbutton.caption "&quot;Enviar&quot; significa &quot;Enviar más tarde&quot;">
 <!ENTITY sendlatersendbutton.tooltip "Con esta opción activada, el comando &quot;Enviar&quot; (ya sea el botón o tecleando Ctrl-Enter) actúa de la misma como &quot;Enviar más tarde&quot;.">
-<!ENTITY altbinding.caption "Bind Alt-Shift-Enter instead of Ctrl-Shift-Enter">
+<!ENTITY altbinding.caption "Asignar Alt-Shift-Enter en lugar de Ctrl-Shift-Enter">
 <!ENTITY advanced.caption "Avanzado">
 <!ENTITY dumplevel.caption "Vaciar nivel de log:">
 <!ENTITY consolelevel.caption "Nivel de log en la consola:">
