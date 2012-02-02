@@ -40,6 +40,8 @@ var Sendlater3HeaderView = function() {
 	    return null;
 	},
 	
+	isEditable:          function() {return false;},
+	cycleCell:           function(aRow, acol) {},
 	isString:            function() {return false;},
 	getCellProperties:   function(row, col, props){},
 	getImageSrc:         function(row, col) {return null;},
