@@ -49,11 +49,11 @@ var Sendlater3HeaderView = function() {
 	getColumnProperties: function(colid,col,props){},
 	getSortLongForRow:   function(hdr) {
 	    SL3U.Entering("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", hdr);
-	    if (hdr.getStringProperty("x-send-later-at")) {
-		var hdrdate =
-		    new Date(hdr.getStringProperty("x-send-later-at"));
-		SL3U.Returning("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", hdrdate.valueOf());
-		return hdrdate.valueOf();
+	    var dateStr = hdr.getStringProperty("x-send-later-at");
+	    if (dateStr) {
+		var hdrdate = new Date(dateStr);
+		SL3U.Returning("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow("+dateStr+")", hdrdate.valueOf()/1000);
+		return hdrdate.valueOf()/1000;
 	    }
 	    else {
 		SL3U.Returning("Sendlater3HeaderView.sendlater3columnHandler.getSortLongForRow", 0);
