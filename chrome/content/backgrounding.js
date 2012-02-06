@@ -811,7 +811,7 @@ var Sendlater3Backgrounding = function() {
 			    messageenumerator = thisfolder.messages;
 			}
 			catch (e) {
-			    SL3U.alert(msgWindow, null,
+			    SL3U.alert(window, null,
 				       SL3U.PromptBundleGetFormatted(
 					   "CorruptFolderError",
 					   [folder.URI]));
