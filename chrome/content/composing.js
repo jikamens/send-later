@@ -104,9 +104,10 @@ var Sendlater3Composing = {
 		    return;
 		}
 		var msgtype = msgcomposeWindow.getAttribute("msgtype");
-		if ((msgtype == nsIMsgCompDeliverMode.Now ||
-		     msgtype == nsIMsgCompDeliverMode.Background) &&
-		    SL3U.getBoolPref("sendbutton")) {
+		if (((msgtype == nsIMsgCompDeliverMode.Now ||
+		      msgtype == nsIMsgCompDeliverMode.Background) &&
+		     SL3U.getBoolPref("sendbutton")) ||
+		    (msgtype == nsIMsgCompDeliverMode.Later)) {
 		    Sendlater3Composing.CheckSendAt(true);
 		    event.preventDefault();
 		}
