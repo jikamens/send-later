@@ -145,7 +145,12 @@ var Sendlater3Composing = {
 	window.openDialog("chrome://sendlater3/content/prompt.xul",
 			  "SendAtWindow", "modal,chrome,centerscreen", 
 			  { finishCallback: Sendlater3Composing.SendAtTime,
-			    continueCallback: Sendlater3Composing.ContinueSendLater,
+			    continueCallback: function() {
+				var w = document
+				    .getElementById("msgcomposeWindow");
+				w.setAttribute("sending_later", true);
+			      Sendlater3Composing.ContinueSendLater();
+			    },
 			    sendCallback: function() {
 				var w = document
 				    .getElementById("msgcomposeWindow");
