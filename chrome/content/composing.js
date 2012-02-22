@@ -25,11 +25,17 @@ var Sendlater3Composing = {
 	    }
 	    else {
 		document.getElementById("key_sendLater")
-		    .setAttribute("oncommand", "goDoCommand('cmd_sendLater')");
+		    .setAttribute("oncommand", "Sendlater3Composing.builtInSendLater();");
 		document.getElementById("key_sendLater3")
 		    .setAttribute("disabled", false);
 	    }
 	}
+    },
+
+    builtInSendLater: function() {
+	document.getElementById("msgcomposeWindow")
+	    .setAttribute("sending_later", true);
+	goDoCommand("cmd_sendLater");
     },
 
     main: function() {
