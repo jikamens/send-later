@@ -1258,7 +1258,7 @@ var Sendlater3Composing = {
     uninit: function() {
 	SL3U.PrefService.RemoveObserver(SL3U.pref("alt_binding"),
 					Sendlater3Composing.setBindings);
-	SL3U.ininitUtil();
+	SL3U.uninitUtil();
     }
 }
 
