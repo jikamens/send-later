@@ -20,6 +20,8 @@ problem solves itself. Not sure this is worth fixing.
 
 Scheduling entry improvements:
 
+* Use sugarjs (sugarjs.com) to allow free-form date entry in a text box?
+
 * Add buttons on pop-up to copy current date/time setting to clipboard
   and fetch setting from current clipboard contents, to make it easy
   to schedule multiple messages to be sent at the same time.
