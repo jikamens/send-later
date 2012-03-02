@@ -19,10 +19,10 @@
 
   <!-- Postbox 2 -->
   <rows id="headerRows">
-    <row id="sl3-expanded-atRow" class="maiheader">
-      <label id="sl3-expanded-atLabel" class="headerName plain"
+    <row id="sendlater3-expanded-atRow" class="maiheader">
+      <label id="sendlater3-expanded-atLabel" class="headerName plain"
 	     value="x-send-later-at"/>
-      <mailheadervalue id="sl3-expanded-atBox"/>
+      <mailheadervalue id="sendlater3-expanded-atBox"/>
     </row>
   </rows>
 

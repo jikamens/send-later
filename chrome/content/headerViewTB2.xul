@@ -19,7 +19,7 @@
 
   <!-- Thunderbird 2 -->  
   <vbox id="expandedHeaders">
-    <mail-headerfield id="sl3-expanded-atBox"
+    <mail-headerfield id="sendlater3-expanded-atBox"
 		      label="&sendlater3header.label;:"/>
   </vbox>
 

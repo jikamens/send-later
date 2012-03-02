@@ -81,10 +81,10 @@ var Sendlater3Util = {
 
     HeaderRowId: function(name) {
 	if (Sendlater3Util.IsThunderbird2()) {
-	    return "expanded" + name + "Box";
+	    return "sendlater3-expanded" + name + "Box";
 	}
 	else {
-	    return "expanded" + name + "Row";
+	    return "sendlater3-expanded" + name + "Row";
 	}
     },
 

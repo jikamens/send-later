@@ -150,7 +150,7 @@ var Sendlater3HeaderView = function() {
 				    .PromptBundleGet(settings[0]) + ")";
 			    }
 			    document
-				.getElementById("sl3-expanded-atBox")
+				.getElementById("sendlater3-expanded-atBox")
 				.headerValue = val;
 			    hidden = false;
 			    SL3U.debug("headerView.js: dispHeader: showing header");
