@@ -115,16 +115,16 @@ var Sendlater3HeaderView = function() {
 	}
 	if ( IsThisDraft(folder) ) {
 	    if (SL3U.getBoolPref("showcolumn")) {
-		document.getElementById("colXSendLaterAt").hidden = false;
+		document.getElementById("sl3_colXSendLaterAt").hidden = false;
 	    }
 	    else {
-		document.getElementById("colXSendLaterAt").hidden = true;
+		document.getElementById("sl3_colXSendLaterAt").hidden = true;
 	    }
-	    gDBView.addColumnHandler("colXSendLaterAt",
+	    gDBView.addColumnHandler("sl3_colXSendLaterAt",
 				     sendlater3columnHandler);
 	}
 	else {
-	    document.getElementById("colXSendLaterAt").hidden = true;
+	    document.getElementById("sl3_colXSendLaterAt").hidden = true;
 	}
 	SL3U.Leaving("Sendlater3HeaderView.addSENDLATER3ColumnHandler");
     }
@@ -150,7 +150,7 @@ var Sendlater3HeaderView = function() {
 				    .PromptBundleGet(settings[0]) + ")";
 			    }
 			    document
-				.getElementById("expandedx-send-later-atBox")
+				.getElementById("sl3-expanded-atBox")
 				.headerValue = val;
 			    hidden = false;
 			    SL3U.debug("headerView.js: dispHeader: showing header");

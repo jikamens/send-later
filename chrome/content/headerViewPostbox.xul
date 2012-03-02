@@ -11,7 +11,7 @@
   <tree id="threadTree">
     <treecols id="threadCols">
       <splitter class="tree-splitter" />
-      <treecol id="colXSendLaterAt" persist="ordinal width"
+      <treecol id="sl3_colXSendLaterAt" persist="ordinal width"
 		currentView="unthreaded" flex="1"
 		label="&sendlater3header.label;" />
     </treecols>
@@ -19,10 +19,10 @@
 
   <!-- Postbox 2 -->
   <rows id="headerRows">
-    <row id="expandedx-send-later-atRow" class="maiheader">
-      <label id="expandedx-send-later-atLabel" class="headerName plain"
+    <row id="sl3-expanded-atRow" class="maiheader">
+      <label id="sl3-expanded-atLabel" class="headerName plain"
 	     value="x-send-later-at"/>
-      <mailheadervalue id="expandedx-send-later-atBox"/>
+      <mailheadervalue id="sl3-expanded-atBox"/>
     </row>
   </rows>
 
