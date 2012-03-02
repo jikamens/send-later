@@ -4,52 +4,52 @@
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
         title="&sendlater.prompt.title.label;" onload="Sendlater3Prompt.SetOnLoad();">
-<stringbundleset id="sl3_strbundles">
-	<stringbundle id="sl3_promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
+<stringbundleset id="sendlater3-strbundles">
+	<stringbundle id="sendlater3-promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
 </stringbundleset>
 <script src="util.js"/>
 <script src="chrome://sendlater3/content/prompt.js"/>
 <keyset>
-<key id="quickbutton1-key" modifiers="alt" key="1"/>
-<key id="quickbutton2-key" modifiers="alt" key="2"/>
-<key id="quickbutton3-key" modifiers="alt" key="3"/>
-<key id="cancel-esc" modifiers="" keycode="VK_ESCAPE" oncommand="window.arguments[0].cancelCallback();close();"/>
-<key id="call-return" modifiers="accel" keycode="VK_RETURN" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
-<key id="send-now-key" modifiers="alt" key="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
+<key id="sendlater3-quickbutton1-key" modifiers="alt" key="1"/>
+<key id="sendlater3-quickbutton2-key" modifiers="alt" key="2"/>
+<key id="sendlater3-quickbutton3-key" modifiers="alt" key="3"/>
+<key id="sendlater3-cancel-esc" modifiers="" keycode="VK_ESCAPE" oncommand="window.arguments[0].cancelCallback();close();"/>
+<key id="sendlater3-call-return" modifiers="accel" keycode="VK_RETURN" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
+<key id="sendlater3-send-now-key" modifiers="alt" key="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
 </keyset>
 <vbox style="margin: 10px;">
 	<vbox style="border:solid #00C000 3px; padding-top: 2px;" >
 	<hbox>
 		<hbox  align="center"  >
 		<separator flex="1" width="8" />			
-		<hbox id="sendlater3toolbartimeicon" width="24" >
+		<hbox id="sendlater3-toolbartimeicon" width="24" >
 			<image  src="chrome://sendlater3/content/timeIcon.png" />
 			<separator flex="1" />
 		</hbox>
-		<menulist label="HH" id="hourvalue" style="margin: 0px;" >
-			<menupopup id="hours">
+		<menulist label="HH" id="sendlater3-hourvalue" style="margin: 0px;" >
+			<menupopup id="sendlater3-hours">
 			</menupopup>
 		</menulist>
 		<description >:</description>
-		<menulist label="MM" id="minvalue" style="margin: 0px;">
-			<menupopup id="mins">
+		<menulist label="MM" id="sendlater3-minvalue" style="margin: 0px;">
+			<menupopup id="sendlater3-mins">
 			</menupopup>
 		</menulist>
 			<separator flex="1" width="4" />
-		<hbox id="sendlater3toolbarcalicon" width="28" >
+		<hbox id="sendlater3-toolbarcalicon" width="28" >
 			<image src="chrome://sendlater3/content/calIcon.png"  />
 			<separator flex="1" />
 		</hbox>
-		<menulist label="Years" id="yearvalue"  style="margin: 0px;">
-			<menupopup id="years">
+		<menulist label="Years" id="sendlater3-yearvalue"  style="margin: 0px;">
+			<menupopup id="sendlater3-years">
 			</menupopup>
 		</menulist>
-		<menulist label="Months" id="monthvalue" style="margin: 0px;">
-			<menupopup id="months">
+		<menulist label="Months" id="sendlater3-monthvalue" style="margin: 0px;">
+			<menupopup id="sendlater3-months">
 			</menupopup>
 		</menulist>
-		<menulist label="Days" id="dayvalue" style="margin: 0px;">
-			<menupopup id="days">
+		<menulist label="Days" id="sendlater3-dayvalue" style="margin: 0px;">
+			<menupopup id="sendlater3-days">
 			</menupopup>
 		</menulist>
 		<separator flex="1" width="8px" /> 
@@ -57,29 +57,29 @@
 	</hbox>
 	
 	<hbox >
-		<description style="text-align:center;" flex="1" id="summary"></description>
+		<description style="text-align:center;" flex="1" id="sendlater3-summary"></description>
 	</hbox>
 
 	<hbox align="center">
 	  <description flex="1">&separate.label;</description>
 	  <label valign="center" value="&sendlater.prompt.recur.label;"/>
-	  <radiogroup id="recur-group" valign="center" orient="horizontal"
+	  <radiogroup id="sendlater3-recur-group" valign="center" orient="horizontal"
 		      onselect="Sendlater3Prompt.CheckRecurring();">
-	    <radio id="recur-none" label="&sendlater.prompt.none.label;"
+	    <radio id="sendlater3-recur-none" label="&sendlater.prompt.none.label;"
 		   selected="true"/>
-	    <radio id="recur-daily" label="&sendlater.prompt.daily.label;"/>
-	    <radio id="recur-weekly" label="&sendlater.prompt.weekly.label;"/>
-	    <radio id="recur-monthly" label="&sendlater.prompt.monthly.label;"/>
-	    <radio id="recur-yearly" label="&sendlater.prompt.yearly.label;"/>
+	    <radio id="sendlater3-recur-daily" label="&sendlater.prompt.daily.label;"/>
+	    <radio id="sendlater3-recur-weekly" label="&sendlater.prompt.weekly.label;"/>
+	    <radio id="sendlater3-recur-monthly" label="&sendlater.prompt.monthly.label;"/>
+	    <radio id="sendlater3-recur-yearly" label="&sendlater.prompt.yearly.label;"/>
 	  </radiogroup>
 	  <description flex="1">&separate.label;</description>
 	</hbox>
 
-				<button id="callsendat" width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
+				<button id="sendlater3-callsendat" width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 				<hbox>
-					<button key="quickbutton1-key" id="shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Prompt.CallSendAfter(15);close();"/>
-					<button key="quickbutton2-key" id="shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3Prompt.CallSendAfter(30);close();"/>
-					<button key="quickbutton3-key" id="shortcutbtn_3" flex="1" label="2 hours" oncommand="Sendlater3Prompt.CallSendAfter(120);close();"/>
+					<button key="sendlater3-quickbutton1-key" id="sendlater3-shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Prompt.CallSendAfter(15);close();"/>
+					<button key="sendlater3-quickbutton2-key" id="sendlater3-shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3Prompt.CallSendAfter(30);close();"/>
+					<button key="sendlater3-quickbutton3-key" id="sendlater3-shortcutbtn_3" flex="1" label="2 hours" oncommand="Sendlater3Prompt.CallSendAfter(120);close();"/>
 				</hbox>
 
 	</vbox>
@@ -95,7 +95,7 @@
 		<description flex="1">&separate.label;</description>
 		<button label="&sendlater.prompt.sendnow.label;" accesskey="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
 		<description flex="1">&separate.label;</description>
-		<button id="cancelButton" key="cancel-esc" label="&sendlater.prompt.close.label;" tooltiptext="&sendlater.prompt.close.tooltip;" oncommand="window.arguments[0].cancelCallback();close();"/>
+		<button id="sendlater3-cancelButton" key="sendlater3-cancel-esc" label="&sendlater.prompt.close.label;" tooltiptext="&sendlater.prompt.close.tooltip;" oncommand="window.arguments[0].cancelCallback();close();"/>
 	</hbox>
 </vbox>
 </window>

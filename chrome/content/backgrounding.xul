@@ -4,12 +4,12 @@
   <script src="util.js"/>
   <script src="backgrounding.js"/>
   <statusbar id="status-bar"> 
-<stringbundleset id="sl3_strbundles">
-	<stringbundle id="sendlater3backgroundstrings" src="chrome://sendlater3/locale/background.properties"/>
+<stringbundleset id="sendlater3-strbundles">
+	<stringbundle id="sendlater3-backgroundstrings" src="chrome://sendlater3/locale/background.properties"/>
 </stringbundleset>
-    <deck selectedIndex="1" id="sendlater_deck" insertafter="statusTextBox" insertbefore="unreadMessageCount" style="width:120px" hidden="true">
-    <progressmeter id="sendlater_anim" mode="determined" />
-    <label id="sendlater_status" value="Send Later 3" style="width:100%;text-align:center;margin:4px" />
+    <deck selectedIndex="1" id="sendlater3-deck" insertafter="statusTextBox" insertbefore="unreadMessageCount" style="width:120px" hidden="true">
+    <progressmeter id="sendlater3-anim" mode="determined" />
+    <label id="sendlater3-status" value="Send Later 3" style="width:100%;text-align:center;margin:4px" />
     </deck>
   </statusbar>
   

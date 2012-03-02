@@ -4,14 +4,14 @@
 <overlay id="sendlater3-header-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <stringbundleset id="sl3_strbundles">
-    <stringbundle id="sl3_promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
+  <stringbundleset id="sendlater3-strbundles">
+    <stringbundle id="sendlater3-promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
   </stringbundleset>
 
   <tree id="threadTree">
     <treecols id="threadCols">
       <splitter class="tree-splitter" />
-      <treecol id="sl3_colXSendLaterAt" persist="ordinal width"
+      <treecol id="sendlater3-colXSendLaterAt" persist="ordinal width"
 		currentView="unthreaded" flex="1"
 		label="&sendlater3header.label;" />
     </treecols>
@@ -19,7 +19,7 @@
 
   <!-- Thunderbird 2 -->  
   <vbox id="expandedHeaders">
-    <mail-headerfield id="sendlater3-expanded-atBox"
+    <mail-headerfield id="sendlater3-expanded-Box"
 		      label="&sendlater3header.label;:"/>
   </vbox>
 

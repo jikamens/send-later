@@ -20,13 +20,13 @@ var Sendlater3Composing = {
 		document.getElementById("key_sendLater")
 		    .setAttribute("oncommand",
 				  "Sendlater3Composing.CheckSendAt()");
-		document.getElementById("key_sendLater3")
+		document.getElementById("sendlater3-key_sendLater3")
 		    .setAttribute("disabled", true);
 	    }
 	    else {
 		document.getElementById("key_sendLater")
 		    .setAttribute("oncommand", "Sendlater3Composing.builtInSendLater();");
-		document.getElementById("key_sendLater3")
+		document.getElementById("sendlater3-key_sendLater3")
 		    .setAttribute("disabled", false);
 	    }
 	}

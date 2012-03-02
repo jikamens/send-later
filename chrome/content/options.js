@@ -18,12 +18,12 @@ var Sendlater3Options = {
 
     SetOnLoad: function() {
 	if (SL3U.IsThunderbird2()) {
-	    document.getElementById("sendbutton_hbox").hidden = true;
-	    document.getElementById("help_link").hidden = true;
-	    document.getElementById("donate_link").hidden = true;
+	    document.getElementById("sendlater3-sendbutton_hbox").hidden = true;
+	    document.getElementById("sendlater3-help_link").hidden = true;
+	    document.getElementById("sendlater3-donate_link").hidden = true;
 	}
 	else {
-	    document.getElementById("help_text").hidden = true;
+	    document.getElementById("sendlater3-help_text").hidden = true;
 	}
     }
 };

@@ -4,14 +4,14 @@ var Sendlater3Prompt = {
 	var dis = !!recurring;
 	var i;
 	for (i = 1; i <= 3; i++) {
-	    document.getElementById("shortcutbtn_" + i).disabled = dis;
-	    document.getElementById("quickbutton" + i + "-key")
+	    document.getElementById("sendlater3-shortcutbtn_" + i).disabled = dis;
+	    document.getElementById("sendlater3-quickbutton" + i + "-key")
 		.setAttribute("disabled", dis);
 	}
     },
 
     CheckRecurring: function() {
-	Sendlater3Prompt.SetRecurring(!document.getElementById("recur-none").selected);
+	Sendlater3Prompt.SetRecurring(!document.getElementById("sendlater3-recur-none").selected);
     },
 
     StealControlReturn: function(ev) {
@@ -25,7 +25,7 @@ var Sendlater3Prompt = {
     // I tried to figure out how to do this with XPath (document.evaluate)
     // and couldn't get it to work, probably because of namespace issues.
     AddControlReturnListeners: function(node) {
-	if (node.nodeName == "button" && node.id != "callsendat") {
+	if (node.nodeName == "button" && node.id != "sendlater3-callsendat") {
 	    node.addEventListener("keydown", Sendlater3Prompt.StealControlReturn, true);
 	}
 	var children = node.childNodes;
@@ -36,33 +36,33 @@ var Sendlater3Prompt = {
 
     SetOnLoad: function() {
         SL3U.Entering("Sendlater3Prompt.SetOnLoad");
-	document.getElementById("yearvalue")
+	document.getElementById("sendlater3-yearvalue")
 	    .addEventListener("ValueChange",
 			      Sendlater3Prompt.populateMonths, false);
-	document.getElementById("monthvalue")
+	document.getElementById("sendlater3-monthvalue")
 	    .addEventListener("ValueChange",
 			      Sendlater3Prompt.populateDays, false);
-	document.getElementById("dayvalue")
+	document.getElementById("sendlater3-dayvalue")
 	    .addEventListener("ValueChange",
 			      Sendlater3Prompt.updateSummary, false);
-	document.getElementById("hourvalue").
+	document.getElementById("sendlater3-hourvalue").
 	    addEventListener("ValueChange",
 			     Sendlater3Prompt.updateSummary, false);
-	document.getElementById("minvalue").
+	document.getElementById("sendlater3-minvalue").
 	    addEventListener("ValueChange",
 			     Sendlater3Prompt.updateSummary, false);
 	Sendlater3Prompt.populateYears();
 	Sendlater3Prompt.populateHours();
 	Sendlater3Prompt.populateMins();
 	var hhmm = new Date();
-	document.getElementById("hourvalue").value = hhmm.getHours();
-	document.getElementById("minvalue").value = hhmm.getMinutes();
+	document.getElementById("sendlater3-hourvalue").value = hhmm.getHours();
+	document.getElementById("sendlater3-minvalue").value = hhmm.getMinutes();
 	var i;
 	for (i = 1; i <= 3; i++) {
-	    document.getElementById("shortcutbtn_"+i).label=SL3U.ButtonLabel(i);
+	    document.getElementById("sendlater3-shortcutbtn_"+i).label=SL3U.ButtonLabel(i);
 	    var value = SL3U.ShortcutValue(i);
 	    if (value == undefined) {
-		document.getElementById("shortcutbtn_" + i).hidden = true;
+		document.getElementById("sendlater3-shortcutbtn_" + i).hidden = true;
 	    }
 	    else {
 		var cmd = "Sendlater3Prompt.CallSendAfter(" + value +
@@ -82,15 +82,15 @@ var Sendlater3Prompt = {
 		// suppose now that I've got it working, it'll do, but I sure
 		// wish I understood what's going on here inside the JavaScript
 		// interpreter.
-		document.getElementById("shortcutbtn_" + i)
+		document.getElementById("sendlater3-shortcutbtn_" + i)
 		    .removeAttribute("oncommand");
-		document.getElementById("quickbutton" + i + "-key")
+		document.getElementById("sendlater3-quickbutton" + i + "-key")
 		    .removeAttribute("oncommand");
-		document.getElementById("shortcutbtn_" + i)
+		document.getElementById("sendlater3-shortcutbtn_" + i)
 		    .setAttribute("oncommand", cmd);
-		document.getElementById("quickbutton" + i + "-key")
+		document.getElementById("sendlater3-quickbutton" + i + "-key")
 		    .setAttribute("oncommand", cmd);
-		document.getElementById("shortcutbtn_" + i).hidden = false;
+		document.getElementById("sendlater3-shortcutbtn_" + i).hidden = false;
 	    }
 	}
 
@@ -98,24 +98,24 @@ var Sendlater3Prompt = {
 	Sendlater3Prompt.SetRecurring(prevRecurring);
 	if (prevRecurring) {
 	    var settings = prevRecurring.split(" ");
-	    var group = document.getElementById("recur-group");
+	    var group = document.getElementById("sendlater3-recur-group");
 	    group.selectedItem = document.getElementById("recur-"+settings[0]);
 	}
 	    
 	var prevXSendLater = window.arguments[0].previouslyTimed;
 	if (prevXSendLater) {
-	   document.getElementById("yearvalue").value =
+	   document.getElementById("sendlater3-yearvalue").value =
 	       prevXSendLater.getFullYear();
-	   document.getElementById("monthvalue").value =
+	   document.getElementById("sendlater3-monthvalue").value =
 	       prevXSendLater.getMonth();
-	   document.getElementById("dayvalue").value =
+	   document.getElementById("sendlater3-dayvalue").value =
 	       prevXSendLater.getDate();
-	   document.getElementById("hourvalue").value =
+	   document.getElementById("sendlater3-hourvalue").value =
 	       prevXSendLater.getHours();
-	   document.getElementById("minvalue").value =
+	   document.getElementById("sendlater3-minvalue").value =
 	       prevXSendLater.getMinutes();
 	}
-	document.getElementById("hourvalue").focus();
+	document.getElementById("sendlater3-hourvalue").focus();
 	Sendlater3Prompt.AddControlReturnListeners(document);
         SL3U.Leaving("Sendlater3Prompt.SetOnLoad");
     },
@@ -123,7 +123,7 @@ var Sendlater3Prompt = {
     populateYears: function() {
         SL3U.Entering("Sendlater3Prompt.populateYears");
 	var today = new Date();
-	var container = document.getElementById("years");
+	var container = document.getElementById("sendlater3-years");
 	var i;
 	for (i=0;i<5;i++)
 	{
@@ -133,13 +133,13 @@ var Sendlater3Prompt = {
 	      container.appendChild(newitem);
 	}
 
-	document.getElementById("yearvalue").selectedIndex = 0;
+	document.getElementById("sendlater3-yearvalue").selectedIndex = 0;
         SL3U.Leaving("Sendlater3Prompt.populateYears");
     },
 
     populateMonths: function() {
         SL3U.Entering("Sendlater3Prompt.populateMonths");
-	var selectedyear =  document.getElementById("yearvalue").value;
+	var selectedyear =  document.getElementById("sendlater3-yearvalue").value;
 	var today = new Date();
 	var monthStr = [ SL3U.PromptBundleGet("January"),
 	    	         SL3U.PromptBundleGet("February"),
@@ -153,7 +153,7 @@ var Sendlater3Prompt = {
 			 SL3U.PromptBundleGet("October"),
 			 SL3U.PromptBundleGet("November"),
 			 SL3U.PromptBundleGet("December") ];
-	var container = document.getElementById("months");
+	var container = document.getElementById("sendlater3-months");
 	Sendlater3Prompt.clearChildren(container);
 	var i = 0;
 	if (selectedyear == today.getFullYear()) {  
@@ -165,7 +165,7 @@ var Sendlater3Prompt = {
 	    newitem.setAttribute("value",i);
 	    container.appendChild(newitem);
 	}
-	document.getElementById("monthvalue").selectedIndex = 0;
+	document.getElementById("sendlater3-monthvalue").selectedIndex = 0;
         SL3U.Leaving("Sendlater3Prompt.populateMonths");
     },
 
@@ -173,10 +173,10 @@ var Sendlater3Prompt = {
         SL3U.Entering("Sendlater3Prompt.populateDays");
 	var today = new Date();
 
-	var selectedyear =  document.getElementById("yearvalue").value;
-	var selectedmonth =  document.getElementById("monthvalue").value;
+	var selectedyear =  document.getElementById("sendlater3-yearvalue").value;
+	var selectedmonth =  document.getElementById("sendlater3-monthvalue").value;
 
-	var container = document.getElementById("days");
+	var container = document.getElementById("sendlater3-days");
 	Sendlater3Prompt.clearChildren(container);
 	var i=0;
         if ((selectedyear == today.getFullYear()) &&
@@ -189,13 +189,13 @@ var Sendlater3Prompt = {
 	    newitem.setAttribute("value",(i+1).toString());
 	    container.appendChild(newitem);
 	}
-	document.getElementById("dayvalue").selectedIndex = 0;
+	document.getElementById("sendlater3-dayvalue").selectedIndex = 0;
         SL3U.Leaving("Sendlater3Prompt.populateDays");
     },
 
     populateHours: function() {
         SL3U.Entering("Sendlater3Prompt.populateHours");
-	var container = document.getElementById("hours");
+	var container = document.getElementById("sendlater3-hours");
 	var i;
 	for (i=0;i<24;i++) {
 	    var newitem = document.createElement("menuitem");
@@ -208,7 +208,7 @@ var Sendlater3Prompt = {
 
     populateMins: function() {
         SL3U.Entering("Sendlater3Prompt.populateMins");
-	var container = document.getElementById("mins");
+	var container = document.getElementById("sendlater3-mins");
 	var i;
 	for (i=0;i<60;i++) {
 	    var newitem = document.createElement("menuitem");
@@ -221,15 +221,15 @@ var Sendlater3Prompt = {
 
     updateSummary: function() {
         SL3U.Entering("Sendlater3Prompt.updateSummary");
-	var selectedyear =  document.getElementById("yearvalue").value;
-	var selectedmonth =  document.getElementById("monthvalue").value;
-	var selecteddate =  document.getElementById("dayvalue").value;
-	var selectedhour =  document.getElementById("hourvalue").value;
-	var selectedmin =  document.getElementById("minvalue").value;
+	var selectedyear =  document.getElementById("sendlater3-yearvalue").value;
+	var selectedmonth =  document.getElementById("sendlater3-monthvalue").value;
+	var selecteddate =  document.getElementById("sendlater3-dayvalue").value;
+	var selectedhour =  document.getElementById("sendlater3-hourvalue").value;
+	var selectedmin =  document.getElementById("sendlater3-minvalue").value;
 	var sendat = SL3U.toSendDate(selectedyear, selectedmonth, selecteddate,
 				     selectedhour, selectedmin);
 
-	document.getElementById("summary").value =
+	document.getElementById("sendlater3-summary").value =
 	    SL3U.PromptBundleGet("willsendat") + " " + sendat.toLocaleString();
         SL3U.Leaving("Sendlater3Prompt.updateSummary");
     },
@@ -267,14 +267,14 @@ var Sendlater3Prompt = {
     CallSendAt: function() {
         SL3U.Entering("Sendlater3Prompt.CallSendAt");
 	var sendat = new Date();
-	var selectedyear =  document.getElementById("yearvalue").value;
-	var selectedmonth =  document.getElementById("monthvalue").value;
-	var selecteddate =  document.getElementById("dayvalue").value;
-	var selectedhour =  document.getElementById("hourvalue").value;
-	var selectedmin =  document.getElementById("minvalue").value;
+	var selectedyear =  document.getElementById("sendlater3-yearvalue").value;
+	var selectedmonth =  document.getElementById("sendlater3-monthvalue").value;
+	var selecteddate =  document.getElementById("sendlater3-dayvalue").value;
+	var selectedhour =  document.getElementById("sendlater3-hourvalue").value;
+	var selectedmin =  document.getElementById("sendlater3-minvalue").value;
 	var sendat = SL3U.toSendDate(selectedyear, selectedmonth, selecteddate,
 				     selectedhour, selectedmin);
-	var recur = document.getElementById("recur-group").selectedItem.id
+	var recur = document.getElementById("sendlater3-recur-group").selectedItem.id
 	    .replace(/recur-/, "");
 	if (recur == "none") {
 	    recur = null;

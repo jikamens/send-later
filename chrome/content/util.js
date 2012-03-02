@@ -79,12 +79,12 @@ var Sendlater3Util = {
 	}
     },
 
-    HeaderRowId: function(name) {
+    HeaderRowId: function() {
 	if (Sendlater3Util.IsThunderbird2()) {
-	    return "sendlater3-expanded" + name + "Box";
+	    return "sendlater3-expanded-Box";
 	}
 	else {
-	    return "sendlater3-expanded" + name + "Row";
+	    return "sendlater3-expanded-Row";
 	}
     },
 
@@ -113,7 +113,7 @@ var Sendlater3Util = {
 	Sendlater3Util.Entering("Sendlater3Util.PromptBundleGet", name);
 	if (Sendlater3Util._PromptBundle == null) {
 	    Sendlater3Util._PromptBundle =
-		document.getElementById("sl3_promptstrings");
+		document.getElementById("sendlater3-promptstrings");
 	}
 	Sendlater3Util.Returning("Sendlater3Util.PromptBundleGet",
 				 Sendlater3Util._PromptBundle.getString(name));
@@ -125,7 +125,7 @@ var Sendlater3Util = {
 				params, length);
 	if (Sendlater3Util._PromptBundle == null) {
 	    Sendlater3Util._PromptBundle =
-		document.getElementById("sl3_promptstrings");
+		document.getElementById("sendlater3-promptstrings");
 	}
 	var formatted = Sendlater3Util._PromptBundle
 	    .getFormattedString(name, params)

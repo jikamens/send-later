@@ -4,14 +4,14 @@
 <overlay id="sendlater3-header-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <stringbundleset id="sl3_strbundles">
-    <stringbundle id="sl3_promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
+  <stringbundleset id="sendlater3-strbundles">
+    <stringbundle id="sendlater3-promptstrings" src="chrome://sendlater3/locale/prompt.properties"/>
   </stringbundleset>
 
   <tree id="threadTree">
     <treecols id="threadCols">
       <splitter class="tree-splitter" />
-      <treecol id="sl3_colXSendLaterAt" persist="ordinal width"
+      <treecol id="sendlater3-colXSendLaterAt" persist="ordinal width"
 		currentView="unthreaded" flex="1"
 		label="&sendlater3header.label;" />
     </treecols>
@@ -19,10 +19,10 @@
 
   <!-- Postbox 2 -->
   <rows id="headerRows">
-    <row id="sendlater3-expanded-atRow" class="maiheader">
-      <label id="sendlater3-expanded-atLabel" class="headerName plain"
+    <row id="sendlater3-expanded-Row" class="maiheader">
+      <label id="sendlater3-expanded-Label" class="headerName plain"
 	     value="x-send-later-at"/>
-      <mailheadervalue id="sendlater3-expanded-atBox"/>
+      <mailheadervalue id="sendlater3-expanded-Box"/>
     </row>
   </rows>
 

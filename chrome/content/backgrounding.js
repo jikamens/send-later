@@ -248,7 +248,7 @@ var Sendlater3Backgrounding = function() {
 	    SL3U.Entering("Sendlater3Backgrounding.DisplayReportCallback.notify");
 	    if (DisplayMessages.length>0) {
 		var msg = DisplayMessages.shift();
-		document.getElementById("sendlater_status").value = msg;
+		document.getElementById("sendlater3-status").value = msg;
 	    }
 	    else {
 		timer.cancel();
@@ -277,7 +277,7 @@ var Sendlater3Backgrounding = function() {
     var ProgressMax;
 
     function ProgressSet(str, where) {
-	var n = document.getElementById("sendlater_anim");
+	var n = document.getElementById("sendlater3-anim");
 	n.max = ProgressMax;
 	n.value = ProgressValue;
 	SL3U.debug(str+"("+where+"): value="+n.value+", max="+n.max+
@@ -488,9 +488,9 @@ var Sendlater3Backgrounding = function() {
 	    SL3U.Entering("Sendlater3Backgrounding.AnimCallback.notify");
 	    SL3U.debug("STATUS MESSAGE - " + MessagesPending);
 	    if (document != null) {
-		document.getElementById("sendlater_deck").selectedIndex = 1;
+		document.getElementById("sendlater3-deck").selectedIndex = 1;
 		var strbundle =
-		    document.getElementById("sendlater3backgroundstrings");
+		    document.getElementById("sendlater3-backgroundstrings");
 		var status;
 
 		if (MessagesPending > 0) {
@@ -924,7 +924,7 @@ var Sendlater3Backgrounding = function() {
 	    var acindex;
 	    SL3U.debug("Progress Animation SET");
 	    if (displayprogressbar()) {
-		document.getElementById("sendlater_deck").selectedIndex = 0;
+		document.getElementById("sendlater3-deck").selectedIndex = 0;
 	    }
 
 	    for (acindex = 0;acindex < allaccounts.Count();acindex++) {
@@ -1008,7 +1008,7 @@ var Sendlater3Backgrounding = function() {
     var SetUpStatusBar = {
 	observe: function() {
 	    var showStatus = SL3U.getBoolPref("showstatus");
-	    document.getElementById("sendlater_deck")
+	    document.getElementById("sendlater3-deck")
 		.setAttribute("hidden", ! showStatus);
 	}
     };

@@ -115,16 +115,16 @@ var Sendlater3HeaderView = function() {
 	}
 	if ( IsThisDraft(folder) ) {
 	    if (SL3U.getBoolPref("showcolumn")) {
-		document.getElementById("sl3_colXSendLaterAt").hidden = false;
+		document.getElementById("sendlater3-colXSendLaterAt").hidden = false;
 	    }
 	    else {
-		document.getElementById("sl3_colXSendLaterAt").hidden = true;
+		document.getElementById("sendlater3-colXSendLaterAt").hidden = true;
 	    }
-	    gDBView.addColumnHandler("sl3_colXSendLaterAt",
+	    gDBView.addColumnHandler("sendlater3-colXSendLaterAt",
 				     sendlater3columnHandler);
 	}
 	else {
-	    document.getElementById("sl3_colXSendLaterAt").hidden = true;
+	    document.getElementById("sendlater3-colXSendLaterAt").hidden = true;
 	}
 	SL3U.Leaving("Sendlater3HeaderView.addSENDLATER3ColumnHandler");
     }
@@ -150,7 +150,7 @@ var Sendlater3HeaderView = function() {
 				    .PromptBundleGet(settings[0]) + ")";
 			    }
 			    document
-				.getElementById("sendlater3-expanded-atBox")
+				.getElementById("sendlater3-expanded-Box")
 				.headerValue = val;
 			    hidden = false;
 			    SL3U.debug("headerView.js: dispHeader: showing header");
@@ -170,7 +170,7 @@ var Sendlater3HeaderView = function() {
 	    else {
 		SL3U.debug("headerView.js: dispHeader: showheader is false");
 	    }
-	    document.getElementById(SL3U.HeaderRowId("x-send-later-at")).hidden = hidden;
+	    document.getElementById(SL3U.HeaderRowId().hidden = hidden;
 	    SL3U.Leaving("Sendlater3HeaderView.sendlater3_HeaderDisplay.dispHeader");
 	},
 	noop: function() { }
