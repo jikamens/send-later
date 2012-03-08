@@ -27,6 +27,5 @@
   </rows>
 
   <script src="util.js"/>
-  <script type="text/javascript" src="chrome://messenger/content/dateFormat.js" />
   <script type="text/javascript" src="chrome://sendlater3/content/headerView.js" />
 </overlay>
