@@ -1,10 +1,5 @@
 function Sendlater3AskDonate() {
-    var localeService = Components
-	.classes["@mozilla.org/intl/nslocaleservice;1"]
-        .getService(Components.interfaces.nsILocaleService);
-    var locale = localeService.getLocaleComponentForUserAgent();
-    var url = "https://addons.mozilla.org/" + locale +
-	"/thunderbird/addon/195275/contribute/?src=send-ask";
+    var url = "https://addons.mozilla.org/thunderbird/addon/send-later-3/contribute/roadblock/?src=send-ask";
     var protocolSvc = Components
 	.classes["@mozilla.org/uriloader/external-protocol-service;1"]
         .getService(Components.interfaces.nsIExternalProtocolService);

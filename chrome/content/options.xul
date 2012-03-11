@@ -79,7 +79,7 @@
 	      <label id="sendlater3-help_link" tooltiptext="&helplink.tooltip;" value="&helplink.value;" class="text-link" onclick="Components.classes['@mozilla.org/uriloader/external-protocol-service;1'].getService(Components.interfaces.nsIExternalProtocolService).loadURI(Components.classes['@mozilla.org/network/io-service;1'].getService(Components.interfaces.nsIIOService).newURI('http://blog.kamens.us/send-later-3/', null, null));"/>
 	      <!-- Thunderbird 2 -->
 	      <label id="sendlater3-help_text" value="&helplink.value;: http://blog.kamens.us/send-later-3/"/>
-	      <label id="sendlater3-donate_link" value="&donatelink.value;" class="text-link" onclick="Components.classes['@mozilla.org/uriloader/external-protocol-service;1'].getService(Components.interfaces.nsIExternalProtocolService).loadURI(Components.classes['@mozilla.org/network/io-service;1'].getService(Components.interfaces.nsIIOService).newURI('https://addons.mozilla.org/'+Components.classes['@mozilla.org/intl/nslocaleservice;1'].getService(Components.interfaces.nsILocaleService).getLocaleComponentForUserAgent()+'/thunderbird/addon/195275/contribute/?src=prefwindow', null, null));"/>
+	      <label id="sendlater3-donate_link" value="&donatelink.value;" class="text-link" onclick="Components.classes['@mozilla.org/uriloader/external-protocol-service;1'].getService(Components.interfaces.nsIExternalProtocolService).loadURI(Components.classes['@mozilla.org/network/io-service;1'].getService(Components.interfaces.nsIIOService).newURI('https://addons.mozilla.org/thunderbird/addon/send-later-3/contribute/roadblock/?src=prefwindow', null, null));"/>
 	    </hbox>
 	  </vbox>
 	</tabpanel>
