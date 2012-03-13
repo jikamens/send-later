@@ -1,4 +1,6 @@
 var Sendlater3Composing = {
+    sComposeMsgsBundle: null,
+
     composeListener: {
 	NotifyComposeBodyReady: function() {
 	    gContentChanged = true;
@@ -39,14 +41,9 @@ var Sendlater3Composing = {
     },
 
     main: function() {
+	SL3U.initUtil();
 
-	var composelogMngr = null;
-	var composelogger = null;
-	var sComposeMsgsBundle = document.getElementById("bundle_composeMsgs");
-
-	var sendlater3ComposePrefs = Components
-	    .classes["@mozilla.org/preferences-service;1"]
-	    .getService(Components.interfaces.nsIPrefBranch);
+	sComposeMsgsBundle = document.getElementById("bundle_composeMsgs");
 
 	function CheckForXSendLater() {
 	    SL3U.Entering("Sendlater3Composing.main.CheckforXSendLater")
@@ -92,7 +89,7 @@ var Sendlater3Composing = {
 	}                            
 
 	var mysleventListener = {
-	    handleEvent : function(event) { 
+	    handleEvent : function(event) {
 		var msgcomposeWindow = document
 		    .getElementById("msgcomposeWindow");
 		msgcomposeWindow.removeAttribute("sending_later");
@@ -123,6 +120,8 @@ var Sendlater3Composing = {
 	var msgcomposeWindow = document.getElementById("msgcomposeWindow");
 	msgcomposeWindow.addEventListener("compose-window-init",
 					  mysleventListener, false);
+	// When window is first loaded compose-window-init is not generated.
+	mysleventListener.handleEvent(null);
 	if (! SL3U.IsThunderbird2()) {
 	    // This doesn't work on Thunderbird 2, since its
 	    // GenericSendFunction doesn't check PreventDefault.
@@ -1262,6 +1261,5 @@ var Sendlater3Composing = {
     }
 }
 
-SL3U.initUtil();
+window.addEventListener("load", Sendlater3Composing.main, false);
 window.addEventListener("unload", Sendlater3Composing.uninit, false);
-Sendlater3Composing.main();

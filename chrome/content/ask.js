@@ -29,4 +29,5 @@ function Sendlater3AskStop() {
     window.close();
 }
 
-SL3U.initUtil();
+window.addEventListener("load", SL3U.initUtil, false);
+window.addEventListener("unload", SL3U.uninitUtil, false);

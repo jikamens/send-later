@@ -17,6 +17,7 @@ var Sendlater3Options = {
     },
 
     SetOnLoad: function() {
+	SL3U.initUtil();
 	if (SL3U.IsThunderbird2()) {
 	    document.getElementById("sendlater3-sendbutton_hbox").hidden = true;
 	    document.getElementById("sendlater3-help_link").hidden = true;
@@ -28,6 +29,5 @@ var Sendlater3Options = {
     }
 };
 
-SL3U.initUtil();
 window.addEventListener("load", Sendlater3Options.SetOnLoad, false);
 window.addEventListener("unload", SL3U.uninitUtil, false);

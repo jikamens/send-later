@@ -1,4 +1,5 @@
 var Sendlater3HeaderView = function() {
+    SL3U.initUtil();
 
     var sendlater3columnHandler = {
 	getCellText: function(row, col) {
@@ -186,10 +187,8 @@ var Sendlater3HeaderView = function() {
 	    .addEventListener("select",addSENDLATER3ColumnHandler,false);
     }
 
-    window.addEventListener("load",sendlater3_HeaderView_SetupListener,false);
-    window.addEventListener("unload", SL3U.uninitUtil, false);
-
+    sendlater3_HeaderView_SetupListener();
 }
 
-SL3U.initUtil();
-Sendlater3HeaderView.apply();
+window.addEventListener("load", Sendlater3HeaderView);
+window.addEventListener("unload", SL3U.uninitUtil, false);

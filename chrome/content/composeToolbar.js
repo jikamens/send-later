@@ -357,14 +357,13 @@ var Sendlater3ComposeToolbar = {
 
     main: function() {
     	SL3U.Entering("Sendlater3ComposeToolbar.main");
-
-	window.addEventListener("load", this.SetOnLoad, false);
-	window.addEventListener("unload", SL3U.uninitUtil, false);
-	document.getElementById("msgcomposeWindow").addEventListener("compose-window-reopen", this.SetOnLoad, false);
+	SL3U.initUtil();
+	Sendlater3ComposeToolbar.SetOnLoad();
+	document.getElementById("msgcomposeWindow").addEventListener("compose-window-reopen", Sendlater3ComposeToolbar.SetOnLoad, false);
 
     	SL3U.Leaving("Sendlater3ComposeToolbar.main");
     }
 }
 
-SL3U.initUtil();
-Sendlater3ComposeToolbar.main();
+window.addEventListener("load", Sendlater3ComposeToolbar.main, false);
+window.addEventListener("unload", SL3U.uninitUtil, false);

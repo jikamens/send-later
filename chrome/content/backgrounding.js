@@ -1088,14 +1088,14 @@ var Sendlater3Backgrounding = function() {
     //     Components.interfaces.nsITimer.TYPE_ONE_SHOT
     //     );
 
-    window.addEventListener("load", SetUpStatusBar.observe, false);
+    SetUpStatusBar.observe();
     SL3U.PrefService.QueryInterface(Components.interfaces.nsIPrefBranch2);
     SL3U.PrefService.addObserver(SL3U.pref("showstatus"),SetUpStatusBar, false);
 
-    window.addEventListener("load", StartMonitorCallback,false);
+    StartMonitorCallback();
     window.addEventListener("unload", StopMonitorCallback, false);
 
-    window.addEventListener("load", DisplayReleaseNotes, false);
+    DisplayReleaseNotes();
 
     SL3U.Leaving("Sendlater3Backgrounding");
     addMsgSendLaterListener();
@@ -1138,5 +1138,4 @@ Sendlater3Backgrounding.markReadListener.prototype = {
     }
 };
 
-SL3U.initUtil();
-Sendlater3Backgrounding.apply();
+window.addEventListener("load", Sendlater3Backgrounding);
