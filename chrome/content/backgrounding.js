@@ -864,6 +864,13 @@ var Sendlater3Backgrounding = function() {
 		return;
 	    }
 
+	    if (! (SL3U.getBoolPref("send_while_offline") ||
+		   MailOfflineMgr.isOnline())) {
+		SL3U.debug("Deferring send while offline");
+		SL3U.Returning("Sendlater3Backgrounding.CheckForSendLaterCallback.notify", "");
+		return;
+	    }		
+
 	    SL3U.debug("One cycle of checking");
 
 	    MessagesPending = 0;
