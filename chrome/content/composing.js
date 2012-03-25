@@ -16,12 +16,17 @@ var Sendlater3Composing = {
 	SaveInFolderDone: function() {}
     },
 
+    CheckSendAt2: function(where, send_button) {
+	SL3U.Entering("Sendlater3Composing.CheckSendAt2(from " + where + ")");
+	Sendlater3Composing.CheckSendAt(send_button);
+    },
+
     setBindings: {
 	observe: function() {
 	    if (! SL3U.getBoolPref("alt_binding")) {
 		document.getElementById("key_sendLater")
 		    .setAttribute("oncommand",
-				  "Sendlater3Composing.CheckSendAt()");
+				  "Sendlater3Composing.CheckSendAt2('key_sendLater binding created in Sendlater3Composing.setBindings.observe')");
 		document.getElementById("sendlater3-key_sendLater3")
 		    .setAttribute("disabled", true);
 	    }
@@ -46,7 +51,7 @@ var Sendlater3Composing = {
 	sComposeMsgsBundle = document.getElementById("bundle_composeMsgs");
 
 	function CheckForXSendLater() {
-	    SL3U.Entering("Sendlater3Composing.main.CheckforXSendLater")
+	    SL3U.Entering("Sendlater3Composing.main.CheckforXSendLater");
 	    Sendlater3Composing.prevXSendLater = false;
 	    Sendlater3Composing.prevRecurring = false;
 	    if (gMsgCompose != null) {
@@ -107,11 +112,14 @@ var Sendlater3Composing = {
 		    return;
 		}
 		var msgtype = msgcomposeWindow.getAttribute("msgtype");
-		if (((msgtype == nsIMsgCompDeliverMode.Now ||
-		      msgtype == nsIMsgCompDeliverMode.Background) &&
-		     SL3U.getBoolPref("sendbutton")) ||
-		    (msgtype == nsIMsgCompDeliverMode.Later)) {
-		    Sendlater3Composing.CheckSendAt(true);
+		if ((msgtype == nsIMsgCompDeliverMode.Now ||
+		     msgtype == nsIMsgCompDeliverMode.Background) &&
+		    SL3U.getBoolPref("sendbutton")) {
+		    Sendlater3Composing.CheckSendAt2("Sendlater3Composing.main.sendMessageListener.handleEvent condition #1", true);
+		    event.preventDefault();
+		}
+		if (msgtype == nsIMsgCompDeliverMode.Later) {
+		    Sendlater3Composing.CheckSendAt2("Sendlater3Composing.main.sendMessageListener.handleEvent condition #2", true);
 		    event.preventDefault();
 		}
 	    }

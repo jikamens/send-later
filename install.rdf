@@ -5,7 +5,7 @@
     <em:type>2</em:type>
     <em:id>sendlater3@kamens.us</em:id>
     <em:name>Send Later 3</em:name>
-    <em:version>3.3.7beta1</em:version>
+    <em:version>3.3.7beta2</em:version>
     <em:creator>Jonathan Kamens</em:creator>
     <em:developer>Karthik Sivaram</em:developer>
     <em:translator>Didier Journois</em:translator><!-- French -->
@@ -17,12 +17,13 @@
     <em:translator>Mikael Hiort af Ornäs</em:translator><!-- Swedish -->
     <em:translator>Ryo Matsui</em:translator><!-- Japanese -->
     <em:translator>Cesare</em:translator><!-- Italian -->
+    <em:translator>Samtron-Translations</em:translator><!-- Finnish -->
     <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
     <em:localized>
       <Description>
 	<em:name>Send Later 3</em:name>
-	<em:locale>pl-PL</em:locale>
-	<em:description>Rozszerzenie "Wyślij później" pozwala na wysyłanie wiadomości o ustalonym wcześniej czasie.</em:description>
+	<em:locale>de-DE</em:locale>
+	<em:description>Eine echte "SendeSpäter" Funktionalität zur Planung der Sendezeit von Emails.</em:description>
       </Description>
     </em:localized>
     <em:localized>
@@ -35,8 +36,29 @@
     <em:localized>
       <Description>
 	<em:name>Send Later 3</em:name>
+	<em:locale>fi-FI</em:locale>
+	<em:description>\"Lähetä myöhemmin\" toiminnallisuus lähetyksien ajastamiseksi</em:description>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
+	<em:name>Send Later 3</em:name>
 	<em:locale>fr-FR</em:locale>
 	<em:description>Fonction d'envoi de courrier différé permettant de programmer l'heure d'envoi d'un courriel.</em:description>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
+	<em:name>Send Later 3</em:name>
+	<em:locale>it-IT</em:locale>
+	<em:description>Una vera funzione di "Invia dopo" per pianificare quando inviare le e-mail.</em:description>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
+	<em:name>Send Later 3</em:name>
+	<em:locale>ja-JP</em:locale>
+	<em:description>指定した時間にメールを送信する機能を提供します。</em:description>
       </Description>
     </em:localized>
     <em:localized>
@@ -49,8 +71,8 @@
     <em:localized>
       <Description>
 	<em:name>Send Later 3</em:name>
-	<em:locale>de-DE</em:locale>
-	<em:description>Eine echte "SendeSpäter" Funktionalität zur Planung der Sendezeit von Emails.</em:description>
+	<em:locale>pl-PL</em:locale>
+	<em:description>Rozszerzenie "Wyślij później" pozwala na wysyłanie wiadomości o ustalonym wcześniej czasie.</em:description>
       </Description>
     </em:localized>
     <em:localized>
@@ -58,13 +80,6 @@
 	<em:name>Send Later 3</em:name>
 	<em:locale>sv-SE</em:locale>
 	<em:description>"Skicka senare"-funktion som låter användaren schemalägga tidpunkten för sändning av ett e-brev.</em:description>
-      </Description>
-    </em:localized>
-    <em:localized>
-      <Description>
-	<em:name>Send Later 3</em:name>
-	<em:locale>it-IT</em:locale>
-	<em:description>Una vera funzione di "Invia dopo" per pianificare quando inviare le e-mail.</em:description>
       </Description>
     </em:localized>
     <em:homepageURL>http://blog.kamens.us/send-later-3</em:homepageURL>

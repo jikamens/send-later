@@ -5,13 +5,13 @@
   <script src="composing.js"/>
 
   <commandset id="composeCommands">
-  <command id="cmd_sendLater" oncommand="Sendlater3Composing.CheckSendAt();"/>
+  <command id="cmd_sendLater" oncommand="Sendlater3Composing.CheckSendAt2('cmd_sendLater binding created in composing.xul');"/>
   </commandset>
   <keyset id="tasksKeys">
-  <key oncommand="Sendlater3Composing.CheckSendAt()" id="key_sendLater"
-     keycode="VK_RETURN" observes="cmd_sendLater" modifiers="accel, shift"/>
-  <key oncommand="Sendlater3Composing.CheckSendAt()" id="sendlater3-key_sendLater3"
-     keycode="VK_RETURN" observes="cmd_sendLater" modifiers="alt, shift"
+  <key oncommand="Sendlater3Composing.CheckSendAt2('key_sendLater binding created in composing.xul')" id="key_sendLater"
+     keycode="VK_RETURN" observes="" modifiers="accel, shift"/>
+  <key oncommand="Sendlater3Composing.CheckSendAt2('sendlater3-key_sendLater3 binding created in composing.xul')" id="sendlater3-key_sendLater3"
+     keycode="VK_RETURN" modifiers="alt, shift"
      disabled="true"/>
   </keyset>
   
