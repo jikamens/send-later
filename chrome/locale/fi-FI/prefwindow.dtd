@@ -13,7 +13,7 @@
 <!ENTITY showtoolbarbutton.caption "Näytä työkalupalkissa">
 <!ENTITY showsendlatercolumn.caption "Näytä Lähetä myöhemmin -rivi">
 <!ENTITY showsendlatercolumn.tooltip "Näytä &quot;Lähetä myöhemmin&quot; -rivi selattaessa luonnoskansioita">
-<!ENTITY showsendlaterheader.caption "Näytä "Lähetä myöhemmin" -otsikko">
+<!ENTITY showsendlaterheader.caption "Näytä &quot;Lähetä myöhemmin&quot; -otsikko">
 <!ENTITY showsendlaterheader.tooltip "Näyttääkö &quot;X-Send-Later-At&quot; otsikko, esim. silloin kun luonnos on ajastettu lähtemään. Näkymään otsikkoon viestin selausikkunaan.">
 <!ENTITY showsendlaterstatus.caption "Näytä tilapalkissa Send Later 3">
 <!ENTITY showsendlaterprogress.caption "Näytä tilapalkissa Taustaeteneminen">
