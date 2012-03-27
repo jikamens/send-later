@@ -99,7 +99,7 @@ var Sendlater3Prompt = {
 	if (prevRecurring) {
 	    var settings = prevRecurring.split(" ");
 	    var group = document.getElementById("sendlater3-recur-group");
-	    group.selectedItem = document.getElementById("recur-"+settings[0]);
+	    group.selectedItem = document.getElementById("sendlater3-recur-"+settings[0]);
 	}
 	    
 	var prevXSendLater = window.arguments[0].previouslyTimed;
@@ -275,7 +275,7 @@ var Sendlater3Prompt = {
 	var sendat = SL3U.toSendDate(selectedyear, selectedmonth, selecteddate,
 				     selectedhour, selectedmin);
 	var recur = document.getElementById("sendlater3-recur-group").selectedItem.id
-	    .replace(/recur-/, "");
+	    .replace(/sendlater3-recur-/, "");
 	if (recur == "none") {
 	    recur = null;
 	}
