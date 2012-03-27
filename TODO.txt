@@ -85,3 +85,6 @@ in the search results isn't populated for matching drafts that are
 scheduled to be sent later. It remains unpopulated when you cancel the
 search, until you leave and return to the folder. Need to investigate
 this!
+
+Make format of Send Later date column configurable, a la
+mail.ui.display.dateformat.
