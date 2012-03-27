@@ -1145,4 +1145,4 @@ Sendlater3Backgrounding.markReadListener.prototype = {
     }
 };
 
-window.addEventListener("load", Sendlater3Backgrounding);
+window.addEventListener("load", Sendlater3Backgrounding, false);

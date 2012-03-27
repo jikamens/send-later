@@ -190,5 +190,5 @@ var Sendlater3HeaderView = function() {
     sendlater3_HeaderView_SetupListener();
 }
 
-window.addEventListener("load", Sendlater3HeaderView);
+window.addEventListener("load", Sendlater3HeaderView, false);
 window.addEventListener("unload", SL3U.uninitUtil, false);
