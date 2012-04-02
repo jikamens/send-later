@@ -185,24 +185,6 @@ var Sendlater3Composing = {
 	    var sendat = Sendlater3Composing.ReallySendAtClosure.at;
 	    var recur = Sendlater3Composing.ReallySendAtClosure.recur;
 
-	    gCloseWindowAfterSave = true;
-	    var identity = getCurrentIdentity();
-	    if (SL3U.IsPostbox()) {
-		Sendlater3Composing.GenericSendMessagePostbox(
-		    nsIMsgCompDeliverMode.SaveAsDraft,
-		    sendat, recur);
-	    }
-	    else if (SL3U.IsThunderbird2()) {
-		Sendlater3Composing.GenericSendMessageTB2(
-		    nsIMsgCompDeliverMode.SaveAsDraft,
-		    sendat, recur);
-	    }
-	    else {
-		Sendlater3Composing.GenericSendMessage(
-		    nsIMsgCompDeliverMode.SaveAsDraft,
-		    sendat, recur);
-	    }
-
 	    // If it has been at least a week since we last asked the
 	    // user to donate, and the user has scheduled at least
 	    // five messages since the last time we asked, and the
@@ -225,6 +207,24 @@ var Sendlater3Composing = {
 		    SL3U.setIntPref(p1, now);
 		}
 		SL3U.setIntPref(p2, sent + 1);
+	    }
+
+	    gCloseWindowAfterSave = true;
+	    var identity = getCurrentIdentity();
+	    if (SL3U.IsPostbox()) {
+		Sendlater3Composing.GenericSendMessagePostbox(
+		    nsIMsgCompDeliverMode.SaveAsDraft,
+		    sendat, recur);
+	    }
+	    else if (SL3U.IsThunderbird2()) {
+		Sendlater3Composing.GenericSendMessageTB2(
+		    nsIMsgCompDeliverMode.SaveAsDraft,
+		    sendat, recur);
+	    }
+	    else {
+		Sendlater3Composing.GenericSendMessage(
+		    nsIMsgCompDeliverMode.SaveAsDraft,
+		    sendat, recur);
 	    }
 
 	    SL3U.SetUpdatePref(identity.key);
