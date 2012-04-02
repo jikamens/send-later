@@ -1074,7 +1074,8 @@ var Sendlater3Backgrounding = function() {
 		var relnotes = SL3U.getCharPref("relnotes");
 		SL3U.setCharPref("relnotes", current_version);
 		if (relnotes && current_version != relnotes) {
-		    var url = "http://blog.kamens.us/send-later-3/#notes";
+		    var url = "http://blog.kamens.us/send-later-3/#notes-" +
+			current_version;
 		    Components
 			.classes['@mozilla.org/appshell/window-mediator;1']
 			.getService(Components.interfaces.nsIWindowMediator)
