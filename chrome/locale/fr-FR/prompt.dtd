@@ -1,6 +1,6 @@
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Comportement par défaut">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Fonctionnalité de Thunderbird : le message est placé dans &quot;Message en attente&quot;">
+<!ENTITY sendlater.prompt.sendlater.label "Boite d'envoi">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Plutôt que de programmer l'envoi à une date précise, déplace le message vers la boite d'envoi pour envoi la prochaine fois que les messages non envoyés sont expédiés.">
 <!ENTITY sendlater.prompt.sendnow.label "Envoyer Maintenant">
 <!ENTITY sendlater.prompt.sendnow.accesskey "M">
 <!ENTITY sendlater.prompt.close.label "Annuler">

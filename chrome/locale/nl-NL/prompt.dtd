@@ -1,6 +1,6 @@
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Doorsturen naar Send Later">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Standaard Thunderbird functie: verplaats bericht naar Postvak UIT voor latere verzending.">
+<!ENTITY sendlater.prompt.sendlater.label "Plaats in Postvak Uit">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Niet een tijdstip voor verzending kiezen, maar in het Postvak Uit plaatsen voor verzending wanneer de nog onverzonden berichten verzonden worden.">
 <!ENTITY sendlater.prompt.sendnow.label "Nu verzenden">
 <!ENTITY sendlater.prompt.sendnow.accesskey "N">
 <!ENTITY sendlater.prompt.close.label "Annuleren">

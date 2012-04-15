@@ -1,6 +1,6 @@
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Przekaż do &quot;Wyślij później&quot;">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Wbudowana funkcjonalność Thunderbirda: przenieś do folderu &quot;Wychodzące&quot; aby dostarczyć przy najbliższym wysyłaniu niewsyłanych wiadomości.">
+<!ENTITY sendlater.prompt.sendlater.label "Umieść w skrzynce nadawczej">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Zamiast wysyłki o planowanym czasie przenosi wiadomość do folderu Skrzynka nadawcza, aby wysłać ją następnym razem wraz z innymi wiadomościami oczekującymi na wysyłkę.">
 <!ENTITY sendlater.prompt.sendnow.label "Wyślij Teraz">
 <!ENTITY sendlater.prompt.sendnow.accesskey "T">
 <!ENTITY sendlater.prompt.close.label "Anuluj">

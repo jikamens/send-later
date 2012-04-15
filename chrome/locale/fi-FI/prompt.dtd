@@ -1,6 +1,6 @@
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Välitä Send Later -ohjelmalle">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Sisäänrakennettu Thunderbird-toiminto: siirrä viesti Lähetetyt-kansioon lähetettäväksi seuraavalla kerralla kun viestejä lähetetään.">
+<!ENTITY sendlater.prompt.sendlater.label "Siirrä Lähetettyihin">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Ajastamisen sijasta siirrä Lähetetyt-kansioon lähetettäväksi seuraavalla kerralla kun viestejä lähetetään.">
 <!ENTITY sendlater.prompt.sendnow.label "Lähetä heti">
 <!ENTITY sendlater.prompt.sendnow.accesskey "H">
 <!ENTITY sendlater.prompt.close.label "Peruuta">
