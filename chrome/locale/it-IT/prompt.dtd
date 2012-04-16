@@ -1,7 +1,7 @@
 <!-- -*- coding: utf-8 -*- -->
 <!ENTITY separate.label "">
-<!ENTITY sendlater.prompt.sendlater.label "Invia dopo standard">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Funzione &quot;Invia dopo&quot; standard di Thunderbird: sposta il massaggio nella &quot;Posta in uscita&quot; per inviarlo non appena i messaggi da inviare verranno spediti.">
+<!ENTITY sendlater.prompt.sendlater.label "Metti nella &quot;Posta in uscita&quot;">
+<!ENTITY sendlater.prompt.sendlater.tooltip "Anziché inviarlo in automatico a un orario specifico, sposta il messaggio nella cartella &quot;Posta in uscita&quot; per inviarlo non appena i messaggi da inviare verranno spediti.">
 <!ENTITY sendlater.prompt.sendnow.label "Invia Ora">
 <!ENTITY sendlater.prompt.sendnow.accesskey "O">
 <!ENTITY sendlater.prompt.close.label "Annulla">

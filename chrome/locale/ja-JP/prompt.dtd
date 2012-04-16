@@ -1,6 +1,6 @@
 <!ENTITY separate.label "">
 <!ENTITY sendlater.prompt.sendlater.label "[送信トレイ] に置く">
-<!ENTITY sendlater.prompt.sendlater.tooltip "Thunderbird に内蔵されている機能: メッセージを [送信トレイ] へ移し、次の機会に未送信のメッセージを送信します。">
+<!ENTITY sendlater.prompt.sendlater.tooltip "送信時間を指定せず、メッ セージを [送信トレイ] へ移し、次の機会に未送信のメッセージを送信します。">
 <!ENTITY sendlater.prompt.sendnow.label "今すぐ送信する">
 <!ENTITY sendlater.prompt.sendnow.accesskey "i">
 <!ENTITY sendlater.prompt.close.label "キャンセル">
