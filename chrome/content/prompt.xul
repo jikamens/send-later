@@ -18,7 +18,7 @@
 <key id="sendlater3-send-now-key" modifiers="alt" key="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
 </keyset>
 <vbox style="margin: 10px;">
-	<vbox style="border:solid #00C000 3px; padding-top: 2px;" >
+	<vbox style="border:solid #00C000 3px; padding-top: 2px; font-size: 125%; color: blue;" >
 	<hbox>
 		<hbox  align="center"  >
 		<separator flex="1" width="8" />			
@@ -26,12 +26,12 @@
 			<image  src="chrome://sendlater3/content/timeIcon.png" />
 			<separator flex="1" />
 		</hbox>
-		<menulist label="HH" id="sendlater3-hourvalue" style="margin: 0px;" >
+		<menulist label="HH" id="sendlater3-hourvalue" style="margin: 0px; color: blue;" >
 			<menupopup id="sendlater3-hours">
 			</menupopup>
 		</menulist>
 		<description >:</description>
-		<menulist label="MM" id="sendlater3-minvalue" style="margin: 0px;">
+		<menulist label="MM" id="sendlater3-minvalue" style="margin: 0px; color: blue;">
 			<menupopup id="sendlater3-mins">
 			</menupopup>
 		</menulist>
@@ -40,15 +40,15 @@
 			<image src="chrome://sendlater3/content/calIcon.png"  />
 			<separator flex="1" />
 		</hbox>
-		<menulist label="Years" id="sendlater3-yearvalue"  style="margin: 0px;">
+		<menulist label="Years" id="sendlater3-yearvalue"  style="margin: 0px; color: blue;">
 			<menupopup id="sendlater3-years">
 			</menupopup>
 		</menulist>
-		<menulist label="Months" id="sendlater3-monthvalue" style="margin: 0px;">
+		<menulist label="Months" id="sendlater3-monthvalue" style="margin: 0px; color: blue;">
 			<menupopup id="sendlater3-months">
 			</menupopup>
 		</menulist>
-		<menulist label="Days" id="sendlater3-dayvalue" style="margin: 0px;">
+		<menulist label="Days" id="sendlater3-dayvalue" style="margin: 0px; color: blue;">
 			<menupopup id="sendlater3-days">
 			</menupopup>
 		</menulist>
@@ -75,11 +75,11 @@
 	  <description flex="1">&separate.label;</description>
 	</hbox>
 
-				<button id="sendlater3-callsendat" width="100%" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
+				<button id="sendlater3-callsendat" width="100%" style="color: blue;" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
 				<hbox>
-					<button key="sendlater3-quickbutton1-key" id="sendlater3-shortcutbtn_1" flex="1" label="15 mins" oncommand="Sendlater3Prompt.CallSendAfter(15);close();"/>
-					<button key="sendlater3-quickbutton2-key" id="sendlater3-shortcutbtn_2" flex="1" label="30 mins" oncommand="Sendlater3Prompt.CallSendAfter(30);close();"/>
-					<button key="sendlater3-quickbutton3-key" id="sendlater3-shortcutbtn_3" flex="1" label="2 hours" oncommand="Sendlater3Prompt.CallSendAfter(120);close();"/>
+					<button key="sendlater3-quickbutton1-key" id="sendlater3-shortcutbtn_1" style="color: blue; font-size: 80%;" flex="1" label="15 mins" oncommand="Sendlater3Prompt.CallSendAfter(15);close();"/>
+					<button key="sendlater3-quickbutton2-key" id="sendlater3-shortcutbtn_2" style="color: blue; font-size: 80%;" flex="1" label="30 mins" oncommand="Sendlater3Prompt.CallSendAfter(30);close();"/>
+					<button key="sendlater3-quickbutton3-key" id="sendlater3-shortcutbtn_3" style="color: blue; font-size: 80%;" flex="1" label="2 hours" oncommand="Sendlater3Prompt.CallSendAfter(120);close();"/>
 				</hbox>
 
 	</vbox>
@@ -90,7 +90,7 @@
 	<hbox>	
 		<description flex="1">&separate.label;</description>
 	</hbox>
-	<hbox align="center" style="border:solid red 2px">
+	<hbox align="center" style="border:solid red 2px; font-size: 90%;">
 		<button label="&sendlater.prompt.sendlater.label;" tooltiptext="&sendlater.prompt.sendlater.tooltip;" oncommand="window.arguments[0].continueCallback();close();"/>
 		<description flex="1">&separate.label;</description>
 		<button label="&sendlater.prompt.sendnow.label;" accesskey="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
