@@ -50,7 +50,7 @@
 	  </menupopup>
 	</menulist>
 	<separator id="sendlater3-toolsep" flex="1" width="8px" /> 
-	<hbox id="sendlater3-toolbarbutton" style="border: groove 1px" >
+	<hbox id="sendlater3-toolbarbutton" style="border: groove 1px" tooltiptext="&sendlater.toolbar.sendlater.button.label;">
 	  <toolbarbutton orient="horizontal" image="chrome://sendlater3/content/sendlater3icon20.png" label="&sendlater.toolbar.sendlater.button.label;" oncommand="Sendlater3ComposeToolbar.CallSendAt();"  />
 	</hbox>
 	<separator id="sendlater3-quicksep" flex="1" width="8px" /> 
