@@ -23,12 +23,12 @@
 	  <image  src="chrome://sendlater3/content/timeIcon.png" />
 	  <separator flex="1" />
 	</hbox>
-	<menulist label="HH" id="sendlater3-hourvalue" style="margin: 0px;" >
+	<menulist label="HH" id="sendlater3-hourvalue" style="margin: 0px; padding-right: 15px;" >
 	  <menupopup id="sendlater3-hours">
 	  </menupopup>
 	</menulist>
 	<description id="sendlater3-colon">:</description>
-	<menulist label="MM" id="sendlater3-minvalue" style="margin: 0px;">
+	<menulist label="MM" id="sendlater3-minvalue" style="margin: 0px; padding-right: 15px;">
 	  <menupopup id="sendlater3-mins">
 	  </menupopup>
 	</menulist>
@@ -37,15 +37,15 @@
 	  <image src="chrome://sendlater3/content/calIcon.png"  />
 	  <separator flex="1" />
 	</hbox>
-	<menulist label="Years" id="sendlater3-yearvalue"  style="margin: 0px;">
+	<menulist label="Years" id="sendlater3-yearvalue"  style="margin: 0px; padding-right: 15px;">
 	  <menupopup id="sendlater3-years">
 	  </menupopup>
 	</menulist>
-	<menulist label="Months" id="sendlater3-monthvalue" style="margin: 0px;">
+	<menulist label="Months" id="sendlater3-monthvalue" style="margin: 0px; padding-right: 15px;">
 	  <menupopup id="sendlater3-months">
 	  </menupopup>
 	</menulist>
-	<menulist label="Days" id="sendlater3-dayvalue" style="margin: 0px;">
+	<menulist label="Days" id="sendlater3-dayvalue" style="margin: 0px; padding-right: 15px;">
 	  <menupopup id="sendlater3-days">
 	  </menupopup>
 	</menulist>
