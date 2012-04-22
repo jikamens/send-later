@@ -43,7 +43,7 @@ var Sendlater3HeaderView = function() {
 	
 	isEditable:          function() {return false;},
 	cycleCell:           function(aRow, acol) {},
-	isString:            function() {return false;},
+	isString:            function() {return true;},
 	getCellProperties:   function(row, col, props){},
 	getImageSrc:         function(row, col) {return null;},
 	getRowProperties:    function(row,props){},
