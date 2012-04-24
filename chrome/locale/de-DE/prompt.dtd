@@ -1,4 +1,4 @@
-<!ENTITY separate.label "">
+<!-- -*- coding: utf-8 -*- -->
 <!ENTITY sendlater.prompt.sendlater.label "Durchgang zu SendeSpäter">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Eingebaute Thunderbird-Funktionalität: verschiebt eine Nachricht in den Postausgangs-Ordner für die nächste Auslieferung aller ungesendeten Nachrichten.">
 <!ENTITY sendlater.prompt.sendnow.label "Jetzt senden">

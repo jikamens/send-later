@@ -5,7 +5,7 @@
     <em:type>2</em:type>
     <em:id>sendlater3@kamens.us</em:id>
     <em:name>Send Later 3</em:name>
-    <em:version>3.3.8beta4</em:version>
+    <em:version>3.3.8beta5</em:version>
     <em:creator>Jonathan Kamens</em:creator>
     <em:developer>Karthik Sivaram</em:developer>
     <em:translator>Didier Journois</em:translator><!-- French -->
@@ -18,6 +18,7 @@
     <em:translator>Ryo Matsui</em:translator><!-- Japanese -->
     <em:translator>Cesare</em:translator><!-- Italian -->
     <em:translator>Samtron-Translations</em:translator><!-- Finnish -->
+    <em:translator>yfdyh000 from BabelZilla</em:translator><!-- Simplified Chinese -->
     <em:description>True "Send Later" functionality to schedule the time for sending an email.</em:description>
     <em:localized>
       <Description>
@@ -89,7 +90,7 @@
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id> <!-- thunderbird -->
         <em:minVersion>2.0</em:minVersion>
-        <em:maxVersion>14.0a1</em:maxVersion>
+        <em:maxVersion>15.0a1</em:maxVersion>
       </Description>
     </em:targetApplication>
     <em:targetApplication>

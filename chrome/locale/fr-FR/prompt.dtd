@@ -1,4 +1,4 @@
-<!ENTITY separate.label "">
+<!-- -*- coding: utf-8 -*- -->
 <!ENTITY sendlater.prompt.sendlater.label "Placer dans &quot;Messages en attente&quot;">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Plutôt que de programmer l'envoi à une date précise, placer le message dans le dossier &quot;Messages en attente&quot; pour envoi la prochaine fois que les messages non envoyés sont expédiés.">
 <!ENTITY sendlater.prompt.sendnow.label "Envoyer Maintenant">

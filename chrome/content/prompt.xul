@@ -61,7 +61,7 @@
 	</hbox>
 
 	<hbox align="center">
-	  <description flex="1">&separate.label;</description>
+	  <description flex="1"></description>
 	  <label valign="center" value="&sendlater.prompt.recur.label;"/>
 	  <radiogroup id="sendlater3-recur-group" valign="center" orient="horizontal"
 		      onselect="Sendlater3Prompt.CheckRecurring();">
@@ -72,7 +72,7 @@
 	    <radio id="sendlater3-recur-monthly" label="&sendlater.prompt.monthly.label;"/>
 	    <radio id="sendlater3-recur-yearly" label="&sendlater.prompt.yearly.label;"/>
 	  </radiogroup>
-	  <description flex="1">&separate.label;</description>
+	  <description flex="1"></description>
 	</hbox>
 
 				<button id="sendlater3-callsendat" width="100%" style="color: blue;" flex="1" label="&sendlater.prompt.sendat.label;" tooltiptext="&sendlater.prompt.sendat.tooltip;" oncommand="Sendlater3Prompt.CallSendAt();close();"/>
@@ -84,17 +84,17 @@
 
 	</vbox>
 	<hbox >	
-		<description flex="1">&separate.label;</description>
+		<description flex="1"></description>
 	</hbox>
 
 	<hbox>	
-		<description flex="1">&separate.label;</description>
+		<description flex="1"></description>
 	</hbox>
 	<hbox align="center" style="border:solid red 2px; font-size: 90%;">
 		<button label="&sendlater.prompt.sendlater.label;" tooltiptext="&sendlater.prompt.sendlater.tooltip;" oncommand="window.arguments[0].continueCallback();close();"/>
-		<description flex="1">&separate.label;</description>
+		<description flex="1"></description>
 		<button label="&sendlater.prompt.sendnow.label;" accesskey="&sendlater.prompt.sendnow.accesskey;" oncommand="window.arguments[0].sendCallback();close();"/>
-		<description flex="1">&separate.label;</description>
+		<description flex="1"></description>
 		<button id="sendlater3-cancelButton" key="sendlater3-cancel-esc" label="&sendlater.prompt.close.label;" tooltiptext="&sendlater.prompt.close.tooltip;" oncommand="window.arguments[0].cancelCallback();close();"/>
 	</hbox>
 </vbox>
