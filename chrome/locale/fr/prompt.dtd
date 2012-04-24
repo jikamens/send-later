@@ -1,7 +1,7 @@
 <!-- -*- coding: utf-8 -*- -->
 <!ENTITY sendlater.prompt.sendlater.label "Placer dans &quot;Messages en attente&quot;">
 <!ENTITY sendlater.prompt.sendlater.tooltip "Plutôt que de programmer l'envoi à une date précise, placer le message dans le dossier &quot;Messages en attente&quot; pour envoi la prochaine fois que les messages non envoyés sont expédiés.">
-<!ENTITY sendlater.prompt.sendnow.label "Envoyer Maintenant">
+<!ENTITY sendlater.prompt.sendnow.label "Envoyer maintenant">
 <!ENTITY sendlater.prompt.sendnow.accesskey "M">
 <!ENTITY sendlater.prompt.close.label "Annuler">
 <!ENTITY sendlater.prompt.close.tooltip "Revenir à la rédaction du message">
