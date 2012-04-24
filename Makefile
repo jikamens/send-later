@@ -12,4 +12,13 @@ send_later3.xpi: $(FILES) check-locales.pl
 	zip -r $@.tmp $(FILES)
 	mv $@.tmp $@
 
-clean: ; -rm -f send_later3.xpi
+translatable: send_later3-translatable.xpi
+.PHONY: translatable
+
+send_later3-translatable.xpi: $(FILES) check-locales.pl
+	./fix-addon-ids.pl --check
+	rm -f $@.tmp
+	zip -r $@.tmp $(FILES)
+	mv $@.tmp $@
+
+clean: ; -rm -f *.xpi
