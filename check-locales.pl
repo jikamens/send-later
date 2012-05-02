@@ -27,7 +27,7 @@ sub check_dtd {
 
 sub check_properties {
     my($file) = @_;
-    &check_generic($file, qr/^([^=]+)=/, qr/[^ -~\s]|\&(?!quot)(?!;)/);
+    &check_generic($file, qr/^([^=]+)=/, qr/\&(?!quot)(?!;)/);
 }
 
 sub check_generic {
