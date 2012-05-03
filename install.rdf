@@ -44,7 +44,7 @@
     <em:localized>
       <Description>
 	<em:name>Send Later 3</em:name>
-	<em:locale>fr-FR</em:locale>
+	<em:locale>fr</em:locale>
 	<em:description>Fonction d'envoi de courrier différé permettant de programmer l'heure d'envoi d'un courriel.</em:description>
       </Description>
     </em:localized>
@@ -65,7 +65,7 @@
     <em:localized>
       <Description>
 	<em:name>Send Later 3</em:name>
-	<em:locale>nl-NL</em:locale>
+	<em:locale>nl</em:locale>
 	<em:description>"Send Later"-functie om het tijdstip van verzending van een email in te stellen.</em:description>
       </Description>
     </em:localized>
