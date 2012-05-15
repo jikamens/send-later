@@ -51,6 +51,11 @@ var Sendlater3Util = {
 
     _PromptBundle: null,
 
+    IsLinux: function() {
+	return Components.classes["@mozilla.org/xre/app-info;1"]
+	    .getService(Components.interfaces.nsIXULRuntime).OS == "Linux";
+    },
+
     IsThunderbird2: function() {
 	var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
             .getService(Components.interfaces.nsIXULAppInfo);
