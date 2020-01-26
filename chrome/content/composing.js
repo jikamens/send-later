@@ -145,14 +145,26 @@ var Sendlater3Composing = {
 
     hijackOtherAddons: function() {
         // Enigmail
+        console.log("composing hijackOtherAddons start");
         try {
             var m = Enigmail.msg;
+            console.log("composing hijackOtherAddons Enigmail.msg set");
             if (! (m.handleSendMessageEvent ||
                    m.sendlater3SendMessageListener)) {
+                console.log("composing hijackOtherAddons " +
+                            "! (m.handleSendMessageEvent || " +
+                            "m.sendlater3SendMessageListener");
                 m.sendLater3SendMessageListener = m.sendMessageListener;
                 m.sendMessageListener = function() {};
             }
-        } catch (ex) {}
+            else {
+                console.log("composing hijackOtherAddons " +
+                            "m.handleSendMessageEvent || " +
+                            "m.sendlater3SendMessageListener");
+            }    
+        } catch (ex) {
+            console.log("composing hijackOtherAddons Enigmail.msg not set");
+        }
 
         // SpamFighter
         //
@@ -187,14 +199,21 @@ var Sendlater3Composing = {
         // their event handler provides, I have no qualms about simply
         // disabling it, so that's what the following code does.
         try {
+            console.log("composing hijackOtherAddons starting SpamFighter");
             if (GetSFCorePort && SendEventHandler) {
+                compose.log("composing.hijackOtherAddons " +
+                            "GetSFCorePort && SendEventHandler");
                 sl3log.info(
                     "Disabling SpamFighter compose-send-message listener");
                 window.removeEventListener(
                     "compose-send-message", SendEventHandler, true);
             }
         }
-        catch (ex) {}
+        catch (ex) {
+            console.log("composing hijackOtherAddons SpamFighter exception " +
+                        ex);
+        }
+        console.log("composing hijackOtherAddons finish");
     },
 
     callEnigmail: function(event) {
@@ -212,6 +231,7 @@ var Sendlater3Composing = {
     },
 
     main: function() {
+        console.log("composing main start");
         SL3U.initUtil();
 
         window.removeEventListener("load", Sendlater3Composing.main, false);
@@ -219,6 +239,7 @@ var Sendlater3Composing = {
         Sendlater3Composing.hijackOtherAddons();
 
         if (SL3U.alert_for_enigmail()) {
+            console.log("composing main SL3U.alert_for_enigmail()");
             Sendlater3Composing.setBindings.observe(true);
             return;
         }
@@ -298,14 +319,21 @@ var Sendlater3Composing = {
 
         var sendMessageListener = {
             handleEvent: function(event) {
+                console.log("composing sendMessageListener handleEvent start");
                 var msgcomposeWindow = document
                     .getElementById("msgcomposeWindow");
                 if (msgcomposeWindow.getAttribute("do_not_send_later")) {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "msgcomposeWindow." +
+                                "getAttribute(\"do_not_send_later\")");
                     msgcomposeWindow.removeAttribute("do_not_send_later");
                     Sendlater3Composing.callEnigmail(event);
                     return;
                 }
                 if (msgcomposeWindow.getAttribute("sending_later")) {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "msgcomposeWindow." +
+                                "getAttribute(\"sending_later\")");
                     msgcomposeWindow.removeAttribute("sending_later");
                     Sendlater3Composing.PrepMessage2();
                     return;
@@ -317,11 +345,16 @@ var Sendlater3Composing = {
                 var we_are_doing_send = SL3U.getBoolPref("sendbutton") ||
                     SL3U.getBoolPref("send_does_delay");
                 if (! (later || (now && we_are_doing_send))) {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "! (later || (now && we_are_doing_send))");
                     Sendlater3Composing.callEnigmail(event);
                     return;
                 }
                 var preset = msgcomposeWindow.sendlater3likethis;
                 if (now && ! preset && SL3U.getBoolPref("send_does_delay")) {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "now && ! preset && " +
+                                "SL3U.getBoolPref(\"send_does_delay\")");
                     var delay_minutes = SL3U.getIntPref("send_delay");
                     var sendat = new Date();
                     sendat.setTime(
@@ -329,9 +362,15 @@ var Sendlater3Composing = {
                     preset = [sendat];
                 }
                 if (preset) {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "preset");
                     msgcomposeWindow.sendlater3likethis = null;
-                    if (! Sendlater3Composing.callEnigmail(event))
+                    if (! Sendlater3Composing.callEnigmail(event)) {
+                        console.log("composing sendMessageListener " +
+                                    "handleEvent ! Sendlater3Composing." +
+                                    "callEnigmail(event)");
                         return;
+                    }
                     Sendlater3Composing.SendAtTime.apply(null, preset);
                     event.preventDefault();
                     return;
@@ -356,20 +395,39 @@ var Sendlater3Composing = {
                     previousArgs: Sendlater3Composing.prevArgs
                 };
                 if (later) {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "later");
                     args.continueCallback = function() {
+                        console.log("composing sendMessageListener " +
+                                    "handleEvent continueCallback start");
                         if (! Sendlater3Composing.confirmAction(
-                            "Outbox", "show_outbox_alert"))
+                            "Outbox", "show_outbox_alert")) {
+                            console.log("composing sendMessageListener " +
+                                        "handleEvent continueCallback " +
+                                        "! Sendlater3Composing." +
+                                        "confirmAction(\"Outbox\", " +
+                                        "\"show_outbox_alert\")");
                             return false;
+                        }
                         args.allowDefault =
                             Sendlater3Composing.callEnigmail(event);
                         return true;
                     };
                 }
                 else {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "later else");
                     args.sendCallback = function() {
+                        console.log("composing sendMessageListener " +
+                                    "handleEvent sendCallback start");
                         if (! Sendlater3Composing.confirmAction(
-                            "SendNow", "show_sendnow_alert"))
+                            "SendNow", "show_sendnow_alert")) {
+                            console.log("composing sendMessageListener " +
+                                        "handleEvent sendCallback ! " +
+                                        "Sendlater3Composing.confirmAction(" +
+                                        "\"SendNow\", \"show_sendnow_alert\")");
                             return false;
+                        }
                         args.allowDefault =
                             Sendlater3Composing.callEnigmail(event);
                         return true;
@@ -379,8 +437,12 @@ var Sendlater3Composing = {
                     "chrome://sendlater3/content/prompt.xul",
                     "SendAtWindow", "modal,chrome,centerscreen",
                     args);
-                if (! args.allowDefault)
+                if (! args.allowDefault) {
+                    console.log("composing sendMessageListener handleEvent " +
+                                "! args.allowDefault");
                     event.preventDefault();
+                }
+                console.log("composing sendMessageListener handleEvent finish");
             }
         }
 
@@ -391,6 +453,7 @@ var Sendlater3Composing = {
         windowInitListener.handleEvent(null);
         msgcomposeWindow.addEventListener("compose-send-message",
                                           sendMessageListener, false);
+        console.log("composing main finish");
     },
 
     confirmAction: function(action, preference) {
