@@ -1,3 +1,5 @@
+(This repository is obsolete. Please see [https://github.com/Extended-Thunder/send-later/](https://github.com/Extended-Thunder/send-later/).)
+
 Send Later Thunderbird add-on
 ===================================================
 
